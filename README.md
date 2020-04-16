@@ -56,14 +56,11 @@ a few installation options.
 git clone https://github.com/evanthegrayt/standup_md.git
 cd standup_md
 
-# Manually install as a gem
-gem build standup_md.gemspec
-gem install standup_md
-
-# OR use rake to link it to /usr/local/bin/standup
+# Use rake to build and install the gem.
 rake install
 
-# OR manually link it somewhere
+# OR manually link the execuable somewhere. If you use this method, you cannot
+# move the repository after you link it!
 ln -s $PWD/bin/standup /usr/local/bin
 ```
 
