@@ -1,4 +1,3 @@
-require 'yaml'
 require 'date'
 require 'fileutils'
 
@@ -6,12 +5,30 @@ class StandupMD
   VERSION = '0.1.0'
 
   attr_reader :all_previous_entries, :current_entry, :previous_entry,
-    :current_entry_tasks
+    :current_entry_tasks, :impediments, :bullet_character, :directory
+
+  attr_accessor :file_name_format, :entry_header_format,
+    :current_header, :previous_header, :impediment_header
 
   ##
   # Constructor.
   def initialize
-    @current_entry_tasks = []
+    @bullet_character = '-'
+    @current_entry_tasks = ["<!-- ADD TODAY'S WORK HERE -->"]
+    @impediments = ['None']
+    @file_name_format = '%Y_%m.md'
+    @directory = File.join(ENV['HOME'], '.cache', 'standup_md')
+    @entry_header_format = '# %Y-%m-%d'
+    @current_header = '## Today'
+    @previous_header = '## Previous'
+    @impediment_header = '## Impediments'
+
+    yield self if block_given?
+
+    unless File.directory?(directory)
+      FileUtils.mkdir_p(directory)
+    end
+
     @file_written = false
     @all_previous_entries =
       File.file?(previous_file) ? File.readlines(previous_file) : ['']
@@ -25,14 +42,8 @@ class StandupMD
   # The name of the current standup file.
   def file
     @file ||= File.expand_path(File.join(
-      directory, today.strftime(preferences['file_name_format'])
+      directory, today.strftime(file_name_format)
     ))
-  end
-
-  ##
-  # The directory in which the standup files are kept.
-  def directory
-    @directory ||= preferences['directory']
   end
 
   ##
@@ -42,9 +53,9 @@ class StandupMD
     prev_entry = []
     yesterday = false
     previous_entry.each do |line|
-      break if line.include?(preferences['impediment_header'].strip)
+      break if line.include?(impediment_header.strip)
       prev_entry << line.strip if yesterday
-      yesterday = true if line.include?(preferences['current_header'].strip)
+      yesterday = true if line.include?(current_header.strip)
     end
     @previous_entry_tasks = prev_entry
   end
@@ -62,18 +73,10 @@ class StandupMD
         FileUtils.touch(file)
         prev_month_file = File.expand_path(File.join(
           directory,
-          today.prev_month.strftime(preferences['file_name_format'])
+          today.prev_month.strftime(file_name_format)
         ))
         File.file?(prev_month_file) ? prev_month_file : ''
       end
-  end
-
-  ##
-  # If current_entry_tasks is empty, returns a markdown comment; otherwise,
-  # formats current_entry_tasks as markdown bullets.
-  def current_entry_tasks_formatted
-    return "- <!-- ADD TODAY'S WORK HERE -->" if current_entry_tasks.empty?
-    current_entry_tasks.map { |e| "- #{e}" }
   end
 
   ##
@@ -96,6 +99,22 @@ class StandupMD
   end
 
   ##
+  # Setter for impediments.
+  def impediments=(tasks)
+    raise 'Must be an Array' unless tasks.is_a?(Array)
+    @impediments = tasks
+  end
+
+  def bullet_character=(character)
+    raise 'Must be "-" or "*"' unless %w[- *].include?(character)
+    @bullet_character = character
+  end
+
+  def directory=(directory)
+    @directory = File.expand_path(directory)
+  end
+
+  ##
   # Writes a new entry to the file if the first entry in the file isn't today.
   def write
     return false if entry_previously_added? || file_written?
@@ -106,24 +125,6 @@ class StandupMD
     @file_written = true
   end
 
-  ##
-  # Hash of user preferences.
-  def preferences
-    return @preferences if @preferences
-    preferences = {
-      'file_name_format' => '%Y_%m.md',
-      'editor' => editor,
-      'directory' => File.expand_path(File.join('~', '.cache', 'standup_md')),
-      'entry_header_format' => '# %Y-%m-%d',
-      'current_header' => '## Today',
-      'previous_header' => '## Previous',
-      'impediment_header' => '## Impediments',
-    }
-    user_prefs = File.expand_path(File.join('~', '.standup_md.yml'))
-    preferences.merge!(YAML.load_file(user_prefs)) if File.file?(user_prefs)
-    @preferences = preferences
-  end
-
   private
 
   ##
@@ -131,12 +132,12 @@ class StandupMD
   def new_entry
     [
       header,
-      preferences['previous_header'],
+      previous_header,
       previous_entry_tasks,
-      preferences['current_header'],
-      current_entry_tasks_formatted,
-      preferences['impediment_header'],
-      '- None',
+      current_header,
+      current_entry_tasks.map { |i| "- #{i}" },
+      impediment_header,
+      impediments.map { |i| "- #{i}" },
       ''
     ].flatten
   end
@@ -150,7 +151,7 @@ class StandupMD
   ##
   # The header for today's entry.
   def header
-    @header ||= today.strftime(preferences['entry_header_format'])
+    @header ||= today.strftime(entry_header_format)
   end
 
   ##
@@ -182,13 +183,5 @@ class StandupMD
   # Convenience method for second entry of previous_file.
   def second_entry_of_file
     @second_entry_of_file ||= first_two_entries_of_file.last
-  end
-
-  ##
-  # Attempts to determine user's preferred editor.
-  def editor
-    return ENV['VISUAL'] if ENV['VISUAL']
-    return ENV['EDITOR'] if ENV['EDITOR']
-    'vim'
   end
 end
