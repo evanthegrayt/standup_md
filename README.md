@@ -13,6 +13,8 @@ markdown files.
   - [Example](#example)
   - [Customization and Runtime Options](#customization-and-runtime-options)
 - [API](#api)
+- [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
+- [Self-Promotion](#self-promotion)
 
 ## About
 I've now been at two separate companies where we post our daily standups in a
@@ -170,3 +172,14 @@ end
 
 standup.write
 ```
+
+## Reporting Bugs and Requesting Features
+If you have an idea or find a bug, please [create an
+issue](https://github.com/evanthegrayt/standup_md/issues/new). Just make sure the topic
+doesn't already exist. Better yet, you can always submit a Pull Request.
+
+## Self-Promotion
+I do these projects for fun, and I enjoy knowing that they're helpful to people.
+Consider starring [the repository](https://github.com/evanthegrayt/standup_md)
+if you like it! If you love it, follow me [on
+github](https://github.com/evanthegrayt)!
