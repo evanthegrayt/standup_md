@@ -1,2 +1,3 @@
 standups/*
 !standups/.keep
+*.gem

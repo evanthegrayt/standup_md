@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/standup'
+require_relative '../lib/standup_md'
 
-standup = Standup.new
-standup.add_new_entry
+standup = StandupMD.new
 
-exec("#{standup.editor} #{standup.file}")
+standup.write
+
+exec("#{standup.preferences['editor']} #{standup.file}")
