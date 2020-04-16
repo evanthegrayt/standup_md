@@ -70,7 +70,7 @@ OptionParser.new do |opts|
     previous = v
     edit = false
   end
-  opts.on('-a', '--all-previous', "Display previous entry. Disables editing") do |v|
+  opts.on('-a', '--all-previous', "Display all previous entries. Disables editing") do |v|
     all_previous = v
     edit = false
   end

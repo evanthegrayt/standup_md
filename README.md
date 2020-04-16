@@ -1,7 +1,18 @@
 # The Standup Doctor
 > The cure for all your standup woes.
 
-An automated way to keep track of standups in markdown files.
+A highly customizable and automated way to keep track of daily standups in
+markdown files.
+
+## Table of Contents
+- [About](#about)
+- [Installation](#Installation)
+  - [Via RubyGems](#via-rubygems)
+  - [Manual Installation](#manual-installation)
+- [Usage](#usage)
+  - [Example](#example)
+  - [Customization and Runtime Options](#customization-and-runtime-options)
+- [API](#api)
 
 ## About
 I've now been at two separate companies where we post our daily standups in a
@@ -13,16 +24,19 @@ most of this process.
 I wasn't sure that others would find this useful, but then the pandemic
 happened, which I assume made doing standups via chat much more common.
 
-In a nutshell, calling `standup` from the command line will open a standup
-file for the current month in your preferred editor. If an entry for today is
-already present, no text will be generated. If an entry for today doesn't exist,
-one will be generated, and if a previous entry exists, it will be added to
-today's entry as what your previous day's work. See [usage](#usage) for
-examples. There's also an API if you'd like to use this in your own code
-somehow.
+In a nutshell, calling `standup` from the command line will open a standup file
+for the current month in your preferred editor. If an entry for today is already
+present, no text will be generated. If an entry for today doesn't exist, one
+will be generated, and if a previous entry exists, it will be added to today's
+entry as what your previous day's work. See [example](#example). There's also an
+API if you'd like to use this in your own code somehow.
 
 ## Installation
 ### Via RubyGems
+*COMING SOON. For now, please use the [manual installation
+instructions](#manual-installation). The gem will be officially released once
+tests are written*.
+
 Just install the gem!
 
 ```sh
@@ -41,12 +55,15 @@ a few installation options.
 ```sh
 git clone https://github.com/evanthegrayt/standup_md.git
 cd standup_md
+
 # Manually install as a gem
 gem build standup_md.gemspec
 gem install standup_md
-# Use rake to link it to /usr/local/bin/standup
+
+# OR use rake to link it to /usr/local/bin/standup
 rake install
-# Manually link it somewhere
+
+# OR manually link it somewhere
 ln -s $PWD/bin/standup /usr/local/bin
 ```
 
@@ -86,29 +103,29 @@ The following scaffolding will be added for today:
 - None
 ```
 
-## Customization With RC File or at Runtime
+## Customization and Runtime Options
 You can create a file in your home directory called `~/.standup_md.yml`.
 Settings located in this file will override default behavior. This file can also
 have settings overwritten at runtime by the use of options. Below is a table of
 available settings and their defaults.
 
-|Runtime Flag|Config Setting|Default|Notes|
+|Runtime Flag|Config File Key|Default|Notes|
 |:----|:------|:------|:------|
+||`current_header:`|`## Today`||
+||`previous_header:`|`## Previous`||
+||`impediment_header:`|`## Impediments`||
+|`-f DATESTRING`|`file_name_format:`|`%Y_%m.md`|String will be formatted by `strftime`|
+|`-E DATESTRING`|`entry_header_format:`|`# %Y-%m-%d`|String will be formatted by `strftime`|
+|`-d DIRECTORY`|`directory:`|`~/.cache/standup_md`|Directory wil be created if it doesn't exist|
+|`-e EDITOR`|`editor:`|`$VISUAL`, `$EDITOR` or `vim`|In that order|
+|`--current-entry-tasks=ARRAY`|`current_entry_tasks:`|`<!-- ADD TODAY'S WORK HERE -->`|Each entry will automatically be prefixed with `bullet_character`|
+|`--impediments=ARRAY`|`impediments:`|`None`|Each entry will automatically be prefixed with `bullet_character`|
+|`-b CHARACTER`|`bullet_character:`|`-` (dash)|Must be `-` (dash) or `*` (asterisk)|
+|`--[no-]edit`||true|Open the file in an editor|
+|`--[no-]write`||true|Write today's entry to the file|
 |`-t`||false|Output today's entry to the command line|
 |`-p`||false|Output previous entry to the command line|
 |`-a`||false|Output all previous entries (limit one month) to the command line|
-|`-f DATESTRING`|file_name_format|`%Y_%m.md`|String will be formatted by `strftime`|
-|`-E DATESTRING`|entry_header_format|`# %Y-%m-%d`|String will be formatted by `strftime`|
-|`-C STRING`|current_header|`## Today`||
-|`-P STRING`|previous_header|`## Previous`||
-|`-I STRING`|impediment_header|`## Impediments`||
-|`-d DIRECTORY`|directory|`~/.cache/standup_md`|Will create the directory if it doesn't exist|
-|`-e EDITOR`|editor|`$VISUAL`, `$EDITOR` or `vim`|In that order|
-|`--current-entry-tasks=ARRAY`|current_entry_tasks|`<!-- ADD TODAY'S WORK HERE -->`|Each entry will automatically be prefixed with `bullet_character`|
-|`--impediments=ARRAY`|impediments|`None`|Each entry will automatically be prefixed with `bullet_character`|
-|`-m CHARACTER`|bullet_character|`-` (dash)|Can only be `-` or `*`|
-|`--[no-]edit`||true|Open the file in an editor|
-|`--[no-]write`||true|Write today's entry to the file|
 |`-v`||false|Verbose output|
 
 For example, a custom `~/.standup_md.yml` file might contain the following.
@@ -122,10 +139,16 @@ directory: '~/standups'
 
 Any options not set in this file will retain their default values. Note that if
 you change `file_name_format`, and don't use a month or year, there will only
-ever be one standup file. This could cause issues long-term, as the files could
-get large and possibly cause performance issues.
+ever be one standup file. This could cause issues long-term, as the files will
+get large over time and possibly cause performance issues.
 
-If you wanted to add some tasks at runtime without opening the file in an
+Also, there are no options to change the headers at runtime because it uses the
+headers to detect tasks from previous entries. If changed at runtime, this would
+cause errors. For this reason, if you don't like the default headers, change
+them in your configuration file after installation, and then try to not change
+them again.
+
+If you wanted to add some tasks at runtime, and without opening the file in an
 editor, you could use the following:
 
 ```bash
@@ -135,9 +158,10 @@ standup --no-edit --current-entry-tasks="Work on this thing","And another thing!
 ## API
 This was mainly written as a command line utility, but I made the API available
 for scripting. There are attribute accessors for most of the settings in the
-[customization table above](#customization). To view all available methods, read
-the comments in the [source](lib/standup_md.rb). A quick-and-dirty example of
-how to write a new entry via code could look like the following:
+[customization table](#customization-and-runtime-options) above. To view all
+available methods, read the comments in the [source](lib/standup_md.rb). A
+quick-and-dirty example of how to write a new entry via code could look like the
+following:
 
 ```ruby
 require 'standup_md'

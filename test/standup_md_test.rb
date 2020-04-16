@@ -15,6 +15,6 @@ class TestName < Test::Unit::TestCase
   end
 
   def test_file
-    assert_equal(File.expand_path(File.join(__dir__, 'files'`)))
+    # TODO
   end
 end
