@@ -1,9 +1,116 @@
 #!/usr/bin/env ruby
 
+require 'yaml'
+require 'optparse'
 require_relative '../lib/standup_md'
 
-standup = StandupMD.new
+def determine_editor
+  return ENV['VISUAL'] if ENV['VISUAL']
+  return ENV['EDITOR'] if ENV['EDITOR']
+  'vim'
+end
 
-standup.write
+user_prefs_file = File.expand_path(File.join(ENV['HOME'], '.standup_md.yml'))
+preferences = File.file?(user_prefs_file) ? YAML.load_file(user_prefs_file) : {}
 
-exec("#{standup.preferences['editor']} #{standup.file}")
+today = false
+previous = false
+all_previous = false
+verbose = false
+write = true
+edit = true
+
+OptionParser.new do |opts|
+  opts.banner = 'The Standup Doctor'
+  opts.version = StandupMD::VERSION
+  opts.on('-b', '--bullet-character=CHAR', 'The character to use for markdown bullets') do |v|
+    preferences['bullet_character'] = v
+  end
+  opts.on('--current-entry-tasks=ARRAY', Array, "List of today's tasks") do |v|
+    preferences['current_entry_tasks'] = v
+  end
+  opts.on('--impediments=ARRAY', Array, 'List of impediments for today') do |v|
+    preferences['impediments'] = v
+  end
+  opts.on('-f', '--file-name-format=STRING', 'Date-formattable string to use for standup file name') do |v|
+    preferences['file_name_format'] = v
+  end
+  opts.on('-e', '--editor=EDITOR', 'Editor to use for opening standup files') do |v|
+    preferences['editor'] = v
+  end
+  opts.on('-d', '--directory=DIRECTORY', 'The directories where standup files are located') do |v|
+    preferences['directory'] = v
+  end
+  opts.on('-E', '--entry-header-format=STRING', 'Date-formattable string to use for entry headers') do |v|
+    preferences['entry_header_format'] = v
+  end
+  opts.on('-C', '--current-header=STRING', 'The header to use for Today') do |v|
+    preferences['current_header'] = v
+  end
+  opts.on('-P', '--previous-header=STRING', 'The header to use for Previous') do |v|
+    preferences['previous_header'] = v
+  end
+  opts.on('-I', '--impediment-header=STRING', 'The header to use for Impediments') do |v|
+    preferences['impediment_header'] = v
+  end
+  opts.on('--[no-]write', "Write today's entry if it doesn't exist. Default is true.") do |v|
+    write = v
+  end
+  opts.on('--[no-]edit', 'Open the file in the editor. Default is true.') do |v|
+    edit = v
+  end
+  opts.on('-v', '--[no-]verbose', 'Verbose output. Default is false.') do |v|
+    verbose = v
+  end
+  opts.on('-t', '--today', "Display today's entry. Disables editing") do |v|
+    today = v
+    edit = false
+  end
+  opts.on('-p', '--previous', "Display previous entry. Disables editing") do |v|
+    previous = v
+    edit = false
+  end
+  opts.on('-a', '--all-previous', "Display previous entry. Disables editing") do |v|
+    all_previous = v
+    edit = false
+  end
+end.parse!(ARGV)
+
+editor = preferences.delete('editor') || determine_editor
+
+standup = StandupMD.new do |s|
+  puts "Runtime options:" if verbose
+  preferences.each do |k, v|
+    puts "  #{k} = #{v}" if verbose
+    s.send("#{k}=", v)
+  end
+end
+
+
+puts 'Status:' if verbose
+if today
+  puts "Display today's entry" if verbose
+  puts standup.current_entry
+end
+
+if previous
+  puts "Display previous entry" if verbose
+  puts standup.previous_entry
+end
+
+if all_previous
+  puts "Display all previous entries" if verbose
+  puts standup.all_previous_entries
+end
+
+if write
+  puts '  Writing file' if verbose
+  standup.write
+end
+
+if edit
+  puts "  Opening file in #{editor}" if verbose
+  exec("#{editor} #{standup.file}")
+end
+
+puts "Done!" if verbose
