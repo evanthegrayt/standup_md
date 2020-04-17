@@ -6,11 +6,12 @@ class StandupMD
 
   ##
   # Instance variables that aren't settable by user, but are gettable.
-  attr_reader :all_previous_entries, :current_entry, :previous_entry
+  attr_reader :file, :previous_file, :current_entry, :previous_entry,
+    :all_previous_entries
 
   ##
   # Instance variables that are settable by the user, but have custom setters.
-  attr_reader :directory, :bullet_character, :impediments, :current_entry_tasks
+  attr_reader :directory, :current_entry_tasks, :impediments, :bullet_character
 
   ##
   # Instance variables with default getters and setters.
@@ -20,23 +21,20 @@ class StandupMD
   ##
   # Constructor. Yields the instance so you can pass a block to access setters.
   def initialize
-    set_default_instance_variables
+    @bullet_character = '-'
+    @current_entry_tasks = ["<!-- ADD TODAY'S WORK HERE -->"]
+    @impediments = ['None']
+    @file_name_format = '%Y_%m.md'
+    @directory = File.join(ENV['HOME'], '.cache', 'standup_md')
+    @entry_header_format = '# %Y-%m-%d'
+    @current_header = '## Today'
+    @previous_header = '## Previous'
+    @impediment_header = '## Impediments'
 
     yield self if block_given?
-
     FileUtils.mkdir_p(directory) unless File.directory?(directory)
 
     set_internal_instance_variables
-  end
-
-  ##
-  # The name of the current standup file.
-  #
-  # @return [String]
-  def file
-    @file ||= File.expand_path(File.join(
-      directory, today.strftime(file_name_format)
-    ))
   end
 
   ##
@@ -44,7 +42,6 @@ class StandupMD
   #
   # @return [Array]
   def previous_entry_tasks
-    return @previous_entry_tasks if @previous_entry_tasks
     prev_entry = []
     yesterday = false
     previous_entry.each do |line|
@@ -52,28 +49,7 @@ class StandupMD
       prev_entry << line.strip if yesterday
       yesterday = true if line.include?(current_header.strip)
     end
-    @previous_entry_tasks = prev_entry
-  end
-
-  ##
-  # The file that contains the previous entry. If previous entry was same month,
-  # previous_file will be the same as file. If previous entry was last month,
-  # and a file exists for last month, previous_file is last month's file.
-  # If neither is true, returns an empty string.
-  #
-  # @return [String]
-  def previous_file
-    @previous_file ||=
-      if File.file?(file)
-        file
-      else
-        FileUtils.touch(file)
-        prev_month_file = File.expand_path(File.join(
-          directory,
-          today.prev_month.strftime(file_name_format)
-        ))
-        File.file?(prev_month_file) ? prev_month_file : ''
-      end
+    prev_entry
   end
 
   ##
@@ -122,17 +98,15 @@ class StandupMD
 
   ##
   # Setter for directory. Must be expanded in case the user uses ~ for home.
-  # If the directory doesn't exist, it will be created. Setting the directory,
-  # by default, will reload entries. This can be overwritten with the `reload`
-  # paramter.
+  # If the directory doesn't exist, it will be created. To reset instance
+  # variables after changing the directory, you'll need to call reload!
   #
   # @param [String] directory
-  # @param [Boolean] reload
   # @return [String]
-  def directory=(directory, reload: true)
-    @directory = File.expand_path(directory)
-    set_internal_instance_variables if reload
-    @directory
+  def directory=(directory)
+    directory = File.expand_path(directory)
+    FileUtils.mkdir_p(directory) unless File.directory?(directory)
+    @directory = directory
   end
 
   ##
@@ -146,6 +120,10 @@ class StandupMD
       f.puts all_previous_entries if file == previous_file
     end
     @file_written = true
+  end
+
+  def reload!
+    set_internal_instance_variables
   end
 
   private
@@ -174,14 +152,13 @@ class StandupMD
   ##
   # The header for today's entry.
   def header # :nodoc:
-    @header ||= today.strftime(entry_header_format)
+    today.strftime(entry_header_format)
   end
 
   ##
   # The first two entries in previous_file. An 'entry' is lines separated by a
   # double newline.
-  def first_two_entries_of_file # :nodoc:
-    return @first_two_entries_of_file if @first_two_entries_of_file
+  def get_first_two_entries_of_file # :nodoc:
     entry_count = 0
     first  = []
     second = []
@@ -189,43 +166,24 @@ class StandupMD
       if line.strip.empty?
         break if entry_count == 1
         entry_count += 1
+        next
       end
       first << line if entry_count == 0
       second << line if entry_count == 1
     end
-    @first_two_entries_of_file = [first, second]
+    [first, second]
   end
 
   ##
   # Convenience method for first entry of previous_file.
   def first_entry_of_file # :nodoc:
-    @first_entry_of_file ||=
-      first_two_entries_of_file.first.delete_if do |e|
-        e.strip.chomp.empty?
-      end
+    @first_two_entries_of_file.first
   end
 
   ##
   # Convenience method for second entry of previous_file.
   def second_entry_of_file # :nodoc:
-    @second_entry_of_file ||=
-      first_two_entries_of_file.last.delete_if do |e|
-        e.strip.chomp.empty?
-      end
-  end
-
-  ##
-  # Sets default instance variables. Called when first instantiated.
-  def set_default_instance_variables # :nodoc:
-    @bullet_character = '-'
-    @current_entry_tasks = ["<!-- ADD TODAY'S WORK HERE -->"]
-    @impediments = ['None']
-    @file_name_format = '%Y_%m.md'
-    @directory = File.join(ENV['HOME'], '.cache', 'standup_md')
-    @entry_header_format = '# %Y-%m-%d'
-    @current_header = '## Today'
-    @previous_header = '## Previous'
-    @impediment_header = '## Impediments'
+    @first_two_entries_of_file.last
   end
 
   ##
@@ -233,11 +191,30 @@ class StandupMD
   # directory is set.
   def set_internal_instance_variables # :nodoc:
     @file_written = false
+    @file = File.expand_path(File.join(directory, today.strftime(file_name_format)))
+    @previous_file = set_previous_file
     @all_previous_entries =
-      File.file?(previous_file) ? File.readlines(previous_file) : ['']
-    @entry_previously_added = all_previous_entries.first.strip == header
+      File.file?(previous_file) ? File.readlines(previous_file).map(&:chomp) : ['']
+    @first_two_entries_of_file = get_first_two_entries_of_file
+    @entry_previously_added = all_previous_entries.first&.strip == header
     @previous_entry =
       @entry_previously_added ? second_entry_of_file : first_entry_of_file
     @current_entry = entry_previously_added? ? first_entry_of_file : new_entry
+
+    FileUtils.touch(file) unless File.file?(file)
+  end
+
+  ##
+  # The file that contains the previous entry. If previous entry was same month,
+  # previous_file will be the same as file. If previous entry was last month,
+  # and a file exists for last month, previous_file is last month's file.
+  # If neither is true, returns an empty string.
+  def set_previous_file # :nodoc:
+    return file if File.file?(file) && !File.zero?(file)
+    prev_month_file = File.expand_path(File.join(
+      directory,
+      today.prev_month.strftime(file_name_format)
+    ))
+    File.file?(prev_month_file) ? prev_month_file : ''
   end
 end

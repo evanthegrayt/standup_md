@@ -1,0 +1,19 @@
+current_entry:
+  - "<%= Date.today.strftime("# %Y-%m-%d") %>"
+  - "## Previous"
+  - "- Test task 2"
+  - "- Test task 4"
+  - "- <!-- ADD TODAY'S WORK HERE -->"
+  - "- Test task 3"
+  - "## Impediments"
+  - "- None"
+
+previous_entry:
+  - "<%= Date.today.prev_day.strftime("# %Y-%m-%d") %>"
+  - "## Previous"
+  - "- Test task 1"
+  - "## Today"
+  - "- Test task 2"
+  - "- Test task 4"
+  - "## Impediments"
+  - "- None"
