@@ -136,9 +136,9 @@ class StandupMD
       previous_header,
       previous_entry_tasks,
       current_header,
-      current_entry_tasks.map { |e| "- #{e}" },
+      current_entry_tasks.map { |e| "#{bullet_character} #{e}" },
       impediment_header,
-      impediments.map { |i| "- #{i}" },
+      impediments.map { |i| "#{bullet_character} #{i}" },
       ''
     ].flatten
   end
