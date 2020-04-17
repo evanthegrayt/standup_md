@@ -86,7 +86,6 @@ standup = StandupMD.new do |s|
   end
 end
 
-
 puts 'Status:' if verbose
 if today
   puts "Display today's entry" if verbose

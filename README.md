@@ -127,6 +127,7 @@ available settings and their defaults.
 |`-p`||false|Output previous entry to the command line|
 |`-a`||false|Output all previous entries (limit one month) to the command line|
 |`-v`||false|Verbose output|
+|`-h`|||Print help|
 
 For example, a custom `~/.standup_md.yml` file might contain the following.
 
