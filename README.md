@@ -21,7 +21,8 @@ I've now been at two separate companies where we post our daily standups in a
 chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day
 became tedious, as I'd have to look up what I did the day before, copy and paste
 yesterday's work into a new entry, and add today's tasks. This gem automates
-most of this process.
+most of this process, along with providing means of opening the file in your
+editor, and displaying entries from the command line.
 
 I wasn't sure that others would find this useful, but then the pandemic
 happened, which I assume made doing standups via chat much more common.
