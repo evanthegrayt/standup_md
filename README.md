@@ -34,26 +34,36 @@ will be generated, and if a previous entry exists, it will be added to today's
 entry as what your previous day's work. See [example](#example). There's also an
 API if you'd like to use this in your own code somehow.
 
+This is a new project, and I have a lot of updates planned (see the [issue
+list](https://github.com/evanthegrayt/standup_md/issues)), but I won't push to
+`master` unless all
+[tests](https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb)
+are passing and the gem is working as expected. The first official release will
+be once [this milestone](https://github.com/evanthegrayt/standup_md/milestone/1)
+is complete. Until then, consider this gem to be in alpha, and the version will
+remain at `0.0.1`.
+
 ## Installation
 ### Via RubyGems
 *COMING SOON. For now, please use the [manual installation
 instructions](#manual-installation). The gem will be officially released once
-tests are written*.
+[this milestone](https://github.com/evanthegrayt/standup_md/milestone/1) is
+completed*.
 
-Just install the gem!
+<!-- Just install the gem! -->
 
-```sh
-gem install standup_md
-```
-If you don't have permission on your system to install ruby or gems, I recommend
-using [rvm](https://rvm.io/) or
-[rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html),
-or you can try to use a manual method below.
+<!-- ```sh -->
+<!-- gem install standup_md -->
+<!-- ``` -->
+<!-- If you don't have permission on your system to install ruby or gems, I recommend -->
+<!-- using [rvm](https://rvm.io/) or -->
+<!-- [rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html), -->
+<!-- or you can try to use a manual method below. -->
 
 
 ### Manual Installation
 From your terminal, clone the repository where you want it. From there, you have
-a few installation options.
+a couple of installation options.
 
 ```sh
 git clone https://github.com/evanthegrayt/standup_md.git

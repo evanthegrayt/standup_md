@@ -17,6 +17,10 @@ class TestStandupMD < Test::Unit::TestCase
     FileUtils.rm(@current_test_file) if File.file?(@current_test_file)
   end
 
+  def test_VERSION
+    assert_match(/\d\.\d.\d/, ::StandupMD::VERSION)
+  end
+
   def test_file
     su = standup(@workdir)
     assert_equal(@current_test_file, su.file)
@@ -144,8 +148,8 @@ class TestStandupMD < Test::Unit::TestCase
     su = standup(@workdir)
     refute(su.entry_previously_added?)
     create_standup_file(@current_test_file)
-    su.reload!
     # TODO
+    su.reload!
     # assert(su.entry_previously_added?)
   end
 
@@ -153,6 +157,7 @@ class TestStandupMD < Test::Unit::TestCase
     su = standup(@workdir)
     assert_nothing_raised { su.write }
     refute(su.write)
+    assert(File.file?(@current_test_file))
   end
 
   def test_reload!

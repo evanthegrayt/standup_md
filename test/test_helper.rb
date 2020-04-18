@@ -5,9 +5,6 @@ require 'test/unit'
 require 'fileutils'
 
 module TestHelper
-
-  private
-
   def fixtures
     @test_helper_fixtures ||= YAML.load(ERB.new(File.read(
       File.join(__dir__, 'fixtures.yml.erb')
@@ -21,11 +18,11 @@ module TestHelper
     end
   end
 
-  def create_standup_file(file)
+  def create_standup_file(file, fixture = 'previous_entry')
     dir = File.dirname(file)
     FileUtils.mkdir(dir) unless File.directory?(dir)
     File.open(file, 'w') do |f|
-      f.puts fixtures['previous_entry']
+      f.puts fixtures[fixture]
       f.puts
       f.puts fixtures['current_entry']
     end

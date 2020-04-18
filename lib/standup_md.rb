@@ -2,7 +2,7 @@ require 'date'
 require 'fileutils'
 
 class StandupMD
-  VERSION = '0.1.0'
+  VERSION = '0.0.1'
 
   ##
   # Instance variables that aren't settable by user, but are gettable.
