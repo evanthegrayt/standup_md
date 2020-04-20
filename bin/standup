@@ -13,24 +13,28 @@ end
 user_prefs_file = File.expand_path(File.join(ENV['HOME'], '.standup_md.yml'))
 preferences = File.file?(user_prefs_file) ? YAML.load_file(user_prefs_file) : {}
 
+additions = nil
 today = false
-previous = false
-all_previous = false
+all = false
 verbose = false
 write = true
 edit = true
+previous_append = true
 
 OptionParser.new do |opts|
   opts.banner = 'The Standup Doctor'
   opts.version = StandupMD::VERSION
-  opts.on('-b', '--bullet-character=CHAR', 'The character to use for markdown bullets') do |v|
-    preferences['bullet_character'] = v
-  end
   opts.on('--current-entry-tasks=ARRAY', Array, "List of today's tasks") do |v|
     preferences['current_entry_tasks'] = v
   end
+  opts.on('--previous-entry-tasks=ARRAY', Array, "List of yesterday's tasks") do |v|
+    preferences['previous_entry_tasks'] = v
+  end
   opts.on('--impediments=ARRAY', Array, 'List of impediments for today') do |v|
     preferences['impediments'] = v
+  end
+  opts.on('--[no-]previous-append', 'Append previous tasks? Default is true') do |v|
+    previous_append = v
   end
   opts.on('-f', '--file-name-format=STRING', 'Date-formattable string to use for standup file name') do |v|
     preferences['file_name_format'] = v
@@ -41,22 +45,10 @@ OptionParser.new do |opts|
   opts.on('-d', '--directory=DIRECTORY', 'The directories where standup files are located') do |v|
     preferences['directory'] = v
   end
-  opts.on('-E', '--entry-header-format=STRING', 'Date-formattable string to use for entry headers') do |v|
-    preferences['entry_header_format'] = v
-  end
-  opts.on('-C', '--current-header=STRING', 'The header to use for Today') do |v|
-    preferences['current_header'] = v
-  end
-  opts.on('-P', '--previous-header=STRING', 'The header to use for Previous') do |v|
-    preferences['previous_header'] = v
-  end
-  opts.on('-I', '--impediment-header=STRING', 'The header to use for Impediments') do |v|
-    preferences['impediment_header'] = v
-  end
-  opts.on('--[no-]write', "Write today's entry if it doesn't exist. Default is true.") do |v|
+  opts.on('--[no-]write', "Write today's entry if it doesn't exist. Default is true") do |v|
     write = v
   end
-  opts.on('--[no-]edit', 'Open the file in the editor. Default is true.') do |v|
+  opts.on('--[no-]edit', 'Open the file in the editor. Default is true') do |v|
     edit = v
   end
   opts.on('-v', '--[no-]verbose', 'Verbose output. Default is false.') do |v|
@@ -66,17 +58,16 @@ OptionParser.new do |opts|
     today = v
     edit = false
   end
-  opts.on('-p', '--previous', "Display previous entry. Disables editing") do |v|
-    previous = v
-    edit = false
-  end
-  opts.on('-a', '--all-previous', "Display all previous entries. Disables editing") do |v|
-    all_previous = v
+  opts.on('-a', '--all', "Display all previous entries. Disables editing") do |v|
+    all = v
     edit = false
   end
 end.parse!(ARGV)
 
 editor = preferences.delete('editor') || determine_editor
+if preferences.key?('previous_entry_tasks') && previous_append
+  additions = preferences.delete('previous_entry_tasks')
+end
 
 standup = StandupMD.new do |s|
   puts "Runtime options:" if verbose
@@ -87,19 +78,27 @@ standup = StandupMD.new do |s|
 end
 
 puts 'Status:' if verbose
+
+if additions
+  puts 'Appending previous entry tasks' if verbose
+  standup.previous_entry_tasks.concat(additions)
+end
+
 if today
   puts "Display today's entry" if verbose
   puts standup.current_entry
 end
 
-if previous
-  puts "Display previous entry" if verbose
-  puts standup.previous_entry
-end
-
-if all_previous
-  puts "Display all previous entries" if verbose
-  puts standup.all_previous_entries
+if all
+  puts "Display all entries" if verbose
+  standup.all_entries.each do |head, s_heads|
+    puts '#' * standup.header_depth + ' ' + head
+    s_heads.each do |s_head, tasks|
+      puts '#' * standup.sub_header_depth + ' ' + s_head
+      tasks.each { |task| puts standup.bullet_character + ' ' + task }
+    end
+    puts
+  end
 end
 
 if write

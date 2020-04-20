@@ -2,34 +2,39 @@ require 'date'
 require 'fileutils'
 
 class StandupMD
-  VERSION = '0.0.1'
+  VERSION = '0.0.9'
 
   ##
   # Instance variables that aren't settable by user, but are gettable.
-  attr_reader :file, :previous_file, :current_entry, :previous_entry,
-    :all_previous_entries
+  attr_reader :file, :previous_file, :current_entry, :all_previous_entries,
+    :all_entries
 
   ##
   # Instance variables that are settable by the user, but have custom setters.
-  attr_reader :directory, :current_entry_tasks, :impediments, :bullet_character
+  attr_reader :directory, :current_entry_tasks, :impediments, :bullet_character,
+    :header_depth, :sub_header_depth, :previous_entry_tasks
 
   ##
   # Instance variables with default getters and setters.
-  attr_accessor :file_name_format, :entry_header_format, :current_header,
-    :previous_header, :impediment_header
+  attr_accessor :file_name_format, :header_date_format, :current_header,
+    :previous_header, :impediments_header, :notes_header
 
   ##
   # Constructor. Yields the instance so you can pass a block to access setters.
   def initialize
+    @header_depth = 1
+    @sub_header_depth = 2
     @bullet_character = '-'
     @current_entry_tasks = ["<!-- ADD TODAY'S WORK HERE -->"]
     @impediments = ['None']
     @file_name_format = '%Y_%m.md'
     @directory = File.join(ENV['HOME'], '.cache', 'standup_md')
-    @entry_header_format = '# %Y-%m-%d'
-    @current_header = '## Today'
-    @previous_header = '## Previous'
-    @impediment_header = '## Impediments'
+    @header_date_format = '%Y-%m-%d'
+    @current_header = 'Current'
+    @previous_header = 'Previous'
+    @impediments_header = 'Impediments'
+    @notes_header = 'Notes'
+    @sub_header_order = [:previous, :current, :impediment, :notes]
 
     yield self if block_given?
     FileUtils.mkdir_p(directory) unless File.directory?(directory)
@@ -37,20 +42,8 @@ class StandupMD
     set_internal_instance_variables
   end
 
-  ##
-  # The tasks done on the previous day as an array.
-  #
-  # @return [Array]
-  def previous_entry_tasks
-    prev_entry = []
-    yesterday = false
-    previous_entry.each do |line|
-      break if line.include?(impediment_header.strip)
-      prev_entry << line.strip if yesterday
-      yesterday = true if line.include?(current_header.strip)
-    end
-    prev_entry
-  end
+  # :section: Booleans
+  # Helper methods for booleans.
 
   ##
   # Has the file been written since instantiated?
@@ -68,6 +61,19 @@ class StandupMD
     @entry_previously_added
   end
 
+  # :section: Custom setters
+  # Setters that required validations.
+
+  ##
+  # Setter for current entry tasks.
+  #
+  # @param [Array] tasks
+  # @return [Array]
+  def previous_entry_tasks=(tasks)
+    raise 'Must be an Array' unless tasks.is_a?(Array)
+    @previous_entry_tasks = tasks
+  end
+
   ##
   # Setter for current entry tasks.
   #
@@ -82,6 +88,7 @@ class StandupMD
   # Setter for impediments.
   #
   # @param [Array] tasks
+  # @return [Array]
   def impediments=(tasks)
     raise 'Must be an Array' unless tasks.is_a?(Array)
     @impediments = tasks
@@ -91,6 +98,7 @@ class StandupMD
   # Setter for bullet_character. Must be * (asterisk) or - (dash).
   #
   # @param [String] character
+  # @return [String]
   def bullet_character=(character)
     raise 'Must be "-" or "*"' unless %w[- *].include?(character)
     @bullet_character = character
@@ -110,14 +118,50 @@ class StandupMD
   end
 
   ##
+  # Number of octothorps (#) to use before the main header.
+  #
+  # @param [Integer] depth
+  # @return [Integer]
+  def header_depth=(depth)
+    if !depth.between?(1, 5)
+      raise 'Header depth out of bounds (1..5)'
+    elsif depth >= sub_header_depth
+      raise 'header_depth must be larger than sub_header_depth'
+    end
+    @header_depth = depth
+  end
+
+  ##
+  # Number of octothorps (#) to use before sub headers (Current, Previous, etc).
+  #
+  # @param [Integer] depth
+  # @return [Integer]
+  def sub_header_depth=(depth)
+    if !depth.between?(2, 6)
+      raise 'Sub-header depth out of bounds (2..6)'
+    elsif depth <= header_depth
+      raise 'sub_header_depth must be smaller than header_depth'
+    end
+    @sub_header_depth = depth
+  end
+
+  # :section: Misc
+  # Misc.
+
+  ##
   # Writes a new entry to the file if the first entry in the file isn't today.
   #
   # @return [Boolean]
   def write
-    return false if entry_previously_added? || file_written?
     File.open(file, 'w') do |f|
-      f.puts new_entry
-      f.puts all_previous_entries if file == previous_file
+      all_entries.each do |head, s_heads|
+        f.puts '#' * header_depth + ' ' + head
+        s_heads.each do |s_head, tasks|
+          f.puts '#' * sub_header_depth + ' ' + s_head
+          tasks.each { |task| f.puts bullet_character + ' ' + task }
+        end
+        f.puts
+      end
     end
     @file_written = true
   end
@@ -128,19 +172,17 @@ class StandupMD
 
   private
 
+  # :section: Private
+  # Private methods.
+
   ##
   # Scaffolding with which new entries will be created.
   def new_entry # :nodoc:
-    [
-      header,
-      previous_header,
-      previous_entry_tasks,
-      current_header,
-      current_entry_tasks.map { |e| "#{bullet_character} #{e}" },
-      impediment_header,
-      impediments.map { |i| "#{bullet_character} #{i}" },
-      ''
-    ].flatten
+    {
+      previous_header => previous_entry_tasks || [],
+      current_header => current_entry_tasks,
+      impediments_header => impediments,
+    }
   end
 
   ##
@@ -152,38 +194,7 @@ class StandupMD
   ##
   # The header for today's entry.
   def header # :nodoc:
-    today.strftime(entry_header_format)
-  end
-
-  ##
-  # The first two entries in previous_file. An 'entry' is lines separated by a
-  # double newline.
-  def get_first_two_entries_of_file # :nodoc:
-    entry_count = 0
-    first  = []
-    second = []
-    all_previous_entries.each do |line|
-      if line.strip.empty?
-        break if entry_count == 1
-        entry_count += 1
-        next
-      end
-      first << line if entry_count == 0
-      second << line if entry_count == 1
-    end
-    [first, second]
-  end
-
-  ##
-  # Convenience method for first entry of previous_file.
-  def first_entry_of_file # :nodoc:
-    @first_two_entries_of_file.first
-  end
-
-  ##
-  # Convenience method for second entry of previous_file.
-  def second_entry_of_file # :nodoc:
-    @first_two_entries_of_file.last
+    today.strftime(header_date_format)
   end
 
   ##
@@ -192,14 +203,12 @@ class StandupMD
   def set_internal_instance_variables # :nodoc:
     @file_written = false
     @file = File.expand_path(File.join(directory, today.strftime(file_name_format)))
-    @previous_file = set_previous_file
-    @all_previous_entries =
-      File.file?(previous_file) ? File.readlines(previous_file).map(&:chomp) : ['']
-    @first_two_entries_of_file = get_first_two_entries_of_file
-    @entry_previously_added = all_previous_entries.first&.strip == header
-    @previous_entry =
-      @entry_previously_added ? second_entry_of_file : first_entry_of_file
-    @current_entry = entry_previously_added? ? first_entry_of_file : new_entry
+    @previous_file = get_previous_file
+    @all_previous_entries = get_all_previous_entries
+    @entry_previously_added = all_previous_entries.key?(header)
+    @previous_entry_tasks = previous_entry[current_header]
+    @current_entry = @all_previous_entries.delete(header) || new_entry
+    @all_entries = {header => current_entry}.merge(all_previous_entries)
 
     FileUtils.touch(file) unless File.file?(file)
   end
@@ -209,12 +218,52 @@ class StandupMD
   # previous_file will be the same as file. If previous entry was last month,
   # and a file exists for last month, previous_file is last month's file.
   # If neither is true, returns an empty string.
-  def set_previous_file # :nodoc:
+  def get_previous_file # :nodoc:
     return file if File.file?(file) && !File.zero?(file)
     prev_month_file = File.expand_path(File.join(
       directory,
       today.prev_month.strftime(file_name_format)
     ))
     File.file?(prev_month_file) ? prev_month_file : ''
+  end
+
+  def get_all_previous_entries
+    prev_entries = {}
+    return prev_entries unless File.file?(previous_file)
+    entry_header = ''
+    section_type = ''
+    File.foreach(previous_file) do |line|
+      line.chomp!
+      next if line.strip.empty?
+      if line.start_with?('#' * header_depth + ' ')
+        entry_header = line.sub(%r{^\#{#{header_depth}}\s*}, '')
+        section_type = notes_header
+        prev_entries[entry_header] = {}
+      elsif line.start_with?('#' * sub_header_depth)
+        section_type = determine_section_type(line.sub(%r{^\#{#{sub_header_depth}}\s*}, ''))
+        prev_entries[entry_header][section_type] = []
+      else
+        prev_entries[entry_header][section_type] << line.sub(%r{\s*#{bullet_character}\s*}, '')
+      end
+    end
+    prev_entries
+  rescue => e
+    raise "File malformation: #{e}"
+  end
+
+  def determine_section_type(line)
+    [
+      current_header,
+      previous_header,
+      impediments_header,
+      notes_header
+    ].each { |header| return header if line.include?(header) }
+    raise "Unknown header type [#{header}]"
+  end
+
+  def previous_entry
+    all_previous_entries.each do |key, value|
+      return value unless key == header
+    end
   end
 end
