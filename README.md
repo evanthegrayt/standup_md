@@ -41,7 +41,7 @@ list](https://github.com/evanthegrayt/standup_md/issues)), but I won't push to
 are passing and the gem is working as expected. The first official release will
 be once [this milestone](https://github.com/evanthegrayt/standup_md/milestone/1)
 is complete. Until then, consider this gem to be in alpha, and the version will
-remain at `0.0.1`.
+remain `< 0.1.0`.
 
 ## Installation
 ### Via RubyGems
@@ -72,7 +72,7 @@ cd standup_md
 # Use rake to build and install the gem.
 rake install
 
-# OR manually link the execuable somewhere. If you use this method, you cannot
+# OR manually link the executable somewhere. If you use this method, you cannot
 # move the repository after you link it!
 ln -s $PWD/bin/standup /usr/local/bin
 ```
@@ -119,6 +119,14 @@ Settings located in this file will override default behavior. This file can also
 have settings overwritten at runtime by the use of options. Below is a table of
 available settings and their defaults.
 
+You'll notice, a lot of settings don't have the ability to be changed at
+runtime. This is because the file structure is very important, and changing
+values that affect formatting will cause problems with the file parser. If you
+don't want to use a default, make the change in your config file before you
+start editing standups. There is an [open
+issue](https://github.com/evanthegrayt/standup_md/issues/16) for handling this
+for the user, but they're not available yet.
+
 |Runtime Flag|Config File Key|Default|Notes|
 |:----|:------|:------|:------|
 ||`header_depth:`|`1`|Number of `#` to place before each entry header|
@@ -129,18 +137,19 @@ available settings and their defaults.
 ||`impediments_header:`|`Impediments`|Will be prefixed with `# * sub_header_depth`|
 ||`file_name_format:`|`%Y_%m.md`|String will be formatted by `strftime`|
 ||`bullet_character:`|`-` (dash)|Must be `-` (dash) or `*` (asterisk)|
-|`-d DIRECTORY`|`directory:`|`~/.cache/standup_md`|Directory wil be created if it doesn't exist|
+|`-d DIRECTORY`|`directory:`|`~/.cache/standup_md`|Directory will be created if it doesn't exist|
 |`-e EDITOR`|`editor:`|`$VISUAL`, `$EDITOR` or `vim`|In that order|
 |`--current-entry-tasks=ARRAY`|`current_entry_tasks:`|`<!-- ADD TODAY'S WORK HERE -->`|Each entry will automatically be prefixed with `bullet_character`|
 |`--previous-entry-tasks=ARRAY`|`previous_entry_tasks:`|The tasks from the previous entry|Each entry will automatically be prefixed with `bullet_character`|
 |`--impediments=ARRAY`|`impediments:`|`None`|Each entry will automatically be prefixed with `bullet_character`|
 |`--notes=ARRAY`|`notes:`|`nil`|Each entry will automatically be prefixed with `bullet_character`|
-|`--[no-]edit`||true|Open the file in an editor|
-|`--[no-]write`||true|Write today's entry to the file|
-|`--[no-]previous-append`||true|When adding previous entries, append to previous tasks|
-|`-t`||false|Output today's entry to the command line|
-|`-a`||false|Output all entries (limit one month) to the command line|
-|`-v`||false|Verbose output|
+|`--[no-]edit`||`true`|Open the file in an editor|
+|`--[no-]write`||`true`|Write today's entry to the file|
+|`--[no-]previous-append`||`true`|When adding previous entries, append to previous tasks|
+|`-t`||`false`|Output today's entry to the command line|
+|`-a`||`false`|Output all entries (limit one month) to the command line|
+|`-j`||`false`|When outputting to the terminal, output json instead of formatted markdown|
+|`-v`||`false`|Verbose output|
 |`-h`|||Print help|
 
 For example, a custom `~/.standup_md.yml` file might contain the following.
@@ -190,6 +199,16 @@ end
 standup.write
 ```
 
+Entries are just hashes, so you can easily transform them to `json` objects.
+
+```ruby
+require 'standup_md'
+require 'json'
+
+standup = StandupMD.new
+standup_entries_as_json = standup.all_entries.to_json
+```
+
 ## Reporting Bugs and Requesting Features
 If you have an idea or find a bug, please [create an
 issue](https://github.com/evanthegrayt/standup_md/issues/new). Just make sure the topic
@@ -199,4 +218,4 @@ doesn't already exist. Better yet, you can always submit a Pull Request.
 I do these projects for fun, and I enjoy knowing that they're helpful to people.
 Consider starring [the repository](https://github.com/evanthegrayt/standup_md)
 if you like it! If you love it, follow me [on
-github](https://github.com/evanthegrayt)!
+Github](https://github.com/evanthegrayt)!

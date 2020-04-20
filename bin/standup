@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-
+require 'json'
 require 'yaml'
 require 'optparse'
 require_relative '../lib/standup_md'
@@ -15,6 +15,7 @@ preferences = File.file?(user_prefs_file) ? YAML.load_file(user_prefs_file) : {}
 
 additions = nil
 today = false
+json = false
 all = false
 verbose = false
 write = true
@@ -51,6 +52,9 @@ OptionParser.new do |opts|
   opts.on('--[no-]edit', 'Open the file in the editor. Default is true') do |v|
     edit = v
   end
+  opts.on('-j', '--[no-]json', 'Display output as formatted json. Default is false.') do |v|
+    json = v
+  end
   opts.on('-v', '--[no-]verbose', 'Verbose output. Default is false.') do |v|
     verbose = v
   end
@@ -86,18 +90,25 @@ end
 
 if today
   puts "Display today's entry" if verbose
-  puts standup.current_entry
+  puts '  ...as json' if json && verbose
+  entry = standup.current_entry
+  puts json ? entry.to_json : entry
 end
 
 if all
   puts "Display all entries" if verbose
-  standup.all_entries.each do |head, s_heads|
-    puts '#' * standup.header_depth + ' ' + head
-    s_heads.each do |s_head, tasks|
-      puts '#' * standup.sub_header_depth + ' ' + s_head
-      tasks.each { |task| puts standup.bullet_character + ' ' + task }
+  if json
+    puts '  ...as json' if verbose
+    puts standup.all_entries.to_json
+  else
+    standup.all_entries.each do |head, s_heads|
+      puts '#' * standup.header_depth + ' ' + head
+      s_heads.each do |s_head, tasks|
+        puts '#' * standup.sub_header_depth + ' ' + s_head
+        tasks.each { |task| puts standup.bullet_character + ' ' + task }
+      end
+      puts
     end
-    puts
   end
 end
 
