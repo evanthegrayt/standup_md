@@ -121,31 +121,36 @@ available settings and their defaults.
 
 |Runtime Flag|Config File Key|Default|Notes|
 |:----|:------|:------|:------|
-||`current_header:`|`## Today`||
-||`previous_header:`|`## Previous`||
-||`impediment_header:`|`## Impediments`||
-|`-f DATESTRING`|`file_name_format:`|`%Y_%m.md`|String will be formatted by `strftime`|
-|`-E DATESTRING`|`entry_header_format:`|`# %Y-%m-%d`|String will be formatted by `strftime`|
+||`header_depth:`|`1`|Number of `#` to place before each entry header|
+||`header_date_format:`|`%Y-%m-%d`|Will be prefixed with `# * header_depth`|
+||`sub_header_depth:`|`2`|Number of `#` to place before each sub-header|
+||`current_header:`|`Current`|Will be prefixed with `# * sub_header_depth`|
+||`previous_header:`|`Previous`|Will be prefixed with `# * sub_header_depth`|
+||`impediments_header:`|`Impediments`|Will be prefixed with `# * sub_header_depth`|
+||`file_name_format:`|`%Y_%m.md`|String will be formatted by `strftime`|
+||`bullet_character:`|`-` (dash)|Must be `-` (dash) or `*` (asterisk)|
 |`-d DIRECTORY`|`directory:`|`~/.cache/standup_md`|Directory wil be created if it doesn't exist|
 |`-e EDITOR`|`editor:`|`$VISUAL`, `$EDITOR` or `vim`|In that order|
 |`--current-entry-tasks=ARRAY`|`current_entry_tasks:`|`<!-- ADD TODAY'S WORK HERE -->`|Each entry will automatically be prefixed with `bullet_character`|
+|`--previous-entry-tasks=ARRAY`|`previous_entry_tasks:`|The tasks from the previous entry|Each entry will automatically be prefixed with `bullet_character`|
 |`--impediments=ARRAY`|`impediments:`|`None`|Each entry will automatically be prefixed with `bullet_character`|
-|`-b CHARACTER`|`bullet_character:`|`-` (dash)|Must be `-` (dash) or `*` (asterisk)|
+|`--notes=ARRAY`|`notes:`|`nil`|Each entry will automatically be prefixed with `bullet_character`|
 |`--[no-]edit`||true|Open the file in an editor|
 |`--[no-]write`||true|Write today's entry to the file|
+|`--[no-]previous-append`||true|When adding previous entries, append to previous tasks|
 |`-t`||false|Output today's entry to the command line|
-|`-p`||false|Output previous entry to the command line|
-|`-a`||false|Output all previous entries (limit one month) to the command line|
+|`-a`||false|Output all entries (limit one month) to the command line|
 |`-v`||false|Verbose output|
 |`-h`|||Print help|
 
 For example, a custom `~/.standup_md.yml` file might contain the following.
 
 ```yaml
-file_name_format: 'standups_for_%m_%Y.md'
-previous_header: '## Yesterday'
-editor: 'mate'
-directory: '~/standups'
+editor:            'mate'
+current_header:    'Today'
+previous_header:   'Yesterday'
+directory:         '~/standups'
+file_name_format:  'standups_for_%m_%Y.md'
 ```
 
 Any options not set in this file will retain their default values. Note that if

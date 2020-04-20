@@ -14,7 +14,7 @@ module TestHelper
   def standup(directory, args = {})
     StandupMD.new do |s|
       s.directory = directory
-      args.each { |k, v| s.sendN("#{k}=", v) }
+      args.each { |k, v| s.send("#{k}=", v) }
     end
   end
 

@@ -32,28 +32,30 @@ class TestStandupMD < Test::Unit::TestCase
     FileUtils.touch(@previous_month_test_file)
     assert_nothing_raised { su.reload! }
     assert_equal(@previous_month_test_file, su.previous_file)
+    # If the current month file exists, but is empty, previous_file should
+    # still be last month's
+    FileUtils.touch(@current_test_file)
+    assert_nothing_raised { su.reload! }
+    assert_equal(@previous_month_test_file, su.previous_file)
+    assert_nothing_raised { su.write }
+    assert_nothing_raised { su.reload! }
+    assert_equal(@current_test_file, su.previous_file)
   end
 
   def test_current_entry
-    # TODO WHY IS THERE A BLANK ELEMENT?!
-    # create_standup_file(@current_test_file)
-    # su = standup(@workdir)
-    # assert_equal(fixtures['current_entry'], su.current_entry)
-    # TODO Make sure this reloads after reload!
-  end
-
-  def test_previous_entry
     create_standup_file(@current_test_file)
     su = standup(@workdir)
-    assert_equal(fixtures['previous_entry'], su.previous_entry)
-    # TODO Make sure this reloads after reload!
+    assert_equal(
+      fixtures['current_entry_tasks'][Date.today.strftime('%Y-%m-%d')],
+      su.current_entry
+    )
   end
 
   def test_all_previous_entries
     create_standup_file(@current_test_file)
     su = standup(@workdir)
     assert_equal(
-      [fixtures['previous_entry'], '', fixtures['current_entry']].flatten,
+      fixtures['previous_entry_tasks'],
       su.all_previous_entries
     )
   end
@@ -61,9 +63,8 @@ class TestStandupMD < Test::Unit::TestCase
   def test_directory
     su = standup(@workdir)
     assert_equal(@workdir, su.directory)
-    assert_nothing_raised do
-      su.directory = File.join(@workdir, 'TEST')
-    end
+    assert_nothing_raised { su.directory = File.join(@workdir, 'TEST') }
+    assert_equal(File.join(@workdir, 'TEST'), su.directory)
     assert(File.directory?(su.directory))
   end
 
@@ -71,10 +72,11 @@ class TestStandupMD < Test::Unit::TestCase
     create_standup_file(@current_test_file)
     su = standup(@workdir)
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], su.current_entry_tasks)
-    assert_raise { su.current_entry_tasks = ''}
-    new_tasks = ['test 100', 'test 99']
-    assert_nothing_raised { su.current_entry_tasks = new_tasks }
-    assert_equal(new_tasks, su.current_entry_tasks)
+    assert_raise { su.current_entry_tasks = 'not array' }
+    assert_nothing_raised { su.current_entry_tasks = ['An array'] }
+    assert_equal(["An array"], su.current_entry_tasks)
+    assert_nothing_raised { su.current_entry_tasks << 'Another task' }
+    assert_includes(su.current_entry_tasks, 'Another task')
   end
 
   def test_impediments
@@ -95,6 +97,36 @@ class TestStandupMD < Test::Unit::TestCase
     assert_raise { su.bullet_character = '>' }
   end
 
+  def test_header_depth
+    su = standup(@workdir, sub_header_depth: 4)
+    assert_equal(1, su.header_depth)
+    assert_raise { su.header_depth = 6 }
+    assert_raise { su.header_depth = 0 }
+    assert_raise { su.header_depth = 5 }
+    assert_nothing_raised { su.header_depth = 3 }
+    assert_equal(3, su.header_depth)
+  end
+
+  def test_sub_header_depth
+    su = standup(@workdir)
+    assert_equal(2, su.sub_header_depth)
+    assert_raise { su.sub_header_depth = 1 }
+    assert_raise { su.sub_header_depth = 7 }
+    assert_nothing_raised { su.sub_header_depth = 6 }
+    assert_equal(6, su.sub_header_depth)
+  end
+
+  def test_previous_entry_tasks
+    create_standup_file(@current_test_file)
+    su = standup(@workdir)
+    assert_equal(["Test task 2", "Test task 4"], su.previous_entry_tasks)
+    assert_raise { su.previous_entry_tasks = 'not array' }
+    assert_nothing_raised { su.previous_entry_tasks = ['An array'] }
+    assert_equal(["An array"], su.previous_entry_tasks)
+    assert_nothing_raised { su.previous_entry_tasks << 'Another task' }
+    assert_includes(su.previous_entry_tasks, 'Another task')
+  end
+
   def test_file_name_format
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -103,39 +135,42 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal('%y_%m.markdown', su.file_name_format)
   end
 
-  def test_entry_header_format
+  def test_header_date_format
     su = standup(@workdir)
-    assert_equal('# %Y-%m-%d', su.entry_header_format)
-    assert_nothing_raised { su.entry_header_format = '# %y-%m-%d' }
-    assert_equal('# %y-%m-%d', su.entry_header_format)
+    assert_equal('%Y-%m-%d', su.header_date_format)
+    assert_nothing_raised { su.header_date_format = '%y-%m-%d' }
+    assert_equal('%y-%m-%d', su.header_date_format)
   end
 
   def test_current_header
     su = standup(@workdir)
-    assert_equal('## Today', su.current_header)
-    assert_nothing_raised { su.current_header = '## Current' }
-    assert_equal('## Current', su.current_header)
+    assert_equal('Current', su.current_header)
+    assert_nothing_raised { su.current_header = 'Today' }
+    assert_equal('Today', su.current_header)
   end
 
   def test_previous_header
     su = standup(@workdir)
-    assert_equal('## Previous', su.previous_header)
-    assert_nothing_raised { su.previous_header = '## Yesterday' }
-    assert_equal('## Yesterday', su.previous_header)
+    assert_equal('Previous', su.previous_header)
+    assert_nothing_raised { su.previous_header = 'Yesterday' }
+    assert_equal('Yesterday', su.previous_header)
   end
 
-  def test_impediment_header
+  def test_impediments_header
     su = standup(@workdir)
-    assert_equal('## Impediments', su.impediment_header)
-    assert_nothing_raised { su.impediment_header = '## Hold Ups' }
-    assert_equal('## Hold Ups', su.impediment_header)
+    assert_equal('Impediments', su.impediments_header)
+    assert_nothing_raised { su.impediments_header = 'Hold Ups' }
+    assert_equal('Hold Ups', su.impediments_header)
   end
 
-  def test_previous_entry_tasks
-    create_standup_file(@current_test_file)
+  def test_notes_header
     su = standup(@workdir)
-    assert_equal(["- Test task 2", "- Test task 4"], su.previous_entry_tasks)
+    assert_equal('Notes', su.notes_header)
+    assert_nothing_raised { su.notes_header = 'Remember' }
+    assert_equal('Remember', su.notes_header)
   end
+
+  # Booleans
 
   def test_file_written?
     su = standup(@workdir)
@@ -148,15 +183,13 @@ class TestStandupMD < Test::Unit::TestCase
     su = standup(@workdir)
     refute(su.entry_previously_added?)
     create_standup_file(@current_test_file)
-    # TODO
     su.reload!
-    # assert(su.entry_previously_added?)
+    assert(su.entry_previously_added?)
   end
 
   def test_write
     su = standup(@workdir)
     assert_nothing_raised { su.write }
-    refute(su.write)
     assert(File.file?(@current_test_file))
   end
 
