@@ -34,6 +34,12 @@ OptionParser.new do |opts|
   opts.on('--impediments=ARRAY', Array, 'List of impediments for today') do |v|
     preferences['impediments'] = v
   end
+  opts.on('--notes=ARRAY', Array, 'List of notes for today') do |v|
+    preferences['notes'] = v
+  end
+  opts.on('--sub-header-order=ARRAY', Array, 'The order of the sub-headers when writing the file') do |v|
+    preferences['sub_header_order'] = v
+  end
   opts.on('--[no-]previous-append', 'Append previous tasks? Default is true') do |v|
     previous_append = v
   end
@@ -76,8 +82,12 @@ end
 standup = StandupMD.new do |s|
   puts "Runtime options:" if verbose
   preferences.each do |k, v|
-    puts "  #{k} = #{v}" if verbose
-    s.send("#{k}=", v)
+    if s.respond_to?(k)
+      puts "  #{k} = #{v}" if verbose
+      s.send("#{k}=", v)
+    else
+      puts "Method `Standup##{k}=` does not exist"
+    end
   end
 end
 

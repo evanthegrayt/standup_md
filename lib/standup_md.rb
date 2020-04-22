@@ -34,7 +34,7 @@ class StandupMD
     @previous_header = 'Previous'
     @impediments_header = 'Impediments'
     @notes_header = 'Notes'
-    @sub_header_order = [:previous, :current, :impediment, :notes]
+    @sub_header_order = %w[previous current impediments notes]
 
     yield self if block_given?
     FileUtils.mkdir_p(directory) unless File.directory?(directory)
@@ -112,6 +112,7 @@ class StandupMD
   # @param [String] directory
   # @return [String]
   def directory=(directory)
+    # TODO test this
     directory = File.expand_path(directory)
     FileUtils.mkdir_p(directory) unless File.directory?(directory)
     @directory = directory
@@ -145,8 +146,23 @@ class StandupMD
     @sub_header_depth = depth
   end
 
+  ##
+  # Preferred order
+  #
+  # @param [Array] Values must be [:previous, :current, :impediment, :notes]
+  # @return [Array]
+  def sub_header_order=(array)
+    order = %w[previous current impediments notes]
+    raise "Values must be #{order.join{', '}}" unless order.sort == array.sort
+    @sub_header_order = array
+  end
+
   # :section: Misc
   # Misc.
+
+  def sub_header_order
+    @sub_header_order.dup
+  end
 
   ##
   # Writes a new entry to the file if the first entry in the file isn't today.
@@ -156,9 +172,11 @@ class StandupMD
     File.open(file, 'w') do |f|
       all_entries.each do |head, s_heads|
         f.puts '#' * header_depth + ' ' + head
-        s_heads.each do |s_head, tasks|
-          f.puts '#' * sub_header_depth + ' ' + s_head
-          tasks.each { |task| f.puts bullet_character + ' ' + task }
+        sub_header_order.map { |value| "#{value}_header" }.each do |sh|
+          f.puts '#' * sub_header_depth + ' ' + send(sh).capitalize
+          s_heads[send(sh).capitalize]&.each do |task|
+            f.puts bullet_character + ' ' + task
+          end
         end
         f.puts
       end
@@ -188,19 +206,21 @@ class StandupMD
   ##
   # Date object of today's date.
   def today # :nodoc:
-    @today ||= Date.today
+    @today
   end
 
   ##
   # The header for today's entry.
   def header # :nodoc:
-    today.strftime(header_date_format)
+    @header
   end
 
   ##
   # Sets internal instance variables. Called when first instantiated, or after
   # directory is set.
   def set_internal_instance_variables # :nodoc:
+    @today = Date.today
+    @header = today.strftime(header_date_format)
     @file_written = false
     @file = File.expand_path(File.join(directory, today.strftime(file_name_format)))
     @previous_file = get_previous_file
@@ -228,22 +248,26 @@ class StandupMD
   end
 
   def get_all_previous_entries
+    return {} unless File.file?(previous_file)
     prev_entries = {}
-    return prev_entries unless File.file?(previous_file)
     entry_header = ''
     section_type = ''
     File.foreach(previous_file) do |line|
       line.chomp!
       next if line.strip.empty?
-      if line.start_with?('#' * header_depth + ' ')
+      if line.match(%r{^#{'#' * header_depth}\s+})
         entry_header = line.sub(%r{^\#{#{header_depth}}\s*}, '')
         section_type = notes_header
         prev_entries[entry_header] = {}
-      elsif line.start_with?('#' * sub_header_depth)
-        section_type = determine_section_type(line.sub(%r{^\#{#{sub_header_depth}}\s*}, ''))
+      elsif line.match(%r{^#{'#' * sub_header_depth}\s+})
+        section_type = determine_section_type(
+          line.sub(%r{^\#{#{sub_header_depth}}\s*}, '')
+        )
         prev_entries[entry_header][section_type] = []
       else
-        prev_entries[entry_header][section_type] << line.sub(%r{\s*#{bullet_character}\s*}, '')
+        prev_entries[entry_header][section_type] << line.sub(
+          %r{\s*#{bullet_character}\s*}, ''
+        )
       end
     end
     prev_entries
@@ -251,17 +275,17 @@ class StandupMD
     raise "File malformation: #{e}"
   end
 
-  def determine_section_type(line)
+  def determine_section_type(line) # :nodoc:
     [
       current_header,
       previous_header,
       impediments_header,
       notes_header
     ].each { |header| return header if line.include?(header) }
-    raise "Unknown header type [#{header}]"
+    raise "Unknown header type [#{line}]"
   end
 
-  def previous_entry
+  def previous_entry # :nodoc:
     all_previous_entries.each do |key, value|
       return value unless key == header
     end

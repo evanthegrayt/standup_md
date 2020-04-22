@@ -68,6 +68,18 @@ class TestStandupMD < Test::Unit::TestCase
     assert(File.directory?(su.directory))
   end
 
+  def test_sub_header_order
+    su = standup(@workdir)
+    assert_equal(%w[previous current impediments notes], su.sub_header_order)
+    assert_raise { su.sub_header_order = 'not array' }
+    assert_raise { su.sub_header_order = %w[current impediments notes] }
+    assert_raise { su.sub_header_order = %w[something, :previous, :current, :impediments, :notes] }
+    assert_nothing_raised { su.sub_header_order = %w[current previous impediments notes] }
+    assert_equal(%w[current previous impediments notes], su.sub_header_order)
+    assert_nothing_raised { su.sub_header_order << 'Another task' }
+    assert_equal(su.sub_header_order, %w[current previous impediments notes])
+  end
+
   def test_current_entry_tasks
     create_standup_file(@current_test_file)
     su = standup(@workdir)
