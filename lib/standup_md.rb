@@ -147,9 +147,9 @@ class StandupMD
   end
 
   ##
-  # Preferred order
+  # Preferred order for sub-headers.
   #
-  # @param [Array] Values must be [:previous, :current, :impediment, :notes]
+  # @param [Array] Values must be %w[previous current impediment notes]
   # @return [Array]
   def sub_header_order=(array)
     order = %w[previous current impediments notes]
@@ -157,12 +157,16 @@ class StandupMD
     @sub_header_order = array
   end
 
-  # :section: Misc
-  # Misc.
-
+  ##
+  # Return a copy of the sub-header order so the user can't modify the array.
+  #
+  # @return [Array]
   def sub_header_order
     @sub_header_order.dup
   end
+
+  # :section: Misc
+  # Misc.
 
   ##
   # Writes a new entry to the file if the first entry in the file isn't today.

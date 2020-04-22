@@ -98,15 +98,17 @@ For example, if the standup entry from yesterday reads as follows:
 - Did something else.
 ## Today
 - Write new feature for `standup_md`
+- Fix bug in `standup_md`
 ## Impediments
 - None
 ```
 
-The following scaffolding will be added for today:
+The following scaffolding will be added for today at the top of the file:
 ```markdown
 # 2020-04-14
 ## Previous
 - Write new feature for `standup_md`
+- Fix bug in `standup_md`
 ## Today
 - <!-- ADD TODAY'S WORK HERE -->
 ## Impediments
@@ -116,18 +118,19 @@ The following scaffolding will be added for today:
 ## Customization and Runtime Options
 You can create a file in your home directory called `~/.standup_md.yml`.
 Settings located in this file will override default behavior. This file can also
-have settings overwritten at runtime by the use of options. Below is a table of
-available settings and their defaults.
+have settings overwritten at runtime by the use of options. You can view [my config
+file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml)
+as an example. Below is a table of all available settings and their defaults.
 
-You'll notice, a lot of settings don't have the ability to be changed at
-runtime. This is because the file structure is very important, and changing
-values that affect formatting will cause problems with the file parser. If you
-don't want to use a default, make the change in your config file before you
-start editing standups. There is an [open
+You'll notice, a lot of settings don't have the ability to be changed at runtime
+when calling the executable. This is because the file structure is very
+important, and changing values that affect formatting will cause problems with
+the file parser. If you don't want to use a default, make the change in your
+config file before you start editing standups. There is an [open
 issue](https://github.com/evanthegrayt/standup_md/issues/16) for handling this
 for the user, but they're not available yet.
 
-|Runtime Flag|Config File Key|Default|Notes|
+|Executable Flag|Config File Key|Default|Notes|
 |:----|:------|:------|:------|
 ||`header_depth:`|`1`|Number of `#` to place before each entry header|
 ||`header_date_format:`|`%Y-%m-%d`|Will be prefixed with `# * header_depth`|
@@ -143,7 +146,7 @@ for the user, but they're not available yet.
 |`--previous-entry-tasks=ARRAY`|`previous_entry_tasks:`|The tasks from the previous entry|Each entry will automatically be prefixed with `bullet_character`|
 |`--impediments=ARRAY`|`impediments:`|`None`|Each entry will automatically be prefixed with `bullet_character`|
 |`--notes=ARRAY`|`notes:`|`nil`|Each entry will automatically be prefixed with `bullet_character`|
-|`--sub-header-order=ARRAY`|`sub_header_order:`|`%w[previous current impediments notes]`|Elements must all exist.|
+|`--sub-header-order=ARRAY`|`sub_header_order:`|`%w[previous current impediments notes]`|Array of strings. Elements must all exist|
 |`--[no-]edit`||`true`|Open the file in an editor|
 |`--[no-]write`||`true`|Write today's entry to the file|
 |`--[no-]previous-append`||`true`|When adding previous entries, append to previous tasks|
