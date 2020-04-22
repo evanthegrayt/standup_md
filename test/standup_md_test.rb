@@ -101,6 +101,16 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal(new_impediments, su.impediments)
   end
 
+  def test_notes
+    create_standup_file(@current_test_file)
+    su = standup(@workdir)
+    assert_equal([], su.notes)
+    assert_raise { su.notes = ''}
+    new_notes = ['Note 1']
+    assert_nothing_raised { su.notes = new_notes }
+    assert_equal(new_notes, su.notes)
+  end
+
   def test_bullet_character
     su = standup(@workdir)
     assert_equal('-', su.bullet_character)
