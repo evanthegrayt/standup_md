@@ -143,6 +143,7 @@ for the user, but they're not available yet.
 |`--previous-entry-tasks=ARRAY`|`previous_entry_tasks:`|The tasks from the previous entry|Each entry will automatically be prefixed with `bullet_character`|
 |`--impediments=ARRAY`|`impediments:`|`None`|Each entry will automatically be prefixed with `bullet_character`|
 |`--notes=ARRAY`|`notes:`|`nil`|Each entry will automatically be prefixed with `bullet_character`|
+|`--sub-header-order=ARRAY`|`sub_header_order:`|`%w[previous current impediments notes]`|Elements must all exist.|
 |`--[no-]edit`||`true`|Open the file in an editor|
 |`--[no-]write`||`true`|Write today's entry to the file|
 |`--[no-]previous-append`||`true`|When adding previous entries, append to previous tasks|
