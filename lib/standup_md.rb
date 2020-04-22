@@ -12,7 +12,7 @@ class StandupMD
   ##
   # Instance variables that are settable by the user, but have custom setters.
   attr_reader :directory, :current_entry_tasks, :impediments, :bullet_character,
-    :header_depth, :sub_header_depth, :previous_entry_tasks
+    :header_depth, :sub_header_depth, :previous_entry_tasks, :notes
 
   ##
   # Instance variables with default getters and setters.
@@ -22,6 +22,7 @@ class StandupMD
   ##
   # Constructor. Yields the instance so you can pass a block to access setters.
   def initialize
+    @notes = []
     @header_depth = 1
     @sub_header_depth = 2
     @bullet_character = '-'
@@ -72,6 +73,16 @@ class StandupMD
   def previous_entry_tasks=(tasks)
     raise 'Must be an Array' unless tasks.is_a?(Array)
     @previous_entry_tasks = tasks
+  end
+
+  ##
+  # Setter for notes.
+  #
+  # @param [Array] notes
+  # @return [Array]
+  def notes=(tasks)
+    raise 'Must be an Array' unless tasks.is_a?(Array)
+    @notes = tasks
   end
 
   ##
@@ -177,9 +188,12 @@ class StandupMD
       all_entries.each do |head, s_heads|
         f.puts '#' * header_depth + ' ' + head
         sub_header_order.map { |value| "#{value}_header" }.each do |sh|
-          f.puts '#' * sub_header_depth + ' ' + send(sh).capitalize
-          s_heads[send(sh).capitalize]&.each do |task|
-            f.puts bullet_character + ' ' + task
+          tasks = s_heads[send(sh).capitalize]
+          if tasks && !tasks.empty?
+            f.puts '#' * sub_header_depth + ' ' + send(sh).capitalize
+            s_heads[send(sh).capitalize].each do |task|
+              f.puts bullet_character + ' ' + task
+            end
           end
         end
         f.puts
@@ -204,6 +218,7 @@ class StandupMD
       previous_header => previous_entry_tasks || [],
       current_header => current_entry_tasks,
       impediments_header => impediments,
+      notes_header => notes,
     }
   end
 
@@ -262,7 +277,7 @@ class StandupMD
       if line.match(%r{^#{'#' * header_depth}\s+})
         entry_header = line.sub(%r{^\#{#{header_depth}}\s*}, '')
         section_type = notes_header
-        prev_entries[entry_header] = {}
+        prev_entries[entry_header] ||= {}
       elsif line.match(%r{^#{'#' * sub_header_depth}\s+})
         section_type = determine_section_type(
           line.sub(%r{^\#{#{sub_header_depth}}\s*}, '')
