@@ -2,6 +2,7 @@
 
 require 'date'
 require 'fileutils'
+require_relative 'standup_md/version'
 
 ##
 # The class for handing reading/writing of entries.
@@ -9,14 +10,6 @@ require 'fileutils'
 # @example
 #   su = StandupMD.new
 class StandupMD
-
-  ##
-  # The gem verision
-  #
-  # @example
-  #  StandupMD::VERSION
-  #  # => '0.9.0'
-  VERSION = '0.0.9'
 
   ##
   # Convenience method for calling +new+ + +load+
