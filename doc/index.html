@@ -62,17 +62,7 @@
 
   <ul class="link-list">
   
-    <li><a href="./Gemfile.html">Gemfile</a>
-  
-    <li><a href="./Gemfile_lock.html">Gemfile.lock</a>
-  
-    <li><a href="./LICENSE.html">LICENSE</a>
-  
     <li><a href="./README_md.html">README</a>
-  
-    <li><a href="./Rakefile.html">Rakefile</a>
-  
-    <li><a href="./standup_md_gemspec.html">standup_md.gemspec</a>
   
   </ul>
 </div>
@@ -98,7 +88,152 @@
 
 <main role="main">
 
-<p>This is the API documentation for RDoc Documentation.
+
+<h1 id="label-The+Standup+Doctor"><a href="https://evanthegrayt.github.io/standup_md/">The Standup Doctor</a><span><a href="#label-The+Standup+Doctor">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<blockquote>
+<p>The cure for all your standup woes.</p>
+</blockquote>
+
+<p>A highly customizable and automated way to keep track of daily standups in markdown files.</p>
+
+<h2 id="label-Table+of+Contents">Table of Contents<span><a href="#label-Table+of+Contents">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p><a href="#about">About</a></p>
+</li><li>
+<p><a href="#Installation">Installation</a></p>
+</li><li>
+<p><a href="#via-rubygems">Via RubyGems</a></p>
+</li><li>
+<p><a href="#manual-installation">Manual Installation</a></p>
+</li><li>
+<p><a href="#usage">Usage</a></p>
+</li><li>
+<p><a href="#example">Example</a></p>
+</li><li>
+<p><a href="#customization-and-runtime-options">Customization and Runtime Options</a></p>
+</li><li>
+<p><a href="#api">API</a></p>
+</li><li>
+<p><a href="https://evanthegrayt.github.io/standup_md/doc/index.html">Documentation</a></p>
+</li><li>
+<p><a href="#reporting-bugs-and-requesting-features">Reporting Bugs and Requesting Features</a></p>
+</li><li>
+<p><a href="#self-promotion">Self-Promotion</a></p>
+</li></ul>
+
+<h2 id="label-About">About<span><a href="#label-About">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>I&#39;ve now been at two separate companies where we post our daily standups in a chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day became tedious, as I&#39;d have to look up what I did the day before, copy and paste yesterday&#39;s work into a new entry, and add today&#39;s tasks. This gem automates most of this process, along with providing means of opening the file in your editor, and displaying entries from the command line.</p>
+
+<p>I wasn&#39;t sure that others would find this useful, but then the pandemic happened, which I assume made doing standups via chat much more common.</p>
+
+<p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated, and if a previous entry exists, it will be added to today&#39;s entry as what your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also an API if you&#39;d like to use this in your own code somehow.</p>
+
+<p>This is a new project, and I have a lot of <a href="https://github.com/evanthegrayt/standup_md/issues">updates planned</a>), but I won&#39;t push to <code>master</code> unless all <a href="https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb">tests</a> are passing and the gem is working as expected. The first official release will be once <a href="https://github.com/evanthegrayt/standup_md/milestone/1">this milestone</a> is complete. Until then, consider this gem to be in alpha, and the version will remain <code>&lt; 0.1.0</code>.</p>
+
+<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h3 id="label-Via+RubyGems">Via RubyGems<span><a href="#label-Via+RubyGems">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p><em>COMING SOON. For now, please use the <a href="#manual-installation">manual installation instructions</a>. The gem will be officially released once <a href="https://github.com/evanthegrayt/standup_md/milestone/1">this milestone</a> is completed</em>.</p>
+<!-- Just install the gem! --><!-- ```sh --><!-- gem install standup_md --><!-- ``` --><!-- If you don't have permission on your system to install ruby or gems, I recommend --><!-- using [rvm](https://rvm.io/) or --><!-- [rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html), --><!-- or you can try to use a manual method below. -->
+<h3 id="label-Manual+Installation">Manual Installation<span><a href="#label-Manual+Installation">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>From your terminal, clone the repository where you want it. From there, you have a couple of installation options.</p>
+
+<pre>git clone https://github.com/evanthegrayt/standup_md.git
+cd standup_md
+
+# Use rake to build and install the gem.
+rake install
+
+# OR manually link the executable somewhere. If you use this method, you cannot
+# move the repository after you link it!
+ln -s $PWD/bin/standup /usr/local/bin</pre>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Call the executable.</p>
+
+<pre class="ruby"><span class="ruby-identifier">standup</span>
+</pre>
+
+<p>This opens the current month&#39;s standup file. If an entry already exists for today, nothing is added. If no entry exists for today, the previous “Current” is placed in the “Previous” section of a new entry. The format of this file is very important; do not change anything, except for adding entries for today.</p>
+
+<h3 id="label-Example">Example<span><a href="#label-Example">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>For example, if the standup entry from yesterday reads as follows:</p>
+
+<pre># 2020-04-13
+## Previous
+- Did something else.
+## Current
+- Write new feature for `standup_md`
+- Fix bug in `standup_md`
+## Impediments
+- None</pre>
+
+<p>The following scaffolding will be added for current entry at the top of the file: <code>markdown # 2020-04-14 ## Previous - Write new feature for `standup_md` - Fix bug in `standup_md` ## Current - &lt;!-- ADD TODAY&#39;S WORK HERE --&gt; ## Impediments - None </code></p>
+
+<h2 id="label-Customization+and+Runtime+Options">Customization and Runtime Options<span><a href="#label-Customization+and+Runtime+Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>You can create a file in your home directory called <code>~/.standup_md.yml</code>. Settings located in this file will override default behavior. This file can also have settings overwritten at runtime by the use of options. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml">my config file</a> as an example. Below is a table of all available settings and their defaults.</p>
+
+<p>You&#39;ll notice, a lot of settings don&#39;t have the ability to be changed at runtime when calling the executable. This is because the file structure is very important, and changing values that affect formatting will cause problems with the file parser. If you don&#39;t want to use a default, make the change in your config file before you start editing standups. There is an <a href="https://github.com/evanthegrayt/standup_md/issues/16">open issue</a> for handling this for the user, but they&#39;re not available yet.  &lt;table style=“width: 100%;”%&gt;  &lt;tr&gt;  &lt;th&gt;Executable Flag&lt;/th&gt;  &lt;th&gt;Config File Key&lt;/th&gt;  &lt;th&gt;Default&lt;/th&gt;  &lt;th&gt;Notes&lt;/th&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>header_depth:</code>&lt;/td&gt;  &lt;td&gt;<code>1</code>&lt;/td&gt;  &lt;td&gt;Number of <code>#</code> to place before each entry header&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>header_date_format:</code>&lt;/td&gt;  &lt;td&gt;<code>%Y-%m-%d</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>sub_header_depth:</code>&lt;/td&gt;  &lt;td&gt;<code>2</code>&lt;/td&gt;  &lt;td&gt;Number of <code>#</code> to place before each sub-header&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>current_header:</code>&lt;/td&gt;  &lt;td&gt;<code>Current</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * sub_header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>previous_header:</code>&lt;/td&gt;  &lt;td&gt;<code>Previous</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * sub_header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>impediments_header:</code>&lt;/td&gt;  &lt;td&gt;<code>Impediments</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * sub_header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>file_name_format:</code>&lt;/td&gt;  &lt;td&gt;<code>%Y_%m.md</code>&lt;/td&gt;  &lt;td&gt;String will be formatted by <code>strftime</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>bullet_character:</code>&lt;/td&gt;  &lt;td&gt;<code>-</code> (dash)&lt;/td&gt;  &lt;td&gt;Must be <code>-</code> (dash) or <code>*</code> (asterisk)&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-d DIRECTORY</code>&lt;/td&gt;  &lt;td&gt;<code>directory:</code>&lt;/td&gt;  &lt;td&gt;<code>~/.cache/standup_md</code>&lt;/td&gt;  &lt;td&gt;Directory will be created if it doesn&#39;t exist&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-e EDITOR</code>&lt;/td&gt;  &lt;td&gt;<code>editor:</code>&lt;/td&gt;  &lt;td&gt;<code>$VISUAL</code>, <code>$EDITOR</code> or <code>vim</code>&lt;/td&gt;  &lt;td&gt;In that order&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--current-entry-tasks=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>current_entry_tasks:</code>&lt;/td&gt;  &lt;td&gt;<code>&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;</code>&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--previous-entry-tasks=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>previous_entry_tasks:</code>&lt;/td&gt;  &lt;td&gt;The tasks from the previous entry&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--impediments=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>impediments:</code>&lt;/td&gt;  &lt;td&gt;<code>None</code>&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--notes=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>notes:</code>&lt;/td&gt;  &lt;td&gt;<code>nil</code>&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--sub-header-order=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>sub_header_order:</code>&lt;/td&gt;  &lt;td&gt;<code>%w[previous current impediments notes]</code>&lt;/td&gt;  &lt;td&gt;Array of strings. Elements must all exist&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;<a href="no-">td>–</a><code>edit</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>true</code>&lt;/td&gt;  &lt;td&gt;Open the file in an editor&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;<a href="no-">td>–</a><code>write</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>true</code>&lt;/td&gt;  &lt;td&gt;Write current entry to the file&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;<a href="no-">td>–</a><code>previous-append</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>true</code>&lt;/td&gt;  &lt;td&gt;When adding previous entries, append to previous tasks&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-c</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;Output current entry to the command line&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-a</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;Output all entries (limit one month) to the command line&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-j</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;When outputting to the terminal, output json instead of formatted markdown&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-v</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;Verbose output&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-h</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;Print help&lt;/td&gt;  &lt;/tr&gt;</p>
+
+<p>&lt;/table&gt;</p>
+
+<p>For example, a custom <code>~/.standup_md.yml</code> file might contain the following.</p>
+
+<pre>editor:            &#39;mate&#39;
+current_header:    &#39;Today&#39;
+previous_header:   &#39;Yesterday&#39;
+directory:         &#39;~/standups&#39;
+file_name_format:  &#39;standups_for_%m_%Y.md&#39;</pre>
+
+<p>Any options not set in this file will retain their default values. Note that if you change <code>file_name_format</code>, and don&#39;t use a month or year, there will only ever be one standup file. This could cause issues long-term, as the files will get large over time and possibly cause performance issues.</p>
+
+<p>Also, there are no options to change the headers at runtime because it uses the headers to detect tasks from previous entries. If changed at runtime, this would cause errors. For this reason, if you don&#39;t like the default headers, change them in your configuration file after installation, and then try to not change them again.</p>
+
+<p>If you wanted to add some tasks at runtime, and without opening the file in an editor, you could use the following:</p>
+
+<pre>standup --no-edit --current-entry-tasks=&quot;Work on this thing&quot;,&quot;And another thing!&quot;</pre>
+
+<h2 id="label-API">API<span><a href="#label-API">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Below are some quick examples, but the API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/index.html">documentation</a>.</p>
+
+<p>This was mainly written as a command line utility, but I made the API available for scripting. There are attribute accessors for most of the settings in the <a href="#customization-and-runtime-options">customization table</a> above. To view all available methods, read the comments in the <a href="lib/standup_md.rb">source</a>. A quick-and-dirty example of how to write a new entry via code could look like the following:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
+
+<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>(
+  <span class="ruby-value">current_header:</span> <span class="ruby-string">&#39;Today&#39;</span>,
+  <span class="ruby-value">current_entry_tasks:</span> [<span class="ruby-string">&#39;Thing to do today&#39;</span>, <span class="ruby-string">&#39;Another thing to do today&#39;</span>],
+  <span class="ruby-value">impediments:</span> [<span class="ruby-string">&#39;Not enough time in the day&#39;</span>]
+)
+
+<span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
+</pre>
+
+<p>Entries are just hashes, so you can easily transform them to <code>json</code> objects.</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;json&#39;</span>
+
+<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">standup_entries_as_json</span> = <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
+</pre>
+
+<h2 id="label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features<span><a href="#label-Reporting+Bugs+and+Requesting+Features">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>If you have an idea or find a bug, please <a href="https://github.com/evanthegrayt/standup_md/issues/new">create an issue</a>. Just make sure the topic doesn&#39;t already exist. Better yet, you can always submit a Pull Request.</p>
+
+<h2 id="label-Self-Promotion">Self-Promotion<span><a href="#label-Self-Promotion">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>I do these projects for fun, and I enjoy knowing that they&#39;re helpful to people. Consider starring <a href="https://github.com/evanthegrayt/standup_md">the repository</a> if you like it! If you love it, follow me <a href="https://github.com/evanthegrayt">on Github</a>!</p>
+
 
 </main>
 

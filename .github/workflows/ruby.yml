@@ -19,4 +19,6 @@ jobs:
         ruby-version: 2.6.x
     - name: Build and test with Rake
       run: |
-        rake test
+        gem install bundler
+        bundle install
+        bundle exec rake test

@@ -411,13 +411,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be all entries before the current entry.</p>
           
           
 
           
           <div class="method-source-code" id="test_all_previous_entries-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 128</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_all_previous_entries</span>
   <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
@@ -486,13 +486,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be able to change the bullet character but should raise if not * or -</p>
           
           
 
           
           <div class="method-source-code" id="test_bullet_character-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 188</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_bullet_character</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;-&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span>)
@@ -599,13 +599,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be able to add tasks for current_entry.</p>
           
           
 
           
           <div class="method-source-code" id="test_current_entry_tasks-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 157</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 165</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_current_entry_tasks</span>
   <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
@@ -639,13 +639,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be changeable and used as the header for <code>current_entry</code></p>
           
           
 
           
           <div class="method-source-code" id="test_current_header-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 241</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 267</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_current_header</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Current&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_header</span>)
@@ -675,13 +675,13 @@
 
         <div class="method-description">
           
-          
+          <p>Directory should default be settable, and where standup files are read from.</p>
           
           
 
           
           <div class="method-source-code" id="test_directory-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 137</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_directory</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
@@ -792,13 +792,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be true if <code>current_entry</code> was in the file at the time it was read.</p>
           
           
 
           
           <div class="method-source-code" id="test_entry_previously_added-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 278</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 314</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_entry_previously_added?</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">entry_previously_added?</span>)
@@ -869,13 +869,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be changeable, and return a string parsed by <code>strftime</code>.</p>
           
           
 
           
           <div class="method-source-code" id="test_file_name_format-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 226</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 248</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_file_name_format</span>
   <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
@@ -906,13 +906,13 @@
 
         <div class="method-description">
           
-          <p>Booleans</p>
+          <p>Should be false when first instantiated, true after <code>write</code> is called.</p>
           
           
 
           
           <div class="method-source-code" id="test_file_written-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 271</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 305</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_file_written?</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_written?</span>)
@@ -942,13 +942,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be changeable, and return a string parsed by <code>strftime</code>.</p>
           
           
 
           
           <div class="method-source-code" id="test_header_date_format-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 234</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 258</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_header_date_format</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%Y-%m-%d&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_date_format</span>)
@@ -978,13 +978,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be an integer between <code>1..5</code>, but not higher than <code>sub_header_depth</code>.</p>
           
           
 
           
           <div class="method-source-code" id="test_header_depth-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 196</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 212</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_header_depth</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-value">sub_header_depth:</span> <span class="ruby-value">4</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span>)
@@ -1017,13 +1017,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be able to add impediments to the array.</p>
           
           
 
           
           <div class="method-source-code" id="test_impediments-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 168</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_impediments</span>
   <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
@@ -1056,13 +1056,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be changeable and used as the header for <code>impediments</code></p>
           
           
 
           
           <div class="method-source-code" id="test_impediments_header-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 255</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 285</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_impediments_header</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Impediments&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments_header</span>)
@@ -1162,16 +1162,18 @@
 
         <div class="method-description">
           
-          
+          <p>Should load instance variables.</p>
           
           
 
           
           <div class="method-source-code" id="test_load-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 292</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 332</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_load</span>
-  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-ivar">@workdir</span> }
+  <span class="ruby-identifier">assert_nil</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-string">&#39;@today&#39;</span>))
   <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span> }
+  <span class="ruby-identifier">refute_nil</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-string">&#39;@today&#39;</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1196,13 +1198,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be able to add notes to the array.</p>
           
           
 
           
           <div class="method-source-code" id="test_notes-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 178</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 190</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_notes</span>
   <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
@@ -1235,13 +1237,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be changeable and used as the header for <code>notes</code></p>
           
           
 
           
           <div class="method-source-code" id="test_notes_header-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 262</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 294</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_notes_header</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Notes&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span>)
@@ -1341,13 +1343,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be an array of previous entry&#39;s current entry.</p>
           
           
 
           
           <div class="method-source-code" id="test_previous_entry_tasks-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 215</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 235</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_entry_tasks</span>
   <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
@@ -1493,13 +1495,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be changeable and used as the header for <code>previous_entry</code></p>
           
           
 
           
           <div class="method-source-code" id="test_previous_header-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 248</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 276</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_header</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Previous&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_header</span>)
@@ -1746,13 +1748,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should be an integer between <code>2..6</code>, but not lower than <code>header_depth</code>.</p>
           
           
 
           
           <div class="method-source-code" id="test_sub_header_depth-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 206</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 224</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_sub_header_depth</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-value">2</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_depth</span>)
@@ -1784,13 +1786,13 @@
 
         <div class="method-description">
           
-          
+          <p>The order of the subheaders is changeable, but all elements must exist.</p>
           
           
 
           
           <div class="method-source-code" id="test_sub_header_order-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 145</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 151</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_sub_header_order</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-node">%w[previous current impediments notes]</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span>)
@@ -1862,13 +1864,13 @@
 
         <div class="method-description">
           
-          
+          <p>Should write the file.</p>
           
           
 
           
           <div class="method-source-code" id="test_write-source">
-            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 286</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 324</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_write</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">write</span> }
