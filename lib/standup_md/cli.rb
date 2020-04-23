@@ -1,16 +1,18 @@
 require 'json'
 require 'yaml'
 require 'optparse'
-require_relative 'standup_md'
+require_relative '../standup_md'
 
+class StandupMD
 class Cli
 
   USER_PREFERENCES =
     File.expand_path(File.join(ENV['HOME'], '.standup_md.yml')).freeze
 
-  attr_reader :options, :additions, :preferences
+  attr_reader :options, :additions
 
   def initialize(options)
+    @options = options
     @additions = nil
     @today = false
     @json = false
@@ -19,17 +21,10 @@ class Cli
     @write = true
     @edit = true
     @previous_append = true
-    @preferences = get_preferences(options)
   end
 
-  def execute
-    editor = preferences.delete('editor') || determine_editor
-
-    if preferences.key?('previous_entry_tasks') && previous_append?
-      @additions = preferences.delete('previous_entry_tasks')
-    end
-
-    standup = ::StandupMD.new do |s|
+  def standup
+    @standup ||= ::StandupMD.new do |s|
       puts "Runtime options:" if verbose?
       preferences.each do |k, v|
         if s.respond_to?(k)
@@ -40,6 +35,12 @@ class Cli
         end
       end
     end.load
+  end
+
+  def execute
+    if preferences.key?('previous_entry_tasks') && previous_append?
+      @additions = preferences.delete('previous_entry_tasks')
+    end
 
     puts 'Status:' if verbose?
 
@@ -85,12 +86,17 @@ class Cli
     puts "Done!" if verbose?
   end
 
-  private
-
-  def determine_editor
-    return ENV['VISUAL'] if ENV['VISUAL']
-    return ENV['EDITOR'] if ENV['EDITOR']
-    'vim'
+  def editor
+    @editor ||=
+      if preferences.key?('editor')
+        preferences.delete('editor')
+      elsif ENV['VISUAL']
+        ENV['VISUAL']
+      elsif ENV['EDITOR']
+        ENV['EDITOR']
+      else
+        'vim'
+      end
   end
 
   def today?
@@ -125,7 +131,8 @@ class Cli
     @preferences
   end
 
-  def get_preferences(options)
+  def preferences
+    return @preferences if @preferences
     prefs = {}
 
     OptionParser.new do |opts|
@@ -180,6 +187,7 @@ class Cli
       end
     end.parse!(options)
 
-    (File.file?(USER_PREFERENCES) ? YAML.load_file(USER_PREFERENCES) : {}).merge(prefs)
+    @preferences = (File.file?(USER_PREFERENCES) ? YAML.load_file(USER_PREFERENCES) : {}).merge(prefs)
   end
+end
 end

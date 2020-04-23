@@ -1,4 +1,4 @@
-require_relative 'lib/standup_md'
+require_relative 'lib/standup_md/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'standup_md'
