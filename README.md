@@ -15,6 +15,7 @@ markdown files.
 - [API](#api)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
 - [Self-Promotion](#self-promotion)
+- [Documentation](docs/index.html)
 
 ## About
 I've now been at two separate companies where we post our daily standups in a
