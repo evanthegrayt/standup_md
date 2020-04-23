@@ -60,7 +60,7 @@
   <h3>Table of Contents</h3>
 
   <ul class="link-list" role="directory">
-    <li><a href="#label-The+Standup+Doctor">The Standup Doctor</a>
+    <li><a href="#label-The+Standup+Doctor"><a href="https://evanthegrayt.github.io/standup_md/">The Standup Doctor</a></a>
     <li><a href="#label-Table+of+Contents">Table of Contents</a>
     <li><a href="#label-About">About</a>
     <li><a href="#label-Installation">Installation</a>
@@ -82,6 +82,10 @@
 
   <ul class="link-list">
   
+    <li><a href="./Gemfile.html">Gemfile</a>
+  
+    <li><a href="./Gemfile_lock.html">Gemfile.lock</a>
+  
     <li><a href="./LICENSE.html">LICENSE</a>
   
     <li><a href="./README_md.html">README</a>
@@ -98,7 +102,7 @@
 
 <main role="main" aria-label="Page README.md">
 
-<h1 id="label-The+Standup+Doctor">The Standup Doctor<span><a href="#label-The+Standup+Doctor">&para;</a> <a href="#top">&uarr;</a></span></h1>
+<h1 id="label-The+Standup+Doctor"><a href="https://evanthegrayt.github.io/standup_md/">The Standup Doctor</a><span><a href="#label-The+Standup+Doctor">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
 <blockquote>
 <p>The cure for all your standup woes.</p>
@@ -183,7 +187,7 @@ ln -s $PWD/bin/standup /usr/local/bin</pre>
 ## Impediments
 - None</pre>
 
-<p>The following scaffolding will be added for today at the top of the file: <code>markdown # 2020-04-14 ## Previous - Write new feature for `standup_md` - Fix bug in `standup_md` ## Current - &lt;!-- ADD TODAY&#39;S WORK HERE --&gt; ## Impediments - None </code></p>
+<p>The following scaffolding will be added for current entry at the top of the file: <code>markdown # 2020-04-14 ## Previous - Write new feature for `standup_md` - Fix bug in `standup_md` ## Current - &lt;!-- ADD TODAY&#39;S WORK HERE --&gt; ## Impediments - None </code></p>
 
 <h2 id="label-Customization+and+Runtime+Options">Customization and Runtime Options<span><a href="#label-Customization+and+Runtime+Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -191,7 +195,7 @@ ln -s $PWD/bin/standup /usr/local/bin</pre>
 
 <p>You&#39;ll notice, a lot of settings don&#39;t have the ability to be changed at runtime when calling the executable. This is because the file structure is very important, and changing values that affect formatting will cause problems with the file parser. If you don&#39;t want to use a default, make the change in your config file before you start editing standups. There is an <a href="https://github.com/evanthegrayt/standup_md/issues/16">open issue</a> for handling this for the user, but they&#39;re not available yet.</p>
 
-<p>|Executable Flag|Config File Key|Default|Notes| |:—-|:——|:——|:——| ||<code>header_depth:</code>|<code>1</code>|Number of <code>#</code> to place before each entry header| ||<code>header_date_format:</code>|<code>%Y-%m-%d</code>|Will be prefixed with <code># * header_depth</code>| ||<code>sub_header_depth:</code>|<code>2</code>|Number of <code>#</code> to place before each sub-header| ||<code>current_header:</code>|<code>Current</code>|Will be prefixed with <code># * sub_header_depth</code>| ||<code>previous_header:</code>|<code>Previous</code>|Will be prefixed with <code># * sub_header_depth</code>| ||<code>impediments_header:</code>|<code>Impediments</code>|Will be prefixed with <code># * sub_header_depth</code>| ||<code>file_name_format:</code>|<code>%Y_%m.md</code>|String will be formatted by <code>strftime</code>| ||<code>bullet_character:</code>|<code>-</code> (dash)|Must be <code>-</code> (dash) or <code>*</code> (asterisk)| |<code>-d DIRECTORY</code>|<code>directory:</code>|<code>~/.cache/standup_md</code>|Directory will be created if it doesn&#39;t exist| |<code>-e EDITOR</code>|<code>editor:</code>|<code>$VISUAL</code>, <code>$EDITOR</code> or <code>vim</code>|In that order| |<code>--current-entry-tasks=ARRAY</code>|<code>current_entry_tasks:</code>|<code>&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;</code>|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--previous-entry-tasks=ARRAY</code>|<code>previous_entry_tasks:</code>|The tasks from the previous entry|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--impediments=ARRAY</code>|<code>impediments:</code>|<code>None</code>|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--notes=ARRAY</code>|<code>notes:</code>|<code>nil</code>|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--sub-header-order=ARRAY</code>|<code>sub_header_order:</code>|<code>%w[previous current impediments notes]</code>|Array of strings. Elements must all exist| |<code>--[no-]edit</code>||<code>true</code>|Open the file in an editor| |<code>--[no-]write</code>||<code>true</code>|Write today&#39;s entry to the file| |<code>--[no-]previous-append</code>||<code>true</code>|When adding previous entries, append to previous tasks| |<code>-t</code>||<code>false</code>|Output today&#39;s entry to the command line| |<code>-a</code>||<code>false</code>|Output all entries (limit one month) to the command line| |<code>-j</code>||<code>false</code>|When outputting to the terminal, output json instead of formatted markdown| |<code>-v</code>||<code>false</code>|Verbose output| |<code>-h</code>|||Print help|</p>
+<p>|Executable Flag|Config File Key|Default|Notes| |:—-|:——|:——|:——| ||<code>header_depth:</code>|<code>1</code>|Number of <code>#</code> to place before each entry header| ||<code>header_date_format:</code>|<code>%Y-%m-%d</code>|Will be prefixed with <code># * header_depth</code>| ||<code>sub_header_depth:</code>|<code>2</code>|Number of <code>#</code> to place before each sub-header| ||<code>current_header:</code>|<code>Current</code>|Will be prefixed with <code># * sub_header_depth</code>| ||<code>previous_header:</code>|<code>Previous</code>|Will be prefixed with <code># * sub_header_depth</code>| ||<code>impediments_header:</code>|<code>Impediments</code>|Will be prefixed with <code># * sub_header_depth</code>| ||<code>file_name_format:</code>|<code>%Y_%m.md</code>|String will be formatted by <code>strftime</code>| ||<code>bullet_character:</code>|<code>-</code> (dash)|Must be <code>-</code> (dash) or <code>*</code> (asterisk)| |<code>-d DIRECTORY</code>|<code>directory:</code>|<code>~/.cache/standup_md</code>|Directory will be created if it doesn&#39;t exist| |<code>-e EDITOR</code>|<code>editor:</code>|<code>$VISUAL</code>, <code>$EDITOR</code> or <code>vim</code>|In that order| |<code>--current-entry-tasks=ARRAY</code>|<code>current_entry_tasks:</code>|<code>&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;</code>|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--previous-entry-tasks=ARRAY</code>|<code>previous_entry_tasks:</code>|The tasks from the previous entry|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--impediments=ARRAY</code>|<code>impediments:</code>|<code>None</code>|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--notes=ARRAY</code>|<code>notes:</code>|<code>nil</code>|Each entry will automatically be prefixed with <code>bullet_character</code>| |<code>--sub-header-order=ARRAY</code>|<code>sub_header_order:</code>|<code>%w[previous current impediments notes]</code>|Array of strings. Elements must all exist| |<code>--[no-]edit</code>||<code>true</code>|Open the file in an editor| |<code>--[no-]write</code>||<code>true</code>|Write current entry to the file| |<code>--[no-]previous-append</code>||<code>true</code>|When adding previous entries, append to previous tasks| |<code>-c</code>||<code>false</code>|Output current entry to the command line| |<code>-a</code>||<code>false</code>|Output all entries (limit one month) to the command line| |<code>-j</code>||<code>false</code>|When outputting to the terminal, output json instead of formatted markdown| |<code>-v</code>||<code>false</code>|Verbose output| |<code>-h</code>|||Print help|</p>
 
 <p>For example, a custom <code>~/.standup_md.yml</code> file might contain the following.</p>
 
@@ -211,14 +215,17 @@ file_name_format:  &#39;standups_for_%m_%Y.md&#39;</pre>
 
 <h2 id="label-API">API<span><a href="#label-API">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Below are some quick examples, but the API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/StandupMD.html">documentation</a> This was mainly written as a command line utility, but I made the API available for scripting. There are attribute accessors for most of the settings in the <a href="#customization-and-runtime-options">customization table</a> above. To view all available methods, read the comments in the <a href="lib/standup_md.rb">source</a>. A quick-and-dirty example of how to write a new entry via code could look like the following:</p>
+<p>Below are some quick examples, but the API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/StandupMD.html">documentation</a>.</p>
+
+<p>This was mainly written as a command line utility, but I made the API available for scripting. There are attribute accessors for most of the settings in the <a href="#customization-and-runtime-options">customization table</a> above. To view all available methods, read the comments in the <a href="lib/standup_md.rb">source</a>. A quick-and-dirty example of how to write a new entry via code could look like the following:</p>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
 
-<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
-  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">current_entry_tasks</span> = [<span class="ruby-string">&#39;Thing to do today&#39;</span>, <span class="ruby-string">&#39;Another thing to do today&#39;</span>]
-  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">impediments</span> = [<span class="ruby-string">&#39;Not enough time in the day&#39;</span>]
-<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>(
+  <span class="ruby-value">current_header:</span> <span class="ruby-string">&#39;Today&#39;</span>,
+  <span class="ruby-value">current_entry_tasks:</span> [<span class="ruby-string">&#39;Thing to do today&#39;</span>, <span class="ruby-string">&#39;Another thing to do today&#39;</span>],
+  <span class="ruby-value">impediments:</span> [<span class="ruby-string">&#39;Not enough time in the day&#39;</span>]
+)
 
 <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
 </pre>
@@ -228,7 +235,7 @@ file_name_format:  &#39;standups_for_%m_%Y.md&#39;</pre>
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
 <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;json&#39;</span>
 
-<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>
 <span class="ruby-identifier">standup_entries_as_json</span> = <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
 </pre>
 

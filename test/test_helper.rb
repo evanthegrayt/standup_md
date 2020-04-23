@@ -48,4 +48,14 @@ module TestHelper
       f.puts fixtures['current_entry']
     end
   end
+
+  ##
+  # Creates instance of +CLI+.
+  #
+  # @param [Array] options Parsed by +getopts+
+  #
+  # @return [StandupMD::CLI]
+  def cli(options = [])
+    @cli = StandupMD::CLI.new(options)
+  end
 end

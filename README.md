@@ -104,7 +104,8 @@ For example, if the standup entry from yesterday reads as follows:
 - None
 ```
 
-The following scaffolding will be added for today at the top of the file:
+The following scaffolding will be added for current entry at the top of the
+file:
 ```markdown
 # 2020-04-14
 ## Previous
@@ -149,9 +150,9 @@ for the user, but they're not available yet.
 |`--notes=ARRAY`|`notes:`|`nil`|Each entry will automatically be prefixed with `bullet_character`|
 |`--sub-header-order=ARRAY`|`sub_header_order:`|`%w[previous current impediments notes]`|Array of strings. Elements must all exist|
 |`--[no-]edit`||`true`|Open the file in an editor|
-|`--[no-]write`||`true`|Write today's entry to the file|
+|`--[no-]write`||`true`|Write current entry to the file|
 |`--[no-]previous-append`||`true`|When adding previous entries, append to previous tasks|
-|`-t`||`false`|Output today's entry to the command line|
+|`-c`||`false`|Output current entry to the command line|
 |`-a`||`false`|Output all entries (limit one month) to the command line|
 |`-j`||`false`|When outputting to the terminal, output json instead of formatted markdown|
 |`-v`||`false`|Verbose output|

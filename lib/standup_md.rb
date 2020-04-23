@@ -212,7 +212,7 @@ class StandupMD
   ##
   # Constructor. Yields the instance so you can pass a block to access setters.
   #
-  # @return [Self]
+  # @return [self]
   #
   # @example
   #   su = StandupMD.new do |s|
@@ -416,7 +416,7 @@ class StandupMD
   # Sets internal instance variables. Called when first instantiated, or after
   # directory is set.
   #
-  # @return [Self]
+  # @return [self]
   def load
     FileUtils.mkdir_p(directory) unless File.directory?(directory)
 
@@ -438,7 +438,7 @@ class StandupMD
   ##
   # Alias of +load+
   #
-  # @return [Self]
+  # @return [self]
   alias_method :reload, :load
 
   private

@@ -8,8 +8,14 @@ task :build do
 end
 
 desc "Build and install the gem"
-task install: [:build] do
+task install: [:dependencies, :build] do
   system("gem install standup_md-#{StandupMD::VERSION}.gem")
+end
+
+desc "Add dependencies"
+task :dependencies do
+  system("gem install bundler")
+  system("bundle install")
 end
 
 desc "Uninstall the gem"

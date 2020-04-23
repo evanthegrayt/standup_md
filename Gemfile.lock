@@ -1,0 +1,19 @@
+PATH
+  remote: .
+  specs:
+    standup_md (0.0.9)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (13.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  standup_md!
+
+BUNDLED WITH
+   1.17.2
