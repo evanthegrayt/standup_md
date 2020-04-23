@@ -442,6 +442,12 @@ class StandupMD
     self
   end
 
+  ##
+  # Alias of +load+
+  #
+  # @return [Self]
+  alias_method :reload, :load
+
   private
 
   ##

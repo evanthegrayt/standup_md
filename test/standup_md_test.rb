@@ -36,6 +36,11 @@ class TestStandupMD < Test::Unit::TestCase
     assert_instance_of(StandupMD, su)
   end
 
+  def test_reload
+    su = standup(@workdir)
+    assert_respond_to(su, :reload)
+  end
+
   ##
   # Attributes should be able to be set if you pass a block at instantiation.
   def test_setting_attributes_via_block

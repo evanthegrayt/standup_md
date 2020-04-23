@@ -199,10 +199,11 @@ following:
 ```ruby
 require 'standup_md'
 
-standup = StandupMD.new do |s|
-  s.current_entry_tasks = ['Thing to do today', 'Another thing to do today']
-  s.impediments = ['Not enough time in the day']
-end
+standup = StandupMD.load(
+  current_header: 'Today',
+  current_entry_tasks: ['Thing to do today', 'Another thing to do today'],
+  impediments: ['Not enough time in the day']
+)
 
 standup.write
 ```
@@ -213,7 +214,7 @@ Entries are just hashes, so you can easily transform them to `json` objects.
 require 'standup_md'
 require 'json'
 
-standup = StandupMD.new
+standup = StandupMD.load
 standup_entries_as_json = standup.all_entries.to_json
 ```
 
