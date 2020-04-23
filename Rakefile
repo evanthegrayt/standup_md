@@ -21,3 +21,8 @@ desc "Run test suite"
 task :test do
   Dir.glob(File.join(__dir__, 'test', '**', '*_test.rb')).each { |f| ruby f }
 end
+
+desc "Generate documentation"
+task :doc do
+  system('rdoc')
+end
