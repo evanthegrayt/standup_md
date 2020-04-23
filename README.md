@@ -34,9 +34,9 @@ will be generated, and if a previous entry exists, it will be added to today's
 entry as what your previous day's work. See [example](#example). There's also an
 API if you'd like to use this in your own code somehow.
 
-This is a new project, and I have a lot of updates planned (see the [issue
-list](https://github.com/evanthegrayt/standup_md/issues)), but I won't push to
-`master` unless all
+This is a new project, and I have a lot of [updates
+planned](https://github.com/evanthegrayt/standup_md/issues)), but I won't push
+to `master` unless all
 [tests](https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb)
 are passing and the gem is working as expected. The first official release will
 be once [this milestone](https://github.com/evanthegrayt/standup_md/milestone/1)
@@ -85,7 +85,7 @@ standup
 ```
 
 This opens the current month's standup file. If an entry already exists for
-today, nothing is added. If no entry exists for today, the previous "Today" is
+today, nothing is added. If no entry exists for today, the previous "Current" is
 placed in the "Previous" section of a new entry.  The format of this file is
 very important; do not change anything, except for adding entries for today.
 
@@ -96,7 +96,7 @@ For example, if the standup entry from yesterday reads as follows:
 # 2020-04-13
 ## Previous
 - Did something else.
-## Today
+## Current
 - Write new feature for `standup_md`
 - Fix bug in `standup_md`
 ## Impediments
@@ -109,7 +109,7 @@ The following scaffolding will be added for today at the top of the file:
 ## Previous
 - Write new feature for `standup_md`
 - Fix bug in `standup_md`
-## Today
+## Current
 - <!-- ADD TODAY'S WORK HERE -->
 ## Impediments
 - None

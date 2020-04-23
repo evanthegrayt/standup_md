@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class TestStandupMD - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/navigation.js" defer></script>
+<script src="./js/search.js" defer></script>
+<script src="./js/search_index.js" defer></script>
+<script src="./js/searcher.js" defer></script>
+<script src="./js/darkfish.js" defer></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">Test::Unit::TestCase
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="TestHelper.html">TestHelper</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-setup">#setup</a>
+    
+    <li ><a href="#method-i-teardown">#teardown</a>
+    
+    <li ><a href="#method-i-test_VERSION">#test_VERSION</a>
+    
+    <li ><a href="#method-i-test_all_previous_entries">#test_all_previous_entries</a>
+    
+    <li ><a href="#method-i-test_bullet_character">#test_bullet_character</a>
+    
+    <li ><a href="#method-i-test_current_entry">#test_current_entry</a>
+    
+    <li ><a href="#method-i-test_current_entry_tasks">#test_current_entry_tasks</a>
+    
+    <li ><a href="#method-i-test_current_header">#test_current_header</a>
+    
+    <li ><a href="#method-i-test_directory">#test_directory</a>
+    
+    <li ><a href="#method-i-test_entry_previously_added-3F">#test_entry_previously_added?</a>
+    
+    <li ><a href="#method-i-test_file">#test_file</a>
+    
+    <li ><a href="#method-i-test_file_name_format">#test_file_name_format</a>
+    
+    <li ><a href="#method-i-test_file_written-3F">#test_file_written?</a>
+    
+    <li ><a href="#method-i-test_header_date_format">#test_header_date_format</a>
+    
+    <li ><a href="#method-i-test_header_depth">#test_header_depth</a>
+    
+    <li ><a href="#method-i-test_impediments">#test_impediments</a>
+    
+    <li ><a href="#method-i-test_impediments_header">#test_impediments_header</a>
+    
+    <li ><a href="#method-i-test_load">#test_load</a>
+    
+    <li ><a href="#method-i-test_notes">#test_notes</a>
+    
+    <li ><a href="#method-i-test_notes_header">#test_notes_header</a>
+    
+    <li ><a href="#method-i-test_previous_entry_tasks">#test_previous_entry_tasks</a>
+    
+    <li ><a href="#method-i-test_previous_file_when_current_and_previous_month_do_not_exist">#test_previous_file_when_current_and_previous_month_do_not_exist</a>
+    
+    <li ><a href="#method-i-test_previous_file_when_current_month_file_does_not_exist_but_previous_does">#test_previous_file_when_current_month_file_does_not_exist_but_previous_does</a>
+    
+    <li ><a href="#method-i-test_previous_file_when_entry_exists_for_today">#test_previous_file_when_entry_exists_for_today</a>
+    
+    <li ><a href="#method-i-test_previous_header">#test_previous_header</a>
+    
+    <li ><a href="#method-i-test_setting_attributes_via_block">#test_setting_attributes_via_block</a>
+    
+    <li ><a href="#method-i-test_sub_header_depth">#test_sub_header_depth</a>
+    
+    <li ><a href="#method-i-test_sub_header_order">#test_sub_header_order</a>
+    
+    <li ><a href="#method-i-test_write">#test_write</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-TestStandupMD">
+  <h1 id="class-TestStandupMD" class="class">
+    class TestStandupMD
+  </h1>
+
+  <section class="description">
+    
+<p>The test suite for <code>StandupMD</code>.</p>
+
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-setup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">setup</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Set working directory, current month&#39;s file, and last month&#39;s file, which will be created and destroyed for each test.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="setup-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">setup</span>
+  <span class="ruby-ivar">@workdir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">__dir__</span>, <span class="ruby-string">&#39;files&#39;</span>)
+  <span class="ruby-ivar">@current_test_file</span> =
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%Y_%m.md&#39;</span>))
+  <span class="ruby-ivar">@previous_month_test_file</span> =
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">prev_month</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%Y_%m.md&#39;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-teardown" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">teardown</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Destroy the working directory and its contents.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="teardown-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">teardown</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-ivar">@workdir</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-ivar">@current_test_file</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-ivar">@current_test_file</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_VERSION" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_VERSION</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><code>StandupMD::VERSION</code> should consist of three integers separated by dots.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_VERSION-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_VERSION</span>
+  <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">/\d+\.\d+.\d+/</span>, <span class="ruby-operator">::</span><span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">VERSION</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_all_previous_entries" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_all_previous_entries</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_all_previous_entries-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_all_previous_entries</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(
+    <span class="ruby-identifier">fixtures</span>[<span class="ruby-string">&#39;previous_entry_tasks&#39;</span>],
+    <span class="ruby-identifier">su</span>.<span class="ruby-identifier">all_previous_entries</span>
+  )
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_bullet_character" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_bullet_character</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_bullet_character-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 169</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_bullet_character</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;-&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span> = <span class="ruby-string">&#39;*&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;*&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span> = <span class="ruby-string">&#39;&gt;&#39;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_current_entry" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_current_entry</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><code>current_entry</code> should be a hash. If <code>file</code> already has an entry for today, it will be read and used as <code>current_entry</code>. If there is no entry for today, one should be generated from scaffolding.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_current_entry-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_current_entry</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(
+    <span class="ruby-identifier">fixtures</span>[<span class="ruby-string">&#39;current_entry_tasks&#39;</span>][<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%Y-%m-%d&#39;</span>)],
+    <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry</span>
+  )
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_current_entry_tasks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_current_entry_tasks</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_current_entry_tasks-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_current_entry_tasks</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>([<span class="ruby-string">&quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;</span>], <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry_tasks</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry_tasks</span> = <span class="ruby-string">&#39;not array&#39;</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry_tasks</span> = [<span class="ruby-string">&#39;An array&#39;</span>] }
+  <span class="ruby-identifier">assert_equal</span>([<span class="ruby-string">&quot;An array&quot;</span>], <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry_tasks</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry_tasks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;Another task&#39;</span> }
+  <span class="ruby-identifier">assert_includes</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_entry_tasks</span>, <span class="ruby-string">&#39;Another task&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_current_header" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_current_header</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_current_header-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 222</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_current_header</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Current&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_header</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Today&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">current_header</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_directory" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_directory</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_directory-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_directory</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-string">&#39;TEST&#39;</span>) }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-string">&#39;TEST&#39;</span>), <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
+  <span class="ruby-identifier">assert</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_entry_previously_added-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_entry_previously_added?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_entry_previously_added-3F-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 259</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_entry_previously_added?</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">entry_previously_added?</span>)
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span>
+  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">entry_previously_added?</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_file</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The file name should equal file_name_format parsed by Date.strftime. The default is Date.today.strftime(&#39;%Y_%m.md&#39;)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_file-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_file</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@current_test_file</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_name_format</span> = <span class="ruby-string">&#39;%y_%m.markdown&#39;</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span> }
+  <span class="ruby-identifier">assert_equal</span>(
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%y_%m.markdown&#39;</span>)),
+    <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file</span>
+  )
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_file_name_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_file_name_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_file_name_format-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_file_name_format</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%Y_%m.md&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_name_format</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_name_format</span> = <span class="ruby-string">&#39;%y_%m.markdown&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%y_%m.markdown&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_name_format</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_file_written-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_file_written?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Booleans</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_file_written-3F-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 252</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_file_written?</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_written?</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">write</span> }
+  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_written?</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_header_date_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_header_date_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_header_date_format-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_header_date_format</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%Y-%m-%d&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_date_format</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_date_format</span> = <span class="ruby-string">&#39;%y-%m-%d&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%y-%m-%d&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_date_format</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_header_depth" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_header_depth</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_header_depth-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 177</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_header_depth</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-value">sub_header_depth:</span> <span class="ruby-value">4</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span> = <span class="ruby-value">6</span> }
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span> = <span class="ruby-value">0</span> }
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span> = <span class="ruby-value">5</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span> = <span class="ruby-value">3</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-value">3</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">header_depth</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_impediments" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_impediments</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_impediments-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 149</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_impediments</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>([<span class="ruby-string">&quot;None&quot;</span>], <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments</span> = <span class="ruby-string">&#39;&#39;</span>}
+  <span class="ruby-identifier">new_impediments</span> = [<span class="ruby-string">&#39;Impediment 1&#39;</span>]
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments</span> = <span class="ruby-identifier">new_impediments</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">new_impediments</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_impediments_header" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_impediments_header</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_impediments_header-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 236</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_impediments_header</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Impediments&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments_header</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments_header</span> = <span class="ruby-string">&#39;Hold Ups&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Hold Ups&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">impediments_header</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_load" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_load</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_load-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 273</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_load</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_notes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_notes</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_notes-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_notes</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>([], <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes</span> = <span class="ruby-string">&#39;&#39;</span>}
+  <span class="ruby-identifier">new_notes</span> = [<span class="ruby-string">&#39;Note 1&#39;</span>]
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes</span> = <span class="ruby-identifier">new_notes</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">new_notes</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_notes_header" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_notes_header</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_notes_header-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 243</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_notes_header</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Notes&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span> = <span class="ruby-string">&#39;Remember&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Remember&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_previous_entry_tasks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_previous_entry_tasks</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_previous_entry_tasks-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 196</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_entry_tasks</span>
+  <span class="ruby-identifier">create_standup_file</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>([<span class="ruby-string">&quot;Test task 2&quot;</span>, <span class="ruby-string">&quot;Test task 4&quot;</span>], <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_entry_tasks</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_entry_tasks</span> = <span class="ruby-string">&#39;not array&#39;</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_entry_tasks</span> = [<span class="ruby-string">&#39;An array&#39;</span>] }
+  <span class="ruby-identifier">assert_equal</span>([<span class="ruby-string">&quot;An array&quot;</span>], <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_entry_tasks</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_entry_tasks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;Another task&#39;</span> }
+  <span class="ruby-identifier">assert_includes</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_entry_tasks</span>, <span class="ruby-string">&#39;Another task&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_previous_file_when_current_and_previous_month_do_not_exist" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_previous_file_when_current_and_previous_month_do_not_exist</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>When neither last month&#39;s file, nor this month&#39;s file exist, previous_file should be an empty string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_previous_file_when_current_and_previous_month_do_not_exist-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_file_when_current_and_previous_month_do_not_exist</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_previous_file_when_current_month_file_does_not_exist_but_previous_does" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_previous_file_when_current_month_file_does_not_exist_but_previous_does</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>When last month&#39;s file exists, but this month&#39;s doesn&#39;t or is empty, previous_file should equal last menth&#39;s file.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_previous_file_when_current_month_file_does_not_exist_but_previous_does-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_file_when_current_month_file_does_not_exist_but_previous_does</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-ivar">@previous_month_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@previous_month_test_file</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>)
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span> }
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@previous_month_test_file</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_previous_file_when_entry_exists_for_today" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_previous_file_when_entry_exists_for_today</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>If there are previous entries for this month, previous file will be this month&#39;s file.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_previous_file_when_entry_exists_for_today-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_file_when_entry_exists_for_today</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-ivar">@current_test_file</span>)
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">write</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@current_test_file</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_previous_header" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_previous_header</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_previous_header-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 229</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_previous_header</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Previous&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_header</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_header</span> = <span class="ruby-string">&#39;Yesterday&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Yesterday&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_header</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_setting_attributes_via_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_setting_attributes_via_block</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Attributes should be able to be set if you pass a block at instantiation.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="test_setting_attributes_via_block-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_setting_attributes_via_block</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">su</span><span class="ruby-operator">|</span> <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-ivar">@workdir</span> } }
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">su</span><span class="ruby-operator">|</span> <span class="ruby-identifier">su</span>.<span class="ruby-identifier">not_a_method</span> = <span class="ruby-string">&#39;something&#39;</span>} }
+  <span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-ivar">@workdir</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">file_name_format</span> = <span class="ruby-string">&#39;%y_%m.markdown&#39;</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">bullet_character</span> = <span class="ruby-string">&#39;*&#39;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%y_%m.markdown&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_name_format</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;*&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_sub_header_depth" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_sub_header_depth</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_sub_header_depth-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 187</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_sub_header_depth</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-value">2</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_depth</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_depth</span> = <span class="ruby-value">1</span> }
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_depth</span> = <span class="ruby-value">7</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_depth</span> = <span class="ruby-value">6</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-value">6</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_depth</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_sub_header_order" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_sub_header_order</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_sub_header_order-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_sub_header_order</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-node">%w[previous current impediments notes]</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span>)
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span> = <span class="ruby-string">&#39;not array&#39;</span> }
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span> = <span class="ruby-node">%w[current impediments notes]</span> }
+  <span class="ruby-identifier">assert_raise</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span> = <span class="ruby-node">%w[something, :previous, :current, :impediments, :notes]</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span> = <span class="ruby-node">%w[current previous impediments notes]</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-node">%w[current previous impediments notes]</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;Another task&#39;</span> }
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">sub_header_order</span>, <span class="ruby-node">%w[current previous impediments notes]</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-test_write" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">test_write</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="test_write-source">
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 267</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_write</span>
+  <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">write</span> }
+  <span class="ruby-identifier">assert</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-ivar">@current_test_file</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.1.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

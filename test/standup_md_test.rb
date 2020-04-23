@@ -1,47 +1,114 @@
 require_relative '../lib/standup_md'
 require_relative 'test_helper'
 
+##
+# The test suite for +StandupMD+.
 class TestStandupMD < Test::Unit::TestCase
   include TestHelper
 
+  ##
+  # Set working directory, current month's file, and last month's file, which
+  # will be created and destroyed for each test.
   def setup
     @workdir = File.join(__dir__, 'files')
     @current_test_file =
-      File.join(@workdir, Date.today.strftime('%Y_%m') << '.md')
+      File.join(@workdir, Date.today.strftime('%Y_%m.md'))
     @previous_month_test_file =
-      File.join(@workdir, Date.today.prev_month.strftime('%Y_%m') << '.md')
+      File.join(@workdir, Date.today.prev_month.strftime('%Y_%m.md'))
   end
 
+  ##
+  # Destroy the working directory and its contents.
   def teardown
     FileUtils.rm_r(@workdir) if File.directory?(@workdir)
     FileUtils.rm(@current_test_file) if File.file?(@current_test_file)
   end
 
-  def test_VERSION
-    assert_match(/\d\.\d.\d/, ::StandupMD::VERSION)
+  ##
+  # Make sure load accepts a hash of attributes, sets them, and returns an
+  # instance of itself.
+  def test_class_load
+    assert_nothing_raised do
+      StandupMD.load({directory: @workdir, bullet_character: '*'})
+    end
+    su = StandupMD.load({directory: @workdir, bullet_character: '*'})
+    assert_equal(@workdir, su.directory)
+    assert_instance_of(StandupMD, su)
   end
 
+  ##
+  # Attributes should be able to be set if you pass a block at instantiation.
+  def test_setting_attributes_via_block
+    assert_nothing_raised { StandupMD.new { |su| su.directory = @workdir } }
+    assert_raise { StandupMD.new { |su| su.not_a_method = 'something'} }
+    su = StandupMD.new do |s|
+      s.directory = @workdir
+      s.file_name_format = '%y_%m.markdown'
+      s.bullet_character = '*'
+    end
+    assert_equal(@workdir, su.directory)
+    assert_equal('%y_%m.markdown', su.file_name_format)
+    assert_equal('*', su.bullet_character)
+  end
+
+  ##
+  # +StandupMD::VERSION+ should consist of three integers separated by dots.
+  def test_VERSION
+    assert_match(/\d+\.\d+.\d+/, ::StandupMD::VERSION)
+  end
+
+  ##
+  # The file name should equal file_name_format parsed by Date.strftime.
+  # The default is Date.today.strftime('%Y_%m.md')
   def test_file
     su = standup(@workdir)
     assert_equal(@current_test_file, su.file)
+    assert_nothing_raised { su.file_name_format = '%y_%m.markdown' }
+    assert_nothing_raised { su.load }
+    assert_equal(
+      File.join(@workdir, Date.today.strftime('%y_%m.markdown')),
+      su.file
+    )
   end
 
-  def test_previous_file
+  ##
+  # When neither last month's file, nor this month's file exist, previous_file
+  # should be an empty string.
+  def test_previous_file_when_current_and_previous_month_do_not_exist
     su = standup(@workdir)
     assert_equal('', su.previous_file)
+  end
+
+  ##
+  # When last month's file exists, but this month's doesn't or is empty,
+  # previous_file should equal last menth's file.
+  def test_previous_file_when_current_month_file_does_not_exist_but_previous_does
+    FileUtils.mkdir_p(@workdir)
     FileUtils.touch(@previous_month_test_file)
-    assert_nothing_raised { su.reload! }
+    su = standup(@workdir)
     assert_equal(@previous_month_test_file, su.previous_file)
-    # If the current month file exists, but is empty, previous_file should
-    # still be last month's
     FileUtils.touch(@current_test_file)
-    assert_nothing_raised { su.reload! }
+    assert_nothing_raised { su.load }
+    su = standup(@workdir)
     assert_equal(@previous_month_test_file, su.previous_file)
+  end
+
+  ##
+  # If there are previous entries for this month, previous file will be this
+  # month's file.
+  def test_previous_file_when_entry_exists_for_today
+    FileUtils.mkdir_p(@workdir)
+    FileUtils.touch(@current_test_file)
+    su = standup(@workdir)
     assert_nothing_raised { su.write }
-    assert_nothing_raised { su.reload! }
+    assert_nothing_raised { su.load }
     assert_equal(@current_test_file, su.previous_file)
   end
 
+  ##
+  # +current_entry+ should be a hash. If +file+ already has an entry for today,
+  # it will be read and used as +current_entry+. If there is no entry for
+  # today, one should be generated from scaffolding.
   def test_current_entry
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -205,7 +272,7 @@ class TestStandupMD < Test::Unit::TestCase
     su = standup(@workdir)
     refute(su.entry_previously_added?)
     create_standup_file(@current_test_file)
-    su.reload!
+    su.load
     assert(su.entry_previously_added?)
   end
 
@@ -215,8 +282,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert(File.file?(@current_test_file))
   end
 
-  def test_reload!
+  def test_load
     su = standup(@workdir)
-    assert_nothing_raised { su.reload! }
+    assert_nothing_raised { su.load }
   end
 end
