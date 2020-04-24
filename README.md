@@ -122,7 +122,8 @@ You can create a file in your home directory called `~/.standup_md.yml`.
 Settings located in this file will override default behavior. This file can also
 have settings overwritten at runtime by the use of options. You can view [my config
 file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml)
-as an example. Below is a table of all available settings and their defaults.
+as an example. Any setting in this file can still be overridden at runtime by
+passing flags to the executable.
 
 You'll notice, a lot of settings don't have the ability to be changed at runtime
 when calling the executable. This is because the file structure is very
@@ -131,175 +132,64 @@ the file parser. If you don't want to use a default, make the change in your
 config file before you start editing standups. There is an [open
 issue](https://github.com/evanthegrayt/standup_md/issues/16) for handling this
 for the user, but they're not available yet.
- <table style="width: 100%;"%>
-  <tr>
-    <th>Executable Flag</th>
-    <th>Config File Key</th>
-    <th>Default</th>
-    <th>Notes</th>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>header_depth:</code></td>
-    <td><code>1</code></td>
-    <td>Number of <code>#</code> to place before each entry header</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>header_date_format:</code></td>
-    <td><code>%Y-%m-%d</code></td>
-    <td>Will be prefixed with <code># * header_depth</code></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>sub_header_depth:</code></td>
-    <td><code>2</code></td>
-    <td>Number of <code>#</code> to place before each sub-header</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>current_header:</code></td>
-    <td><code>Current</code></td>
-    <td>Will be prefixed with <code># * sub_header_depth</code></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>previous_header:</code></td>
-    <td><code>Previous</code></td>
-    <td>Will be prefixed with <code># * sub_header_depth</code></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>impediments_header:</code></td>
-    <td><code>Impediments</code></td>
-    <td>Will be prefixed with <code># * sub_header_depth</code></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>file_name_format:</code></td>
-    <td><code>%Y_%m.md</code></td>
-    <td>String will be formatted by <code>strftime</code></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><code>bullet_character:</code></td>
-    <td><code>-</code> (dash)</td>
-    <td>Must be <code>-</code> (dash) or <code>*</code> (asterisk)</td>
-  </tr>
-  <tr>
-    <td><code>-d DIRECTORY</code></td>
-    <td><code>directory:</code></td>
-    <td><code>~/.cache/standup_md</code></td>
-    <td>Directory will be created if it doesn't exist</td>
-  </tr>
-  <tr>
-    <td><code>-e EDITOR</code></td>
-    <td><code>editor:</code></td>
-    <td><code>$VISUAL</code>, <code>$EDITOR</code> or <code>vim</code></td>
-    <td>In that order</td>
-  </tr>
-  <tr>
-    <td><code>--current-entry-tasks=ARRAY</code></td>
-    <td><code>current_entry_tasks:</code></td>
-    <td><code><!-- ADD TODAY'S WORK HERE --></code></td>
-    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
-  </tr>
-  <tr>
-    <td><code>--previous-entry-tasks=ARRAY</code></td>
-    <td><code>previous_entry_tasks:</code></td>
-    <td>The tasks from the previous entry</td>
-    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
-  </tr>
-  <tr>
-    <td><code>--impediments=ARRAY</code></td>
-    <td><code>impediments:</code></td>
-    <td><code>None</code></td>
-    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
-  </tr>
-  <tr>
-    <td><code>--notes=ARRAY</code></td>
-    <td><code>notes:</code></td>
-    <td><code>nil</code></td>
-    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
-  </tr>
-  <tr>
-    <td><code>--sub-header-order=ARRAY</code></td>
-    <td><code>sub_header_order:</code></td>
-    <td><code>%w[previous current impediments notes]</code></td>
-    <td>Array of strings. Elements must all exist</td>
-  </tr>
-  <tr>
-    <td><code>--[no-]edit</code></td>
-    <td></td>
-    <td><code>true</code></td>
-    <td>Open the file in an editor</td>
-  </tr>
-  <tr>
-    <td>`--[no-]write`</td>
-    <td></td>
-    <td>`true`</td>
-    <td>Write current entry to the file</td>
-  </tr>
-  <tr>
-    <td><code>--[no-]previous-append</code></td>
-    <td></td>
-    <td><code>true</code></td>
-    <td>When adding previous entries, append to previous tasks</td>
-  </tr>
-  <tr>
-    <td><code>-c</code></td>
-    <td></td>
-    <td><code>false</code></td>
-    <td>Output current entry to the command line</td>
-  </tr>
-  <tr>
-    <td><code>-a</code></td>
-    <td></td>
-    <td><code>false</code></td>
-    <td>Output all entries (limit one month) to the command line</td>
-  </tr>
-  <tr>
-    <td><code>-j</code></td>
-    <td></td>
-    <td><code>false</code></td>
-    <td>When outputting to the terminal, output json instead of formatted markdown</td>
-  </tr>
-  <tr>
-    <td><code>-v</code></td>
-    <td></td>
-    <td><code>false</code></td>
-    <td>Verbose output</td>
-  </tr>
-  <tr>
-    <td><code>-h</code></td>
-    <td></td>
-    <td></td>
-    <td>Print help</td>
-  </tr>
 
-</table>
+There are no options to change the headers at runtime because it uses the
+headers to detect tasks from previous entries. If changed at runtime, this would
+cause errors. For this reason, if you don't like the default headers, change
+them in your configuration file after installation, and then try to not change
+them again.
 
 
-For example, a custom `~/.standup_md.yml` file might contain the following.
+### Available Config File Keys and Defaults
 
 ```yaml
-editor:            'mate'
-current_header:    'Today'
-previous_header:   'Yesterday'
-directory:         '~/standups'
-file_name_format:  'standups_for_%m_%Y.md'
+# Key:                 Default
+header_depth:          1
+header_date_format:    '%Y-%m-%d'
+sub_header_depth:      2
+current_header:        'Current'
+previous_header:       'Previous'
+impediments_header:    'Impediments'
+file_name_format:      '%Y_%m.md'
+bullet_character:      '-'        # (dash)
+directory:             '~/.cache/standup_md'
+editor:                # $VISUAL, $EDITOR or vim, in that order
+current_entry_tasks:   
+  - "<!-- ADD TODAY'S WORK HERE -->"
+previous_entry_tasks:  'The tasks from the previous entry'
+impediments:           'None'
+notes:                 null
+sub_header_order:
+  - 'previous'
+  - 'current'
+  - 'impediments'
+  - 'notes'
+```
+
+### Executable Flags
+```
+The Standup Doctor
+        --current-entry-tasks=ARRAY  List of current entry's tasks
+        --previous-entry-tasks=ARRAY List of yesterday's tasks
+        --impediments=ARRAY          List of impediments for current entry
+        --notes=ARRAY                List of notes for current entry
+        --sub-header-order=ARRAY     The order of the sub-headers when writing the file
+        --[no-]append-previous       Append previous tasks? Default is true
+    -f, --file-name-format=STRING    Date-formattable string to use for standup file name
+    -e, --editor=EDITOR              Editor to use for opening standup files
+    -d, --directory=DIRECTORY        The directories where standup files are located
+        --[no-]write                 Write current entry if it doesn't exist. Default is true
+        --[no-]edit                  Open the file in the editor. Default is true
+    -j, --[no-]json                  Print output as formatted json. Default is false.
+    -v, --[no-]verbose               Verbose output. Default is false.
+    -c, --current                    Print current entry. Disables editing
+    -a, --all                        Print all previous entries. Disables editing
 ```
 
 Any options not set in this file will retain their default values. Note that if
 you change `file_name_format`, and don't use a month or year, there will only
 ever be one standup file. This could cause issues long-term, as the files will
 get large over time and possibly cause performance issues.
-
-Also, there are no options to change the headers at runtime because it uses the
-headers to detect tasks from previous entries. If changed at runtime, this would
-cause errors. For this reason, if you don't like the default headers, change
-them in your configuration file after installation, and then try to not change
-them again.
 
 If you wanted to add some tasks at runtime, and without opening the file in an
 editor, you could use the following:
