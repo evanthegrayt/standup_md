@@ -1,4 +1,11 @@
 require_relative 'lib/standup_md'
+require 'rdoc/task'
+
+RDoc::Task.new do |rdoc|
+  rdoc.main = "README.md"
+  rdoc.rdoc_dir = 'doc'
+  rdoc.rdoc_files.include("README.md", "**/*.rb")
+end
 
 task :default => :test
 
@@ -26,9 +33,4 @@ end
 desc "Run test suite"
 task :test do
   Dir.glob(File.join(__dir__, 'test', '**', '*_test.rb')).each { |f| ruby f }
-end
-
-desc "Generate documentation"
-task :doc do
-  system('rdoc')
 end

@@ -13,7 +13,7 @@ markdown files.
   - [Example](#example)
   - [Customization and Runtime Options](#customization-and-runtime-options)
 - [API](#api)
-  - [Documentation](https://evanthegrayt.github.io/standup_md/doc/StandupMD.html)
+  - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
 - [Self-Promotion](#self-promotion)
 
@@ -131,32 +131,154 @@ the file parser. If you don't want to use a default, make the change in your
 config file before you start editing standups. There is an [open
 issue](https://github.com/evanthegrayt/standup_md/issues/16) for handling this
 for the user, but they're not available yet.
+ <table style="width: 100%;"%>
+  <tr>
+    <th>Executable Flag</th>
+    <th>Config File Key</th>
+    <th>Default</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>header_depth:</code></td>
+    <td><code>1</code></td>
+    <td>Number of <code>#</code> to place before each entry header</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>header_date_format:</code></td>
+    <td><code>%Y-%m-%d</code></td>
+    <td>Will be prefixed with <code># * header_depth</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>sub_header_depth:</code></td>
+    <td><code>2</code></td>
+    <td>Number of <code>#</code> to place before each sub-header</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>current_header:</code></td>
+    <td><code>Current</code></td>
+    <td>Will be prefixed with <code># * sub_header_depth</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>previous_header:</code></td>
+    <td><code>Previous</code></td>
+    <td>Will be prefixed with <code># * sub_header_depth</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>impediments_header:</code></td>
+    <td><code>Impediments</code></td>
+    <td>Will be prefixed with <code># * sub_header_depth</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>file_name_format:</code></td>
+    <td><code>%Y_%m.md</code></td>
+    <td>String will be formatted by <code>strftime</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>bullet_character:</code></td>
+    <td><code>-</code> (dash)</td>
+    <td>Must be <code>-</code> (dash) or <code>*</code> (asterisk)</td>
+  </tr>
+  <tr>
+    <td><code>-d DIRECTORY</code></td>
+    <td><code>directory:</code></td>
+    <td><code>~/.cache/standup_md</code></td>
+    <td>Directory will be created if it doesn't exist</td>
+  </tr>
+  <tr>
+    <td><code>-e EDITOR</code></td>
+    <td><code>editor:</code></td>
+    <td><code>$VISUAL</code>, <code>$EDITOR</code> or <code>vim</code></td>
+    <td>In that order</td>
+  </tr>
+  <tr>
+    <td><code>--current-entry-tasks=ARRAY</code></td>
+    <td><code>current_entry_tasks:</code></td>
+    <td><code><!-- ADD TODAY'S WORK HERE --></code></td>
+    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
+  </tr>
+  <tr>
+    <td><code>--previous-entry-tasks=ARRAY</code></td>
+    <td><code>previous_entry_tasks:</code></td>
+    <td>The tasks from the previous entry</td>
+    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
+  </tr>
+  <tr>
+    <td><code>--impediments=ARRAY</code></td>
+    <td><code>impediments:</code></td>
+    <td><code>None</code></td>
+    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
+  </tr>
+  <tr>
+    <td><code>--notes=ARRAY</code></td>
+    <td><code>notes:</code></td>
+    <td><code>nil</code></td>
+    <td>Each entry will automatically be prefixed with <code>bullet_character</code></td>
+  </tr>
+  <tr>
+    <td><code>--sub-header-order=ARRAY</code></td>
+    <td><code>sub_header_order:</code></td>
+    <td><code>%w[previous current impediments notes]</code></td>
+    <td>Array of strings. Elements must all exist</td>
+  </tr>
+  <tr>
+    <td><code>--[no-]edit</code></td>
+    <td></td>
+    <td><code>true</code></td>
+    <td>Open the file in an editor</td>
+  </tr>
+  <tr>
+    <td>`--[no-]write`</td>
+    <td></td>
+    <td>`true`</td>
+    <td>Write current entry to the file</td>
+  </tr>
+  <tr>
+    <td><code>--[no-]previous-append</code></td>
+    <td></td>
+    <td><code>true</code></td>
+    <td>When adding previous entries, append to previous tasks</td>
+  </tr>
+  <tr>
+    <td><code>-c</code></td>
+    <td></td>
+    <td><code>false</code></td>
+    <td>Output current entry to the command line</td>
+  </tr>
+  <tr>
+    <td><code>-a</code></td>
+    <td></td>
+    <td><code>false</code></td>
+    <td>Output all entries (limit one month) to the command line</td>
+  </tr>
+  <tr>
+    <td><code>-j</code></td>
+    <td></td>
+    <td><code>false</code></td>
+    <td>When outputting to the terminal, output json instead of formatted markdown</td>
+  </tr>
+  <tr>
+    <td><code>-v</code></td>
+    <td></td>
+    <td><code>false</code></td>
+    <td>Verbose output</td>
+  </tr>
+  <tr>
+    <td><code>-h</code></td>
+    <td></td>
+    <td></td>
+    <td>Print help</td>
+  </tr>
 
-|Executable Flag|Config File Key|Default|Notes|
-|:----|:------|:------|:------|
-||`header_depth:`|`1`|Number of `#` to place before each entry header|
-||`header_date_format:`|`%Y-%m-%d`|Will be prefixed with `# * header_depth`|
-||`sub_header_depth:`|`2`|Number of `#` to place before each sub-header|
-||`current_header:`|`Current`|Will be prefixed with `# * sub_header_depth`|
-||`previous_header:`|`Previous`|Will be prefixed with `# * sub_header_depth`|
-||`impediments_header:`|`Impediments`|Will be prefixed with `# * sub_header_depth`|
-||`file_name_format:`|`%Y_%m.md`|String will be formatted by `strftime`|
-||`bullet_character:`|`-` (dash)|Must be `-` (dash) or `*` (asterisk)|
-|`-d DIRECTORY`|`directory:`|`~/.cache/standup_md`|Directory will be created if it doesn't exist|
-|`-e EDITOR`|`editor:`|`$VISUAL`, `$EDITOR` or `vim`|In that order|
-|`--current-entry-tasks=ARRAY`|`current_entry_tasks:`|`<!-- ADD TODAY'S WORK HERE -->`|Each entry will automatically be prefixed with `bullet_character`|
-|`--previous-entry-tasks=ARRAY`|`previous_entry_tasks:`|The tasks from the previous entry|Each entry will automatically be prefixed with `bullet_character`|
-|`--impediments=ARRAY`|`impediments:`|`None`|Each entry will automatically be prefixed with `bullet_character`|
-|`--notes=ARRAY`|`notes:`|`nil`|Each entry will automatically be prefixed with `bullet_character`|
-|`--sub-header-order=ARRAY`|`sub_header_order:`|`%w[previous current impediments notes]`|Array of strings. Elements must all exist|
-|`--[no-]edit`||`true`|Open the file in an editor|
-|`--[no-]write`||`true`|Write current entry to the file|
-|`--[no-]previous-append`||`true`|When adding previous entries, append to previous tasks|
-|`-c`||`false`|Output current entry to the command line|
-|`-a`||`false`|Output all entries (limit one month) to the command line|
-|`-j`||`false`|When outputting to the terminal, output json instead of formatted markdown|
-|`-v`||`false`|Verbose output|
-|`-h`|||Print help|
+</table>
+
 
 For example, a custom `~/.standup_md.yml` file might contain the following.
 
@@ -188,7 +310,7 @@ standup --no-edit --current-entry-tasks="Work on this thing","And another thing!
 
 ## API
 Below are some quick examples, but the API is fully documented in the
-[documentation](https://evanthegrayt.github.io/standup_md/doc/StandupMD.html).
+[documentation](https://evanthegrayt.github.io/standup_md/doc/index.html).
 
 This was mainly written as a command line utility, but I made the API available
 for scripting. There are attribute accessors for most of the settings in the

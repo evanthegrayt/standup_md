@@ -125,6 +125,8 @@ class TestStandupMD < Test::Unit::TestCase
     )
   end
 
+  ##
+  # Should be all entries before the current entry.
   def test_all_previous_entries
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -134,6 +136,8 @@ class TestStandupMD < Test::Unit::TestCase
     )
   end
 
+  ##
+  # Directory should default be settable, and where standup files are read from.
   def test_directory
     su = standup(@workdir)
     assert_equal(@workdir, su.directory)
@@ -142,6 +146,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert(File.directory?(su.directory))
   end
 
+  ##
+  # The order of the subheaders is changeable, but all elements must exist.
   def test_sub_header_order
     su = standup(@workdir)
     assert_equal(%w[previous current impediments notes], su.sub_header_order)
@@ -154,6 +160,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal(su.sub_header_order, %w[current previous impediments notes])
   end
 
+  ##
+  # Should be able to add tasks for current_entry.
   def test_current_entry_tasks
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -165,6 +173,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_includes(su.current_entry_tasks, 'Another task')
   end
 
+  ##
+  # Should be able to add impediments to the array.
   def test_impediments
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -175,6 +185,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal(new_impediments, su.impediments)
   end
 
+  ##
+  # Should be able to add notes to the array.
   def test_notes
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -185,6 +197,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal(new_notes, su.notes)
   end
 
+  ##
+  # Should be able to change the bullet character but should raise if not * or -
   def test_bullet_character
     su = standup(@workdir)
     assert_equal('-', su.bullet_character)
@@ -193,6 +207,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_raise { su.bullet_character = '>' }
   end
 
+  ##
+  # Should be an integer between +1..5+, but not higher than +sub_header_depth+.
   def test_header_depth
     su = standup(@workdir, sub_header_depth: 4)
     assert_equal(1, su.header_depth)
@@ -203,6 +219,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal(3, su.header_depth)
   end
 
+  ##
+  # Should be an integer between +2..6+, but not lower than +header_depth+.
   def test_sub_header_depth
     su = standup(@workdir)
     assert_equal(2, su.sub_header_depth)
@@ -212,6 +230,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal(6, su.sub_header_depth)
   end
 
+  ##
+  # Should be an array of previous entry's current entry.
   def test_previous_entry_tasks
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -223,6 +243,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_includes(su.previous_entry_tasks, 'Another task')
   end
 
+  ##
+  # Should be changeable, and return a string parsed by +strftime+.
   def test_file_name_format
     create_standup_file(@current_test_file)
     su = standup(@workdir)
@@ -231,6 +253,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal('%y_%m.markdown', su.file_name_format)
   end
 
+  ##
+  # Should be changeable, and return a string parsed by +strftime+.
   def test_header_date_format
     su = standup(@workdir)
     assert_equal('%Y-%m-%d', su.header_date_format)
@@ -238,6 +262,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal('%y-%m-%d', su.header_date_format)
   end
 
+  ##
+  # Should be changeable and used as the header for +current_entry+
   def test_current_header
     su = standup(@workdir)
     assert_equal('Current', su.current_header)
@@ -245,6 +271,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal('Today', su.current_header)
   end
 
+  ##
+  # Should be changeable and used as the header for +previous_entry+
   def test_previous_header
     su = standup(@workdir)
     assert_equal('Previous', su.previous_header)
@@ -252,6 +280,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal('Yesterday', su.previous_header)
   end
 
+  ##
+  # Should be changeable and used as the header for +impediments+
   def test_impediments_header
     su = standup(@workdir)
     assert_equal('Impediments', su.impediments_header)
@@ -259,6 +289,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_equal('Hold Ups', su.impediments_header)
   end
 
+  ##
+  # Should be changeable and used as the header for +notes+
   def test_notes_header
     su = standup(@workdir)
     assert_equal('Notes', su.notes_header)
@@ -268,6 +300,8 @@ class TestStandupMD < Test::Unit::TestCase
 
   # Booleans
 
+  ##
+  # Should be false when first instantiated, true after +write+ is called.
   def test_file_written?
     su = standup(@workdir)
     refute(su.file_written?)
@@ -275,6 +309,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert(su.file_written?)
   end
 
+  ##
+  # Should be true if +current_entry+ was in the file at the time it was read.
   def test_entry_previously_added?
     su = standup(@workdir)
     refute(su.entry_previously_added?)
@@ -283,14 +319,20 @@ class TestStandupMD < Test::Unit::TestCase
     assert(su.entry_previously_added?)
   end
 
+  ##
+  # Should write the file.
   def test_write
     su = standup(@workdir)
     assert_nothing_raised { su.write }
     assert(File.file?(@current_test_file))
   end
 
+  ##
+  # Should load instance variables.
   def test_load
-    su = standup(@workdir)
+    su = StandupMD.new { |s| s.directory = @workdir }
+    assert_nil(su.instance_variable_get('@today'))
     assert_nothing_raised { su.load }
+    refute_nil(su.instance_variable_get('@today'))
   end
 end
