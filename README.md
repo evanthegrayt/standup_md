@@ -117,6 +117,14 @@ file:
 - None
 ```
 
+There are also flags that will print entries to the command line. There's a full
+list of features below, but as a quick example, you can copy today's entry to
+your clipboard without even opening your editor.
+
+```sh
+standup -c | pbcopy
+```
+
 ## Customization and Runtime Options
 You can create a file in your home directory called `~/.standup_md.yml`.
 Settings located in this file will override default behavior. This file can also
@@ -154,7 +162,7 @@ file_name_format:      '%Y_%m.md'
 bullet_character:      '-'        # (dash)
 directory:             '~/.cache/standup_md'
 editor:                # $VISUAL, $EDITOR or vim, in that order
-current_entry_tasks:   
+current_entry_tasks:
   - "<!-- ADD TODAY'S WORK HERE -->"
 previous_entry_tasks:  'The tasks from the previous entry'
 impediments:           'None'
