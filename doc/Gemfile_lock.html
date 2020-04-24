@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Rakefile - RDoc Documentation</title>
+<title>Gemfile.lock - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -81,54 +81,34 @@
   </div>
 </nav>
 
-<main role="main" aria-label="Page Rakefile">
+<main role="main" aria-label="Page Gemfile.lock">
 
-<p>require_relative &#39;lib/standup_md&#39;</p>
+<p>PATH</p>
 
-<p>task :default =&gt; :test</p>
+<pre>remote: .
+specs:
+  standup_md (0.0.9)</pre>
 
-<p>desc “Build the gem” task :build do</p>
+<p>GEM</p>
 
-<pre class="ruby"><span class="ruby-identifier">system</span>(<span class="ruby-string">&#39;gem build standup_md.gemspec&#39;</span>)
+<pre>remote: https://rubygems.org/
+specs:
+  rake (13.0.1)</pre>
+
+<p>PLATFORMS</p>
+
+<pre class="ruby"><span class="ruby-identifier">ruby</span>
 </pre>
 
-<p>end</p>
+<p>DEPENDENCIES</p>
 
-<p>desc “Build and install the gem” task install: [:dependencies, :build] do</p>
-
-<pre class="ruby"><span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;gem install standup_md-#{StandupMD::VERSION}.gem&quot;</span>)
+<pre class="ruby"><span class="ruby-identifier">rake</span>
+<span class="ruby-identifier">standup_md!</span>
 </pre>
 
-<p>end</p>
+<p>BUNDLED WITH</p>
 
-<p>desc “Add dependencies” task :dependencies do</p>
-
-<pre class="ruby"><span class="ruby-identifier">system</span>(<span class="ruby-string">&quot;gem install bundler&quot;</span>)
-<span class="ruby-identifier">system</span>(<span class="ruby-string">&quot;bundle install&quot;</span>)
-</pre>
-
-<p>end</p>
-
-<p>desc “Uninstall the gem” task :uninstall do</p>
-
-<pre class="ruby"><span class="ruby-identifier">system</span>(<span class="ruby-string">&#39;gem uninstall standup&#39;</span>)
-</pre>
-
-<p>end</p>
-
-<p>desc “Run test suite” task :test do</p>
-
-<pre class="ruby"><span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">__dir__</span>, <span class="ruby-string">&#39;test&#39;</span>, <span class="ruby-string">&#39;**&#39;</span>, <span class="ruby-string">&#39;*_test.rb&#39;</span>)).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ruby</span> <span class="ruby-identifier">f</span> }
-</pre>
-
-<p>end</p>
-
-<p>desc “Generate documentation” task :doc do</p>
-
-<pre class="ruby"><span class="ruby-identifier">system</span>(<span class="ruby-string">&#39;rdoc&#39;</span>)
-</pre>
-
-<p>end</p>
+<pre>1.17.2</pre>
 
 </main>
 

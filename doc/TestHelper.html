@@ -68,6 +68,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-cli">#cli</a>
+    
     <li ><a href="#method-i-create_standup_file">#create_standup_file</a>
     
     <li ><a href="#method-i-fixtures">#fixtures</a>
@@ -106,6 +108,43 @@
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-cli" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cli</span><span
+            class="method-args">(options = [])</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates instance of <code>CLI</code>.</p>
+
+<p>@param [Array] options Parsed by <code>getopts</code></p>
+
+<p>@return [StandupMD::CLI]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cli-source">
+            <pre><span class="ruby-comment"># File test/test_helper.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cli</span>(<span class="ruby-identifier">options</span> = [])
+  <span class="ruby-ivar">@cli</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">CLI</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-create_standup_file" class="method-detail ">

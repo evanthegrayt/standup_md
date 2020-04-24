@@ -36,6 +36,8 @@ class TestStandupMD < Test::Unit::TestCase
     assert_instance_of(StandupMD, su)
   end
 
+  ##
+  # The reload method should exist, and is an alias of +load+.
   def test_reload
     su = standup(@workdir)
     assert_respond_to(su, :reload)
