@@ -36,7 +36,7 @@ entry as what your previous day's work. See [example](#example). There's also an
 API if you'd like to use this in your own code somehow.
 
 This is a new project, and I have a lot of [updates
-planned](https://github.com/evanthegrayt/standup_md/issues)), but I won't push
+planned](https://github.com/evanthegrayt/standup_md/issues), but I won't push
 to `master` unless all
 [tests](https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb)
 are passing and the gem is working as expected. The first official release will

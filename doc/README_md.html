@@ -69,6 +69,8 @@
     <li><a href="#label-Usage">Usage</a>
     <li><a href="#label-Example">Example</a>
     <li><a href="#label-Customization+and+Runtime+Options">Customization and Runtime Options</a>
+    <li><a href="#label-Available+Config+File+Keys+and+Defaults">Available Config File Keys and Defaults</a>
+    <li><a href="#label-Executable+Flags">Executable Flags</a>
     <li><a href="#label-API">API</a>
     <li><a href="#label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features</a>
     <li><a href="#label-Self-Promotion">Self-Promotion</a>
@@ -133,7 +135,7 @@
 
 <p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated, and if a previous entry exists, it will be added to today&#39;s entry as what your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also an API if you&#39;d like to use this in your own code somehow.</p>
 
-<p>This is a new project, and I have a lot of <a href="https://github.com/evanthegrayt/standup_md/issues">updates planned</a>), but I won&#39;t push to <code>master</code> unless all <a href="https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb">tests</a> are passing and the gem is working as expected. The first official release will be once <a href="https://github.com/evanthegrayt/standup_md/milestone/1">this milestone</a> is complete. Until then, consider this gem to be in alpha, and the version will remain <code>&lt; 0.1.0</code>.</p>
+<p>This is a new project, and I have a lot of <a href="https://github.com/evanthegrayt/standup_md/issues">updates planned</a>, but I won&#39;t push to <code>master</code> unless all <a href="https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb">tests</a> are passing and the gem is working as expected. The first official release will be once <a href="https://github.com/evanthegrayt/standup_md/milestone/1">this milestone</a> is complete. Until then, consider this gem to be in alpha, and the version will remain <code>&lt; 0.1.0</code>.</p>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -181,23 +183,56 @@ ln -s $PWD/bin/standup /usr/local/bin</pre>
 
 <h2 id="label-Customization+and+Runtime+Options">Customization and Runtime Options<span><a href="#label-Customization+and+Runtime+Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>You can create a file in your home directory called <code>~/.standup_md.yml</code>. Settings located in this file will override default behavior. This file can also have settings overwritten at runtime by the use of options. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml">my config file</a> as an example. Below is a table of all available settings and their defaults.</p>
+<p>You can create a file in your home directory called <code>~/.standup_md.yml</code>. Settings located in this file will override default behavior. This file can also have settings overwritten at runtime by the use of options. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml">my config file</a> as an example. Any setting in this file can still be overridden at runtime by passing flags to the executable.</p>
 
-<p>You&#39;ll notice, a lot of settings don&#39;t have the ability to be changed at runtime when calling the executable. This is because the file structure is very important, and changing values that affect formatting will cause problems with the file parser. If you don&#39;t want to use a default, make the change in your config file before you start editing standups. There is an <a href="https://github.com/evanthegrayt/standup_md/issues/16">open issue</a> for handling this for the user, but they&#39;re not available yet.  &lt;table style=“width: 100%;”%&gt;  &lt;tr&gt;  &lt;th&gt;Executable Flag&lt;/th&gt;  &lt;th&gt;Config File Key&lt;/th&gt;  &lt;th&gt;Default&lt;/th&gt;  &lt;th&gt;Notes&lt;/th&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>header_depth:</code>&lt;/td&gt;  &lt;td&gt;<code>1</code>&lt;/td&gt;  &lt;td&gt;Number of <code>#</code> to place before each entry header&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>header_date_format:</code>&lt;/td&gt;  &lt;td&gt;<code>%Y-%m-%d</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>sub_header_depth:</code>&lt;/td&gt;  &lt;td&gt;<code>2</code>&lt;/td&gt;  &lt;td&gt;Number of <code>#</code> to place before each sub-header&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>current_header:</code>&lt;/td&gt;  &lt;td&gt;<code>Current</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * sub_header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>previous_header:</code>&lt;/td&gt;  &lt;td&gt;<code>Previous</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * sub_header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>impediments_header:</code>&lt;/td&gt;  &lt;td&gt;<code>Impediments</code>&lt;/td&gt;  &lt;td&gt;Will be prefixed with <code># * sub_header_depth</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>file_name_format:</code>&lt;/td&gt;  &lt;td&gt;<code>%Y_%m.md</code>&lt;/td&gt;  &lt;td&gt;String will be formatted by <code>strftime</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>bullet_character:</code>&lt;/td&gt;  &lt;td&gt;<code>-</code> (dash)&lt;/td&gt;  &lt;td&gt;Must be <code>-</code> (dash) or <code>*</code> (asterisk)&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-d DIRECTORY</code>&lt;/td&gt;  &lt;td&gt;<code>directory:</code>&lt;/td&gt;  &lt;td&gt;<code>~/.cache/standup_md</code>&lt;/td&gt;  &lt;td&gt;Directory will be created if it doesn&#39;t exist&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-e EDITOR</code>&lt;/td&gt;  &lt;td&gt;<code>editor:</code>&lt;/td&gt;  &lt;td&gt;<code>$VISUAL</code>, <code>$EDITOR</code> or <code>vim</code>&lt;/td&gt;  &lt;td&gt;In that order&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--current-entry-tasks=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>current_entry_tasks:</code>&lt;/td&gt;  &lt;td&gt;<code>&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;</code>&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--previous-entry-tasks=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>previous_entry_tasks:</code>&lt;/td&gt;  &lt;td&gt;The tasks from the previous entry&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--impediments=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>impediments:</code>&lt;/td&gt;  &lt;td&gt;<code>None</code>&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--notes=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>notes:</code>&lt;/td&gt;  &lt;td&gt;<code>nil</code>&lt;/td&gt;  &lt;td&gt;Each entry will automatically be prefixed with <code>bullet_character</code>&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>--sub-header-order=ARRAY</code>&lt;/td&gt;  &lt;td&gt;<code>sub_header_order:</code>&lt;/td&gt;  &lt;td&gt;<code>%w[previous current impediments notes]</code>&lt;/td&gt;  &lt;td&gt;Array of strings. Elements must all exist&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;<a href="no-">td>–</a><code>edit</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>true</code>&lt;/td&gt;  &lt;td&gt;Open the file in an editor&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;<a href="no-">td>–</a><code>write</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>true</code>&lt;/td&gt;  &lt;td&gt;Write current entry to the file&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;<a href="no-">td>–</a><code>previous-append</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>true</code>&lt;/td&gt;  &lt;td&gt;When adding previous entries, append to previous tasks&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-c</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;Output current entry to the command line&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-a</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;Output all entries (limit one month) to the command line&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-j</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;When outputting to the terminal, output json instead of formatted markdown&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-v</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;<code>false</code>&lt;/td&gt;  &lt;td&gt;Verbose output&lt;/td&gt;  &lt;/tr&gt;  &lt;tr&gt;  &lt;td&gt;<code>-h</code>&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;&lt;/td&gt;  &lt;td&gt;Print help&lt;/td&gt;  &lt;/tr&gt;</p>
+<p>You&#39;ll notice, a lot of settings don&#39;t have the ability to be changed at runtime when calling the executable. This is because the file structure is very important, and changing values that affect formatting will cause problems with the file parser. If you don&#39;t want to use a default, make the change in your config file before you start editing standups. There is an <a href="https://github.com/evanthegrayt/standup_md/issues/16">open issue</a> for handling this for the user, but they&#39;re not available yet.</p>
 
-<p>&lt;/table&gt;</p>
+<p>There are no options to change the headers at runtime because it uses the headers to detect tasks from previous entries. If changed at runtime, this would cause errors. For this reason, if you don&#39;t like the default headers, change them in your configuration file after installation, and then try to not change them again.</p>
 
-<p>For example, a custom <code>~/.standup_md.yml</code> file might contain the following.</p>
+<h3 id="label-Available+Config+File+Keys+and+Defaults">Available Config File Keys and Defaults<span><a href="#label-Available+Config+File+Keys+and+Defaults">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<pre>editor:            &#39;mate&#39;
-current_header:    &#39;Today&#39;
-previous_header:   &#39;Yesterday&#39;
-directory:         &#39;~/standups&#39;
-file_name_format:  &#39;standups_for_%m_%Y.md&#39;</pre>
+<pre># Key:                 Default
+header_depth:          1
+header_date_format:    &#39;%Y-%m-%d&#39;
+sub_header_depth:      2
+current_header:        &#39;Current&#39;
+previous_header:       &#39;Previous&#39;
+impediments_header:    &#39;Impediments&#39;
+file_name_format:      &#39;%Y_%m.md&#39;
+bullet_character:      &#39;-&#39;        # (dash)
+directory:             &#39;~/.cache/standup_md&#39;
+editor:                # $VISUAL, $EDITOR or vim, in that order
+current_entry_tasks:   
+  - &quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;
+previous_entry_tasks:  &#39;The tasks from the previous entry&#39;
+impediments:           &#39;None&#39;
+notes:                 null
+sub_header_order:
+  - &#39;previous&#39;
+  - &#39;current&#39;
+  - &#39;impediments&#39;
+  - &#39;notes&#39;</pre>
+
+<h3 id="label-Executable+Flags">Executable Flags<span><a href="#label-Executable+Flags">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre>The Standup Doctor
+        --current-entry-tasks=ARRAY  List of current entry&#39;s tasks
+        --previous-entry-tasks=ARRAY List of yesterday&#39;s tasks
+        --impediments=ARRAY          List of impediments for current entry
+        --notes=ARRAY                List of notes for current entry
+        --sub-header-order=ARRAY     The order of the sub-headers when writing the file
+        --[no-]append-previous       Append previous tasks? Default is true
+    -f, --file-name-format=STRING    Date-formattable string to use for standup file name
+    -e, --editor=EDITOR              Editor to use for opening standup files
+    -d, --directory=DIRECTORY        The directories where standup files are located
+        --[no-]write                 Write current entry if it doesn&#39;t exist. Default is true
+        --[no-]edit                  Open the file in the editor. Default is true
+    -j, --[no-]json                  Print output as formatted json. Default is false.
+    -v, --[no-]verbose               Verbose output. Default is false.
+    -c, --current                    Print current entry. Disables editing
+    -a, --all                        Print all previous entries. Disables editing</pre>
 
 <p>Any options not set in this file will retain their default values. Note that if you change <code>file_name_format</code>, and don&#39;t use a month or year, there will only ever be one standup file. This could cause issues long-term, as the files will get large over time and possibly cause performance issues.</p>
-
-<p>Also, there are no options to change the headers at runtime because it uses the headers to detect tasks from previous entries. If changed at runtime, this would cause errors. For this reason, if you don&#39;t like the default headers, change them in your configuration file after installation, and then try to not change them again.</p>
 
 <p>If you wanted to add some tasks at runtime, and without opening the file in an editor, you could use the following:</p>
 
