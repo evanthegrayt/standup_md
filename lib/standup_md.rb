@@ -50,18 +50,22 @@ class StandupMD
   #
   # @example
   #   # Assuming the current month is April, 2020
-  #   su = StandupMD.new
+  #
   #   Dir.entries(su.directory)
   #   # => []
+  #   su = StandupMD.new
   #   su.previous_file
   #   # => ''
-  #   su = StandupMD.new
+  #
   #   Dir.entries(su.directory)
   #   # => ['2020_03.md']
+  #   su = StandupMD.new
   #   su.previous_file
   #   # => '2020_03.md'
-  #   FileUtils.touch(File.join(su.directory, '2020_04.md'))
-  #   su.load
+  #
+  #   Dir.entries(su.directory)
+  #   # => ['2020_03.md', '2020_04.md']
+  #   su = StandupMD.new
   #   su.previous_file
   #   # => '2020_04.md'
   attr_reader :previous_file
