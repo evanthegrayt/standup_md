@@ -165,8 +165,9 @@ editor:                # $VISUAL, $EDITOR or vim, in that order
 current_entry_tasks:
   - "<!-- ADD TODAY'S WORK HERE -->"
 previous_entry_tasks:  'The tasks from the previous entry'
-impediments:           'None'
-notes:                 null
+impediments:
+  - 'None'
+notes:                 null # If not null, must be array
 sub_header_order:
   - 'previous'
   - 'current'
