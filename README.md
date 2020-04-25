@@ -164,7 +164,7 @@ directory:             '~/.cache/standup_md'
 editor:                # $VISUAL, $EDITOR or vim, in that order
 current_entry_tasks:
   - "<!-- ADD TODAY'S WORK HERE -->"
-previous_entry_tasks:  'The tasks from the previous entry'
+previous_entry_tasks:  # An array of the tasks from the previous entry'
 impediments:
   - 'None'
 notes:                 null # If not null, must be array
