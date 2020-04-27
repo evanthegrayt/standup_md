@@ -43,7 +43,7 @@ class StandupMD
 
   ##
   # The file that contains previous entries. When last month's file exists, but
-  # this month's doesn't or is empty, previous_file should equal last menth's
+  # this month's doesn't or is empty, previous_file should equal last month's
   # file.
   #
   # @return [String]
@@ -126,7 +126,7 @@ class StandupMD
   attr_reader :current_entry_tasks
 
   ##
-  # Array of imnpediments for today's entry.
+  # Array of impediments for today's entry.
   #
   # @return [Array]
   attr_reader :impediments
@@ -484,7 +484,7 @@ class StandupMD
     File.file?(prev_month_file) ? prev_month_file : ''
   end
 
-  def get_all_previous_entries
+  def get_all_previous_entries # :nodoc:
     return {} unless File.file?(previous_file)
     prev_entries = {}
     entry_header = ''
