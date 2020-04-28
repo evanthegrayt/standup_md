@@ -46,20 +46,16 @@ remain `< 0.1.0`.
 
 ## Installation
 ### Via RubyGems
-*COMING SOON. For now, please use the [manual installation
-instructions](#manual-installation). The gem will be officially released once
-[this milestone](https://github.com/evanthegrayt/standup_md/milestone/1) is
-completed*.
+Just install the gem!
 
-<!-- Just install the gem! -->
+```sh
+gem install standup_md
+```
 
-<!-- ```sh -->
-<!-- gem install standup_md -->
-<!-- ``` -->
-<!-- If you don't have permission on your system to install ruby or gems, I recommend -->
-<!-- using [rvm](https://rvm.io/) or -->
-<!-- [rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html), -->
-<!-- or you can try to use a manual method below. -->
+If you don't have permission on your system to install ruby or gems, I recommend
+using [rvm](https://rvm.io/) or
+[rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html),
+or you can try the manual methods below.
 
 
 ### Manual Installation
@@ -75,7 +71,7 @@ rake install
 
 # OR manually link the executable somewhere. If you use this method, you cannot
 # move the repository after you link it!
-ln -s $PWD/bin/standup /usr/local/bin
+ln -s $PWD/bin/standup /usr/local/bin/standup
 ```
 
 ## Usage

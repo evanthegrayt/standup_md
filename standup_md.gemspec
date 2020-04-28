@@ -4,20 +4,22 @@ Gem::Specification.new do |spec|
   spec.name          = 'standup_md'
   spec.version       = StandupMD::VERSION
   spec.authors       = ['Evan Gray']
-  spec.email         = ['evanthegrayt@vivaldi.net']
+  spec.email         = 'evanthegrayt@vivaldi.net'
   spec.license       = 'MIT'
+  spec.date          = Time.now.strftime('%Y-%m-%d')
 
   spec.summary       = %q{The cure for all your standup woes}
   spec.description   = %q{Generate and edit standups in markdown format}
-  spec.homepage      = 'https://github.com/evanthegrayt/standup_md'
+  spec.homepage      = 'https://evanthegrayt.github.io/standup_md/'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = 'rubygems.org'
+    spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
     spec.metadata['homepage_uri'] = spec.homepage
-    spec.metadata['source_code_uri'] = spec.homepage
+    spec.metadata['source_code_uri'] = 'https://github.com/evanthegrayt/standup_md'
+    spec.metadata['documentation_uri'] = 'https://evanthegrayt.github.io/standup_md/doc/index.html'
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'
