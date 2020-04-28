@@ -4,6 +4,6 @@ class StandupMD
   #
   # @example
   #  StandupMD::VERSION
-  #  # => '0.9.0'
-  VERSION = '0.0.10'
+  #  # => '0.1.0'
+  VERSION = '0.1.0'
 end
