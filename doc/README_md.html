@@ -60,7 +60,7 @@
   <h3>Table of Contents</h3>
 
   <ul class="link-list" role="directory">
-    <li><a href="#label-The+Standup+Doctor"><a href="https://evanthegrayt.github.io/standup_md/">The Standup Doctor</a></a>
+    <li><a href="#label-The+Standup+Doctor">The Standup Doctor</a>
     <li><a href="#label-Table+of+Contents">Table of Contents</a>
     <li><a href="#label-About">About</a>
     <li><a href="#label-Installation">Installation</a>
@@ -94,13 +94,15 @@
 
 <main role="main" aria-label="Page README.md">
 
-<h1 id="label-The+Standup+Doctor"><a href="https://evanthegrayt.github.io/standup_md/">The Standup Doctor</a><span><a href="#label-The+Standup+Doctor">&para;</a> <a href="#top">&uarr;</a></span></h1>
+<h1 id="label-The+Standup+Doctor">The Standup Doctor<span><a href="#label-The+Standup+Doctor">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
 <blockquote>
 <p>The cure for all your standup woes.</p>
 </blockquote>
 
 <p>A highly customizable and automated way to keep track of daily standups in markdown files.</p>
+
+<p>View on: <a href="https://github.com/evanthegrayt/standup_md">Github</a> | <a href="https://evanthegrayt.github.io/standup_md/">GitHub Pages</a></p>
 
 <h2 id="label-Table+of+Contents">Table of Contents<span><a href="#label-Table+of+Contents">&para;</a> <a href="#top">&uarr;</a></span></h2>
 <ul><li>
@@ -133,9 +135,7 @@
 
 <p>I wasn&#39;t sure that others would find this useful, but then the pandemic happened, which I assume made doing standups via chat much more common.</p>
 
-<p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated, and if a previous entry exists, it will be added to today&#39;s entry as what your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also an API if you&#39;d like to use this in your own code somehow.</p>
-
-<p>This is a new project, and I have a lot of <a href="https://github.com/evanthegrayt/standup_md/issues">updates planned</a>, but I won&#39;t push to <code>master</code> unless all <a href="https://github.com/evanthegrayt/standup_md/blob/master/test/standup_md_test.rb">tests</a> are passing and the gem is working as expected. The first official release will be once <a href="https://github.com/evanthegrayt/standup_md/milestone/1">this milestone</a> is complete. Until then, consider this gem to be in alpha, and the version will remain <code>&lt; 0.1.0</code>.</p>
+<p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated, and if a previous entry exists, it will be added to today&#39;s entry as your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also an API if you&#39;d like to use this in your own code somehow.</p>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -145,6 +145,8 @@
 
 <pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-identifier">install</span> <span class="ruby-identifier">standup_md</span>
 </pre>
+
+<p><a href="https://rubygems.org/gems/standup_md">Here</a> is the link to the gem&#39;s page.</p>
 
 <p>If you don&#39;t have permission on your system to install ruby or gems, I recommend using <a href="https://rvm.io/">rvm</a> or <a href="http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html">rbenv</a>, or you can try the manual methods below.</p>
 
