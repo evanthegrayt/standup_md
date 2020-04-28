@@ -35,8 +35,8 @@ In a nutshell, calling `standup` from the command line will open a standup file
 for the current month in your preferred editor. If an entry for today is already
 present, no text will be generated. If an entry for today doesn't exist, one
 will be generated, and if a previous entry exists, it will be added to today's
-entry as what your previous day's work. See [example](#example). There's also an
-API if you'd like to use this in your own code somehow.
+entry as your previous day's work. See [example](#example). There's also an API
+if you'd like to use this in your own code somehow.
 
 ## Installation
 ### Via RubyGems
