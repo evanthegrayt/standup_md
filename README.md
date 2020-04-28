@@ -52,6 +52,8 @@ Just install the gem!
 gem install standup_md
 ```
 
+[Here](https://rubygems.org/gems/standup_md) is the link to the gem's page.
+
 If you don't have permission on your system to install ruby or gems, I recommend
 using [rvm](https://rvm.io/) or
 [rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html),
