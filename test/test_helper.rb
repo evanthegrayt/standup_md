@@ -56,6 +56,6 @@ module TestHelper
   #
   # @return [StandupMD::CLI]
   def cli(options = [])
-    @cli = StandupMD::CLI.new(options)
+    StandupMD::CLI.new(options)
   end
 end

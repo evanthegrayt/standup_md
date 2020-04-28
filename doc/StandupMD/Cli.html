@@ -259,14 +259,14 @@
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">options</span>)
-  <span class="ruby-ivar">@options</span>             = <span class="ruby-identifier">options</span>
+  <span class="ruby-ivar">@edit</span>                = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@write</span>               = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@append_previous</span>     = <span class="ruby-keyword">true</span>
   <span class="ruby-ivar">@print_current_entry</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@json</span>                = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@print_all_entries</span>   = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@verbose</span>             = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@write</span>               = <span class="ruby-keyword">true</span>
-  <span class="ruby-ivar">@edit</span>                = <span class="ruby-keyword">true</span>
-  <span class="ruby-ivar">@append_previous</span>     = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@print_all_entries</span>   = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@options</span>             = <span class="ruby-identifier">options</span>
   <span class="ruby-ivar">@preferences</span>         = <span class="ruby-identifier">get_preferences</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -308,7 +308,7 @@
 
           
           <div class="method-source-code" id="append_previous-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 204</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 203</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">append_previous?</span>
   <span class="ruby-ivar">@append_previous</span>
 <span class="ruby-keyword">end</span></pre>
@@ -343,7 +343,7 @@
 
           
           <div class="method-source-code" id="append_to_previous_entry_tasks-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 129</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">append_to_previous_entry_tasks</span>
   <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Appending previous entry tasks&#39;</span>
   <span class="ruby-identifier">additions</span> = <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">&#39;previous_entry_tasks&#39;</span>)
@@ -380,7 +380,7 @@
 
           
           <div class="method-source-code" id="echo-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 220</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 219</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">echo</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">verbose?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -413,7 +413,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 137</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">edit</span>
   <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;  Opening file in #{editor}&quot;</span>
   <span class="ruby-identifier">exec</span>(<span class="ruby-node">&quot;#{editor} #{standup.file}&quot;</span>)
@@ -449,7 +449,7 @@
 
           
           <div class="method-source-code" id="edit-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 195</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 194</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">edit?</span>
   <span class="ruby-ivar">@edit</span>
 <span class="ruby-keyword">end</span></pre>
@@ -484,16 +484,20 @@
 
           
           <div class="method-source-code" id="editor-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 80</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 76</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">editor</span>
   <span class="ruby-ivar">@editor</span> <span class="ruby-operator">||=</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;editor&#39;</span>)
+      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{preferences.key(&#39;editor&#39;)}] via preferences&quot;</span>
       <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">&#39;editor&#39;</span>)
     <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]
+      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{ENV[&#39;VISUAL&#39;]}] (ENV[&#39;VISUAL&#39;])&quot;</span>
       <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]
     <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;EDITOR&#39;</span>]
+      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{ENV[&#39;EDITOR&#39;]}] (ENV[&#39;EDITOR&#39;])&quot;</span>
       <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;EDITOR&#39;</span>]
     <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">echo</span> <span class="ruby-string">&quot;Editor set to [vim] (default)&quot;</span>
       <span class="ruby-string">&#39;vim&#39;</span>
     <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -528,7 +532,7 @@
 
           
           <div class="method-source-code" id="json-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 163</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 162</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">json?</span>
   <span class="ruby-ivar">@json</span>
 <span class="ruby-keyword">end</span></pre>
@@ -565,20 +569,15 @@
           <div class="method-source-code" id="print_all_entries-source">
             <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_all_entries</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&quot;Display all entries&quot;</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">json?</span>
-    <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  ...as json&#39;</span>
-    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
+  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Display all entries&#39;</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">json?</span>
+    <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">print_entry</span>(<span class="ruby-identifier">head</span>, <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>[<span class="ruby-identifier">head</span>])
+    <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span>, <span class="ruby-identifier">s_heads</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;#&#39;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">header_depth</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">head</span>
-    <span class="ruby-identifier">s_heads</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s_head</span>, <span class="ruby-identifier">tasks</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;#&#39;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">sub_header_depth</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">s_head</span>
-      <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">task</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">bullet_character</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">task</span> }
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">puts</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  ...as json&#39;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -611,7 +610,7 @@
 
           
           <div class="method-source-code" id="print_all_entries-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 171</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 170</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_all_entries?</span>
   <span class="ruby-ivar">@print_all_entries</span>
 <span class="ruby-keyword">end</span></pre>
@@ -646,12 +645,16 @@
 
           
           <div class="method-source-code" id="print_current_entry-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_current_entry</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&quot;Print current entry&quot;</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  ...as json&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">json?</span>
-  <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">current_entry</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">json?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">to_json</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">entry</span>
+  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Print current entry&#39;</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">json?</span>
+    <span class="ruby-identifier">print_entry</span>(<span class="ruby-identifier">standup</span>.<span class="ruby-identifier">header</span>, <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">current_entry</span>)
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  ...as json&#39;</span>
+  <span class="ruby-identifier">entry</span> = {<span class="ruby-identifier">standup</span>.<span class="ruby-identifier">header</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">current_entry</span>}.<span class="ruby-identifier">to_json</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">entry</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -684,7 +687,7 @@
 
           
           <div class="method-source-code" id="print_current_entry-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 155</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_current_entry?</span>
   <span class="ruby-ivar">@print_current_entry</span>
 <span class="ruby-keyword">end</span></pre>
@@ -719,7 +722,7 @@
 
           
           <div class="method-source-code" id="should_append-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 212</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 211</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">should_append?</span>
   <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;previous_entry_tasks&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">append_previous?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -757,14 +760,10 @@
             <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">standup</span>
   <span class="ruby-ivar">@standup</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">echo</span> <span class="ruby-string">&quot;Runtime options:&quot;</span>
+    <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Runtime options:&#39;</span>
     <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">k</span>)
-        <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;  #{k} = #{v}&quot;</span>
-        <span class="ruby-identifier">s</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
-      <span class="ruby-keyword">else</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Method `Standup##{k}=` does not exist&quot;</span>
-      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;  #{k} = #{v}&quot;</span>
+      <span class="ruby-identifier">s</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>.<span class="ruby-identifier">load</span>
 <span class="ruby-keyword">end</span></pre>
@@ -799,7 +798,7 @@
 
           
           <div class="method-source-code" id="verbose-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 179</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">verbose?</span>
   <span class="ruby-ivar">@verbose</span>
 <span class="ruby-keyword">end</span></pre>
@@ -834,7 +833,7 @@
 
           
           <div class="method-source-code" id="write-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 187</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write?</span>
   <span class="ruby-ivar">@write</span>
 <span class="ruby-keyword">end</span></pre>
@@ -869,7 +868,7 @@
 
           
           <div class="method-source-code" id="write_file-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 146</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 145</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write_file</span>
   <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  Writing file&#39;</span>
   <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>

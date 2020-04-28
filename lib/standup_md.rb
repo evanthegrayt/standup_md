@@ -30,6 +30,12 @@ class StandupMD
   # :section: Attributes that aren't settable by user, but are gettable.
 
   ##
+  # The string that will be used for the entry headers.
+  #
+  # @return [String]
+  attr_reader :header
+
+  ##
   # The file name should equal file_name_format parsed by Date.strftime.
   # The default is +Date.today.strftime('%Y_%m.md')+
   #
@@ -462,12 +468,6 @@ class StandupMD
   # Date object of today's date.
   def today # :nodoc:
     @today
-  end
-
-  ##
-  # The header for today's entry.
-  def header # :nodoc:
-    @header
   end
 
   ##
