@@ -1,8 +1,11 @@
-# [The Standup Doctor](https://evanthegrayt.github.io/standup_md/)
+# The Standup Doctor
 > The cure for all your standup woes.
 
 A highly customizable and automated way to keep track of daily standups in
 markdown files.
+
+View on: [Github](https://github.com/evanthegrayt/standup_md) |
+[GitHub Pages](https://evanthegrayt.github.io/standup_md/)
 
 ## Table of Contents
 - [About](#about)
