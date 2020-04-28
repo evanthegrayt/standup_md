@@ -42,14 +42,14 @@ class StandupMD
     #
     # @param [Array] options
     def initialize(options)
-      @options             = options
+      @edit                = true
+      @write               = true
+      @append_previous     = true
       @print_current_entry = false
       @json                = false
-      @print_all_entries   = false
       @verbose             = false
-      @write               = true
-      @edit                = true
-      @append_previous     = true
+      @print_all_entries   = false
+      @options             = options
       @preferences         = get_preferences
     end
 
@@ -59,14 +59,10 @@ class StandupMD
     # @return [StandupMD]
     def standup
       @standup ||= ::StandupMD.new do |s|
-        echo "Runtime options:"
+        echo 'Runtime options:'
         preferences.each do |k, v|
-          if s.respond_to?(k)
-            echo "  #{k} = #{v}"
-            s.send("#{k}=", v)
-          else
-            puts "Method `Standup##{k}=` does not exist"
-          end
+          echo "  #{k} = #{v}"
+          s.send("#{k}=", v)
         end
       end.load
     end
@@ -80,12 +76,16 @@ class StandupMD
     def editor
       @editor ||=
         if preferences.key?('editor')
+          echo "Editor set to [#{preferences.key('editor')}] via preferences"
           preferences.delete('editor')
         elsif ENV['VISUAL']
+          echo "Editor set to [#{ENV['VISUAL']}] (ENV['VISUAL'])"
           ENV['VISUAL']
         elsif ENV['EDITOR']
+          echo "Editor set to [#{ENV['EDITOR']}] (ENV['EDITOR'])"
           ENV['EDITOR']
         else
+          echo "Editor set to [vim] (default)"
           'vim'
         end
     end
@@ -95,20 +95,15 @@ class StandupMD
     #
     # @return [nil]
     def print_all_entries
-      echo "Display all entries"
-      if json?
-        echo '  ...as json'
-        puts standup.all_entries.to_json
+      echo 'Display all entries'
+      unless json?
+        standup.all_entries.keys.reverse.each do |head|
+          print_entry(head, standup.all_entries[head])
+        end
         return
       end
-      standup.all_entries.each do |head, s_heads|
-        puts '#' * standup.header_depth + ' ' + head
-        s_heads.each do |s_head, tasks|
-          puts '#' * standup.sub_header_depth + ' ' + s_head
-          tasks.each { |task| puts standup.bullet_character + ' ' + task }
-        end
-        puts
-      end
+      echo '  ...as json'
+      puts standup.all_entries.to_json
     end
 
     ##
@@ -116,10 +111,14 @@ class StandupMD
     #
     # @return [nil]
     def print_current_entry
-      echo "Print current entry"
-      echo '  ...as json' if json?
-      entry = standup.current_entry
-      puts json? ? entry.to_json : entry
+      echo 'Print current entry'
+      unless json?
+        print_entry(standup.header, standup.current_entry)
+        return
+      end
+      echo '  ...as json'
+      entry = {standup.header => standup.current_entry}.to_json
+      puts entry
     end
 
     ##
@@ -224,11 +223,22 @@ class StandupMD
     private
 
     ##
+    # Prints entries to the command line as markdown.
+    def print_entry(head, s_heads) # :nodoc:
+      puts '#' * standup.header_depth + ' ' + head
+      s_heads.each do |s_head, tasks|
+        puts '#' * standup.sub_header_depth + ' ' + s_head
+        tasks.each { |task| puts standup.bullet_character + ' ' + task }
+      end
+      puts
+    end
+
+    ##
     # Parses options passed at runtime and concatenates them with the options in
     # the user's preferences file. Reveal source to see options.
     #
     # @return [Hash]
-    def get_preferences
+    def get_preferences # :nodoc:
       prefs = {}
 
       OptionParser.new do |opts|
@@ -237,7 +247,7 @@ class StandupMD
         opts.on('--current-entry-tasks=ARRAY', Array, "List of current entry's tasks") do |v|
           prefs['current_entry_tasks'] = v
         end
-        opts.on('--previous-entry-tasks=ARRAY', Array, "List of yesterday's tasks") do |v|
+        opts.on('--previous-entry-tasks=ARRAY', Array, "List of precious entry's tasks") do |v|
           prefs['previous_entry_tasks'] = v
         end
         opts.on('--impediments=ARRAY', Array, 'List of impediments for current entry') do |v|
@@ -273,13 +283,15 @@ class StandupMD
         opts.on('-v', '--[no-]verbose', 'Verbose output. Default is false.') do |v|
           @verbose = v
         end
-        opts.on('-c', '--current', "Print current entry. Disables editing") do |v|
+        opts.on('-c', '--current', 'Print current entry. Disables editing and writing') do |v|
           @print_current_entry = v
           @edit = false
+          @write = false
         end
-        opts.on('-a', '--all', "Print all previous entries. Disables editing") do |v|
+        opts.on('-a', '--all', 'Print all previous entries. Disables editing and writing') do |v|
           @print_all_entries = v
           @edit = false
+          @write = false
         end
       end.parse!(options)
 

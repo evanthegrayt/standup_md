@@ -176,6 +176,11 @@ ln -s $PWD/bin/standup /usr/local/bin</pre>
 
 <p>The following scaffolding will be added for current entry at the top of the file: <code>markdown # 2020-04-14 ## Previous - Write new feature for `standup_md` - Fix bug in `standup_md` ## Current - &lt;!-- ADD TODAY&#39;S WORK HERE --&gt; ## Impediments - None </code></p>
 
+<p>There are also flags that will print entries to the command line. There&#39;s a full list of features below, but as a quick example, you can copy today&#39;s entry to your clipboard without even opening your editor.</p>
+
+<pre class="ruby"><span class="ruby-identifier">standup</span> <span class="ruby-operator">-</span><span class="ruby-identifier">c</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">pbcopy</span>
+</pre>
+
 <h2 id="label-Customization+and+Runtime+Options">Customization and Runtime Options<span><a href="#label-Customization+and+Runtime+Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <p>You can create a file in your home directory called <code>~/.standup_md.yml</code>. Settings located in this file will override default behavior. This file can also have settings overwritten at runtime by the use of options. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml">my config file</a> as an example. Any setting in this file can still be overridden at runtime by passing flags to the executable.</p>
@@ -197,11 +202,12 @@ file_name_format:      &#39;%Y_%m.md&#39;
 bullet_character:      &#39;-&#39;        # (dash)
 directory:             &#39;~/.cache/standup_md&#39;
 editor:                # $VISUAL, $EDITOR or vim, in that order
-current_entry_tasks:   
+current_entry_tasks:
   - &quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;
-previous_entry_tasks:  &#39;The tasks from the previous entry&#39;
-impediments:           &#39;None&#39;
-notes:                 null
+previous_entry_tasks:  # An array of the tasks from the previous entry
+impediments:
+  - &#39;None&#39;
+notes:                 null # If not null, must be array
 sub_header_order:
   - &#39;previous&#39;
   - &#39;current&#39;

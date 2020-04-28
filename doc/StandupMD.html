@@ -319,7 +319,7 @@
 
         <div class="method-description">
         
-        <p>Array of imnpediments for today&#39;s entry.</p>
+        <p>Array of impediments for today&#39;s entry.</p>
 
 <p>@return [Array]</p>
         
@@ -480,6 +480,21 @@
         </div>
       </div>
       
+      <div id="attribute-i-header" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">header</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The string that will be used for the entry headers.</p>
+
+<p>@return [String]</p>
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-previous_file" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">previous_file</span><span
@@ -488,25 +503,29 @@
 
         <div class="method-description">
         
-        <p>The file that contains previous entries. When last month&#39;s file exists, but this month&#39;s doesn&#39;t or is empty, <a href="StandupMD.html#attribute-i-previous_file"><code>previous_file</code></a> should equal last menth&#39;s file.</p>
+        <p>The file that contains previous entries. When last month&#39;s file exists, but this month&#39;s doesn&#39;t or is empty, <a href="StandupMD.html#attribute-i-previous_file"><code>previous_file</code></a> should equal last month&#39;s file.</p>
 
 <p>@return [String]</p>
 
 <p>@example</p>
 
 <pre class="ruby"><span class="ruby-comment"># Assuming the current month is April, 2020</span>
-<span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>
+
 <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
 <span class="ruby-comment"># =&gt; []</span>
+<span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>
 <span class="ruby-comment"># =&gt; &#39;&#39;</span>
-<span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>
+
 <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
 <span class="ruby-comment"># =&gt; [&#39;2020_03.md&#39;]</span>
+<span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>
 <span class="ruby-comment"># =&gt; &#39;2020_03.md&#39;</span>
-<span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>, <span class="ruby-string">&#39;2020_04.md&#39;</span>))
-<span class="ruby-identifier">su</span>.<span class="ruby-identifier">load</span>
+
+<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
+<span class="ruby-comment"># =&gt; [&#39;2020_03.md&#39;, &#39;2020_04.md&#39;]</span>
+<span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-identifier">su</span>.<span class="ruby-identifier">previous_file</span>
 <span class="ruby-comment"># =&gt; &#39;2020_04.md&#39;</span>
 </pre>
@@ -685,7 +704,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 223</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 233</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-ivar">@notes</span> = []
   <span class="ruby-ivar">@header_depth</span> = <span class="ruby-value">1</span>
@@ -764,7 +783,7 @@
 
           
           <div class="method-source-code" id="entry_previously_added-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 265</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 275</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">entry_previously_added?</span>
   <span class="ruby-ivar">@entry_previously_added</span>
 <span class="ruby-keyword">end</span></pre>
@@ -809,7 +828,7 @@
 
           
           <div class="method-source-code" id="file_written-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 257</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 267</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">file_written?</span>
   <span class="ruby-ivar">@file_written</span>
 <span class="ruby-keyword">end</span></pre>
@@ -875,7 +894,7 @@
 
           
           <div class="method-source-code" id="bullet_character-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 322</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 332</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bullet_character=</span>(<span class="ruby-identifier">character</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be &quot;-&quot; or &quot;*&quot;&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-node">%w[- *]</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">character</span>)
   <span class="ruby-ivar">@bullet_character</span> = <span class="ruby-identifier">character</span>
@@ -913,7 +932,7 @@
 
           
           <div class="method-source-code" id="current_entry_tasks-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 300</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 310</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_entry_tasks=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@current_entry_tasks</span> = <span class="ruby-identifier">tasks</span>
@@ -951,7 +970,7 @@
 
           
           <div class="method-source-code" id="directory-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 335</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 345</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
   <span class="ruby-comment"># TODO test this</span>
   <span class="ruby-identifier">directory</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>)
@@ -991,7 +1010,7 @@
 
           
           <div class="method-source-code" id="header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 348</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 358</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">1</span>, <span class="ruby-value">5</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Header depth out of bounds (1..5)&#39;</span>
@@ -1033,7 +1052,7 @@
 
           
           <div class="method-source-code" id="impediments-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 311</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 321</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">impediments=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@impediments</span> = <span class="ruby-identifier">tasks</span>
@@ -1071,7 +1090,7 @@
 
           
           <div class="method-source-code" id="notes-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 289</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">notes=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@notes</span> = <span class="ruby-identifier">tasks</span>
@@ -1109,7 +1128,7 @@
 
           
           <div class="method-source-code" id="previous_entry_tasks-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 278</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 288</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">previous_entry_tasks=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@previous_entry_tasks</span> = <span class="ruby-identifier">tasks</span>
@@ -1147,7 +1166,7 @@
 
           
           <div class="method-source-code" id="sub_header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 363</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 373</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">2</span>, <span class="ruby-value">6</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Sub-header depth out of bounds (2..6)&#39;</span>
@@ -1189,7 +1208,7 @@
 
           
           <div class="method-source-code" id="sub_header_order-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 378</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 388</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order=</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-identifier">order</span> = <span class="ruby-node">%w[previous current impediments notes]</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Values must be #{order.join{&#39;, &#39;}}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">array</span>.<span class="ruby-identifier">sort</span>
@@ -1275,7 +1294,7 @@
 
           
           <div class="method-source-code" id="load-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 420</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 430</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
 
@@ -1358,7 +1377,7 @@
 
           
           <div class="method-source-code" id="sub_header_order-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 391</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 401</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order</span>
   <span class="ruby-ivar">@sub_header_order</span>.<span class="ruby-identifier">dup</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1393,7 +1412,7 @@
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 399</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 409</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span>, <span class="ruby-identifier">s_heads</span><span class="ruby-operator">|</span>
