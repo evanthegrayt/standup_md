@@ -6,7 +6,7 @@ require_relative '../standup_md'
 class StandupMD
   ##
   # Class for handing the command-line interface.
-  class CLI
+  class Cli
 
     ##
     # The user's preference file.

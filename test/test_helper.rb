@@ -50,12 +50,12 @@ module TestHelper
   end
 
   ##
-  # Creates instance of +CLI+.
+  # Creates instance of +Cli+.
   #
   # @param [Array] options Parsed by +getopts+
   #
-  # @return [StandupMD::CLI]
+  # @return [StandupMD::Cli]
   def cli(options = [])
-    StandupMD::CLI.new(options)
+    StandupMD::Cli.new(options)
   end
 end
