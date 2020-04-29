@@ -5,7 +5,8 @@ A highly customizable and automated way to keep track of daily standups in
 markdown files.
 
 View on: [Github](https://github.com/evanthegrayt/standup_md) |
-[GitHub Pages](https://evanthegrayt.github.io/standup_md/)
+[GitHub Pages](https://evanthegrayt.github.io/standup_md/) |
+[RubyGems](https://rubygems.org/gems/standup_md)
 
 ## Table of Contents
 - [About](#about)
@@ -46,10 +47,8 @@ Just install the gem!
 gem install standup_md
 ```
 
-[Here](https://rubygems.org/gems/standup_md) is the link to the gem's page.
-
 If you don't have permission on your system to install ruby or gems, I recommend
-using [rvm](https://rvm.io/) or
+using
 [rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html),
 or you can try the manual methods below.
 

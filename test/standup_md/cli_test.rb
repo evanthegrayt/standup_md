@@ -2,7 +2,7 @@ require_relative '../../lib/standup_md/cli'
 require_relative '../test_helper'
 
 ##
-# The test suite for +CLI+.
+# The test suite for +Cli+.
 class TestStandupMD < Test::Unit::TestCase
   include TestHelper
 
@@ -30,15 +30,15 @@ class TestStandupMD < Test::Unit::TestCase
   def test_PREFERENCE_FILE
     assert_equal(
       File.expand_path(File.join(ENV['HOME'], '.standup_md.yml')),
-      StandupMD::CLI::PREFERENCE_FILE
+      StandupMD::Cli::PREFERENCE_FILE
     )
   end
 
   ##
-  # The +execute+ method is the entry point for the CLI. It's parameter is an
+  # The +execute+ method is the entry point for the Cli. It's parameter is an
   # array of command-line flags
   def test_self_execute
-    assert_nothing_raised { StandupMD::CLI.execute(@options) }
+    assert_nothing_raised { StandupMD::Cli.execute(@options) }
   end
 
   ##
@@ -60,7 +60,7 @@ class TestStandupMD < Test::Unit::TestCase
   ##
   # The +initialize+ method should accept the same parameters as +exectute+.
   def test_initialize
-    assert_nothing_raised { StandupMD::CLI.new(@options) }
+    assert_nothing_raised { StandupMD::Cli.new(@options) }
   end
 
   ##
