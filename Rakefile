@@ -34,3 +34,11 @@ desc "Run test suite"
 task :test do
   Dir.glob(File.join(__dir__, 'test', '**', '*_test.rb')).each { |f| ruby f }
 end
+
+desc "Remove built gems from directory"
+task :clean do
+  Dir.glob('standup_md*.gem').each do |f|
+    puts "Removing #{f}"
+    FileUtils.rm(f)
+  end
+end
