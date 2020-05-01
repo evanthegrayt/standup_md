@@ -417,6 +417,7 @@ class StandupMD
           s_heads[sh].each { |task| f.puts bullet_character + ' ' + task }
         end
         f.puts
+        break if new_month?
       end
     end
     @file_written = true
@@ -450,6 +451,12 @@ class StandupMD
   #
   # @return [self]
   alias_method :reload, :load
+
+  ##
+  # Is today a different month than the previous entry?
+  def new_month?
+    file != previous_file
+  end
 
   private
 
