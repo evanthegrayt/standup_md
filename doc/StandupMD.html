@@ -116,6 +116,8 @@
     
     <li ><a href="#method-i-load">#load</a>
     
+    <li ><a href="#method-i-new_month-3F">#new_month?</a>
+    
     <li ><a href="#method-i-notes-3D">#notes=</a>
     
     <li ><a href="#method-i-previous_entry_tasks-3D">#previous_entry_tasks=</a>
@@ -1294,7 +1296,7 @@
 
           
           <div class="method-source-code" id="load-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 430</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 431</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
 
@@ -1320,6 +1322,39 @@
         <div class="aliases">
           Also aliased as: <a href="StandupMD.html#method-i-reload">reload</a>
         </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-new_month-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new_month?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Is today a different month than the previous entry?</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new_month-3F-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 457</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_month?</span>
+  <span class="ruby-identifier">file</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">previous_file</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
         
 
         
@@ -1424,6 +1459,7 @@
         <span class="ruby-identifier">s_heads</span>[<span class="ruby-identifier">sh</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">task</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">bullet_character</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">task</span> }
       <span class="ruby-keyword">end</span>
       <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-ivar">@file_written</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_month?</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-ivar">@file_written</span> = <span class="ruby-keyword">true</span>

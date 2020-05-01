@@ -88,7 +88,7 @@ class TestCli < Test::Unit::TestCase
 
   ##
   # False by default. True if flag is passed.
-  def test_print_current_empty?
+  def test_print_current_entry?
     c = cli
     refute(c.print_current_entry?)
 
