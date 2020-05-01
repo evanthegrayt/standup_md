@@ -27,7 +27,7 @@ end
 
 desc "Uninstall the gem"
 task :uninstall do
-  system('gem uninstall standup')
+  system('gem uninstall standup_md')
 end
 
 desc "Run test suite"
