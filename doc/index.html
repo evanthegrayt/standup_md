@@ -250,7 +250,7 @@ sub_header_order:
 
 <p>Below are some quick examples, but the API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/index.html">documentation</a>.</p>
 
-<p>This was mainly written as a command line utility, but I made the API available for scripting. There are attribute accessors for most of the settings in the <a href="#customization-and-runtime-options">customization table</a> above. To view all available methods, read the comments in the <a href="lib/standup_md.rb">source</a>. A quick-and-dirty example of how to write a new entry via code could look like the following:</p>
+<p>This was mainly written as a command line utility, but I made the API available for scripting. There are attribute accessors for most of the settings in the <a href="#customization-and-runtime-options">customization table</a> above. A quick example of how to write a new entry via code could look like the following:</p>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
 
@@ -263,13 +263,16 @@ sub_header_order:
 <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
 </pre>
 
+<p>Note: <code>::load({...})</code> just is a quick way to call <code>StandupMD.new {...}.load</code>.</p>
+
 <p>Entries are just hashes, so you can easily transform them to <code>json</code> objects.</p>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
 <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;json&#39;</span>
 
 <span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>
-<span class="ruby-identifier">standup_entries_as_json</span> = <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
+
+<span class="ruby-identifier">standup_json</span> = <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
 </pre>
 
 <h2 id="label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features<span><a href="#label-Reporting+Bugs+and+Requesting+Features">&para;</a> <a href="#top">&uarr;</a></span></h2>

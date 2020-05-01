@@ -204,9 +204,8 @@ Below are some quick examples, but the API is fully documented in the
 
 This was mainly written as a command line utility, but I made the API available
 for scripting. There are attribute accessors for most of the settings in the
-[customization table](#customization-and-runtime-options) above. To view all
-available methods, read the comments in the [source](lib/standup_md.rb). A
-quick-and-dirty example of how to write a new entry via code could look like the
+[customization table](#customization-and-runtime-options) above. A
+quick example of how to write a new entry via code could look like the
 following:
 
 ```ruby
@@ -220,6 +219,7 @@ standup = StandupMD.load(
 
 standup.write
 ```
+Note: `::load({...})` just is a quick way to call `StandupMD.new {...}.load`.
 
 Entries are just hashes, so you can easily transform them to `json` objects.
 
@@ -228,7 +228,8 @@ require 'standup_md'
 require 'json'
 
 standup = StandupMD.load
-standup_entries_as_json = standup.all_entries.to_json
+
+standup_json = standup.all_entries.to_json
 ```
 
 ## Reporting Bugs and Requesting Features
