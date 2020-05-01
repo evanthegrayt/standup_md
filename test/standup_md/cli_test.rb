@@ -3,7 +3,7 @@ require_relative '../test_helper'
 
 ##
 # The test suite for +Cli+.
-class TestStandupMD < Test::Unit::TestCase
+class TestCli < Test::Unit::TestCase
   include TestHelper
 
   ##

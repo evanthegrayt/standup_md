@@ -88,17 +88,11 @@
     
     <li ><a href="#method-i-setup">#setup</a>
     
-    <li ><a href="#method-i-should_append-3F">#should_append?</a>
-    
     <li ><a href="#method-i-teardown">#teardown</a>
-    
-    <li ><a href="#method-i-test_PREFERENCE_FILE">#test_PREFERENCE_FILE</a>
     
     <li ><a href="#method-i-test_VERSION">#test_VERSION</a>
     
     <li ><a href="#method-i-test_all_previous_entries">#test_all_previous_entries</a>
-    
-    <li ><a href="#method-i-test_append_previous-3F">#test_append_previous?</a>
     
     <li ><a href="#method-i-test_bullet_character">#test_bullet_character</a>
     
@@ -111,10 +105,6 @@
     <li ><a href="#method-i-test_current_header">#test_current_header</a>
     
     <li ><a href="#method-i-test_directory">#test_directory</a>
-    
-    <li ><a href="#method-i-test_edit-3F">#test_edit?</a>
-    
-    <li ><a href="#method-i-test_editor">#test_editor</a>
     
     <li ><a href="#method-i-test_entry_previously_added-3F">#test_entry_previously_added?</a>
     
@@ -132,19 +122,11 @@
     
     <li ><a href="#method-i-test_impediments_header">#test_impediments_header</a>
     
-    <li ><a href="#method-i-test_initialize">#test_initialize</a>
-    
-    <li ><a href="#method-i-test_json-3F">#test_json?</a>
-    
     <li ><a href="#method-i-test_load">#test_load</a>
     
     <li ><a href="#method-i-test_notes">#test_notes</a>
     
     <li ><a href="#method-i-test_notes_header">#test_notes_header</a>
-    
-    <li ><a href="#method-i-test_options">#test_options</a>
-    
-    <li ><a href="#method-i-test_preferences">#test_preferences</a>
     
     <li ><a href="#method-i-test_previous_entry_tasks">#test_previous_entry_tasks</a>
     
@@ -156,27 +138,15 @@
     
     <li ><a href="#method-i-test_previous_header">#test_previous_header</a>
     
-    <li ><a href="#method-i-test_print_all_entries-3F">#test_print_all_entries?</a>
-    
-    <li ><a href="#method-i-test_print_current_empty-3F">#test_print_current_empty?</a>
-    
     <li ><a href="#method-i-test_reload">#test_reload</a>
     
-    <li ><a href="#method-i-test_self_execute">#test_self_execute</a>
-    
     <li ><a href="#method-i-test_setting_attributes_via_block">#test_setting_attributes_via_block</a>
-    
-    <li ><a href="#method-i-test_standup">#test_standup</a>
     
     <li ><a href="#method-i-test_sub_header_depth">#test_sub_header_depth</a>
     
     <li ><a href="#method-i-test_sub_header_order">#test_sub_header_order</a>
     
-    <li ><a href="#method-i-test_verbose-3F">#test_verbose?</a>
-    
     <li ><a href="#method-i-test_write">#test_write</a>
-    
-    <li ><a href="#method-i-test_write-3F">#test_write?</a>
     
   </ul>
 </div>
@@ -191,8 +161,6 @@
 
   <section class="description">
     
-<p>The test suite for <code>Cli</code>.</p>
-
 <p>The test suite for <code>StandupMD</code>.</p>
 
   </section>
@@ -233,57 +201,13 @@
 
           
           <div class="method-source-code" id="setup-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 12</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">setup</span>
   <span class="ruby-ivar">@workdir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">__dir__</span>, <span class="ruby-string">&#39;files&#39;</span>)
   <span class="ruby-ivar">@current_test_file</span> =
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%Y_%m.md&#39;</span>))
   <span class="ruby-ivar">@previous_month_test_file</span> =
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">prev_month</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&#39;%Y_%m.md&#39;</span>))
-  <span class="ruby-ivar">@options</span> = [<span class="ruby-string">&#39;--no-edit&#39;</span>, <span class="ruby-string">&#39;--no-write&#39;</span>, <span class="ruby-node">&quot;--directory=#{@workdir}&quot;</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-should_append-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">should_append?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>True only if <code>--no-append</code> and <code>--previous-entry-tasks</code> are passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="should_append-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 161</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">should_append?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">should_append?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>[<span class="ruby-string">&#39;--no-append&#39;</span>]
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">should_append?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;--no-append&#39;</span>, <span class="ruby-string">&#39;--previous-entry-tasks=&quot;test one&quot;,&quot;test two&quot;&#39;</span>])
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">should_append?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;--previous-entry-tasks=&quot;test one&quot;,&quot;test two&quot;&#39;</span>])
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">should_append?</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -314,46 +238,10 @@
 
           
           <div class="method-source-code" id="teardown-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 23</span>
+            <pre><span class="ruby-comment"># File test/standup_md_test.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">teardown</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-ivar">@workdir</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-ivar">@current_test_file</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-ivar">@current_test_file</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_PREFERENCE_FILE" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_PREFERENCE_FILE</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>The user&#39;s preference file is a string.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_PREFERENCE_FILE-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 30</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_PREFERENCE_FILE</span>
-  <span class="ruby-identifier">assert_equal</span>(
-    <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;HOME&#39;</span>], <span class="ruby-string">&#39;.standup_md.yml&#39;</span>)),
-    <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Cli</span><span class="ruby-operator">::</span><span class="ruby-constant">PREFERENCE_FILE</span>
-  )
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -425,43 +313,6 @@
     <span class="ruby-identifier">fixtures</span>[<span class="ruby-string">&#39;previous_entry_tasks&#39;</span>],
     <span class="ruby-identifier">su</span>.<span class="ruby-identifier">all_previous_entries</span>
   )
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_append_previous-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_append_previous?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>True by default. False if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_append_previous-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 151</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_append_previous?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">append_previous?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;--no-append-previous&#39;</span>])
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">append_previous?</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -688,86 +539,6 @@
   <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-string">&#39;TEST&#39;</span>) }
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-string">&#39;TEST&#39;</span>), <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
   <span class="ruby-identifier">assert</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>))
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_edit-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_edit?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>True by default. False if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_edit-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 141</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_edit?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">edit?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;--no-edit&#39;</span>])
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">edit?</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_editor" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_editor</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>The editor should be set by preferences, or env, or set to &#39;vim&#39;.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_editor-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 75</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_editor</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>], <span class="ruby-identifier">c</span>.<span class="ruby-identifier">editor</span>)
-  <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;EDITOR&#39;</span>]
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;EDITOR&#39;</span>], <span class="ruby-identifier">c</span>.<span class="ruby-identifier">editor</span>)
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;vim&#39;</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">editor</span>)
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;--editor=mate&#39;</span>])
-  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;mate&#39;</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">editor</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1079,76 +850,6 @@
       </div>
 
     
-      <div id="method-i-test_initialize" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_initialize</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>The <code>initialize</code> method should accept the same parameters as <code>exectute</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_initialize-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 62</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_initialize</span>
-  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Cli</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@options</span>) }
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_json-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_json?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>False by default. True if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_json-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 101</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_json?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">json?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;-j&#39;</span>])
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">json?</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
       <div id="method-i-test_load" class="method-detail ">
         
         <div class="method-heading">
@@ -1249,76 +950,6 @@
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Notes&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span>)
   <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span> = <span class="ruby-string">&#39;Remember&#39;</span> }
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;Remember&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">notes_header</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_options" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_options</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>The <code>options</code> should be an array of options passed from the command line.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_options-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 46</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_options</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>(<span class="ruby-ivar">@options</span>)
-  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@options</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">options</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_preferences" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_preferences</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>The <code>preferences</code> are the settings after <code>options</code> are parsed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_preferences-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 53</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_preferences</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>(<span class="ruby-ivar">@options</span>)
-  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-keyword">false</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-string">&#39;@write&#39;</span>))
-  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-keyword">false</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-string">&#39;@edit&#39;</span>))
-  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">preferences</span>[<span class="ruby-string">&#39;directory&#39;</span>])
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1518,80 +1149,6 @@
       </div>
 
     
-      <div id="method-i-test_print_all_entries-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_print_all_entries?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>False by default. True if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_print_all_entries-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 111</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_print_all_entries?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">print_all_entries?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;-a&#39;</span>])
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">print_all_entries?</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_print_current_empty-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_print_current_empty?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>False by default. True if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_print_current_empty-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 91</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_print_current_empty?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">print_current_entry?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;-c&#39;</span>])
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">print_current_entry?</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
       <div id="method-i-test_reload" class="method-detail ">
         
         <div class="method-heading">
@@ -1615,39 +1172,6 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_reload</span>
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_respond_to</span>(<span class="ruby-identifier">su</span>, <span class="ruby-value">:reload</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_self_execute" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_self_execute</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>The <code>execute</code> method is the entry point for the Cli. It&#39;s parameter is an array of command-line flags</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_self_execute-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 40</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_self_execute</span>
-  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Cli</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-ivar">@options</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1690,40 +1214,6 @@
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@workdir</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">directory</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;%y_%m.markdown&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">file_name_format</span>)
   <span class="ruby-identifier">assert_equal</span>(<span class="ruby-string">&#39;*&#39;</span>, <span class="ruby-identifier">su</span>.<span class="ruby-identifier">bullet_character</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_standup" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_standup</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Creates the instance of <code>StandupMD</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_standup-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 68</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_standup</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">StandupMD</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">standup</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1814,43 +1304,6 @@
       </div>
 
     
-      <div id="method-i-test_verbose-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_verbose?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>False by default. True if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_verbose-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 121</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_verbose?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">verbose?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;-v&#39;</span>])
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">verbose?</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
       <div id="method-i-test_write" class="method-detail ">
         
         <div class="method-heading">
@@ -1875,43 +1328,6 @@
   <span class="ruby-identifier">su</span> = <span class="ruby-identifier">standup</span>(<span class="ruby-ivar">@workdir</span>)
   <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">su</span>.<span class="ruby-identifier">write</span> }
   <span class="ruby-identifier">assert</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-ivar">@current_test_file</span>))
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-test_write-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">test_write?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>True by default. False if flag is passed.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="test_write-3F-source">
-            <pre><span class="ruby-comment"># File test/standup_md/cli_test.rb, line 131</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">test_write?</span>
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>
-  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">write?</span>)
-
-  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cli</span>([<span class="ruby-string">&#39;--no-write&#39;</span>])
-  <span class="ruby-identifier">refute</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">write?</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

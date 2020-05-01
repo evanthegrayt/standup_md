@@ -34,7 +34,7 @@ class StandupMD
     ##
     # Preferences after reading config file and parsing ARGV.
     #
-    # @return [Array] ARGV
+    # @return [Array]
     attr_reader :preferences
 
     ##
