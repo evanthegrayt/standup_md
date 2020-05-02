@@ -15,6 +15,7 @@ class TestStandupMD < Test::Unit::TestCase
       File.join(@workdir, Date.today.strftime('%Y_%m.md'))
     @previous_month_test_file =
       File.join(@workdir, Date.today.prev_month.strftime('%Y_%m.md'))
+    @test_config = File.join(@workdir, 'standup_md.yml')
   end
 
   ##
@@ -29,9 +30,12 @@ class TestStandupMD < Test::Unit::TestCase
   # instance of itself.
   def test_class_load
     assert_nothing_raised do
-      StandupMD.load({directory: @workdir, bullet_character: '*'})
+      StandupMD.load { |s| s.directory = @workdir }
     end
-    su = StandupMD.load({directory: @workdir, bullet_character: '*'})
+    su = StandupMD.load do |s|
+      s.directory = @workdir
+      s.bullet_character = '*'
+    end
     assert_equal(@workdir, su.directory)
     assert_instance_of(StandupMD, su)
   end
@@ -208,19 +212,21 @@ class TestStandupMD < Test::Unit::TestCase
   end
 
   ##
-  # Should be an integer between +1..5+, but not higher than +sub_header_depth+.
+  # Should be an integer between +1..5+. If higher than +sub_header_depth+,
+  # +sub_header_depth+ should be changed.
   def test_header_depth
-    su = standup(@workdir, sub_header_depth: 4)
+    su = standup(@workdir)
     assert_equal(1, su.header_depth)
     assert_raise { su.header_depth = 6 }
     assert_raise { su.header_depth = 0 }
-    assert_raise { su.header_depth = 5 }
     assert_nothing_raised { su.header_depth = 3 }
     assert_equal(3, su.header_depth)
+    assert_equal(4, su.sub_header_depth)
   end
 
   ##
-  # Should be an integer between +2..6+, but not lower than +header_depth+.
+  # Should be an integer between +2..6+. If lower than +header_depth+,
+  # +header_depth+ should be changed.
   def test_sub_header_depth
     su = standup(@workdir)
     assert_equal(2, su.sub_header_depth)
@@ -228,6 +234,11 @@ class TestStandupMD < Test::Unit::TestCase
     assert_raise { su.sub_header_depth = 7 }
     assert_nothing_raised { su.sub_header_depth = 6 }
     assert_equal(6, su.sub_header_depth)
+    assert_nothing_raised { su.header_depth = 3 }
+    assert_equal(3, su.header_depth)
+    assert_nothing_raised { su.sub_header_depth = 3 }
+    assert_equal(3, su.sub_header_depth)
+    assert_equal(2, su.header_depth)
   end
 
   ##
@@ -334,5 +345,49 @@ class TestStandupMD < Test::Unit::TestCase
     assert_nil(su.instance_variable_get('@today'))
     assert_nothing_raised { su.load }
     refute_nil(su.instance_variable_get('@today'))
+  end
+
+  ##
+  # Should be false until config file is loaded.
+  def test_config_file_loaded?
+    su = standup(@workdir)
+    refute(su.config_file_loaded?)
+    assert_raise { su.load_config_file }
+
+    create_config_file(@test_config)
+    su = StandupMD.new(@test_config) { |s| s.directory = @workdir }
+    assert_nothing_raised { su.load_config_file }
+    assert(su.config_file_loaded?)
+  end
+
+  ##
+  # Config should be a hash, and populated if +config_file+ is loaded.
+  def test_config
+    su = standup(@workdir)
+    create_config_file(@test_config)
+    assert_empty(su.config)
+    assert_nothing_raised { su.config_file = @test_config }
+    assert_nothing_raised { su.load_config_file }
+    assert_equal({'impediments' => ['NONE']}, su.config)
+  end
+
+  ##
+  # Config file should be settable and gettable.
+  def test_config_file
+    su = standup(@workdir)
+    assert_nil(su.config_file)
+    assert_nothing_raised { su.config_file = @test_config }
+    assert_equal(@test_config, su.config_file)
+  end
+
+  ##
+  # Should raise if +config_file+ wasn't set or if file doesn't exist.
+  def test_load_config_file
+    assert_raise { StandupMD.new(@test_config) { |s| s.directory = @workdir } }
+    su = standup(@workdir)
+    assert_nothing_raised { su.config_file = @test_config }
+    assert_raise { su.load_config_file }
+    create_config_file(@test_config)
+    assert_nothing_raised { su.load_config_file }
   end
 end

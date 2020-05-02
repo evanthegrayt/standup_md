@@ -71,12 +71,6 @@
     
       <li><a href="#Attributes+with+default+getters+and+setters.">Attributes with default getters and setters.</a></li>
     
-      <li><a href="#Booleans">Booleans</a></li>
-    
-      <li><a href="#Custom+setters">Custom setters</a></li>
-    
-      <li><a href="#Misc">Misc</a></li>
-    
   </ul>
 </div>
 
@@ -102,6 +96,10 @@
     
     <li ><a href="#method-i-bullet_character-3D">#bullet_character=</a>
     
+    <li ><a href="#method-i-config_file-3D">#config_file=</a>
+    
+    <li ><a href="#method-i-config_file_loaded-3F">#config_file_loaded?</a>
+    
     <li ><a href="#method-i-current_entry_tasks-3D">#current_entry_tasks=</a>
     
     <li ><a href="#method-i-directory-3D">#directory=</a>
@@ -115,6 +113,8 @@
     <li ><a href="#method-i-impediments-3D">#impediments=</a>
     
     <li ><a href="#method-i-load">#load</a>
+    
+    <li ><a href="#method-i-load_config_file">#load_config_file</a>
     
     <li ><a href="#method-i-new_month-3F">#new_month?</a>
     
@@ -175,7 +175,7 @@
         
         <div class="method-heading">
           <span class="method-name">load</span><span
-            class="method-args">(attributes = {})</span>
+            class="method-args">(config_file = nil) { |s| ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -184,9 +184,9 @@
 
         <div class="method-description">
           
-          <p>Convenience method for calling <code>new</code> + <code>load</code></p>
+          <p>Convenience method for calling <code>new</code> + <code>load</code>. Accepts a <code>YAML</code> config file as an argument, and yields the standup instance if a block is given.</p>
 
-<p>@param [Hash] attributes Attributes to set before loading.</p>
+<p>@param [String] <a href="StandupMD.html#attribute-i-config_file"><code>config_file</code></a> File path to config file.</p>
 
 <p>@example</p>
 
@@ -197,14 +197,11 @@
 
           
           <div class="method-source-code" id="load-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 21</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load</span>(<span class="ruby-identifier">attributes</span> = {})
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">k</span>)
-      <span class="ruby-identifier">s</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">load</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load</span>(<span class="ruby-identifier">config_file</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">config_file</span>)
+  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">s</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">load</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -254,6 +251,36 @@
         <p>Character used as bullets for list entries.</p>
 
 <p>@return [String] either - (dash) or * (asterisk)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-config" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">config</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The options from <code>config_file</code> as a hash.</p>
+
+<p>@return [Hash] Options from <code>config_file</code></p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-config_file" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">config_file</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The configuration file. Default is <code>nil</code>. If set to a string, and the file exists, it is used to set options.</p>
+
+<p>@return [String] file path</p>
         
         </div>
       </div>
@@ -505,7 +532,7 @@
 
         <div class="method-description">
         
-        <p>The file that contains previous entries. When last month&#39;s file exists, but this month&#39;s doesn&#39;t or is empty, <a href="StandupMD.html#attribute-i-previous_file"><code>previous_file</code></a> should equal last month&#39;s file.</p>
+        <p>The file that contains the previous entry. If previous entry was same month, <a href="StandupMD.html#attribute-i-previous_file"><code>previous_file</code></a> will be the same as file. If previous entry was last month, and a file exists for last month, <a href="StandupMD.html#attribute-i-previous_file"><code>previous_file</code></a> is last month&#39;s file. If neither is true, returns an empty string.</p>
 
 <p>@return [String]</p>
 
@@ -555,6 +582,26 @@
 
     
 
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="VERSION">VERSION
+        
+        <dd><p>The gem verision</p>
+
+<p>@example</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">VERSION</span>
+<span class="ruby-comment"># =&gt; &#39;0.1.3&#39;</span>
+</pre>
+        
+      
+      </dl>
+    </section>
     
 
     
@@ -680,7 +727,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">() { |self| ... }</span>
+            class="method-args">(config_file = nil) { |self| ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -689,13 +736,15 @@
 
         <div class="method-description">
           
-          <p>Constructor. Yields the instance so you can pass a block to access setters.</p>
+          <p>Constructor. Takes a path to a <code>YAML</code> configuration file as an argument. If passed, settings from the config file will be set. After <code>config_file</code> is loaded, yields <code>self</code> so you can pass a block to access setters, overwriting settings from <code>config_file</code>.</p>
+
+<p>@param [String] <a href="StandupMD.html#attribute-i-config_file"><code>config_file</code></a> The config file, if any, to load.</p>
 
 <p>@return [self]</p>
 
 <p>@example</p>
 
-<pre class="ruby"><span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+<pre class="ruby"><span class="ruby-identifier">su</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;~/.standup_md.yml&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-ivar">@workdir</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">file_name_format</span> = <span class="ruby-string">&#39;%y_%m.markdown&#39;</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">bullet_character</span> = <span class="ruby-string">&#39;*&#39;</span>
@@ -706,8 +755,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 233</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 250</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">config_file</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@config</span> = {}
   <span class="ruby-ivar">@notes</span> = []
   <span class="ruby-ivar">@header_depth</span> = <span class="ruby-value">1</span>
   <span class="ruby-ivar">@sub_header_depth</span> = <span class="ruby-value">2</span>
@@ -722,6 +772,10 @@
   <span class="ruby-ivar">@impediments_header</span> = <span class="ruby-string">&#39;Impediments&#39;</span>
   <span class="ruby-ivar">@notes_header</span> = <span class="ruby-string">&#39;Notes&#39;</span>
   <span class="ruby-ivar">@sub_header_order</span> = <span class="ruby-node">%w[previous current impediments notes]</span>
+  <span class="ruby-ivar">@config_file_loaded</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@config_file</span> = <span class="ruby-identifier">config_file</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">config_file</span>)
+
+  <span class="ruby-identifier">load_config_file</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config_file</span>
 
   <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -737,31 +791,197 @@
     
     </section>
   
-  </section>
-
-  <section id="Booleans" class="documentation-section">
-    
-    <header class="documentation-section-title">
-      <h2>
-        Booleans
-      </h2>
-      <span class="section-click-top">
-        <a href="#top">&uarr; top</a>
-      </span>
-    </header>
-    
-
-    
-
-    
-
-    
-
-    
-     <section id="public-instance-Booleans-method-details" class="method-section">
+     <section id="public-instance-Attributes+with+default+getters+and+setters.-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
+
+    
+      <div id="method-i-bullet_character-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bullet_character=</span><span
+            class="method-args">(character)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Setter for bullet_character. Must be * (asterisk) or - (dash).</p>
+
+<p>@param [String] character</p>
+
+<p>@return [String]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="bullet_character-3D-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 356</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bullet_character=</span>(<span class="ruby-identifier">character</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be &quot;-&quot; or &quot;*&quot;&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-node">%w[- *]</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">character</span>)
+  <span class="ruby-ivar">@bullet_character</span> = <span class="ruby-identifier">character</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-config_file-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">config_file=</span><span
+            class="method-args">(config_file)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Setter for directory. Must be expanded in case the user uses `~` for home. If the directory doesn&#39;t exist, it will be created. To reset instance variables after changing the directory, you&#39;ll need to call load.</p>
+
+<p>@param [String] file</p>
+
+<p>@return [String]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="config_file-3D-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 369</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">config_file=</span>(<span class="ruby-identifier">config_file</span>)
+  <span class="ruby-ivar">@config_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">config_file</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-config_file_loaded-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">config_file_loaded?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Has a config file been loaded?</p>
+
+<p>@return [Boolean]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="config_file_loaded-3F-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 278</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">config_file_loaded?</span>
+  <span class="ruby-ivar">@config_file_loaded</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-current_entry_tasks-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">current_entry_tasks=</span><span
+            class="method-args">(tasks)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Setter for current entry tasks.</p>
+
+<p>@param [Array] tasks</p>
+
+<p>@return [Array]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="current_entry_tasks-3D-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 334</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_entry_tasks=</span>(<span class="ruby-identifier">tasks</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+  <span class="ruby-ivar">@current_entry_tasks</span> = <span class="ruby-identifier">tasks</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-directory-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">directory=</span><span
+            class="method-args">(directory)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Setter for directory. Must be expanded in case the user uses `~` for home. If the directory doesn&#39;t exist, it will be created. To reset instance variables after changing the directory, you&#39;ll need to call load.</p>
+
+<p>@param [String] directory</p>
+
+<p>@return [String]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="directory-3D-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 381</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
+  <span class="ruby-identifier">directory</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>)
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
+  <span class="ruby-ivar">@directory</span> = <span class="ruby-identifier">directory</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-entry_previously_added-3F" class="method-detail ">
@@ -785,7 +1005,7 @@
 
           
           <div class="method-source-code" id="entry_previously_added-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 275</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 302</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">entry_previously_added?</span>
   <span class="ruby-ivar">@entry_previously_added</span>
 <span class="ruby-keyword">end</span></pre>
@@ -830,154 +1050,9 @@
 
           
           <div class="method-source-code" id="file_written-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 267</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 294</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">file_written?</span>
   <span class="ruby-ivar">@file_written</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-    </section>
-  
-  </section>
-
-  <section id="Custom+setters" class="documentation-section">
-    
-    <header class="documentation-section-title">
-      <h2>
-        Custom setters
-      </h2>
-      <span class="section-click-top">
-        <a href="#top">&uarr; top</a>
-      </span>
-    </header>
-    
-
-    
-
-    
-
-    
-
-    
-     <section id="public-instance-Custom+setters-method-details" class="method-section">
-       <header>
-         <h3>Public Instance Methods</h3>
-       </header>
-
-    
-      <div id="method-i-bullet_character-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">bullet_character=</span><span
-            class="method-args">(character)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Setter for bullet_character. Must be * (asterisk) or - (dash).</p>
-
-<p>@param [String] character</p>
-
-<p>@return [String]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="bullet_character-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 332</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bullet_character=</span>(<span class="ruby-identifier">character</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be &quot;-&quot; or &quot;*&quot;&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-node">%w[- *]</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">character</span>)
-  <span class="ruby-ivar">@bullet_character</span> = <span class="ruby-identifier">character</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-current_entry_tasks-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">current_entry_tasks=</span><span
-            class="method-args">(tasks)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Setter for current entry tasks.</p>
-
-<p>@param [Array] tasks</p>
-
-<p>@return [Array]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="current_entry_tasks-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 310</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_entry_tasks=</span>(<span class="ruby-identifier">tasks</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
-  <span class="ruby-ivar">@current_entry_tasks</span> = <span class="ruby-identifier">tasks</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-directory-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">directory=</span><span
-            class="method-args">(directory)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Setter for directory. Must be expanded in case the user uses `~` for home. If the directory doesn&#39;t exist, it will be created. To reset instance variables after changing the directory, you&#39;ll need to call load.</p>
-
-<p>@param [String] directory</p>
-
-<p>@return [String]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="directory-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 345</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
-  <span class="ruby-comment"># TODO test this</span>
-  <span class="ruby-identifier">directory</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>)
-  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
-  <span class="ruby-ivar">@directory</span> = <span class="ruby-identifier">directory</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1012,12 +1087,12 @@
 
           
           <div class="method-source-code" id="header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 358</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 393</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">1</span>, <span class="ruby-value">5</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Header depth out of bounds (1..5)&#39;</span>
   <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">sub_header_depth</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;header_depth must be larger than sub_header_depth&#39;</span>
+    <span class="ruby-ivar">@sub_header_depth</span> = <span class="ruby-identifier">depth</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-ivar">@header_depth</span> = <span class="ruby-identifier">depth</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1054,10 +1129,135 @@
 
           
           <div class="method-source-code" id="impediments-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 321</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 345</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">impediments=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@impediments</span> = <span class="ruby-identifier">tasks</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-load" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets internal instance variables. Called when first instantiated, or after directory is set.</p>
+
+<p>@return [self]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 475</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
+
+  <span class="ruby-ivar">@today</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+  <span class="ruby-ivar">@header</span> = <span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">header_date_format</span>)
+  <span class="ruby-ivar">@file_written</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">file_name_format</span>)))
+  <span class="ruby-ivar">@previous_file</span> = <span class="ruby-identifier">get_previous_file</span>
+  <span class="ruby-ivar">@all_previous_entries</span> = <span class="ruby-identifier">get_all_previous_entries</span>
+  <span class="ruby-ivar">@entry_previously_added</span> = <span class="ruby-identifier">all_previous_entries</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">header</span>)
+  <span class="ruby-ivar">@previous_entry_tasks</span> = <span class="ruby-identifier">previous_entry</span>[<span class="ruby-identifier">current_header</span>]
+  <span class="ruby-ivar">@current_entry</span> = <span class="ruby-ivar">@all_previous_entries</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">header</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">new_entry</span>
+  <span class="ruby-ivar">@all_entries</span> = {<span class="ruby-identifier">header</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">current_entry</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">all_previous_entries</span>)
+
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-identifier">file</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">file</span>)
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="StandupMD.html#method-i-reload">reload</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-load_config_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_config_file</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Loads the config file</p>
+
+<p>@return [Hash] The config options</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_config_file-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 441</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_config_file</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;No config file set&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File #{config_file} does not exist&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">config_file</span>)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">config_file</span>)
+  <span class="ruby-ivar">@config_file_loaded</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-new_month-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new_month?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Is today a different month than the previous entry?</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new_month-3F-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 501</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_month?</span>
+  <span class="ruby-identifier">file</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">previous_file</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1092,7 +1292,7 @@
 
           
           <div class="method-source-code" id="notes-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 299</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 323</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">notes=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@notes</span> = <span class="ruby-identifier">tasks</span>
@@ -1130,226 +1330,10 @@
 
           
           <div class="method-source-code" id="previous_entry_tasks-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 288</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 312</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">previous_entry_tasks=</span>(<span class="ruby-identifier">tasks</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
   <span class="ruby-ivar">@previous_entry_tasks</span> = <span class="ruby-identifier">tasks</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-sub_header_depth-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">sub_header_depth=</span><span
-            class="method-args">(depth)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Number of octothorps (#) to use before sub headers (Current, Previous, etc).</p>
-
-<p>@param [Integer] depth</p>
-
-<p>@return [Integer]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="sub_header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 373</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_depth=</span>(<span class="ruby-identifier">depth</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">2</span>, <span class="ruby-value">6</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Sub-header depth out of bounds (2..6)&#39;</span>
-  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">header_depth</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;sub_header_depth must be smaller than header_depth&#39;</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-ivar">@sub_header_depth</span> = <span class="ruby-identifier">depth</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-sub_header_order-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">sub_header_order=</span><span
-            class="method-args">(array)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Preferred order for sub-headers.</p>
-
-<p>@param [Array] Values must be %w[previous current impediment notes]</p>
-
-<p>@return [Array]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="sub_header_order-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 388</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order=</span>(<span class="ruby-identifier">array</span>)
-  <span class="ruby-identifier">order</span> = <span class="ruby-node">%w[previous current impediments notes]</span>
-  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Values must be #{order.join{&#39;, &#39;}}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">array</span>.<span class="ruby-identifier">sort</span>
-  <span class="ruby-ivar">@sub_header_order</span> = <span class="ruby-identifier">array</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-    </section>
-  
-  </section>
-
-  <section id="Misc" class="documentation-section">
-    
-    <header class="documentation-section-title">
-      <h2>
-        Misc
-      </h2>
-      <span class="section-click-top">
-        <a href="#top">&uarr; top</a>
-      </span>
-    </header>
-    
-
-    
-
-    
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="VERSION">VERSION
-        
-        <dd><p>The gem verision</p>
-
-<p>@example</p>
-
-<pre class="ruby"><span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">VERSION</span>
-<span class="ruby-comment"># =&gt; &#39;0.1.3&#39;</span>
-</pre>
-        
-      
-      </dl>
-    </section>
-    
-
-    
-
-    
-     <section id="public-instance-Misc-method-details" class="method-section">
-       <header>
-         <h3>Public Instance Methods</h3>
-       </header>
-
-    
-      <div id="method-i-load" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">load</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Sets internal instance variables. Called when first instantiated, or after directory is set.</p>
-
-<p>@return [self]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="load-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 431</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>
-  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
-
-  <span class="ruby-ivar">@today</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
-  <span class="ruby-ivar">@header</span> = <span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">header_date_format</span>)
-  <span class="ruby-ivar">@file_written</span> = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">today</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">file_name_format</span>)))
-  <span class="ruby-ivar">@previous_file</span> = <span class="ruby-identifier">get_previous_file</span>
-  <span class="ruby-ivar">@all_previous_entries</span> = <span class="ruby-identifier">get_all_previous_entries</span>
-  <span class="ruby-ivar">@entry_previously_added</span> = <span class="ruby-identifier">all_previous_entries</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">header</span>)
-  <span class="ruby-ivar">@previous_entry_tasks</span> = <span class="ruby-identifier">previous_entry</span>[<span class="ruby-identifier">current_header</span>]
-  <span class="ruby-ivar">@current_entry</span> = <span class="ruby-ivar">@all_previous_entries</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">header</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">new_entry</span>
-  <span class="ruby-ivar">@all_entries</span> = {<span class="ruby-identifier">header</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">current_entry</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">all_previous_entries</span>)
-
-  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-identifier">file</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">file</span>)
-  <span class="ruby-keyword">self</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-        <div class="aliases">
-          Also aliased as: <a href="StandupMD.html#method-i-reload">reload</a>
-        </div>
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-new_month-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">new_month?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Is today a different month than the previous entry?</p>
-          
-          
-
-          
-          <div class="method-source-code" id="new_month-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 457</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_month?</span>
-  <span class="ruby-identifier">file</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">previous_file</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1391,6 +1375,48 @@
       </div>
 
     
+      <div id="method-i-sub_header_depth-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sub_header_depth=</span><span
+            class="method-args">(depth)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Number of octothorps (#) to use before sub headers (Current, Previous, etc).</p>
+
+<p>@param [Integer] depth</p>
+
+<p>@return [Integer]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sub_header_depth-3D-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 408</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_depth=</span>(<span class="ruby-identifier">depth</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">2</span>, <span class="ruby-value">6</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Sub-header depth out of bounds (2..6)&#39;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">header_depth</span>
+    <span class="ruby-ivar">@header_depth</span> = <span class="ruby-identifier">depth</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@sub_header_depth</span> = <span class="ruby-identifier">depth</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-sub_header_order" class="method-detail ">
         
         <div class="method-heading">
@@ -1412,9 +1438,48 @@
 
           
           <div class="method-source-code" id="sub_header_order-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 401</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 433</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order</span>
   <span class="ruby-ivar">@sub_header_order</span>.<span class="ruby-identifier">dup</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-sub_header_order-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sub_header_order=</span><span
+            class="method-args">(array)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Preferred order for sub-headers.</p>
+
+<p>@param [Array] Values must be %w[previous current impediment notes]</p>
+
+<p>@return [Array]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sub_header_order-3D-source">
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 423</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order=</span>(<span class="ruby-identifier">array</span>)
+  <span class="ruby-identifier">order</span> = <span class="ruby-node">%w[previous current impediments notes]</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Values must be #{order.join{&#39;, &#39;}}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">array</span>.<span class="ruby-identifier">sort</span>
+  <span class="ruby-ivar">@sub_header_order</span> = <span class="ruby-identifier">array</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1447,7 +1512,7 @@
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 409</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 453</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span>, <span class="ruby-identifier">s_heads</span><span class="ruby-operator">|</span>

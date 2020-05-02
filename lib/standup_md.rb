@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'yaml'
 require 'date'
 require 'fileutils'
 require_relative 'standup_md/version'
@@ -12,19 +12,17 @@ require_relative 'standup_md/version'
 class StandupMD
 
   ##
-  # Convenience method for calling +new+ + +load+
+  # Convenience method for calling +new+ + +load+. Accepts a +YAML+ config file
+  # as an argument, and yields the standup instance if a block is given.
   #
-  # @param [Hash] attributes Attributes to set before loading.
+  # @param [String] config_file File path to config file.
   #
   # @example
   #   su = StandupMD.load(bullet_character: '*')
-  def self.load(attributes = {})
-    self.new do |s|
-      attributes.each do |k, v|
-        next unless s.respond_to?(k)
-        s.send("#{k}=", v)
-      end
-    end.load
+  def self.load(config_file = nil)
+    s = new(config_file)
+    yield s if block_given?
+    s.load
   end
 
   # :section: Attributes that aren't settable by user, but are gettable.
@@ -48,9 +46,10 @@ class StandupMD
   attr_reader :file
 
   ##
-  # The file that contains previous entries. When last month's file exists, but
-  # this month's doesn't or is empty, previous_file should equal last month's
-  # file.
+  # The file that contains the previous entry. If previous entry was same month,
+  # previous_file will be the same as file. If previous entry was last month,
+  # and a file exists for last month, previous_file is last month's file.
+  # If neither is true, returns an empty string.
   #
   # @return [String]
   #
@@ -111,6 +110,19 @@ class StandupMD
   attr_reader :all_entries
 
   # :section: Attributes that are settable by the user, but have custom setters.
+
+  ##
+  # The configuration file. Default is +nil+. If set to a string, and the file
+  # exists, it is used to set options.
+  #
+  # @return [String] file path
+  attr_reader :config_file
+
+  ##
+  # The options from +config_file+ as a hash.
+  #
+  # @return [Hash] Options from +config_file+
+  attr_reader :config
 
   ##
   # The directory where the markdown files are kept.
@@ -220,17 +232,23 @@ class StandupMD
   attr_accessor :notes_header
 
   ##
-  # Constructor. Yields the instance so you can pass a block to access setters.
+  # Constructor. Takes a path to a +YAML+ configuration file as an argument. If
+  # passed, settings from the config file will be set. After +config_file+ is
+  # loaded, yields +self+ so you can pass a block to access setters,
+  # overwriting settings from +config_file+.
+  #
+  # @param [String] config_file The config file, if any, to load.
   #
   # @return [self]
   #
   # @example
-  #   su = StandupMD.new do |s|
+  #   su = StandupMD.new('~/.standup_md.yml') do |s|
   #     s.directory = @workdir
   #     s.file_name_format = '%y_%m.markdown'
   #     s.bullet_character = '*'
   #   end
-  def initialize
+  def initialize(config_file = nil)
+    @config = {}
     @notes = []
     @header_depth = 1
     @sub_header_depth = 2
@@ -245,12 +263,21 @@ class StandupMD
     @impediments_header = 'Impediments'
     @notes_header = 'Notes'
     @sub_header_order = %w[previous current impediments notes]
+    @config_file_loaded = false
+    @config_file = config_file && File.expand_path(config_file)
+
+    load_config_file if config_file
 
     yield self if block_given?
   end
 
-  # :section: Booleans
-  # Helper methods for booleans.
+  ##
+  # Has a config file been loaded?
+  #
+  # @return [Boolean]
+  def config_file_loaded?
+    @config_file_loaded
+  end
 
   ##
   # Has the file been written since instantiated?
@@ -275,9 +302,6 @@ class StandupMD
   def entry_previously_added?
     @entry_previously_added
   end
-
-  # :section: Custom setters
-  # Setters that required validations.
 
   ##
   # Setter for current entry tasks.
@@ -339,11 +363,22 @@ class StandupMD
   # If the directory doesn't exist, it will be created. To reset instance
   # variables after changing the directory, you'll need to call load.
   #
+  # @param [String] file
+  #
+  # @return [String]
+  def config_file=(config_file)
+    @config_file = File.expand_path(config_file)
+  end
+
+  ##
+  # Setter for directory. Must be expanded in case the user uses `~` for home.
+  # If the directory doesn't exist, it will be created. To reset instance
+  # variables after changing the directory, you'll need to call load.
+  #
   # @param [String] directory
   #
   # @return [String]
   def directory=(directory)
-    # TODO test this
     directory = File.expand_path(directory)
     FileUtils.mkdir_p(directory) unless File.directory?(directory)
     @directory = directory
@@ -359,7 +394,7 @@ class StandupMD
     if !depth.between?(1, 5)
       raise 'Header depth out of bounds (1..5)'
     elsif depth >= sub_header_depth
-      raise 'header_depth must be larger than sub_header_depth'
+      @sub_header_depth = depth + 1
     end
     @header_depth = depth
   end
@@ -374,7 +409,7 @@ class StandupMD
     if !depth.between?(2, 6)
       raise 'Sub-header depth out of bounds (2..6)'
     elsif depth <= header_depth
-      raise 'sub_header_depth must be smaller than header_depth'
+      @header_depth = depth - 1
     end
     @sub_header_depth = depth
   end
@@ -391,15 +426,24 @@ class StandupMD
     @sub_header_order = array
   end
 
-  # :section: Misc
-  # Misc.
-
   ##
   # Return a copy of the sub-header order so the user can't modify the array.
   #
   # @return [Array]
   def sub_header_order
     @sub_header_order.dup
+  end
+
+  ##
+  # Loads the config file
+  #
+  # @return [Hash] The config options
+  def load_config_file
+    raise 'No config file set' if config_file.nil?
+    raise "File #{config_file} does not exist" unless File.file?(config_file)
+    @config = YAML::load_file(config_file)
+    @config_file_loaded = true
+    @config.each { |k, v| send("#{k}=", v) }
   end
 
   ##
@@ -477,11 +521,6 @@ class StandupMD
     @today
   end
 
-  ##
-  # The file that contains the previous entry. If previous entry was same month,
-  # previous_file will be the same as file. If previous entry was last month,
-  # and a file exists for last month, previous_file is last month's file.
-  # If neither is true, returns an empty string.
   def get_previous_file # :nodoc:
     return file if File.file?(file) && !File.zero?(file)
     prev_month_file = File.expand_path(File.join(

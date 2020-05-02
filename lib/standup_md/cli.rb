@@ -1,5 +1,4 @@
 require 'json'
-require 'yaml'
 require 'optparse'
 require_relative '../standup_md'
 
@@ -58,8 +57,13 @@ class StandupMD
     #
     # @return [StandupMD]
     def standup
-      @standup ||= ::StandupMD.new do |s|
-        echo 'Runtime options:'
+      cf = File.file?(PREFERENCE_FILE) ? PREFERENCE_FILE : nil
+      @standup ||= ::StandupMD.new(cf) do |s|
+        if s.config.any?
+          echo 'Config options:'
+          s.config.each { |k, v| echo "  #{k} = #{v}" }
+        end
+        echo 'Runtime options:' if preferences.any?
         preferences.each do |k, v|
           echo "  #{k} = #{v}"
           s.send("#{k}=", v)
@@ -134,7 +138,7 @@ class StandupMD
     ##
     # Opens the file in an editor. Abandons the script.
     def edit
-      echo "  Opening file in #{editor}"
+      echo "Opening file in #{editor}"
       exec("#{editor} #{standup.file}")
     end
 
@@ -143,7 +147,7 @@ class StandupMD
     #
     # @return [Boolean] true if file was written
     def write_file
-      echo '  Writing file'
+      echo 'Writing file'
       standup.write
     end
 
@@ -295,7 +299,7 @@ class StandupMD
         end
       end.parse!(options)
 
-      (File.file?(PREFERENCE_FILE) ? YAML.load_file(PREFERENCE_FILE) : {}).merge(prefs)
+      prefs
     end
   end
 end
