@@ -271,8 +271,9 @@ end
 
 standup.write
 ```
-Note: `StandupMD::load() { ... }` just is a quick way to call `StandupMD::new
-{ ... }.load`.
+
+Note: `StandupMD::load { ... }` just is a quick way to call `StandupMD::new {
+... }.load`
 
 Entries are just hashes, so you can easily transform them to `json` objects.
 
