@@ -111,6 +111,8 @@
 </li><li>
 <p><a href="#customization-and-runtime-options">Customization and Runtime Options</a></p>
 </li><li>
+<p><a href="#using-existing-standup-files">Using existing standup files</a></p>
+</li><li>
 <p><a href="#api">API</a></p>
 </li><li>
 <p><a href="https://evanthegrayt.github.io/standup_md/doc/index.html">Documentation</a></p>
@@ -239,6 +241,43 @@ sub_header_order:
 <p>If you wanted to add some tasks at runtime, and without opening the file in an editor, you could use the following:</p>
 
 <pre>standup --no-edit --current-entry-tasks=&quot;Work on this thing&quot;,&quot;And another thing!&quot;</pre>
+
+<h3 id="label-Using+Existing+Standup+Files">Using Existing Standup Files<span><a href="#label-Using+Existing+Standup+Files">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>If you already have a directory of existing standup files, they must be in a format that the parser can understand. The default is:</p>
+
+<pre># 2020-05-01
+## Previous
+- task
+## Current
+- task
+## Impediments
+- impediment
+## Notes
+- notes, if any are present</pre>
+
+<p>The order, words, date format, and header level are all customizable, but the overall format must be the same. If customization is necessary, this must be done in <code>~/.standup_md.yml</code> before execution, or else the parser will error.</p>
+
+<p>For example, if you wanted the format to be as follows:</p>
+
+<pre>## 05/01/2020
+### Today
+- task
+### Yesterday
+- task
+### Hold-ups
+- impediment
+### Notes
+- notes, if any are present</pre>
+
+<p>Your <code>~/.standup_md.yml</code> should contain:</p>
+
+<pre>sub_header_depth:    3
+header_depth:        2
+current_header:      Today
+previous_header:     Yesterday
+impediments_header:  Hold-ups
+header_date_format:  &#39;%m/%d/%Y&#39;</pre>
 
 <h2 id="label-API">API<span><a href="#label-API">&para;</a> <a href="#top">&uarr;</a></span></h2>
 

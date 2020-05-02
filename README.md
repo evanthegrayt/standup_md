@@ -16,6 +16,7 @@ View on: [Github](https://github.com/evanthegrayt/standup_md) |
 - [Usage](#usage)
   - [Example](#example)
   - [Customization and Runtime Options](#customization-and-runtime-options)
+  - [Using existing standup files](#using-existing-standup-files)
 - [API](#api)
   - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
@@ -196,6 +197,51 @@ editor, you could use the following:
 
 ```bash
 standup --no-edit --current-entry-tasks="Work on this thing","And another thing!"
+```
+
+### Using Existing Standup Files
+If you already have a directory of existing standup files, they must be in a
+format that the parser can understand. The default is:
+
+```markdown
+# 2020-05-01
+## Previous
+- task
+## Current
+- task
+## Impediments
+- impediment
+## Notes
+- notes, if any are present
+```
+
+The order, words, date format, and header level are all customizable, but the
+overall format must be the same. If customization is necessary, this must be
+done in `~/.standup_md.yml` before execution, or else the parser will error.
+
+For example, if you wanted the format to be as follows:
+
+```markdown
+## 05/01/2020
+### Today
+- task
+### Yesterday
+- task
+### Hold-ups
+- impediment
+### Notes
+- notes, if any are present
+```
+
+Your `~/.standup_md.yml` should contain:
+
+```yaml
+sub_header_depth:    3
+header_depth:        2
+current_header:      Today
+previous_header:     Yesterday
+impediments_header:  Hold-ups
+header_date_format:  '%m/%d/%Y'
 ```
 
 ## API
