@@ -98,6 +98,7 @@ For example, if the standup entry from yesterday reads as follows:
 
 The following scaffolding will be added for current entry at the top of the
 file:
+
 ```markdown
 # 2020-04-14
 ## Previous
