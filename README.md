@@ -242,6 +242,12 @@ current_header:      Today
 previous_header:     Yesterday
 impediments_header:  Hold-ups
 header_date_format:  '%m/%d/%Y'
+sub_header_order:
+  - current
+  - previous
+  - impediments
+  - notes
+
 ```
 
 ## API
