@@ -177,7 +177,16 @@ ln -s $PWD/bin/standup /usr/local/bin/standup</pre>
 ## Impediments
 - None</pre>
 
-<p>The following scaffolding will be added for current entry at the top of the file: <code>markdown # 2020-04-14 ## Previous - Write new feature for `standup_md` - Fix bug in `standup_md` ## Current - &lt;!-- ADD TODAY&#39;S WORK HERE --&gt; ## Impediments - None </code></p>
+<p>The following scaffolding will be added for current entry at the top of the file:</p>
+
+<pre># 2020-04-14
+## Previous
+- Write new feature for `standup_md`
+- Fix bug in `standup_md`
+## Current
+- &lt;!-- ADD TODAY&#39;S WORK HERE --&gt;
+## Impediments
+- None</pre>
 
 <p>There are also flags that will print entries to the command line. There&#39;s a full list of features below, but as a quick example, you can copy today&#39;s entry to your clipboard without even opening your editor.</p>
 
@@ -301,7 +310,7 @@ sub_header_order:
 <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
 </pre>
 
-<p>Note: <code>StandupMD::load() { ... }</code> just is a quick way to call <code>StandupMD::new { ... }.load</code>.</p>
+<p>Note: <code>StandupMD::load { ... }</code> just is a quick way to call <code>StandupMD::new { ... }.load</code></p>
 
 <p>Entries are just hashes, so you can easily transform them to <code>json</code> objects.</p>
 
