@@ -28,7 +28,9 @@ module TestHelper
   # @return [StandupMD]
   def standup(directory, args = {})
     args['directory'] = directory
-    StandupMD.load(args)
+    StandupMD.load do |s|
+      args.each { |k, v| s.send("#{k}=", v) }
+    end
   end
 
   ##
@@ -57,5 +59,13 @@ module TestHelper
   # @return [StandupMD::Cli]
   def cli(options = [])
     StandupMD::Cli.new(options)
+  end
+
+  ##
+  # Creates a config file.
+  #
+  # @param [String] file The file to create
+  def create_config_file(file)
+    File.open(file, 'w+') { |f| f.puts "impediments: [NONE]" }
   end
 end

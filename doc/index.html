@@ -244,7 +244,7 @@ sub_header_order:
 
 <h3 id="label-Using+Existing+Standup+Files">Using Existing Standup Files<span><a href="#label-Using+Existing+Standup+Files">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>If you already have a directory of existing standup files, they must be in a format that the parser can understand. The default is:</p>
+<p>If you already have a directory of existing standup files, you can use them, but they must be in a format that the parser can understand. The default is:</p>
 
 <pre># 2020-05-01
 ## Previous
@@ -277,7 +277,12 @@ header_depth:        2
 current_header:      Today
 previous_header:     Yesterday
 impediments_header:  Hold-ups
-header_date_format:  &#39;%m/%d/%Y&#39;</pre>
+header_date_format:  &#39;%m/%d/%Y&#39;
+sub_header_order:
+  - current
+  - previous
+  - impediments
+  - notes</pre>
 
 <h2 id="label-API">API<span><a href="#label-API">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -287,16 +292,16 @@ header_date_format:  &#39;%m/%d/%Y&#39;</pre>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
 
-<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>(
-  <span class="ruby-value">current_header:</span> <span class="ruby-string">&#39;Today&#39;</span>,
-  <span class="ruby-value">current_entry_tasks:</span> [<span class="ruby-string">&#39;Thing to do today&#39;</span>, <span class="ruby-string">&#39;Another thing to do today&#39;</span>],
-  <span class="ruby-value">impediments:</span> [<span class="ruby-string">&#39;Not enough time in the day&#39;</span>]
-)
+<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span>,
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">current_entry_tasks</span> = [<span class="ruby-string">&#39;Thing to do today&#39;</span>, <span class="ruby-string">&#39;Another thing to do today&#39;</span>],
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">impediments</span> = [<span class="ruby-string">&#39;Not enough time in the day&#39;</span>]
+<span class="ruby-keyword">end</span>
 
 <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
 </pre>
 
-<p>Note: <code>::load({...})</code> just is a quick way to call <code>StandupMD.new {...}.load</code>.</p>
+<p>Note: <code>StandupMD::load() { ... }</code> just is a quick way to call <code>StandupMD::new { ... }.load</code>.</p>
 
 <p>Entries are just hashes, so you can easily transform them to <code>json</code> objects.</p>
 

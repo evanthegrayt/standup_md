@@ -200,8 +200,8 @@ standup --no-edit --current-entry-tasks="Work on this thing","And another thing!
 ```
 
 ### Using Existing Standup Files
-If you already have a directory of existing standup files, they must be in a
-format that the parser can understand. The default is:
+If you already have a directory of existing standup files, you can use them, but
+they must be in a format that the parser can understand. The default is:
 
 ```markdown
 # 2020-05-01
@@ -263,15 +263,16 @@ following:
 ```ruby
 require 'standup_md'
 
-standup = StandupMD.load(
-  current_header: 'Today',
-  current_entry_tasks: ['Thing to do today', 'Another thing to do today'],
-  impediments: ['Not enough time in the day']
-)
+standup = StandupMD.load do |s|
+  s.current_header = 'Today',
+  s.current_entry_tasks = ['Thing to do today', 'Another thing to do today'],
+  s.impediments = ['Not enough time in the day']
+end
 
 standup.write
 ```
-Note: `::load({...})` just is a quick way to call `StandupMD.new {...}.load`.
+Note: `StandupMD::load() { ... }` just is a quick way to call `StandupMD::new
+{ ... }.load`.
 
 Entries are just hashes, so you can easily transform them to `json` objects.
 
