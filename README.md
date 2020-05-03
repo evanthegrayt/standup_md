@@ -1,4 +1,8 @@
 # The Standup Doctor
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fevanthegrayt%2Fstandup_md%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/evanthegrayt/standup_md/goto?ref=master)
+[![Gem Version](https://badge.fury.io/rb/standup_md.svg)](https://badge.fury.io/rb/standup_md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > The cure for all your standup woes.
 
 A highly customizable and automated way to keep track of daily standups in
