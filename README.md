@@ -241,8 +241,8 @@ For example, if you wanted the format to be as follows:
 Your `~/.standup_md.yml` should contain:
 
 ```yaml
-sub_header_depth:    3
 header_depth:        2
+sub_header_depth:    3
 current_header:      Today
 previous_header:     Yesterday
 impediments_header:  Hold-ups
@@ -253,7 +253,6 @@ sub_header_order:
   - previous
   - impediments
   - notes
-
 ```
 
 ## API
@@ -278,7 +277,7 @@ end
 standup.write
 ```
 
-Note: `StandupMD::load { ... }` just is a quick way to call `StandupMD::new {
+Note: `StandupMD.load { ... }` just is a quick way to call `StandupMD.new {
 ... }.load`
 
 Entries are just hashes, so you can easily transform them to `json` objects.
