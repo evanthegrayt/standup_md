@@ -229,13 +229,13 @@ For example, if you wanted the format to be as follows:
 ```markdown
 ## 05/01/2020
 ### Today
-- task
+* task
 ### Yesterday
-- task
+* task
 ### Hold-ups
-- impediment
+* impediment
 ### Notes
-- notes, if any are present
+* notes, if any are present
 ```
 
 Your `~/.standup_md.yml` should contain:
@@ -246,6 +246,7 @@ header_depth:        2
 current_header:      Today
 previous_header:     Yesterday
 impediments_header:  Hold-ups
+bullet_character:    '*'
 header_date_format:  '%m/%d/%Y'
 sub_header_order:
   - current
