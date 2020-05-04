@@ -487,9 +487,9 @@
             <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">editor</span>
   <span class="ruby-ivar">@editor</span> <span class="ruby-operator">||=</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;editor&#39;</span>)
-      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{preferences.key(&#39;editor&#39;)}] via preferences&quot;</span>
-      <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">&#39;editor&#39;</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;editor&#39;</span>)
+      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{standup.config[&#39;editor&#39;]}] via preferences&quot;</span>
+      <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">config</span>[<span class="ruby-string">&#39;editor&#39;</span>]
     <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]
       <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{ENV[&#39;VISUAL&#39;]}] (ENV[&#39;VISUAL&#39;])&quot;</span>
       <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]

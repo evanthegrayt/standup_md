@@ -79,9 +79,9 @@ class StandupMD
     # @return [String] The editor
     def editor
       @editor ||=
-        if preferences.key?('editor')
-          echo "Editor set to [#{preferences.key('editor')}] via preferences"
-          preferences.delete('editor')
+        if standup.config.key?('editor')
+          echo "Editor set to [#{standup.config['editor']}] via preferences"
+          standup.config['editor']
         elsif ENV['VISUAL']
           echo "Editor set to [#{ENV['VISUAL']}] (ENV['VISUAL'])"
           ENV['VISUAL']
@@ -270,7 +270,7 @@ class StandupMD
           prefs['file_name_format'] = v
         end
         opts.on('-e', '--editor=EDITOR', 'Editor to use for opening standup files') do |v|
-          prefs['editor'] = v
+          @editor = v
         end
         opts.on('-d', '--directory=DIRECTORY', 'The directories where standup files are located') do |v|
           prefs['directory'] = v

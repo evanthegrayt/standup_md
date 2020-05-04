@@ -389,5 +389,6 @@ class TestStandupMD < Test::Unit::TestCase
     assert_raise { su.load_config_file }
     create_config_file(@test_config)
     assert_nothing_raised { su.load_config_file }
+    assert_equal(['NONE'], su.impediments)
   end
 end
