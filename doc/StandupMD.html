@@ -848,7 +848,7 @@
 
         <div class="method-description">
           
-          <p>Setter for directory. Must be expanded in case the user uses `~` for home. If the directory doesn&#39;t exist, it will be created. To reset instance variables after changing the directory, you&#39;ll need to call load.</p>
+          <p>Setter for <code>config_file</code>. Must be expanded in case the user uses `~` for home.</p>
 
 <p>@param [String] file</p>
 
@@ -858,7 +858,7 @@
 
           
           <div class="method-source-code" id="config_file-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 369</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 368</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">config_file=</span>(<span class="ruby-identifier">config_file</span>)
   <span class="ruby-ivar">@config_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">config_file</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -968,7 +968,7 @@
 
           
           <div class="method-source-code" id="directory-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 381</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 380</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
   <span class="ruby-identifier">directory</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>)
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
@@ -1087,7 +1087,7 @@
 
           
           <div class="method-source-code" id="header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 393</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 392</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">1</span>, <span class="ruby-value">5</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Header depth out of bounds (1..5)&#39;</span>
@@ -1165,7 +1165,7 @@
 
           
           <div class="method-source-code" id="load-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 475</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 474</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
 
@@ -1218,7 +1218,7 @@
 
           
           <div class="method-source-code" id="load_config_file-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 441</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 440</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_config_file</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;No config file set&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File #{config_file} does not exist&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">config_file</span>)
@@ -1255,7 +1255,7 @@
 
           
           <div class="method-source-code" id="new_month-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 501</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 500</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_month?</span>
   <span class="ruby-identifier">file</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">previous_file</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1398,7 +1398,7 @@
 
           
           <div class="method-source-code" id="sub_header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 408</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 407</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">2</span>, <span class="ruby-value">6</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Sub-header depth out of bounds (2..6)&#39;</span>
@@ -1438,7 +1438,7 @@
 
           
           <div class="method-source-code" id="sub_header_order-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 433</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 432</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order</span>
   <span class="ruby-ivar">@sub_header_order</span>.<span class="ruby-identifier">dup</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1475,7 +1475,7 @@
 
           
           <div class="method-source-code" id="sub_header_order-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 423</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 422</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_order=</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-identifier">order</span> = <span class="ruby-node">%w[previous current impediments notes]</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Values must be #{order.join{&#39;, &#39;}}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">array</span>.<span class="ruby-identifier">sort</span>
@@ -1512,7 +1512,7 @@
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 453</span>
+            <pre><span class="ruby-comment"># File lib/standup_md.rb, line 452</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span>, <span class="ruby-identifier">s_heads</span><span class="ruby-operator">|</span>

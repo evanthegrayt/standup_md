@@ -359,9 +359,8 @@ class StandupMD
   end
 
   ##
-  # Setter for directory. Must be expanded in case the user uses `~` for home.
-  # If the directory doesn't exist, it will be created. To reset instance
-  # variables after changing the directory, you'll need to call load.
+  # Setter for +config_file+. Must be expanded in case the user uses `~` for
+  # home.
   #
   # @param [String] file
   #

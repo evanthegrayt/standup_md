@@ -97,6 +97,8 @@
 
 <h1 id="label-The+Standup+Doctor">The Standup Doctor<span><a href="#label-The+Standup+Doctor">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
+<p><a href="https://actions-badge.atrox.dev/evanthegrayt/standup_md/goto?ref=master"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fevanthegrayt%2Fstandup_md%2Fbadge%3Fref%3Dmaster&style=flat"></a> <a href="https://badge.fury.io/rb/standup_md"><img src="https://badge.fury.io/rb/standup_md.svg"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a></p>
+
 <blockquote>
 <p>The cure for all your standup woes.</p>
 </blockquote>
@@ -281,21 +283,22 @@ sub_header_order:
 
 <pre>## 05/01/2020
 ### Today
-- task
+* task
 ### Yesterday
-- task
+* task
 ### Hold-ups
-- impediment
+* impediment
 ### Notes
-- notes, if any are present</pre>
+* notes, if any are present</pre>
 
 <p>Your <code>~/.standup_md.yml</code> should contain:</p>
 
-<pre>sub_header_depth:    3
-header_depth:        2
+<pre>header_depth:        2
+sub_header_depth:    3
 current_header:      Today
 previous_header:     Yesterday
 impediments_header:  Hold-ups
+bullet_character:    &#39;*&#39;
 header_date_format:  &#39;%m/%d/%Y&#39;
 sub_header_order:
   - current
@@ -320,7 +323,7 @@ sub_header_order:
 <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
 </pre>
 
-<p>Note: <code>StandupMD::load { ... }</code> just is a quick way to call <code>StandupMD::new { ... }.load</code></p>
+<p>Note: <code>StandupMD.load { ... }</code> just is a quick way to call <code>StandupMD.new { ... }.load</code></p>
 
 <p>Entries are just hashes, so you can easily transform them to <code>json</code> objects.</p>
 
