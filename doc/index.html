@@ -76,6 +76,24 @@
   
     <li><a href="./StandupMD/Cli.html">StandupMD::Cli</a>
   
+    <li><a href="./StandupMD/Cli/Helpers.html">StandupMD::Cli::Helpers</a>
+  
+    <li><a href="./StandupMD/Config.html">StandupMD::Config</a>
+  
+    <li><a href="./StandupMD/Config/Cli.html">StandupMD::Config::Cli</a>
+  
+    <li><a href="./StandupMD/Config/Entry.html">StandupMD::Config::Entry</a>
+  
+    <li><a href="./StandupMD/Config/EntryList.html">StandupMD::Config::EntryList</a>
+  
+    <li><a href="./StandupMD/Config/File.html">StandupMD::Config::File</a>
+  
+    <li><a href="./StandupMD/Entry.html">StandupMD::Entry</a>
+  
+    <li><a href="./StandupMD/EntryList.html">StandupMD::EntryList</a>
+  
+    <li><a href="./StandupMD/File.html">StandupMD::File</a>
+  
   </ul>
 </div>
 
@@ -109,15 +127,29 @@
 </li><li>
 <p><a href="#usage">Usage</a></p>
 </li><li>
-<p><a href="#example">Example</a></p>
+<p><a href="#command-line">Command Line</a></p>
+<ul><li>
+<p><a href="#cli-examples">CLI Examples</a></p>
+</li><li>
+<p><a href="#adding-an-entry-for-today-via-editor">Adding an entry for today via editor</a></p>
+</li><li>
+<p><a href="#copy-the-entry-for-today-to-clipboard">Copy the entry for today to clipboard</a></p>
+</li><li>
+<p><a href="#add-entry-to-file-without-opening-it">Add entry to file without opening it</a></p>
+</li><li>
+<p><a href="#find-an-entry-by-date-and-print-it">Find an entry by date and print it</a></p>
 </li><li>
 <p><a href="#customization-and-runtime-options">Customization and Runtime Options</a></p>
 </li><li>
 <p><a href="#using-existing-standup-files">Using existing standup files</a></p>
+</li></ul>
 </li><li>
 <p><a href="#api">API</a></p>
+<ul><li>
+<p><a href="#api-examples">API Examples</a></p>
 </li><li>
 <p><a href="https://evanthegrayt.github.io/standup_md/doc/index.html">Documentation</a></p>
+</li></ul>
 </li><li>
 <p><a href="#reporting-bugs-and-requesting-features">Reporting Bugs and Requesting Features</a></p>
 </li><li>
@@ -126,11 +158,9 @@
 
 <h2 id="label-About">About<span><a href="#label-About">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>I&#39;ve now been at two separate companies where we post our daily standups in a chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day became tedious, as I&#39;d have to look up what I did the day before, copy and paste yesterday&#39;s work into a new entry, and add today&#39;s tasks. This gem automates most of this process, along with providing means of opening the file in your editor, and displaying entries from the command line.</p>
+<p>I&#39;ve now been at two separate companies where we post our daily standups in a chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day became tedious, as I&#39;d have to look up what I did the day before, copy and paste yesterday&#39;s work into a new entry, and add today&#39;s tasks. This gem automates most of this process, along with providing means of opening the file in your editor, and finding and displaying entries from the command line.</p>
 
-<p>I wasn&#39;t sure that others would find this useful, but then the pandemic happened, which I assume made doing standups via chat much more common.</p>
-
-<p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated, and if a previous entry exists, it will be added to today&#39;s entry as your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also an API if you&#39;d like to use this in your own code somehow.</p>
+<p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated with your preferred values. When generating, if a previous entry exists, it will be added to today&#39;s entry as your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also a very robust API if you&#39;d like to use this in your own code somehow.</p>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
@@ -141,32 +171,35 @@
 <pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-identifier">install</span> <span class="ruby-identifier">standup_md</span>
 </pre>
 
-<p>If you don&#39;t have permission on your system to install ruby or gems, I recommend using <a href="http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html">rbenv</a>, or you can try the manual methods below.</p>
+<p>To include in your project, add the following to your <code>Gemfile</code>.</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&#39;standup_md&#39;</span>
+</pre>
 
 <h3 id="label-Manual+Installation">Manual Installation<span><a href="#label-Manual+Installation">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>From your terminal, clone the repository where you want it. From there, you have a couple of installation options.</p>
+<p>From your terminal, clone the repository where you want it, and use <code>rake</code> to install the gem.</p>
 
 <pre>git clone https://github.com/evanthegrayt/standup_md.git
 cd standup_md
 
 # Use rake to build and install the gem.
-rake install
-
-# OR manually link the executable somewhere. If you use this method, you cannot
-# move the repository after you link it!
-ln -s $PWD/bin/standup /usr/local/bin/standup</pre>
+rake install</pre>
 
 <h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Call the executable.</p>
+<h3 id="label-Command+Line">Command Line<span><a href="#label-Command+Line">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>For the most basic usage, simplyt call the executable.</p>
 
 <pre class="ruby"><span class="ruby-identifier">standup</span>
 </pre>
 
-<p>This opens the current month&#39;s standup file. If an entry already exists for today, nothing is added. If no entry exists for today, the previous “Current” is placed in the “Previous” section of a new entry. The format of this file is very important; do not change anything, except for adding entries for today.</p>
+<p>This opens the current month&#39;s standup file. If an entry already exists for today, nothing is added. If no entry exists for today, the previous “Current” is placed in the “Previous” section of a new entry. The format of this file is very important; you may add new entries, but don&#39;t change any of the headers. Doing so will cause the parser to break. If you want to customize the headers, you can do so in the <a href="#available-config-file-options-and-defaults">configuration file</a>.</p>
 
-<h3 id="label-Example">Example<span><a href="#label-Example">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<h3 id="label-CLI+Examples">CLI Examples<span><a href="#label-CLI+Examples">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<h4 id="label-Adding+an+entry+for+today+via+editor">Adding an entry for today via editor<span><a href="#label-Adding+an+entry+for+today+via+editor">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
 <p>For example, if the standup entry from yesterday reads as follows:</p>
 
@@ -190,70 +223,92 @@ ln -s $PWD/bin/standup /usr/local/bin/standup</pre>
 ## Impediments
 - None</pre>
 
+<h4 id="label-Copy+the+entry+for+today+to+clipboard">Copy the entry for today to clipboard<span><a href="#label-Copy+the+entry+for+today+to+clipboard">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
 <p>There are also flags that will print entries to the command line. There&#39;s a full list of features below, but as a quick example, you can copy today&#39;s entry to your clipboard without even opening your editor.</p>
 
-<pre class="ruby"><span class="ruby-identifier">standup</span> <span class="ruby-operator">-</span><span class="ruby-identifier">c</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">pbcopy</span>
+<pre class="ruby"><span class="ruby-identifier">standup</span> <span class="ruby-operator">-</span><span class="ruby-identifier">p</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">pbcopy</span>
 </pre>
 
-<h2 id="label-Customization+and+Runtime+Options">Customization and Runtime Options<span><a href="#label-Customization+and+Runtime+Options">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<p>If you wanted to add today&#39;s entry without opening your editor, and print the result to the command line, you could use the following.</p>
 
-<p>You can create a file in your home directory called <code>~/.standup_md.yml</code>. Settings located in this file will override default behavior. This file can also have settings overwritten at runtime by the use of options. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml">my config file</a> as an example. Any setting in this file can still be overridden at runtime by passing flags to the executable.</p>
+<h4 id="label-Add+entry+to+file+without+opening+it">Add entry to file without opening it<span><a href="#label-Add+entry+to+file+without+opening+it">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<pre>standup --no-edit --current &quot;Work on this thing&quot;,&quot;And another thing&quot; -p</pre>
+
+<h4 id="label-Find+an+entry+by+date+and+print+it.">Find an entry by date and print it.<span><a href="#label-Find+an+entry+by+date+and+print+it.">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>If you wanted to find and print the entry for March 2nd, 2020, you could use the following.</p>
+
+<pre>standup -p 2020-03-02</pre>
+
+<h3 id="label-Customization+and+Runtime+Options">Customization and Runtime Options<span><a href="#label-Customization+and+Runtime+Options">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>You can create a file in your home directory called <code>~/.standuprc</code>. Settings located in this file will override default behavior. This file can also have settings overwritten at runtime by the use of options. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc">my config file</a> as an example. Any setting in this file can still be overridden at runtime by passing flags to the executable.</p>
 
 <p>You&#39;ll notice, a lot of settings don&#39;t have the ability to be changed at runtime when calling the executable. This is because the file structure is very important, and changing values that affect formatting will cause problems with the file parser. If you don&#39;t want to use a default, make the change in your config file before you start editing standups. There is an <a href="https://github.com/evanthegrayt/standup_md/issues/16">open issue</a> for handling this for the user, but they&#39;re not available yet.</p>
 
 <p>There are no options to change the headers at runtime because it uses the headers to detect tasks from previous entries. If changed at runtime, this would cause errors. For this reason, if you don&#39;t like the default headers, change them in your configuration file after installation, and then try to not change them again.</p>
 
-<h3 id="label-Available+Config+File+Keys+and+Defaults">Available Config File Keys and Defaults<span><a href="#label-Available+Config+File+Keys+and+Defaults">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<h4 id="label-Available+Config+File+Options+and+Defaults">Available Config File Options and Defaults<span><a href="#label-Available+Config+File+Options+and+Defaults">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
-<pre># Key:                 Default
-header_depth:          1
-header_date_format:    &#39;%Y-%m-%d&#39;
-sub_header_depth:      2
-current_header:        &#39;Current&#39;
-previous_header:       &#39;Previous&#39;
-impediments_header:    &#39;Impediments&#39;
-file_name_format:      &#39;%Y_%m.md&#39;
-bullet_character:      &#39;-&#39;        # (dash)
-directory:             &#39;~/.cache/standup_md&#39;
-editor:                # $VISUAL, $EDITOR or vim, in that order
-current_entry_tasks:
-  - &quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;
-previous_entry_tasks:  # An array of the tasks from the previous entry
-impediments:
-  - &#39;None&#39;
-notes:                 null # If not null, must be array
-sub_header_order:
-  - &#39;previous&#39;
-  - &#39;current&#39;
-  - &#39;impediments&#39;
-  - &#39;notes&#39;</pre>
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-comment"># Defaults for how the file is formatted.</span>
+  <span class="ruby-comment"># See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_date_format</span> = <span class="ruby-string">&#39;%Y-%m-%d&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_depth</span>       = <span class="ruby-value">1</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_depth</span>   = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span>     = <span class="ruby-string">&#39;Current&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">previous_header</span>    = <span class="ruby-string">&#39;Previous&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">impediments_header</span> = <span class="ruby-string">&#39;Impediments&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">notes_header</span>       = <span class="ruby-string">&#39;Notes&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span>   = <span class="ruby-node">%w[previous current impediments notes]</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">directory</span>          = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;HOME&#39;</span>], <span class="ruby-string">&#39;.cache&#39;</span>, <span class="ruby-string">&#39;standup_md&#39;</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span>   = <span class="ruby-string">&#39;-&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">name_format</span>        = <span class="ruby-string">&#39;%Y_%m.md&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">create</span>             = <span class="ruby-keyword">true</span>
 
-<h3 id="label-Executable+Flags">Executable Flags<span><a href="#label-Executable+Flags">&para;</a> <a href="#top">&uarr;</a></span></h3>
+  <span class="ruby-comment"># Defaults for entries</span>
+  <span class="ruby-comment"># See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Entry.html</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">current</span>          = [<span class="ruby-string">&quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;</span>]
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">previous</span>         = []
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">impediments</span>      = [<span class="ruby-string">&#39;None&#39;</span>]
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">notes</span>            = []
 
-<pre>The Standup Doctor
-        --current-entry-tasks=ARRAY  List of current entry&#39;s tasks
-        --previous-entry-tasks=ARRAY List of yesterday&#39;s tasks
-        --impediments=ARRAY          List of impediments for current entry
-        --notes=ARRAY                List of notes for current entry
-        --sub-header-order=ARRAY     The order of the sub-headers when writing the file
-        --[no-]append-previous       Append previous tasks? Default is true
-    -f, --file-name-format=STRING    Date-formattable string to use for standup file name
-    -e, --editor=EDITOR              Editor to use for opening standup files
-    -d, --directory=DIRECTORY        The directories where standup files are located
-        --[no-]write                 Write current entry if it doesn&#39;t exist. Default is true
-        --[no-]edit                  Open the file in the editor. Default is true
-    -j, --[no-]json                  Print output as formatted json. Default is false.
-    -v, --[no-]verbose               Verbose output. Default is false.
-    -c, --current                    Print current entry. Disables editing
-    -a, --all                        Print all previous entries. Disables editing</pre>
+  <span class="ruby-comment"># Defaults for executable runtime behavior.</span>
+  <span class="ruby-comment"># See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">date</span>               = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">editor</span>             = <span class="ruby-string">&#39;vim&#39;</span> <span class="ruby-comment"># Checks $VISUAL and $EDITOR first, in that order</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">verbose</span>            = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">edit</span>               = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">write</span>              = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">print</span>              = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">auto_fill_previous</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">preference_file</span>    = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;HOME&#39;</span>], <span class="ruby-string">&#39;.standuprc&#39;</span>))
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h4 id="label-Executable+Flags">Executable Flags<span><a href="#label-Executable+Flags">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<pre>--current ARRAY            List of current entry&#39;s tasks
+    --previous ARRAY           List of precious entry&#39;s tasks
+    --impediments ARRAY        List of impediments for current entry
+    --notes ARRAY              List of notes for current entry
+    --sub-header-order ARRAY   The order of the sub-headers when writing the file
+-f, --file-name-format STRING  Date-formattable string to use for standup file name
+-E, --editor EDITOR            Editor to use for opening standup files
+-d, --directory DIRECTORY      The directories where standup files are located
+-w  --[no-]write               Write current entry if it doesn&#39;t exist. Default is true
+-a  --[no-]auto-fill-previous  Auto-generate &#39;previous&#39; tasks for new entries
+-e  --[no-]edit                Open the file in the editor. Default is true
+-v, --[no-]verbose             Verbose output. Default is false.
+-p, --print [DATE]             Print current entry.
+                               If DATE is passed, will print entry for DATE, if it exists.
+                               DATE must be in the same format as file-name-format</pre>
 
 <p>Any options not set in this file will retain their default values. Note that if you change <code>file_name_format</code>, and don&#39;t use a month or year, there will only ever be one standup file. This could cause issues long-term, as the files will get large over time and possibly cause performance issues.</p>
 
-<p>If you wanted to add some tasks at runtime, and without opening the file in an editor, you could use the following:</p>
-
-<pre>standup --no-edit --current-entry-tasks=&quot;Work on this thing&quot;,&quot;And another thing!&quot;</pre>
-
-<h3 id="label-Using+Existing+Standup+Files">Using Existing Standup Files<span><a href="#label-Using+Existing+Standup+Files">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<h4 id="label-Using+Existing+Standup+Files">Using Existing Standup Files<span><a href="#label-Using+Existing+Standup+Files">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
 <p>If you already have a directory of existing standup files, you can use them, but they must be in a format that the parser can understand. The default is:</p>
 
@@ -267,7 +322,7 @@ sub_header_order:
 ## Notes
 - notes, if any are present</pre>
 
-<p>The order, words, date format, and header level are all customizable, but the overall format must be the same. If customization is necessary, this must be done in <code>~/.standup_md.yml</code> before execution, or else the parser will error.</p>
+<p>The order, words, date format, and header level are all customizable, but the overall format must be the same. If customization is necessary, this must be done in <code>~/.standuprc</code> before execution, or else the parser will error.</p>
 
 <p>For example, if you wanted the format to be as follows:</p>
 
@@ -281,48 +336,52 @@ sub_header_order:
 ### Notes
 * notes, if any are present</pre>
 
-<p>Your <code>~/.standup_md.yml</code> should contain:</p>
+<p>Your <code>~/.standuprc</code> should contain:</p>
 
-<pre>header_depth:        2
-sub_header_depth:    3
-current_header:      Today
-previous_header:     Yesterday
-impediments_header:  Hold-ups
-bullet_character:    &#39;*&#39;
-header_date_format:  &#39;%m/%d/%Y&#39;
-sub_header_order:
-  - current
-  - previous
-  - impediments
-  - notes</pre>
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_depth</span>        <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_depth</span>    <span class="ruby-value">3</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span>      <span class="ruby-constant">Today</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">previous_header</span>     <span class="ruby-constant">Yesterday</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">impediments_header</span>  <span class="ruby-constant">Hold</span><span class="ruby-operator">-</span><span class="ruby-identifier">ups</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span>    <span class="ruby-string">&#39;*&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_date_format</span>  <span class="ruby-string">&#39;%m/%d/%Y&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span> = <span class="ruby-node">%w[current previous impediments notes]</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <h2 id="label-API">API<span><a href="#label-API">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>Below are some quick examples, but the API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/index.html">documentation</a>.</p>
+<p>The API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/index.html">documentation</a>.</p>
 
-<p>This was mainly written as a command line utility, but I made the API available for scripting. There are attribute accessors for most of the settings in the <a href="#customization-and-runtime-options">customization table</a> above. A quick example of how to write a new entry via code could look like the following:</p>
+<p>This was mainly written as a command line utility, but the API is ridiculously robust, and is available for use in your own projects. A quick example of how to write a new entry via code could look like the following:</p>
+
+<h3 id="label-API+Examples">API Examples<span><a href="#label-API+Examples">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;date&#39;</span>
 
-<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
-  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span>,
-  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">current_entry_tasks</span> = [<span class="ruby-string">&#39;Thing to do today&#39;</span>, <span class="ruby-string">&#39;Another thing to do today&#39;</span>],
-  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">impediments</span> = [<span class="ruby-string">&#39;Not enough time in the day&#39;</span>]
+<span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span>,
 <span class="ruby-keyword">end</span>
 
-<span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
+<span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>)
+<span class="ruby-identifier">entry</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">create</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">current</span> = [<span class="ruby-string">&#39;Stuff I will do today&#39;</span>] }
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">entry</span>
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>
 </pre>
 
-<p>Note: <code>StandupMD.load { ... }</code> just is a quick way to call <code>StandupMD.new { ... }.load</code></p>
-
-<p>Entries are just hashes, so you can easily transform them to <code>json</code> objects.</p>
+<p>The above example was written as such to show how the different pieces of the API fit together. The code can actually be simplified to the following.</p>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
-<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;json&#39;</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;date&#39;</span>
 
-<span class="ruby-identifier">standup</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load</span>
+<span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span>,
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">current</span> = [<span class="ruby-string">&#39;Stuff I will do today&#39;</span>]
+<span class="ruby-keyword">end</span>
 
-<span class="ruby-identifier">standup_json</span> = <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
+<span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>).<span class="ruby-identifier">load</span>.<span class="ruby-identifier">write</span>
 </pre>
 
 <h2 id="label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features<span><a href="#label-Reporting+Bugs+and+Requesting+Features">&para;</a> <a href="#top">&uarr;</a></span></h2>

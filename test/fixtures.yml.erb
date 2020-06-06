@@ -57,3 +57,7 @@ previous_month_entry_tasks:
       - "Test task 4"
     Impediments:
       - "None"
+
+today_date: "<%= Date.today.strftime("%Y-%m-%d") %>"
+
+yesterday_date: "<%= Date.today.prev_day.strftime("%Y-%m-%d") %>"

@@ -18,11 +18,17 @@ View on: [Github](https://github.com/evanthegrayt/standup_md) |
   - [Via RubyGems](#via-rubygems)
   - [Manual Installation](#manual-installation)
 - [Usage](#usage)
-  - [Example](#example)
-  - [Customization and Runtime Options](#customization-and-runtime-options)
-  - [Using existing standup files](#using-existing-standup-files)
-- [API](#api)
-  - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
+  - [Command Line](#command-line)
+    - [CLI Examples](#cli-examples)
+      - [Adding an entry for today via editor](#adding-an-entry-for-today-via-editor)
+      - [Copy the entry for today to clipboard](#copy-the-entry-for-today-to-clipboard)
+      - [Add entry to file without opening it](#add-entry-to-file-without-opening-it)
+      - [Find an entry by date and print it](#find-an-entry-by-date-and-print-it)
+    - [Customization and Runtime Options](#customization-and-runtime-options)
+    - [Using existing standup files](#using-existing-standup-files)
+  - [API](#api)
+    - [API Examples](#api-examples)
+    - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
 - [Self-Promotion](#self-promotion)
 
@@ -32,17 +38,15 @@ chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day
 became tedious, as I'd have to look up what I did the day before, copy and paste
 yesterday's work into a new entry, and add today's tasks. This gem automates
 most of this process, along with providing means of opening the file in your
-editor, and displaying entries from the command line.
-
-I wasn't sure that others would find this useful, but then the pandemic
-happened, which I assume made doing standups via chat much more common.
+editor, and finding and displaying entries from the command line.
 
 In a nutshell, calling `standup` from the command line will open a standup file
 for the current month in your preferred editor. If an entry for today is already
 present, no text will be generated. If an entry for today doesn't exist, one
-will be generated, and if a previous entry exists, it will be added to today's
-entry as your previous day's work. See [example](#example). There's also an API
-if you'd like to use this in your own code somehow.
+will be generated with your preferred values. When generating, if a previous
+entry exists, it will be added to today's entry as your previous day's work. See
+[example](#example). There's also a very robust API if you'd like to use this
+in your own code somehow.
 
 ## Installation
 ### Via RubyGems
@@ -52,15 +56,15 @@ Just install the gem!
 gem install standup_md
 ```
 
-If you don't have permission on your system to install ruby or gems, I recommend
-using
-[rbenv](http://www.rubyinside.com/rbenv-a-simple-new-ruby-version-management-tool-5302.html),
-or you can try the manual methods below.
+To include in your project, add the following to your `Gemfile`.
 
+```ruby
+gem 'standup_md'
+```
 
 ### Manual Installation
-From your terminal, clone the repository where you want it. From there, you have
-a couple of installation options.
+From your terminal, clone the repository where you want it, and use `rake` to
+install the gem.
 
 ```sh
 git clone https://github.com/evanthegrayt/standup_md.git
@@ -68,14 +72,11 @@ cd standup_md
 
 # Use rake to build and install the gem.
 rake install
-
-# OR manually link the executable somewhere. If you use this method, you cannot
-# move the repository after you link it!
-ln -s $PWD/bin/standup /usr/local/bin/standup
 ```
 
 ## Usage
-Call the executable.
+### Command Line
+For the most basic usage, simplyt call the executable.
 
 ```sh
 standup
@@ -83,10 +84,13 @@ standup
 
 This opens the current month's standup file. If an entry already exists for
 today, nothing is added. If no entry exists for today, the previous "Current" is
-placed in the "Previous" section of a new entry.  The format of this file is
-very important; do not change anything, except for adding entries for today.
+placed in the "Previous" section of a new entry. The format of this file is very
+important; you may add new entries, but don't change any of the headers. Doing
+so will cause the parser to break. If you want to customize the headers, you can
+do so in the [configuration file](#available-config-file-options-and-defaults).
 
-### Example
+### CLI Examples
+#### Adding an entry for today via editor
 For example, if the standup entry from yesterday reads as follows:
 
 ```markdown
@@ -114,19 +118,36 @@ file:
 - None
 ```
 
+#### Copy the entry for today to clipboard
 There are also flags that will print entries to the command line. There's a full
 list of features below, but as a quick example, you can copy today's entry to
 your clipboard without even opening your editor.
 
 ```sh
-standup -c | pbcopy
+standup -p | pbcopy
 ```
 
-## Customization and Runtime Options
-You can create a file in your home directory called `~/.standup_md.yml`.
-Settings located in this file will override default behavior. This file can also
-have settings overwritten at runtime by the use of options. You can view [my config
-file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standup_md.yml)
+If you wanted to add today's entry without opening your editor, and print the
+result to the command line, you could use the following.
+
+#### Add entry to file without opening it
+```sh
+standup --no-edit --current "Work on this thing","And another thing" -p
+```
+
+#### Find an entry by date and print it.
+If you wanted to find and print the entry for March 2nd, 2020, you could use the
+following.
+
+```sh
+standup -p 2020-03-02
+```
+
+### Customization and Runtime Options
+You can create a file in your home directory called `~/.standuprc`. Settings
+located in this file will override default behavior. This file can also have
+settings overwritten at runtime by the use of options. You can view [my config
+file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc)
 as an example. Any setting in this file can still be overridden at runtime by
 passing flags to the executable.
 
@@ -145,51 +166,62 @@ them in your configuration file after installation, and then try to not change
 them again.
 
 
-### Available Config File Keys and Defaults
+#### Available Config File Options and Defaults
 
-```yaml
-# Key:                 Default
-header_depth:          1
-header_date_format:    '%Y-%m-%d'
-sub_header_depth:      2
-current_header:        'Current'
-previous_header:       'Previous'
-impediments_header:    'Impediments'
-file_name_format:      '%Y_%m.md'
-bullet_character:      '-'        # (dash)
-directory:             '~/.cache/standup_md'
-editor:                # $VISUAL, $EDITOR or vim, in that order
-current_entry_tasks:
-  - "<!-- ADD TODAY'S WORK HERE -->"
-previous_entry_tasks:  # An array of the tasks from the previous entry
-impediments:
-  - 'None'
-notes:                 null # If not null, must be array
-sub_header_order:
-  - 'previous'
-  - 'current'
-  - 'impediments'
-  - 'notes'
+```ruby
+StandupMD.configure do |c|
+  # Defaults for how the file is formatted.
+  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html
+  c.file.header_date_format = '%Y-%m-%d'
+  c.file.header_depth       = 1
+  c.file.sub_header_depth   = 2
+  c.file.current_header     = 'Current'
+  c.file.previous_header    = 'Previous'
+  c.file.impediments_header = 'Impediments'
+  c.file.notes_header       = 'Notes'
+  c.file.sub_header_order   = %w[previous current impediments notes]
+  c.file.directory          = ::File.join(ENV['HOME'], '.cache', 'standup_md')
+  c.file.bullet_character   = '-'
+  c.file.name_format        = '%Y_%m.md'
+  c.file.create             = true
+
+  # Defaults for entries
+  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Entry.html
+  c.entry.current          = ["<!-- ADD TODAY'S WORK HERE -->"]
+  c.entry.previous         = []
+  c.entry.impediments      = ['None']
+  c.entry.notes            = []
+
+  # Defaults for executable runtime behavior.
+  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html
+  c.cli.date               = Date.today
+  c.cli.editor             = 'vim' # Checks $VISUAL and $EDITOR first, in that order
+  c.cli.verbose            = false
+  c.cli.edit               = true
+  c.cli.write              = true
+  c.cli.print              = false
+  c.cli.auto_fill_previous = true
+  c.cli.preference_file    = ::File.expand_path(::File.join(ENV['HOME'], '.standuprc'))
+end
 ```
 
-### Executable Flags
+#### Executable Flags
 ```
-The Standup Doctor
-        --current-entry-tasks=ARRAY  List of current entry's tasks
-        --previous-entry-tasks=ARRAY List of yesterday's tasks
-        --impediments=ARRAY          List of impediments for current entry
-        --notes=ARRAY                List of notes for current entry
-        --sub-header-order=ARRAY     The order of the sub-headers when writing the file
-        --[no-]append-previous       Append previous tasks? Default is true
-    -f, --file-name-format=STRING    Date-formattable string to use for standup file name
-    -e, --editor=EDITOR              Editor to use for opening standup files
-    -d, --directory=DIRECTORY        The directories where standup files are located
-        --[no-]write                 Write current entry if it doesn't exist. Default is true
-        --[no-]edit                  Open the file in the editor. Default is true
-    -j, --[no-]json                  Print output as formatted json. Default is false.
-    -v, --[no-]verbose               Verbose output. Default is false.
-    -c, --current                    Print current entry. Disables editing
-    -a, --all                        Print all previous entries. Disables editing
+    --current ARRAY            List of current entry's tasks
+    --previous ARRAY           List of precious entry's tasks
+    --impediments ARRAY        List of impediments for current entry
+    --notes ARRAY              List of notes for current entry
+    --sub-header-order ARRAY   The order of the sub-headers when writing the file
+-f, --file-name-format STRING  Date-formattable string to use for standup file name
+-E, --editor EDITOR            Editor to use for opening standup files
+-d, --directory DIRECTORY      The directories where standup files are located
+-w  --[no-]write               Write current entry if it doesn't exist. Default is true
+-a  --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
+-e  --[no-]edit                Open the file in the editor. Default is true
+-v, --[no-]verbose             Verbose output. Default is false.
+-p, --print [DATE]             Print current entry.
+                               If DATE is passed, will print entry for DATE, if it exists.
+                               DATE must be in the same format as file-name-format
 ```
 
 Any options not set in this file will retain their default values. Note that if
@@ -197,14 +229,7 @@ you change `file_name_format`, and don't use a month or year, there will only
 ever be one standup file. This could cause issues long-term, as the files will
 get large over time and possibly cause performance issues.
 
-If you wanted to add some tasks at runtime, and without opening the file in an
-editor, you could use the following:
-
-```bash
-standup --no-edit --current-entry-tasks="Work on this thing","And another thing!"
-```
-
-### Using Existing Standup Files
+#### Using Existing Standup Files
 If you already have a directory of existing standup files, you can use them, but
 they must be in a format that the parser can understand. The default is:
 
@@ -222,7 +247,7 @@ they must be in a format that the parser can understand. The default is:
 
 The order, words, date format, and header level are all customizable, but the
 overall format must be the same. If customization is necessary, this must be
-done in `~/.standup_md.yml` before execution, or else the parser will error.
+done in `~/.standuprc` before execution, or else the parser will error.
 
 For example, if you wanted the format to be as follows:
 
@@ -238,57 +263,58 @@ For example, if you wanted the format to be as follows:
 * notes, if any are present
 ```
 
-Your `~/.standup_md.yml` should contain:
+Your `~/.standuprc` should contain:
 
-```yaml
-header_depth:        2
-sub_header_depth:    3
-current_header:      Today
-previous_header:     Yesterday
-impediments_header:  Hold-ups
-bullet_character:    '*'
-header_date_format:  '%m/%d/%Y'
-sub_header_order:
-  - current
-  - previous
-  - impediments
-  - notes
+```ruby
+StandupMD.configure do |c|
+  c.file.header_depth        2
+  c.file.sub_header_depth    3
+  c.file.current_header      Today
+  c.file.previous_header     Yesterday
+  c.file.impediments_header  Hold-ups
+  c.file.bullet_character    '*'
+  c.file.header_date_format  '%m/%d/%Y'
+  c.file.sub_header_order = %w[current previous impediments notes]
+end
 ```
 
 ## API
-Below are some quick examples, but the API is fully documented in the
+The API is fully documented in the
 [documentation](https://evanthegrayt.github.io/standup_md/doc/index.html).
 
-This was mainly written as a command line utility, but I made the API available
-for scripting. There are attribute accessors for most of the settings in the
-[customization table](#customization-and-runtime-options) above. A
-quick example of how to write a new entry via code could look like the
-following:
+This was mainly written as a command line utility, but the API is ridiculously
+robust, and is available for use in your own projects. A quick example of how
+to write a new entry via code could look like the following:
+
+### API Examples
 
 ```ruby
 require 'standup_md'
+require 'date'
 
-standup = StandupMD.load do |s|
-  s.current_header = 'Today',
-  s.current_entry_tasks = ['Thing to do today', 'Another thing to do today'],
-  s.impediments = ['Not enough time in the day']
+StandupMD.configure do |c|
+  c.file.current_header = 'Today',
 end
 
-standup.write
+file = StandupMD::File.find_by_date(Date.today)
+entry = StandupMD::Entry.create { |e| e.current = ['Stuff I will do today'] }
+file.entries << entry
+file.write
 ```
 
-Note: `StandupMD.load { ... }` just is a quick way to call `StandupMD.new {
-... }.load`
-
-Entries are just hashes, so you can easily transform them to `json` objects.
+The above example was written as such to show how the different pieces of the
+API fit together. The code can actually be simplified to the following.
 
 ```ruby
 require 'standup_md'
-require 'json'
+require 'date'
 
-standup = StandupMD.load
+StandupMD.configure do |c|
+  c.file.current_header = 'Today',
+  c.entry.current = ['Stuff I will do today']
+end
 
-standup_json = standup.all_entries.to_json
+StandupMD::File.find_by_date(Date.today).load.write
 ```
 
 ## Reporting Bugs and Requesting Features

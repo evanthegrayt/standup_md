@@ -67,7 +67,18 @@
   
 </div>
 
-    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Cli/Helpers.html">StandupMD::Cli::Helpers</a>
+  
+  
+  </ul>
+</div>
+
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -75,39 +86,21 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-config">::config</a>
+    
+    <li ><a href="#method-c-echo">::echo</a>
+    
     <li ><a href="#method-c-execute">::execute</a>
     
     <li ><a href="#method-c-new">::new</a>
-    
-    <li ><a href="#method-i-append_previous-3F">#append_previous?</a>
-    
-    <li ><a href="#method-i-append_to_previous_entry_tasks">#append_to_previous_entry_tasks</a>
     
     <li ><a href="#method-i-echo">#echo</a>
     
     <li ><a href="#method-i-edit">#edit</a>
     
-    <li ><a href="#method-i-edit-3F">#edit?</a>
+    <li ><a href="#method-i-load_preferences">#load_preferences</a>
     
-    <li ><a href="#method-i-editor">#editor</a>
-    
-    <li ><a href="#method-i-json-3F">#json?</a>
-    
-    <li ><a href="#method-i-print_all_entries">#print_all_entries</a>
-    
-    <li ><a href="#method-i-print_all_entries-3F">#print_all_entries?</a>
-    
-    <li ><a href="#method-i-print_current_entry">#print_current_entry</a>
-    
-    <li ><a href="#method-i-print_current_entry-3F">#print_current_entry?</a>
-    
-    <li ><a href="#method-i-should_append-3F">#should_append?</a>
-    
-    <li ><a href="#method-i-standup">#standup</a>
-    
-    <li ><a href="#method-i-verbose-3F">#verbose?</a>
-    
-    <li ><a href="#method-i-write-3F">#write?</a>
+    <li ><a href="#method-i-preference_file_loaded-3F">#preference_file_loaded?</a>
     
     <li ><a href="#method-i-write_file">#write_file</a>
     
@@ -135,20 +128,6 @@
     
 
     
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="PREFERENCE_FILE">PREFERENCE_FILE
-        
-        <dd><p>The user&#39;s preference file.</p>
-        
-      
-      </dl>
-    </section>
-    
 
     
     <section class="attribute-method-details" class="method-section">
@@ -156,6 +135,36 @@
         <h3>Attributes</h3>
       </header>
 
+      
+      <div id="attribute-i-entry" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">entry</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The entry searched for, usually today.</p>
+
+<p>@return [StandupMD::Entry]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-file" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">file</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The file loaded.</p>
+
+<p>@return [StandupMD::File]</p>
+        
+        </div>
+      </div>
       
       <div id="attribute-i-options" class="method-detail">
         <div class="method-heading attribute-method-heading">
@@ -172,21 +181,6 @@
         </div>
       </div>
       
-      <div id="attribute-i-preferences" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">preferences</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        <p>Preferences after reading config file and parsing ARGV.</p>
-
-<p>@return [Array]</p>
-        
-        </div>
-      </div>
-      
     </section>
     
 
@@ -195,6 +189,76 @@
        <header>
          <h3>Public Class Methods</h3>
        </header>
+
+    
+      <div id="method-c-config" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">config</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Access to the class&#39;s configuration.</p>
+
+<p>@return [StandupMD::Config::Cli]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="config-source">
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config</span>
+  <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">cli</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-echo" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">echo</span><span
+            class="method-args">(msg)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Prints output if <code>verbose</code> is true.</p>
+
+<p>@return [nil]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="echo-source">
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">echo</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">verbose</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-c-execute" class="method-detail ">
@@ -216,15 +280,16 @@
 
           
           <div class="method-source-code" id="execute-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 17</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">execute</span>(<span class="ruby-identifier">options</span> = [])
   <span class="ruby-identifier">exe</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)
-  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">append_to_previous_entry_tasks</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">should_append?</span>
 
-  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print_current_entry</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print_current_entry?</span>
-  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print_all_entries</span>   <span class="ruby-keyword">if</span> <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print_all_entries?</span>
-  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">write_file</span>          <span class="ruby-keyword">if</span> <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">write?</span>
-  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">edit</span>                <span class="ruby-keyword">if</span> <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">edit?</span>
+  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">write_file</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">write</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">print</span>
+    <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print</span>(<span class="ruby-identifier">exe</span>.<span class="ruby-identifier">entry</span>)
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">edit</span>
+    <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">edit</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -240,7 +305,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(options)</span>
+            class="method-args">(options = [], load_config = true)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -257,17 +322,16 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 43</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">options</span>)
-  <span class="ruby-ivar">@edit</span>                = <span class="ruby-keyword">true</span>
-  <span class="ruby-ivar">@write</span>               = <span class="ruby-keyword">true</span>
-  <span class="ruby-ivar">@append_previous</span>     = <span class="ruby-keyword">true</span>
-  <span class="ruby-ivar">@print_current_entry</span> = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@json</span>                = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@verbose</span>             = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@print_all_entries</span>   = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@options</span>             = <span class="ruby-identifier">options</span>
-  <span class="ruby-ivar">@preferences</span>         = <span class="ruby-identifier">get_preferences</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">options</span> = [], <span class="ruby-identifier">load_config</span> = <span class="ruby-keyword">true</span>)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">config</span>
+  <span class="ruby-ivar">@preference_file_loaded</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
+  <span class="ruby-identifier">load_preferences</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">load_config</span>
+  <span class="ruby-identifier">set_preferences</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">date</span>)
+  <span class="ruby-ivar">@file</span>.<span class="ruby-identifier">load</span>
+  <span class="ruby-ivar">@entry</span> = <span class="ruby-identifier">set_entry</span>(<span class="ruby-ivar">@file</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -287,78 +351,6 @@
        </header>
 
     
-      <div id="method-i-append_previous-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">append_previous?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Should `previous_entry_tasks` be appended? If false, <code>previous_entry_tasks</code> will be overwritten.</p>
-
-<p>@return [Boolean] Default is true</p>
-          
-          
-
-          
-          <div class="method-source-code" id="append_previous-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 207</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">append_previous?</span>
-  <span class="ruby-ivar">@append_previous</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-append_to_previous_entry_tasks" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">append_to_previous_entry_tasks</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Appends entries passed at runtime to existing previous entries.</p>
-
-<p>@return [Hash]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="append_to_previous_entry_tasks-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 132</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">append_to_previous_entry_tasks</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Appending previous entry tasks&#39;</span>
-  <span class="ruby-identifier">additions</span> = <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">&#39;previous_entry_tasks&#39;</span>)
-  <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">previous_entry_tasks</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">additions</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
       <div id="method-i-echo" class="method-detail ">
         
         <div class="method-heading">
@@ -372,7 +364,7 @@
 
         <div class="method-description">
           
-          <p>Prints output if <code>verbose</code> is true.</p>
+          <p>Quick access to <a href="Cli.html#method-c-echo"><code>Cli.echo</code></a>.</p>
 
 <p>@return [nil]</p>
           
@@ -380,9 +372,9 @@
 
           
           <div class="method-source-code" id="echo-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 223</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 118</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">echo</span>(<span class="ruby-identifier">msg</span>)
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">verbose?</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">echo</span>(<span class="ruby-identifier">msg</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -408,15 +400,17 @@
         <div class="method-description">
           
           <p>Opens the file in an editor. Abandons the script.</p>
+
+<p>@return [nil]</p>
           
           
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 140</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">edit</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Opening file in #{editor}&quot;</span>
-  <span class="ruby-identifier">exec</span>(<span class="ruby-node">&quot;#{editor} #{standup.file}&quot;</span>)
+  <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Opening file in #{@config.editor}&quot;</span>
+  <span class="ruby-identifier">exec</span>(<span class="ruby-node">&quot;#{@config.editor} #{file.name}&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -428,10 +422,10 @@
       </div>
 
     
-      <div id="method-i-edit-3F" class="method-detail ">
+      <div id="method-i-load_preferences" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">edit?</span><span
+          <span class="method-name">load_preferences</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -441,143 +435,22 @@
 
         <div class="method-description">
           
-          <p>Should the standup file be opened in the editor?</p>
-
-<p>@return [Boolean] Default is true</p>
-          
-          
-
-          
-          <div class="method-source-code" id="edit-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 198</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">edit?</span>
-  <span class="ruby-ivar">@edit</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-editor" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">editor</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Tries to determine the editor, first by checking if the user has one set in their preferences. If not, the <code>VISUAL</code> and <code>EDITOR</code> environmental variables are checked. If none of the above are set, defaults to <code>vim</code>.</p>
-
-<p>@return [String] The editor</p>
-          
-          
-
-          
-          <div class="method-source-code" id="editor-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 80</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">editor</span>
-  <span class="ruby-ivar">@editor</span> <span class="ruby-operator">||=</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;editor&#39;</span>)
-      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{standup.config[&#39;editor&#39;]}] via preferences&quot;</span>
-      <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">config</span>[<span class="ruby-string">&#39;editor&#39;</span>]
-    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]
-      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{ENV[&#39;VISUAL&#39;]}] (ENV[&#39;VISUAL&#39;])&quot;</span>
-      <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;VISUAL&#39;</span>]
-    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;EDITOR&#39;</span>]
-      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Editor set to [#{ENV[&#39;EDITOR&#39;]}] (ENV[&#39;EDITOR&#39;])&quot;</span>
-      <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;EDITOR&#39;</span>]
-    <span class="ruby-keyword">else</span>
-      <span class="ruby-identifier">echo</span> <span class="ruby-string">&quot;Editor set to [vim] (default)&quot;</span>
-      <span class="ruby-string">&#39;vim&#39;</span>
-    <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-json-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">json?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>If printing an entry, should it be printed as json?</p>
-
-<p>@return [Boolean] Default is false</p>
-          
-          
-
-          
-          <div class="method-source-code" id="json-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 166</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">json?</span>
-  <span class="ruby-ivar">@json</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-print_all_entries" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">print_all_entries</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Prints all entries to the command line.</p>
+          <p>Load the preference file.</p>
 
 <p>@return [nil]</p>
           
           
 
           
-          <div class="method-source-code" id="print_all_entries-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 101</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_all_entries</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Display all entries&#39;</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">json?</span>
-    <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">print_entry</span>(<span class="ruby-identifier">head</span>, <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>[<span class="ruby-identifier">head</span>])
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">return</span>
+          <div class="method-source-code" id="load_preferences-source">
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_preferences</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">preference_file</span>)
+    <span class="ruby-operator">::</span><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load_config_file</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">preference_file</span>)
+    <span class="ruby-ivar">@preference_file_loaded</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Preference file #{@config.preference_file} does not exist.&quot;</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  ...as json&#39;</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">all_entries</span>.<span class="ruby-identifier">to_json</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -589,10 +462,10 @@
       </div>
 
     
-      <div id="method-i-print_all_entries-3F" class="method-detail ">
+      <div id="method-i-preference_file_loaded-3F" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">print_all_entries?</span><span
+          <span class="method-name">preference_file_loaded?</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -602,245 +475,17 @@
 
         <div class="method-description">
           
-          <p>Should all entries be printed? If true, disables editing.</p>
+          <p>Has the preference file been loaded?</p>
 
-<p>@return [Boolean] Default is false</p>
-          
-          
-
-          
-          <div class="method-source-code" id="print_all_entries-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 174</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_all_entries?</span>
-  <span class="ruby-ivar">@print_all_entries</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-print_current_entry" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">print_current_entry</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Prints the current entry to the command line.</p>
-
-<p>@return [nil]</p>
+<p>@return boolean</p>
           
           
 
           
-          <div class="method-source-code" id="print_current_entry-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 117</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_current_entry</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Print current entry&#39;</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">json?</span>
-    <span class="ruby-identifier">print_entry</span>(<span class="ruby-identifier">standup</span>.<span class="ruby-identifier">header</span>, <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">current_entry</span>)
-    <span class="ruby-keyword">return</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;  ...as json&#39;</span>
-  <span class="ruby-identifier">entry</span> = {<span class="ruby-identifier">standup</span>.<span class="ruby-identifier">header</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">current_entry</span>}.<span class="ruby-identifier">to_json</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">entry</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-print_current_entry-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">print_current_entry?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Should current entry be printed? If true, disables editing.</p>
-
-<p>@return [Boolean] Default is false</p>
-          
-          
-
-          
-          <div class="method-source-code" id="print_current_entry-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 158</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print_current_entry?</span>
-  <span class="ruby-ivar">@print_current_entry</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-should_append-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">should_append?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Did the user pass <code>previous_entry_tasks</code>, and should we append?</p>
-
-<p>@return [Boolean]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="should_append-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 215</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">should_append?</span>
-  <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;previous_entry_tasks&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">append_previous?</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-standup" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">standup</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Sets up an instance of <code>StandupMD</code> and passes all user preferences.</p>
-
-<p>@return [StandupMD]</p>
-          
-          
-
-          
-          <div class="method-source-code" id="standup-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 59</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">standup</span>
-  <span class="ruby-identifier">cf</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-constant">PREFERENCE_FILE</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">PREFERENCE_FILE</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>
-  <span class="ruby-ivar">@standup</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">::</span><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cf</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">any?</span>
-      <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Config options:&#39;</span>
-      <span class="ruby-identifier">s</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;  #{k} = #{v}&quot;</span> }
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Runtime options:&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">any?</span>
-    <span class="ruby-identifier">preferences</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;  #{k} = #{v}&quot;</span>
-      <span class="ruby-identifier">s</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">load</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-verbose-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">verbose?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Should debug info be printed?</p>
-
-<p>@return [Boolean] Default is false</p>
-          
-          
-
-          
-          <div class="method-source-code" id="verbose-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 182</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">verbose?</span>
-  <span class="ruby-ivar">@verbose</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-write-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">write?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Should the file be written?</p>
-
-<p>@return [Boolean] Default is true</p>
-          
-          
-
-          
-          <div class="method-source-code" id="write-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 190</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write?</span>
-  <span class="ruby-ivar">@write</span>
+          <div class="method-source-code" id="preference_file_loaded-3F-source">
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preference_file_loaded?</span>
+  <span class="ruby-ivar">@preference_file_loaded</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -873,10 +518,10 @@
 
           
           <div class="method-source-code" id="write_file-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 149</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write_file</span>
-  <span class="ruby-identifier">echo</span> <span class="ruby-string">&#39;Writing file&#39;</span>
-  <span class="ruby-identifier">standup</span>.<span class="ruby-identifier">write</span>
+  <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Writing file #{file.name}&quot;</span>
+  <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
