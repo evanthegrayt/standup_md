@@ -269,9 +269,9 @@ Your `~/.standuprc` should contain:
 StandupMD.configure do |c|
   c.file.header_depth       = 2
   c.file.sub_header_depth   = 3
-  c.file.current_header     = Today
-  c.file.previous_header    = Yesterday
-  c.file.impediments_header = Hold-ups
+  c.file.current_header     = 'Today'
+  c.file.previous_header    = 'Yesterday'
+  c.file.impediments_header = 'Hold-ups'
   c.file.bullet_character   = '*'
   c.file.header_date_format = '%m/%d/%Y'
   c.file.sub_header_order   = %w[current previous impediments notes]
