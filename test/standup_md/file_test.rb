@@ -68,7 +68,9 @@ class TestFile < TestHelper
     refute(@file.loaded?)
     assert_nothing_raised { @file.load }
     assert(@file.loaded?)
-    entry_list = @file.load
+    file = @file.load
+    assert_instance_of(StandupMD::File, file)
+    entry_list = file.entries
     assert_instance_of(StandupMD::EntryList, entry_list)
     assert_equal(2, entry_list.size)
     StandupMD.config.file.current_header = 'Today'

@@ -138,6 +138,7 @@ module StandupMD
       entry_list << new_entry(record) unless record.empty?
       @loaded = true
       @entries = entry_list.sort
+      self
     rescue => e
       raise "File malformation: #{e}"
     end
