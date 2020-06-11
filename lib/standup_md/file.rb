@@ -20,6 +20,16 @@ module StandupMD
     end
 
     ##
+    # Convenience method for calling File.find(file_name).load
+    #
+    # @param [String] file_name
+    #
+    # @return [StandupMD::File]
+    def self.load(file_name)
+      new(file_name).load
+    end
+
+    ##
     # Find standup file in directory by file name.
     #
     # @param [String] File_naem
