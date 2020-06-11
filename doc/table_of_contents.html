@@ -51,17 +51,29 @@
 
       <li><a href="README_md.html#label-Usage">Usage</a>
 
-      <li><a href="README_md.html#label-Example">Example</a>
+      <li><a href="README_md.html#label-Command+Line">Command Line</a>
+
+      <li><a href="README_md.html#label-CLI+Examples">CLI Examples</a>
+
+      <li><a href="README_md.html#label-Adding+an+entry+for+today+via+editor">Adding an entry for today via editor</a>
+
+      <li><a href="README_md.html#label-Copy+the+entry+for+today+to+clipboard">Copy the entry for today to clipboard</a>
+
+      <li><a href="README_md.html#label-Add+entry+to+file+without+opening+it">Add entry to file without opening it</a>
+
+      <li><a href="README_md.html#label-Find+an+entry+by+date+and+print+it.">Find an entry by date and print it.</a>
 
       <li><a href="README_md.html#label-Customization+and+Runtime+Options">Customization and Runtime Options</a>
 
-      <li><a href="README_md.html#label-Available+Config+File+Keys+and+Defaults">Available Config File Keys and Defaults</a>
+      <li><a href="README_md.html#label-Available+Config+File+Options+and+Defaults">Available Config File Options and Defaults</a>
 
       <li><a href="README_md.html#label-Executable+Flags">Executable Flags</a>
 
       <li><a href="README_md.html#label-Using+Existing+Standup+Files">Using Existing Standup Files</a>
 
       <li><a href="README_md.html#label-API">API</a>
+
+      <li><a href="README_md.html#label-API+Examples">API Examples</a>
 
       <li><a href="README_md.html#label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features</a>
 
@@ -77,21 +89,58 @@
 <h2 id="classes">Classes and Modules</h2>
 <ul>
 
-  <li class="class">
+  <li class="module">
     <a href="StandupMD.html">StandupMD</a>
-
-    <ul>
-
-      <li><a href="StandupMD.html#5Buntitled-5D">Top Section</a>
-
-      <li><a href="StandupMD.html#Attributes+with+default+getters+and+setters.">Attributes with default getters and setters.</a>
-
-    </ul>
 
   </li>
 
   <li class="class">
     <a href="StandupMD/Cli.html">StandupMD::Cli</a>
+
+  </li>
+
+  <li class="module">
+    <a href="StandupMD/Cli/Helpers.html">StandupMD::Cli::Helpers</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/Config.html">StandupMD::Config</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/Config/Cli.html">StandupMD::Config::Cli</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/Config/Entry.html">StandupMD::Config::Entry</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/Config/EntryList.html">StandupMD::Config::EntryList</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/Config/File.html">StandupMD::Config::File</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/Entry.html">StandupMD::Entry</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/EntryList.html">StandupMD::EntryList</a>
+
+  </li>
+
+  <li class="class">
+    <a href="StandupMD/File.html">StandupMD::File</a>
 
   </li>
 
@@ -101,19 +150,94 @@
 <ul>
 
   <li class="method">
+    <a href="StandupMD/Entry.html#method-c-config">::config</a>
+    &mdash;
+    <span class="container">StandupMD::Entry</span>
+
+  <li class="method">
+    <a href="StandupMD/File.html#method-c-config">::config</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/Cli.html#method-c-config">::config</a>
+    &mdash;
+    <span class="container">StandupMD::Cli</span>
+
+  <li class="method">
+    <a href="StandupMD.html#method-c-config">::config</a>
+    &mdash;
+    <span class="container">StandupMD</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-c-config">::config</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD.html#method-c-config_file_loaded-3F">::config_file_loaded?</a>
+    &mdash;
+    <span class="container">StandupMD</span>
+
+  <li class="method">
+    <a href="StandupMD.html#method-c-configure">::configure</a>
+    &mdash;
+    <span class="container">StandupMD</span>
+
+  <li class="method">
+    <a href="StandupMD/Entry.html#method-c-create">::create</a>
+    &mdash;
+    <span class="container">StandupMD::Entry</span>
+
+  <li class="method">
+    <a href="StandupMD/Cli.html#method-c-echo">::echo</a>
+    &mdash;
+    <span class="container">StandupMD::Cli</span>
+
+  <li class="method">
     <a href="StandupMD/Cli.html#method-c-execute">::execute</a>
     &mdash;
     <span class="container">StandupMD::Cli</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-c-load">::load</a>
+    <a href="StandupMD/File.html#method-c-find">::find</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/File.html#method-c-find_by_date">::find_by_date</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD.html#method-c-load_config_file">::load_config_file</a>
     &mdash;
     <span class="container">StandupMD</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-c-new">::new</a>
+    <a href="StandupMD/EntryList.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/Config/File.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">StandupMD::Config::File</span>
+
+  <li class="method">
+    <a href="StandupMD/File.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/Config.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">StandupMD::Config</span>
+
+  <li class="method">
+    <a href="StandupMD/Config/Entry.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">StandupMD::Config::Entry</span>
 
   <li class="method">
     <a href="StandupMD/Cli.html#method-c-new">::new</a>
@@ -121,39 +245,44 @@
     <span class="container">StandupMD::Cli</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-append_previous-3F">#append_previous?</a>
+    <a href="StandupMD/Config/Cli.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::Config::Cli</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-append_to_previous_entry_tasks">#append_to_previous_entry_tasks</a>
+    <a href="StandupMD/Entry.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::Entry</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-bullet_character-3D">#bullet_character=</a>
+    <a href="StandupMD.html#method-c-reset_config">::reset_config</a>
     &mdash;
     <span class="container">StandupMD</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-config_file-3D">#config_file=</a>
+    <a href="StandupMD/EntryList.html#method-i-3C-3C">#&lt;&lt;</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-config_file_loaded-3F">#config_file_loaded?</a>
+    <a href="StandupMD/Entry.html#method-i-3C-3D-3E">#&lt;=&gt;</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Entry</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-current_entry_tasks-3D">#current_entry_tasks=</a>
+    <a href="StandupMD/Config/File.html#method-i-bullet_character-3D">#bullet_character=</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Config::File</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-directory-3D">#directory=</a>
+    <a href="StandupMD/Config/File.html#method-i-directory-3D">#directory=</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Config::File</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-i-each">#each</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
     <a href="StandupMD/Cli.html#method-i-echo">#echo</a>
@@ -166,129 +295,149 @@
     <span class="container">StandupMD::Cli</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-edit-3F">#edit?</a>
+    <a href="StandupMD/EntryList.html#method-i-empty-3F">#empty?</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/File.html#method-i-exist-3F">#exist?</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-i-filter">#filter</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-i-filter-21">#filter!</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-i-find">#find</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-i-first">#first</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/Config/File.html#method-i-header_depth-3D">#header_depth=</a>
+    &mdash;
+    <span class="container">StandupMD::Config::File</span>
+
+  <li class="method">
+    <a href="StandupMD/Config/EntryList.html#method-i-initalize">#initalize</a>
+    &mdash;
+    <span class="container">StandupMD::Config::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/EntryList.html#method-i-last">#last</a>
+    &mdash;
+    <span class="container">StandupMD::EntryList</span>
+
+  <li class="method">
+    <a href="StandupMD/File.html#method-i-load">#load</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/Cli.html#method-i-load_preferences">#load_preferences</a>
     &mdash;
     <span class="container">StandupMD::Cli</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-editor">#editor</a>
+    <a href="StandupMD/File.html#method-i-loaded-3F">#loaded?</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/File.html#method-i-new-3F">#new?</a>
+    &mdash;
+    <span class="container">StandupMD::File</span>
+
+  <li class="method">
+    <a href="StandupMD/Cli.html#method-i-preference_file_loaded-3F">#preference_file_loaded?</a>
     &mdash;
     <span class="container">StandupMD::Cli</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-entry_previously_added-3F">#entry_previously_added?</a>
+    <a href="StandupMD/Cli/Helpers.html#method-i-print">#print</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Cli::Helpers</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-file_written-3F">#file_written?</a>
+    <a href="StandupMD/Config/File.html#method-i-reset_values">#reset_values</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Config::File</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-header_depth-3D">#header_depth=</a>
+    <a href="StandupMD/Config/Cli.html#method-i-reset_values">#reset_values</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Config::Cli</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-impediments-3D">#impediments=</a>
+    <a href="StandupMD/Config/Entry.html#method-i-reset_values">#reset_values</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Config::Entry</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-json-3F">#json?</a>
+    <a href="StandupMD/Config/EntryList.html#method-i-reset_values">#reset_values</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::Config::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-load">#load</a>
+    <a href="StandupMD/EntryList.html#method-i-size">#size</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-load_config_file">#load_config_file</a>
+    <a href="StandupMD/EntryList.html#method-i-sort">#sort</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-new_month-3F">#new_month?</a>
+    <a href="StandupMD/EntryList.html#method-i-sort-21">#sort!</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-notes-3D">#notes=</a>
+    <a href="StandupMD/EntryList.html#method-i-sort_reverse">#sort_reverse</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-previous_entry_tasks-3D">#previous_entry_tasks=</a>
+    <a href="StandupMD/Config/File.html#method-i-sub_header_depth-3D">#sub_header_depth=</a>
     &mdash;
-    <span class="container">StandupMD</span>
+    <span class="container">StandupMD::Config::File</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-print_all_entries">#print_all_entries</a>
+    <a href="StandupMD/EntryList.html#method-i-to_h">#to_h</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-print_all_entries-3F">#print_all_entries?</a>
+    <a href="StandupMD/Entry.html#method-i-to_h">#to_h</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::Entry</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-print_current_entry">#print_current_entry</a>
+    <a href="StandupMD/EntryList.html#method-i-to_json">#to_json</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::EntryList</span>
 
   <li class="method">
-    <a href="StandupMD/Cli.html#method-i-print_current_entry-3F">#print_current_entry?</a>
+    <a href="StandupMD/Entry.html#method-i-to_json">#to_json</a>
     &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::Entry</span>
 
   <li class="method">
-    <a href="StandupMD.html#method-i-reload">#reload</a>
+    <a href="StandupMD/File.html#method-i-write">#write</a>
     &mdash;
-    <span class="container">StandupMD</span>
-
-  <li class="method">
-    <a href="StandupMD/Cli.html#method-i-should_append-3F">#should_append?</a>
-    &mdash;
-    <span class="container">StandupMD::Cli</span>
-
-  <li class="method">
-    <a href="StandupMD/Cli.html#method-i-standup">#standup</a>
-    &mdash;
-    <span class="container">StandupMD::Cli</span>
-
-  <li class="method">
-    <a href="StandupMD.html#method-i-sub_header_depth-3D">#sub_header_depth=</a>
-    &mdash;
-    <span class="container">StandupMD</span>
-
-  <li class="method">
-    <a href="StandupMD.html#method-i-sub_header_order">#sub_header_order</a>
-    &mdash;
-    <span class="container">StandupMD</span>
-
-  <li class="method">
-    <a href="StandupMD.html#method-i-sub_header_order-3D">#sub_header_order=</a>
-    &mdash;
-    <span class="container">StandupMD</span>
-
-  <li class="method">
-    <a href="StandupMD/Cli.html#method-i-verbose-3F">#verbose?</a>
-    &mdash;
-    <span class="container">StandupMD::Cli</span>
-
-  <li class="method">
-    <a href="StandupMD.html#method-i-write">#write</a>
-    &mdash;
-    <span class="container">StandupMD</span>
-
-  <li class="method">
-    <a href="StandupMD/Cli.html#method-i-write-3F">#write?</a>
-    &mdash;
-    <span class="container">StandupMD::Cli</span>
+    <span class="container">StandupMD::File</span>
 
   <li class="method">
     <a href="StandupMD/Cli.html#method-i-write_file">#write_file</a>
