@@ -76,7 +76,7 @@ rake install
 
 ## Usage
 ### Command Line
-For the most basic usage, simplyt call the executable.
+For the most basic usage, simply call the executable.
 
 ```sh
 standup
