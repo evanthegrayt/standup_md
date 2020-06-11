@@ -4,13 +4,13 @@ require_relative '../../../lib/standup_md'
 class TestEntryConfig < TestHelper
   def setup
     super
-    StandupMD.config.entry.reset_values
+    StandupMD.config.entry.reset
   end
 
-  def test_reset_values
+  def test_reset
     StandupMD.config.entry.current = ['test']
     assert_equal(['test'], StandupMD.config.entry.current)
-    assert(StandupMD.config.entry.reset_values)
+    assert(StandupMD.config.entry.reset)
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
   end
 

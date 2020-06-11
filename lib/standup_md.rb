@@ -13,7 +13,7 @@ module StandupMD
   @config_file_loaded = false
 
   ##
-  # Shorthand for +StanupMD::Cli+
+  # Method for accessing the configuration.
   #
   # @return [StanupMD::Cli]
   def self.config

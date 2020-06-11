@@ -76,14 +76,14 @@ module StandupMD
       ##
       # Initializes the config with default values.
       def initialize
-        reset_values
+        reset
       end
 
       ##
       # Sets all config values back to their defaults.
       #
       # @return [Boolean] true if successful
-      def reset_values
+      def reset
         @date = Date.today
         @editor = set_editor
         @verbose = false

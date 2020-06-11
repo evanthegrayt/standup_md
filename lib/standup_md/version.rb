@@ -4,8 +4,6 @@ module StandupMD
   ##
   # The gem verision
   #
-  # @example
-  #  StandupMD::VERSION
-  #  # => '0.3.0'
-  VERSION = '0.3.1'
+  # @return [String]
+  VERSION = '0.3.2'
 end

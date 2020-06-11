@@ -42,14 +42,14 @@ module StandupMD
       ##
       # Initializes the config with default values.
       def initialize
-        reset_values
+        reset
       end
 
       ##
       # Sets all config values back to their defaults.
       #
       # @return [Boolean] true if successful
-      def reset_values
+      def reset
         @current = ["<!-- ADD TODAY'S WORK HERE -->"]
         @previous = []
         @impediments = ['None']
