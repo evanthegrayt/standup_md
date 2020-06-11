@@ -188,7 +188,7 @@ rake install</pre>
 
 <h3 id="label-Command+Line">Command Line<span><a href="#label-Command+Line">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>For the most basic usage, simplyt call the executable.</p>
+<p>For the most basic usage, simply call the executable.</p>
 
 <pre class="ruby"><span class="ruby-identifier">standup</span>
 </pre>
@@ -232,7 +232,7 @@ rake install</pre>
 
 <h4 id="label-Add+entry+to+file+without+opening+it">Add entry to file without opening it<span><a href="#label-Add+entry+to+file+without+opening+it">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
-<pre>standup --no-edit --current &quot;Work on this thing&quot;,&quot;And another thing&quot; -p</pre>
+<pre>standup --no-edit --current &quot;Work on this thing&quot;,&quot;And another thing&quot;</pre>
 
 <h4 id="label-Find+an+entry+by+date+and+print+it.">Find an entry by date and print it.<span><a href="#label-Find+an+entry+by+date+and+print+it.">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
@@ -337,27 +337,26 @@ rake install</pre>
 <p>Your <code>~/.standuprc</code> should contain:</p>
 
 <pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_depth</span>        <span class="ruby-value">2</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_depth</span>    <span class="ruby-value">3</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span>      <span class="ruby-constant">Today</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">previous_header</span>     <span class="ruby-constant">Yesterday</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">impediments_header</span>  <span class="ruby-constant">Hold</span><span class="ruby-operator">-</span><span class="ruby-identifier">ups</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span>    <span class="ruby-string">&#39;*&#39;</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_date_format</span>  <span class="ruby-string">&#39;%m/%d/%Y&#39;</span>
-  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span> = <span class="ruby-node">%w[current previous impediments notes]</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_depth</span>       = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_depth</span>   = <span class="ruby-value">3</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span>     = <span class="ruby-string">&#39;Today&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">previous_header</span>    = <span class="ruby-string">&#39;Yesterday&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">impediments_header</span> = <span class="ruby-string">&#39;Hold-ups&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span>   = <span class="ruby-string">&#39;*&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_date_format</span> = <span class="ruby-string">&#39;%m/%d/%Y&#39;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span>   = <span class="ruby-node">%w[current previous impediments notes]</span>
 <span class="ruby-keyword">end</span>
 </pre>
 
 <h2 id="label-API">API<span><a href="#label-API">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>The API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/index.html">documentation</a>.</p>
+<p>The API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/doc/index.html">RDoc Documentation</a>.</p>
 
 <p>This was mainly written as a command line utility, but the API is ridiculously robust, and is available for use in your own projects. A quick example of how to write a new entry via code could look like the following:</p>
 
 <h3 id="label-API+Examples">API Examples<span><a href="#label-API+Examples">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
-<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;date&#39;</span>
 
 <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span>,
@@ -372,7 +371,6 @@ rake install</pre>
 <p>The above example was written as such to show how the different pieces of the API fit together. The code can actually be simplified to the following.</p>
 
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
-<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;date&#39;</span>
 
 <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&#39;Today&#39;</span>,

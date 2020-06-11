@@ -4,6 +4,26 @@ module StandupMD
     ##
     # The configuration class for StandupMD::File
     class File
+
+      ##
+      # The default options.
+      #
+      # @return [Hash]
+      DEFAULTS = {
+        header_date_format: '%Y-%m-%d',
+        header_depth: 1,
+        sub_header_depth: 2,
+        current_header: 'Current',
+        previous_header: 'Previous',
+        impediments_header: 'Impediments',
+        notes_header: 'Notes',
+        sub_header_order: %w[previous current impediments notes],
+        directory: ::File.join(ENV['HOME'], '.cache', 'standup_md'),
+        bullet_character: '-',
+        name_format: '%Y_%m.md',
+        create: true,
+      }
+
       ##
       # Number of octothorps that should preface entry headers.
       #
@@ -116,27 +136,15 @@ module StandupMD
       ##
       # Initializes the config with default values.
       def initialize
-        reset_values
+        reset
       end
 
       ##
       # Sets all config values back to their defaults.
       #
-      # @return [Boolean] true if successful
-      def reset_values
-        @header_date_format = '%Y-%m-%d'
-        @header_depth = 1
-        @sub_header_depth = 2
-        @current_header = 'Current'
-        @previous_header = 'Previous'
-        @impediments_header = 'Impediments'
-        @notes_header = 'Notes'
-        @sub_header_order = %w[previous current impediments notes]
-        @directory = ::File.join(ENV['HOME'], '.cache', 'standup_md')
-        @bullet_character = '-'
-        @name_format = '%Y_%m.md'
-        @create = true
-        true
+      # @return [Hash]
+      def reset
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
       end
 
       ##

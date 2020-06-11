@@ -10,6 +10,10 @@ class TestStandupMD < TestHelper
     assert_instance_of(StandupMD::Config, StandupMD.config)
   end
 
+  def test_reset_config
+    assert_instance_of(StandupMD::Config, StandupMD.reset_config)
+  end
+
   def test_file
     assert_instance_of(StandupMD::Config::File, StandupMD.config.file)
   end

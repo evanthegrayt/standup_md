@@ -4,7 +4,7 @@ require_relative '../../lib/standup_md'
 class TestFile < TestHelper
   def setup
     super
-    StandupMD.config.file.reset_values
+    StandupMD.config.file.reset
     StandupMD.config.file.directory = workdir
     @previous_month_test_file = Date.today.prev_month.strftime('%Y_%m.md')
     create_standup_file(test_file_name)

@@ -4,13 +4,13 @@ require_relative '../../../lib/standup_md'
 class TestFileConfig < TestHelper
   def setup
     super
-    StandupMD.config.file.reset_values
+    StandupMD.config.file.reset
   end
 
-  def test_reset_values
+  def test_reset
     StandupMD.config.file.header_depth = 3
     assert_equal(3, StandupMD.config.file.header_depth)
-    assert(StandupMD.config.file.reset_values)
+    assert(StandupMD.config.file.reset)
     assert_equal(1, StandupMD.config.file.header_depth)
   end
 

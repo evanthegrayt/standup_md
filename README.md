@@ -132,7 +132,7 @@ result to the command line, you could use the following.
 
 #### Add entry to file without opening it
 ```sh
-standup --no-edit --current "Work on this thing","And another thing" -p
+standup --no-edit --current "Work on this thing","And another thing"
 ```
 
 #### Find an entry by date and print it.
@@ -280,7 +280,7 @@ end
 
 ## API
 The API is fully documented in the
-[documentation](https://evanthegrayt.github.io/standup_md/doc/index.html).
+[RDoc Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html).
 
 This was mainly written as a command line utility, but the API is ridiculously
 robust, and is available for use in your own projects. A quick example of how
@@ -290,7 +290,6 @@ to write a new entry via code could look like the following:
 
 ```ruby
 require 'standup_md'
-require 'date'
 
 StandupMD.configure do |c|
   c.file.current_header = 'Today',
@@ -307,7 +306,6 @@ API fit together. The code can actually be simplified to the following.
 
 ```ruby
 require 'standup_md'
-require 'date'
 
 StandupMD.configure do |c|
   c.file.current_header = 'Today',

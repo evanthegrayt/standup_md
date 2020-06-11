@@ -7,10 +7,10 @@ class TestCli < TestHelper
   def setup
     super
     create_standup_file(test_file_name)
-    StandupMD.config.cli.reset_values
-    StandupMD.config.file.reset_values
-    StandupMD.config.entry.reset_values
-    StandupMD.config.entry_list.reset_values
+    StandupMD.config.cli.reset
+    StandupMD.config.file.reset
+    StandupMD.config.entry.reset
+    StandupMD.config.entry_list.reset
     StandupMD.config.cli.preference_file = test_config_file_name
     StandupMD.instance_variable_set('@config_file_loaded', false)
     @previous_month_test_file =
@@ -20,10 +20,10 @@ class TestCli < TestHelper
 
   def teardown
     super
-    StandupMD.config.cli.reset_values
-    StandupMD.config.file.reset_values
-    StandupMD.config.entry.reset_values
-    StandupMD.config.entry_list.reset_values
+    StandupMD.config.cli.reset
+    StandupMD.config.file.reset
+    StandupMD.config.entry.reset
+    StandupMD.config.entry_list.reset
   end
 
   def test_preference_file
