@@ -56,22 +56,6 @@ module StandupMD
     end
 
     ##
-    # How many entries are in the list.
-    #
-    # @return [Integer]
-    def size
-      @entries.size
-    end
-
-    ##
-    # Is the list empty?
-    #
-    # @return [Boolean] true if empty
-    def empty?
-      @entries.empty?
-    end
-
-    ##
     # Returns a copy of self sorted by date.
     #
     # @return [StandupMD::EntryList]
@@ -125,24 +109,6 @@ module StandupMD
     end
 
     ##
-    # The first entry in the list. This method assumes the list has
-    # already been sorted.
-    #
-    # @return [StandupMD::Entry]
-    def first
-      to_a.first
-    end
-
-    ##
-    # The last entry in the list. This method assumes the list has
-    # already been sorted.
-    #
-    # @return [StandupMD::Entry]
-    def last
-      to_a.last
-    end
-
-    ##
     # The list as a hash, with the dates as keys.
     #
     # @return [Hash]
@@ -161,6 +127,40 @@ module StandupMD
     # @return [String]
     def to_json
       to_h.to_json
+    end
+
+    ##
+    # The first entry in the list. This method assumes the list has
+    # already been sorted.
+    #
+    # @return [StandupMD::Entry]
+    def first
+      to_a.first
+    end
+
+    ##
+    # The last entry in the list. This method assumes the list has
+    # already been sorted.
+    #
+    # @return [StandupMD::Entry]
+    def last
+      to_a.last
+    end
+
+    ##
+    # How many entries are in the list.
+    #
+    # @return [Integer]
+    def size
+      @entries.size
+    end
+
+    ##
+    # Is the list empty?
+    #
+    # @return [Boolean] true if empty
+    def empty?
+      @entries.empty?
     end
   end
 end

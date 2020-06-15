@@ -103,6 +103,22 @@
     
 
     
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="DEFAULTS">DEFAULTS
+        
+        <dd><p>The default options.</p>
+
+<p>@return [Hash]</p>
+        
+      
+      </dl>
+    </section>
+    
 
     
     <section class="attribute-method-details" class="method-section">
@@ -208,7 +224,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/entry.rb, line 44</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/entry.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-identifier">reset</span>
 <span class="ruby-keyword">end</span></pre>
@@ -245,19 +261,15 @@
           
           <p>Sets all config values back to their defaults.</p>
 
-<p>@return [Boolean] true if successful</p>
+<p>@return [Hash]</p>
           
           
 
           
           <div class="method-source-code" id="reset-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/entry.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/entry.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reset</span>
-  <span class="ruby-ivar">@current</span> = [<span class="ruby-string">&quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;</span>]
-  <span class="ruby-ivar">@previous</span> = []
-  <span class="ruby-ivar">@impediments</span> = [<span class="ruby-string">&#39;None&#39;</span>]
-  <span class="ruby-ivar">@notes</span> = []
-  <span class="ruby-keyword">true</span>
+  <span class="ruby-constant">DEFAULTS</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-identifier">v</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
