@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'config/cli'
 require_relative 'config/file'
 require_relative 'config/entry'

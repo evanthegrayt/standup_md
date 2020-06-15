@@ -8,6 +8,17 @@ module StandupMD
     class Entry
 
       ##
+      # The default options.
+      #
+      # @return [Hash]
+      DEFAULTS = {
+        current: ["<!-- ADD TODAY'S WORK HERE -->"],
+        previous: [],
+        impediments: ['None'],
+        notes: [],
+      }
+
+      ##
       # Tasks for "Current" section.
       #
       # @param [Array] current
@@ -48,13 +59,9 @@ module StandupMD
       ##
       # Sets all config values back to their defaults.
       #
-      # @return [Boolean] true if successful
+      # @return [Hash]
       def reset
-        @current = ["<!-- ADD TODAY'S WORK HERE -->"]
-        @previous = []
-        @impediments = ['None']
-        @notes = []
-        true
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
       end
     end
   end

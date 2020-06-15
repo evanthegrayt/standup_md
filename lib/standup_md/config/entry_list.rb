@@ -8,6 +8,12 @@ module StandupMD
     class EntryList
 
       ##
+      # The default options.
+      #
+      # @return [Hash]
+      DEFAULTS = {}
+
+      ##
       # Initializes the config with default values.
       def initalize
         reset
@@ -16,10 +22,9 @@ module StandupMD
       ##
       # Sets all config values back to their defaults.
       #
-      # @return [Boolean] true if successful
+      # @return [Hash]
       def reset
-        # TODO add order ascending or decending.
-        true
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
       end
     end
   end

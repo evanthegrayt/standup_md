@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'date'
 
 module StandupMD
@@ -7,6 +8,23 @@ module StandupMD
     ##
     # The configuration class for StandupMD::Cli
     class Cli
+
+      ##
+      # The default options.
+      #
+      # @return [Hash]
+      DEFAULTS = {
+        date: Date.today,
+        editor: ENV['VISUAL'] || ENV['EDITOR'] || 'vim',
+        verbose: false,
+        edit: true,
+        write: true,
+        print: false,
+        auto_fill_previous: true,
+        preference_file:
+          ::File.expand_path(::File.join(ENV['HOME'], '.standuprc')),
+      }
+
       ##
       # The editor to use when opening standup files. If one is not set, the
       # first of $VISUAL, $EDITOR, or vim will be used, in that order.
@@ -33,7 +51,7 @@ module StandupMD
       attr_accessor :edit
 
       ##
-      # Should the cli write the file?
+      # Should the cli automatically write the new entry to the file?
       #
       # @param [Boolean] write
       #
@@ -41,7 +59,7 @@ module StandupMD
       attr_accessor :write
 
       ##
-      # Should the cli print the entry?
+      # Should the cli print the entry to the command line?
       #
       # @param [Boolean] print
       #
@@ -49,7 +67,7 @@ module StandupMD
       attr_accessor :print
 
       ##
-      # The date to use to find the file.
+      # The date to use to find the entry.
       #
       # @param [Date] date
       #
@@ -82,24 +100,9 @@ module StandupMD
       ##
       # Sets all config values back to their defaults.
       #
-      # @return [Boolean] true if successful
+      # @return [Hash]
       def reset
-        @date = Date.today
-        @editor = set_editor
-        @verbose = false
-        @edit = true
-        @write = true
-        @print = false
-        @auto_fill_previous = true
-        @preference_file = ::File.expand_path(::File.join(ENV['HOME'], '.standuprc'))
-      end
-
-      private
-
-      def set_editor # :nodoc:
-        return ENV['VISUAL'] if ENV['VISUAL']
-        return ENV['EDITOR'] if ENV['EDITOR']
-        'vim'
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
       end
     end
   end

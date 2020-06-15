@@ -330,7 +330,7 @@
 
           
           <div class="method-source-code" id="empty-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 162</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">empty?</span>
   <span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">empty?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -369,7 +369,7 @@
 
           
           <div class="method-source-code" id="filter-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 108</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filter</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(
     <span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">date</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>) }
@@ -410,7 +410,7 @@
 
           
           <div class="method-source-code" id="filter-21-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filter!</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
   <span class="ruby-ivar">@entries</span> = <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
   <span class="ruby-keyword">self</span>
@@ -479,7 +479,7 @@
 
           
           <div class="method-source-code" id="first-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 132</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 137</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">first</span>
   <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -514,7 +514,7 @@
 
           
           <div class="method-source-code" id="last-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 141</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">last</span>
   <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">last</span>
 <span class="ruby-keyword">end</span></pre>
@@ -549,7 +549,7 @@
 
           
           <div class="method-source-code" id="size-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">size</span>
   <span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">size</span>
 <span class="ruby-keyword">end</span></pre>
@@ -584,7 +584,7 @@
 
           
           <div class="method-source-code" id="sort-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -619,7 +619,7 @@
 
           
           <div class="method-source-code" id="sort-21-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort!</span>
   <span class="ruby-ivar">@entries</span> = <span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>
   <span class="ruby-keyword">self</span>
@@ -655,7 +655,7 @@
 
           
           <div class="method-source-code" id="sort_reverse-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 95</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort_reverse</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -690,7 +690,7 @@
 
           
           <div class="method-source-code" id="to_h-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 149</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_h</span>
   <span class="ruby-constant">Hash</span>[<span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">e</span>.<span class="ruby-identifier">date</span>, {
     <span class="ruby-string">&#39;current&#39;</span>     <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">current</span>,
@@ -730,7 +730,7 @@
 
           
           <div class="method-source-code" id="to_json-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 162</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_json</span>
   <span class="ruby-identifier">to_h</span>.<span class="ruby-identifier">to_json</span>
 <span class="ruby-keyword">end</span></pre>

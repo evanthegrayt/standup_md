@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../test_helper'
 require_relative '../../../lib/standup_md'
 
@@ -16,17 +18,13 @@ class TestCliConfig < TestHelper
   end
 
   def test_editor
-    ENV['VISUAL'] = 'nano'
-    StandupMD.config.cli.reset
-    assert_equal('nano', StandupMD.config.cli.editor)
-    ENV['VISUAL'] = nil
-    ENV['EDITOR'] = 'mate'
-    StandupMD.config.cli.reset
-    assert_equal('mate', StandupMD.config.cli.editor)
-    ENV['VISUAL'] = nil
-    ENV['EDITOR'] = nil
-    StandupMD.config.cli.reset
-    assert_equal('vim', StandupMD.config.cli.editor)
+    if ENV['VISUAL']
+      assert_equal(ENV['VISUAL'], StandupMD.config.cli.editor)
+    elsif ENV['EDITOR']
+      assert_equal(ENV['EDITOR'], StandupMD.config.cli.editor)
+    else
+      assert_equal('vim', StandupMD.config.cli.editor)
+    end
     assert_nothing_raised { StandupMD.config.cli.editor = 'mate' }
     assert_equal('mate', StandupMD.config.cli.editor)
   end

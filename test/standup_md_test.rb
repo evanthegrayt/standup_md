@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'test_helper'
 require_relative '../lib/standup_md'
 
@@ -8,6 +10,10 @@ class TestStandupMD < TestHelper
 
   def test_config
     assert_instance_of(StandupMD::Config, StandupMD.config)
+  end
+
+  def test_reset_config
+    assert_instance_of(StandupMD::Config, StandupMD.reset_config)
   end
 
   def test_file

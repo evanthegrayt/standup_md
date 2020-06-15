@@ -132,7 +132,7 @@ result to the command line, you could use the following.
 
 #### Add entry to file without opening it
 ```sh
-standup --no-edit --current "Work on this thing","And another thing" -p
+standup --no-edit --current "Work on this thing","And another thing"
 ```
 
 #### Find an entry by date and print it.

@@ -8,7 +8,7 @@ require_relative 'standup_md/cli'
 require_relative 'standup_md/config'
 
 ##
-# The class for handing reading/writing of entries.
+# The main module for the gem. Provides access to configuration classes.
 module StandupMD
   @config_file_loaded = false
 

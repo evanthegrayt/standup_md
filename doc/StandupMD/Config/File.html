@@ -111,6 +111,22 @@
     
 
     
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="DEFAULTS">DEFAULTS
+        
+        <dd><p>The default options.</p>
+
+<p>@return [Hash]</p>
+        
+      
+      </dl>
+    </section>
+    
 
     
     <section class="attribute-method-details" class="method-section">
@@ -364,7 +380,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 138</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-identifier">reset</span>
 <span class="ruby-keyword">end</span></pre>
@@ -409,7 +425,7 @@
 
           
           <div class="method-source-code" id="bullet_character-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 179</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 187</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bullet_character=</span>(<span class="ruby-identifier">char</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Must be &quot;-&quot; or &quot;*&quot;&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-node">%w[- *]</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">char</span>)
   <span class="ruby-ivar">@bullet_character</span> = <span class="ruby-identifier">char</span>
@@ -447,7 +463,7 @@
 
           
           <div class="method-source-code" id="directory-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 192</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 200</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
   <span class="ruby-identifier">directory</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>)
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
@@ -486,7 +502,7 @@
 
           
           <div class="method-source-code" id="header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 148</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 156</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">1</span>, <span class="ruby-value">5</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Header depth out of bounds (1..5)&#39;</span>
@@ -520,27 +536,15 @@
           
           <p>Sets all config values back to their defaults.</p>
 
-<p>@return [Boolean] true if successful</p>
+<p>@return [Hash]</p>
           
           
 
           
           <div class="method-source-code" id="reset-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 126</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reset</span>
-  <span class="ruby-ivar">@header_date_format</span> = <span class="ruby-string">&#39;%Y-%m-%d&#39;</span>
-  <span class="ruby-ivar">@header_depth</span> = <span class="ruby-value">1</span>
-  <span class="ruby-ivar">@sub_header_depth</span> = <span class="ruby-value">2</span>
-  <span class="ruby-ivar">@current_header</span> = <span class="ruby-string">&#39;Current&#39;</span>
-  <span class="ruby-ivar">@previous_header</span> = <span class="ruby-string">&#39;Previous&#39;</span>
-  <span class="ruby-ivar">@impediments_header</span> = <span class="ruby-string">&#39;Impediments&#39;</span>
-  <span class="ruby-ivar">@notes_header</span> = <span class="ruby-string">&#39;Notes&#39;</span>
-  <span class="ruby-ivar">@sub_header_order</span> = <span class="ruby-node">%w[previous current impediments notes]</span>
-  <span class="ruby-ivar">@directory</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;HOME&#39;</span>], <span class="ruby-string">&#39;.cache&#39;</span>, <span class="ruby-string">&#39;standup_md&#39;</span>)
-  <span class="ruby-ivar">@bullet_character</span> = <span class="ruby-string">&#39;-&#39;</span>
-  <span class="ruby-ivar">@name_format</span> = <span class="ruby-string">&#39;%Y_%m.md&#39;</span>
-  <span class="ruby-ivar">@create</span> = <span class="ruby-keyword">true</span>
-  <span class="ruby-keyword">true</span>
+  <span class="ruby-constant">DEFAULTS</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-identifier">v</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -575,7 +579,7 @@
 
           
           <div class="method-source-code" id="sub_header_depth-3D-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 164</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 172</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_depth=</span>(<span class="ruby-identifier">depth</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">depth</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-value">2</span>, <span class="ruby-value">6</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Sub-header depth out of bounds (2..6)&#39;</span>
