@@ -172,6 +172,8 @@ them again.
 
 
 #### Available Config File Options and Defaults
+For command-line usage, this file needs to be named `~/.standuprc`. To use in a
+rails project, create an initializer (`config/initializers/standup_md.rb`).
 
 ```ruby
 StandupMD.configure do |c|
