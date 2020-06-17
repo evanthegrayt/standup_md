@@ -49,6 +49,11 @@ entry exists, it will be added to today's entry as your previous day's work. See
 in your own code somehow.
 
 ## Installation
+If you don't have the permissions to install system-wide gems, you're probabaly
+also running an older version of ruby. I recommend installing
+[rbenv](https://github.com/rbenv/rbenv#installation), and then installing an
+up-to-date version of ruby.
+
 ### Via RubyGems
 Just install the gem!
 
