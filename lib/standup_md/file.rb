@@ -158,7 +158,7 @@ module StandupMD
     # This method is destructive; if a file for entries in the date range
     # already exists, it will be clobbered with the entries in the range.
     #
-    # @param [Hash] start_and_end_date
+    # @param [Hash] {start_date: Date, end_date: Date}
     #
     # @return [Boolean] true if successful
     def write(dates = {})

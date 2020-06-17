@@ -28,6 +28,7 @@ View on: [Github](https://github.com/evanthegrayt/standup_md) |
     - [Using existing standup files](#using-existing-standup-files)
   - [API](#api)
     - [API Examples](#api-examples)
+      - [Adding an entry for today](#adding-an-entry-for-today)
     - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
 - [Self-Promotion](#self-promotion)
@@ -294,7 +295,7 @@ robust, and is available for use in your own projects. A quick example of how
 to write a new entry via code could look like the following:
 
 ### API Examples
-
+#### Adding an entry for today
 ```ruby
 require 'standup_md'
 

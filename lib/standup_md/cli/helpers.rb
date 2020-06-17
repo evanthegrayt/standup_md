@@ -137,7 +137,9 @@ module StandupMD
       #
       # @return [Array]
       def set_previous_entry(file)
-        return [] unless StandupMD.config.cli.auto_fill_previous
+        unless StandupMD.config.cli.auto_fill_previous
+          return Standup.config.entry.previous_entry
+        end
         return prev_entry(prev_file.load.entries) if file.new? && prev_file
         prev_entry(file.entries)
       end
