@@ -29,6 +29,7 @@ View on: [Github](https://github.com/evanthegrayt/standup_md) |
   - [API](#api)
     - [API Examples](#api-examples)
       - [Adding an entry for today](#adding-an-entry-for-today)
+      - [Finding a past entry](#finding-a-past-entry)
     - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
 - [Self-Promotion](#self-promotion)
@@ -321,6 +322,15 @@ StandupMD.configure do |c|
 end
 
 StandupMD::File.find_by_date(Date.today).load.write
+```
+
+#### Finding a past entry
+```ruby
+require 'standup_md'
+
+date = Date.new(2020, 04, 15)
+file = StandupMD::File.find_by_date(date).load
+entry = file.entries.find(date)
 ```
 
 ## Reporting Bugs and Requesting Features

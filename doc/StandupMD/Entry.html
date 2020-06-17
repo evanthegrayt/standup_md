@@ -238,7 +238,7 @@
 
           
           <div class="method-source-code" id="config-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config</span>
   <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">entry</span>
 <span class="ruby-keyword">end</span></pre>
@@ -273,7 +273,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">create</span>
   <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">new</span>(
     <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>,
@@ -324,7 +324,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">date</span>, <span class="ruby-identifier">current</span>, <span class="ruby-identifier">previous</span>, <span class="ruby-identifier">impediments</span>, <span class="ruby-identifier">notes</span> = [])
   <span class="ruby-identifier">raise</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">date</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Date</span>)
   <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">config</span>
@@ -372,7 +372,7 @@
 
           
           <div class="method-source-code" id="3C-3D-3E-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 94</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-identifier">date</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">date</span>
 <span class="ruby-keyword">end</span></pre>
@@ -407,7 +407,7 @@
 
           
           <div class="method-source-code" id="to_h-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 102</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_h</span>
   {
     <span class="ruby-identifier">date</span> <span class="ruby-operator">=&gt;</span> {
@@ -449,7 +449,7 @@
 
           
           <div class="method-source-code" id="to_json-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 118</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_json</span>
   <span class="ruby-identifier">to_h</span>.<span class="ruby-identifier">to_json</span>
 <span class="ruby-keyword">end</span></pre>

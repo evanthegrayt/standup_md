@@ -51,8 +51,12 @@ module StandupMD
     ##
     # Finds an entry based on date. This method assumes the list has already
     # been sorted.
-    def find(key)
-      to_a.bsearch { |e| e.date == key }
+    #
+    # @param [Date] date
+    #
+    # @return [StandupMD::Entry]
+    def find(date)
+      entries.bsearch { |e| e.date == date }
     end
 
     ##

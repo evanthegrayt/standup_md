@@ -148,6 +148,10 @@
 <ul><li>
 <p><a href="#api-examples">API Examples</a></p>
 </li><li>
+<p><a href="#adding-an-entry-for-today">Adding an entry for today</a></p>
+</li><li>
+<p><a href="#finding-a-past-entry">Finding a past entry</a></p>
+</li><li>
 <p><a href="https://evanthegrayt.github.io/standup_md/doc/index.html">Documentation</a></p>
 </li></ul>
 </li><li>
@@ -163,6 +167,8 @@
 <p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn&#39;t exist, one will be generated with your preferred values. When generating, if a previous entry exists, it will be added to today&#39;s entry as your previous day&#39;s work. See <a href="#example">example</a>. There&#39;s also a very robust API if you&#39;d like to use this in your own code somehow.</p>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>If you don&#39;t have the permissions to install system-wide gems, you&#39;re probabaly also running an older version of ruby. I recommend installing <a href="https://github.com/rbenv/rbenv#installation">rbenv</a>, and then installing an up-to-date version of ruby.</p>
 
 <h3 id="label-Via+RubyGems">Via RubyGems<span><a href="#label-Via+RubyGems">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
@@ -251,6 +257,8 @@ rake install</pre>
 <p>There are no options to change the headers at runtime because it uses the headers to detect tasks from previous entries. If changed at runtime, this would cause errors. For this reason, if you don&#39;t like the default headers, change them in your configuration file after installation, and then try to not change them again.</p>
 
 <h4 id="label-Available+Config+File+Options+and+Defaults">Available Config File Options and Defaults<span><a href="#label-Available+Config+File+Options+and+Defaults">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>For command-line usage, this file needs to be named <code>~/.standuprc</code>. To use in a rails project, create an initializer (<code>config/initializers/standup_md.rb</code>).</p>
 
 <pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
   <span class="ruby-comment"># Defaults for how the file is formatted.</span>
@@ -358,6 +366,8 @@ rake install</pre>
 
 <h3 id="label-API+Examples">API Examples<span><a href="#label-API+Examples">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
+<h4 id="label-Adding+an+entry+for+today">Adding an entry for today<span><a href="#label-Adding+an+entry+for+today">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
 <pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
 
 <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
@@ -380,6 +390,15 @@ rake install</pre>
 <span class="ruby-keyword">end</span>
 
 <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>).<span class="ruby-identifier">load</span>.<span class="ruby-identifier">write</span>
+</pre>
+
+<h4 id="label-Finding+a+past+entry">Finding a past entry<span><a href="#label-Finding+a+past+entry">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;standup_md&#39;</span>
+
+<span class="ruby-identifier">date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2020</span>, <span class="ruby-value">04</span>, <span class="ruby-value">15</span>)
+<span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-identifier">date</span>).<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">entry</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">date</span>)
 </pre>
 
 <h2 id="label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features<span><a href="#label-Reporting+Bugs+and+Requesting+Features">&para;</a> <a href="#top">&uarr;</a></span></h2>

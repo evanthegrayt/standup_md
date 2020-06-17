@@ -1,15 +1,15 @@
-Sun, 14 Jun 2020 22:02:40 -0500
-README.md	Sun, 14 Jun 2020 22:02:07 -0500
-lib/standup_md.rb	Sun, 14 Jun 2020 22:01:32 -0500
+Wed, 17 Jun 2020 10:47:41 -0500
+README.md	Wed, 17 Jun 2020 10:46:31 -0500
+lib/standup_md.rb	Wed, 17 Jun 2020 08:47:50 -0500
 lib/standup_md/cli.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/cli/helpers.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/config.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/config/cli.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/config/entry.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/config/entry_list.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/config/file.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/entry.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/entry_list.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/file.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/file/helpers.rb	Sun, 14 Jun 2020 22:01:32 -0500
-lib/standup_md/version.rb	Sun, 14 Jun 2020 22:01:32 -0500
+lib/standup_md/cli/helpers.rb	Wed, 17 Jun 2020 09:57:07 -0500
+lib/standup_md/config.rb	Wed, 17 Jun 2020 08:47:50 -0500
+lib/standup_md/config/cli.rb	Wed, 17 Jun 2020 08:47:50 -0500
+lib/standup_md/config/entry.rb	Wed, 17 Jun 2020 08:47:50 -0500
+lib/standup_md/config/entry_list.rb	Wed, 17 Jun 2020 08:47:50 -0500
+lib/standup_md/config/file.rb	Wed, 17 Jun 2020 08:47:50 -0500
+lib/standup_md/entry.rb	Wed, 17 Jun 2020 08:47:50 -0500
+lib/standup_md/entry_list.rb	Wed, 17 Jun 2020 10:39:30 -0500
+lib/standup_md/file.rb	Wed, 17 Jun 2020 10:46:53 -0500
+lib/standup_md/file/helpers.rb	Sun, 14 Jun 2020 22:06:09 -0500
+lib/standup_md/version.rb	Wed, 17 Jun 2020 10:04:09 -0500
