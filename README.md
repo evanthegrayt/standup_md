@@ -214,7 +214,14 @@ StandupMD.configure do |c|
 end
 ```
 
+Any options not set in this file will retain their default values. Note that if
+you change `file_name_format`, and don't use a month or year, there will only
+ever be one standup file. This could cause issues long-term, as the files will
+get large over time and possibly cause performance issues.
+
+
 #### Executable Flags
+Some of these options can be changed at runtime. They are as follows.
 ```
     --current ARRAY            List of current entry's tasks
     --previous ARRAY           List of precious entry's tasks
@@ -232,11 +239,6 @@ end
                                If DATE is passed, will print entry for DATE, if it exists.
                                DATE must be in the same format as file-name-format
 ```
-
-Any options not set in this file will retain their default values. Note that if
-you change `file_name_format`, and don't use a month or year, there will only
-ever be one standup file. This could cause issues long-term, as the files will
-get large over time and possibly cause performance issues.
 
 #### Using Existing Standup Files
 If you already have a directory of existing standup files, you can use them, but
