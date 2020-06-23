@@ -62,7 +62,7 @@ class TestHelper < Test::Unit::TestCase
   def standup(directory, args = {})
     args['directory'] = directory
     StandupMD.load do |s|
-      args.each { |k, v| s.send("#{k}=", v) }
+      args.each { |k, v| s.public_send("#{k}=", v) }
     end
   end
 

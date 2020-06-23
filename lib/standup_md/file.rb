@@ -169,9 +169,9 @@ module StandupMD
         sorted_entries.filter(start_date, end_date).sort_reverse.each do |entry|
           f.puts header(entry.date)
           @config.sub_header_order.each do |attr|
-            tasks = entry.send(attr)
+            tasks = entry.public_send(attr)
             next if !tasks || tasks.empty?
-            f.puts sub_header(@config.send("#{attr}_header").capitalize)
+            f.puts sub_header(@config.public_send("#{attr}_header").capitalize)
             tasks.each { |task| f.puts @config.bullet_character + ' ' + task }
           end
           f.puts

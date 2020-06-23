@@ -39,7 +39,7 @@ module StandupMD
     attr_accessor :previous
 
     ##
-    # Iimpediments for this entry.
+    # Impediments for this entry.
     #
     # @return [Array]
     attr_accessor :impediments

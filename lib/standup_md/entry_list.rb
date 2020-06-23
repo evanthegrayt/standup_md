@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+require 'forwardable'
 
 module StandupMD
 
   ##
   # Enumerable list of entries.
   class EntryList
+    extend Forwardable
     include Enumerable
 
     ##
@@ -27,12 +29,6 @@ module StandupMD
         raise ArgumentError, 'Entry must instance of StandupMD::Entry'
       end
       @entries = entries
-    end
-
-    ##
-    # Iterate over the list and yield each entry.
-    def each(&block)
-      @entries.each(&block)
     end
 
     ##
@@ -133,38 +129,21 @@ module StandupMD
       to_h.to_json
     end
 
-    ##
-    # The first entry in the list. This method assumes the list has
-    # already been sorted.
-    #
-    # @return [StandupMD::Entry]
-    def first
-      to_a.first
-    end
+    # :section: Delegators
 
     ##
-    # The last entry in the list. This method assumes the list has
-    # already been sorted.
+    # The following are forwarded to @entries, which is the underly array of
+    # entries.
     #
-    # @return [StandupMD::Entry]
-    def last
-      to_a.last
-    end
-
-    ##
-    # How many entries are in the list.
+    # +each+:: Iterate over each entry.
     #
-    # @return [Integer]
-    def size
-      @entries.size
-    end
-
-    ##
-    # Is the list empty?
+    # +empty?+:: Is the list empty?
     #
-    # @return [Boolean] true if empty
-    def empty?
-      @entries.empty?
-    end
+    # +size+:: How many items are in the list?
+    #
+    # +first+:: The first record in the list.
+    #
+    # +last+:: The last record in the list.
+    def_delegators :@entries, :each, :empty?, :size, :first, :last
   end
 end

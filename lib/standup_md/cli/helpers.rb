@@ -18,11 +18,11 @@ module StandupMD
           puts "No record found for #{StandupMD.config.cli.date}"
           return
         end
-        puts '#' * StandupMD.config.file.header_depth + ' ' + entry.date.strftime(StandupMD.config.file.header_date_format)
-        StandupMD.config.file.sub_header_order.each do |attr|
-          tasks = entry.send(attr)
+        puts header(entry)
+        StandupMD.config.file.sub_header_order.each do |header_type|
+          tasks = entry.public_send(header_type)
           next if !tasks || tasks.empty?
-          puts '#' * StandupMD.config.file.sub_header_depth + ' ' + StandupMD.config.file.send("#{attr}_header").capitalize
+          puts sub_header(header_type)
           tasks.each { |task| puts StandupMD.config.file.bullet_character + ' ' + task }
         end
         puts
@@ -161,6 +161,28 @@ module StandupMD
       # @return [StandupMD::File]
       def prev_file
         StandupMD::File.find_by_date(Date.today.prev_month)
+      end
+
+      ##
+      # The header.
+      #
+      # @param [StandupMD::Entry] entry
+      #
+      # @return [String]
+      def header(entry)
+        '#' * StandupMD.config.file.header_depth + ' ' +
+          entry.date.strftime(StandupMD.config.file.header_date_format)
+      end
+
+      ##
+      # The sub-header.
+      #
+      # @param [String] header_type
+      #
+      # @return [String]
+      def sub_header(header_type)
+        '#' * StandupMD.config.file.sub_header_depth + ' ' +
+          StandupMD.config.file.public_send("#{header_type}_header").capitalize
       end
     end
   end
