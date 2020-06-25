@@ -38,7 +38,7 @@ module StandupMD
       def set_preferences(options)
         OptionParser.new do |opts|
           opts.banner = 'The Standup Doctor'
-          opts.version = "[StandupMD] #{::StandupMD::VERSION}"
+          opts.version = "[StandupMD] #{::StandupMD::Version.to_s}"
           opts.on(
             '--current ARRAY', Array,
             "List of current entry's tasks"
