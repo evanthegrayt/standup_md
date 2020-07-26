@@ -5,7 +5,6 @@ require 'fileutils'
 require_relative 'file/helpers'
 
 module StandupMD
-
   ##
   # Class for handling reading and writing standup files.
   class File
@@ -35,9 +34,8 @@ module StandupMD
     # @param [String] File_naem
     def self.find(file_name)
       file = Dir.entries(config.directory).bsearch { |f| f == file_name }
-      if file.nil? && !config.create
-        raise "File #{file_name} not found." unless config.create
-      end
+      raise "File #{file_name} not found." if file.nil? && !config.create
+
       new(file_name)
     end
 
@@ -46,9 +44,8 @@ module StandupMD
     #
     # @param [Date] date
     def self.find_by_date(date)
-      unless date.is_a?(Date)
-        raise ArgumentError, "Argument must be a Date object"
-      end
+      raise ArgumentError, 'Must be a Date object' unless date.is_a?(Date)
+
       find(date.strftime(config.name_format))
     end
 
@@ -79,6 +76,7 @@ module StandupMD
 
       unless ::File.directory?(@config.directory)
         raise "Dir #{@config.directory} not found." unless @config.create
+
         FileUtils.mkdir_p(@config.directory)
       end
 
@@ -86,6 +84,7 @@ module StandupMD
 
       unless ::File.file?(@name)
         raise "File #{@name} not found." unless @config.create
+
         FileUtils.touch(@name)
       end
 
@@ -124,21 +123,23 @@ module StandupMD
     # @return [StandupMD::FileList]
     def load
       raise "File #{name} does not exist." unless ::File.file?(name)
+
       entry_list = EntryList.new
       record = {}
       section_type = ''
       ::File.foreach(name) do |line|
         line.chomp!
         next if line.strip.empty?
-        if is_header?(line)
+
+        if header?(line)
           unless record.empty?
             entry_list << new_entry(record)
             record = {}
           end
-          record['header'] = line.sub(%r{^\#{#{@config.header_depth}}\s*}, '')
-            section_type = @config.notes_header
-            record[section_type] = []
-        elsif is_sub_header?(line)
+          record['header'] = line.sub(/^\#{#{@config.header_depth}}\s*/, '')
+          section_type = @config.notes_header
+          record[section_type] = []
+        elsif sub_header?(line)
           section_type = determine_section_type(line)
           record[section_type] = []
         else
@@ -161,7 +162,7 @@ module StandupMD
     # @param [Hash] {start_date: Date, end_date: Date}
     #
     # @return [Boolean] true if successful
-    def write(dates = {})
+    def write(**dates)
       sorted_entries = entries.sort
       start_date = dates.fetch(:start_date, sorted_entries.first.date)
       end_date = dates.fetch(:end_date, sorted_entries.last.date)
@@ -171,6 +172,7 @@ module StandupMD
           @config.sub_header_order.each do |attr|
             tasks = entry.public_send(attr)
             next if !tasks || tasks.empty?
+
             f.puts sub_header(@config.public_send("#{attr}_header").capitalize)
             tasks.each { |task| f.puts @config.bullet_character + ' ' + task }
           end

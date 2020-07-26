@@ -2,11 +2,9 @@
 
 module StandupMD
   class Config
-
     ##
     # The configuration class for StandupMD::Entry
     class Entry
-
       ##
       # The default options.
       #
@@ -15,8 +13,8 @@ module StandupMD
         current: ["<!-- ADD TODAY'S WORK HERE -->"],
         previous: [],
         impediments: ['None'],
-        notes: [],
-      }
+        notes: []
+      }.freeze
 
       ##
       # Tasks for "Current" section.

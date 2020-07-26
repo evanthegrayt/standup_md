@@ -51,7 +51,7 @@ class TestHelper < Test::Unit::TestCase
   ##
   # Reads the fixtures in as a hash.
   def fixtures
-    @test_helper_fixtures ||= YAML.load(ERB.new(File.read(
+    @fixtures ||= YAML.safe_load(ERB.new(File.read(
       File.join(__dir__, 'fixtures.yml.erb')
     )).result(binding))
   end
@@ -59,7 +59,7 @@ class TestHelper < Test::Unit::TestCase
   ##
   # Creates +StandupUP+ instance. Directory must be passed, usually a
   # subdirectory of +test+, so we don't overwrite the user's standup file.
-  def standup(directory, args = {})
+  def standup(directory, **args)
     args['directory'] = directory
     StandupMD.load do |s|
       args.each { |k, v| s.public_send("#{k}=", v) }

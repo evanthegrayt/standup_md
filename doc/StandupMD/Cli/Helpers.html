@@ -127,18 +127,19 @@
 
           
           <div class="method-source-code" id="print-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli/helpers.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli/helpers.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">print</span>(<span class="ruby-identifier">entry</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">nil?</span>
-    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No record found for #{StandupMD.config.cli.date}&quot;</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No record found for #{config.cli.date}&quot;</span>
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-identifier">header</span>(<span class="ruby-identifier">entry</span>)
-  <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header_type</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">config</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header_type</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">tasks</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">public_send</span>(<span class="ruby-identifier">header_type</span>)
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">tasks</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">empty?</span>
+
     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">sub_header</span>(<span class="ruby-identifier">header_type</span>)
-    <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">task</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">task</span> }
+    <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">task</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">task</span> }
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">puts</span>
 <span class="ruby-keyword">end</span></pre>

@@ -4,11 +4,9 @@ require 'date'
 
 module StandupMD
   class Config
-
     ##
     # The configuration class for StandupMD::Cli
     class Cli
-
       ##
       # The default options.
       #
@@ -22,8 +20,8 @@ module StandupMD
         print: false,
         auto_fill_previous: true,
         preference_file:
-          ::File.expand_path(::File.join(ENV['HOME'], '.standuprc')),
-      }
+          ::File.expand_path(::File.join(ENV['HOME'], '.standuprc'))
+      }.freeze
 
       ##
       # The editor to use when opening standup files. If one is not set, the

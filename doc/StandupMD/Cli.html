@@ -212,7 +212,7 @@
 
           
           <div class="method-source-code" id="config-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 17</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config</span>
   <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">cli</span>
 <span class="ruby-keyword">end</span></pre>
@@ -247,7 +247,7 @@
 
           
           <div class="method-source-code" id="echo-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">echo</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">verbose</span>
 <span class="ruby-keyword">end</span></pre>
@@ -280,7 +280,7 @@
 
           
           <div class="method-source-code" id="execute-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 31</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">execute</span>(<span class="ruby-identifier">options</span> = [])
   <span class="ruby-identifier">exe</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)
 
@@ -322,16 +322,16 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">options</span> = [], <span class="ruby-identifier">load_config</span> = <span class="ruby-keyword">true</span>)
   <span class="ruby-ivar">@config</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">config</span>
   <span class="ruby-ivar">@preference_file_loaded</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
   <span class="ruby-identifier">load_preferences</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">load_config</span>
-  <span class="ruby-identifier">set_preferences</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">load_runtime_preferences</span>(<span class="ruby-identifier">options</span>)
   <span class="ruby-ivar">@file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">date</span>)
   <span class="ruby-ivar">@file</span>.<span class="ruby-identifier">load</span>
-  <span class="ruby-ivar">@entry</span> = <span class="ruby-identifier">set_entry</span>(<span class="ruby-ivar">@file</span>)
+  <span class="ruby-ivar">@entry</span> = <span class="ruby-identifier">new_entry</span>(<span class="ruby-ivar">@file</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -372,7 +372,7 @@
 
           
           <div class="method-source-code" id="echo-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">echo</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">echo</span>(<span class="ruby-identifier">msg</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -407,7 +407,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 100</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">edit</span>
   <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Opening file in #{@config.editor}&quot;</span>
   <span class="ruby-identifier">exec</span>(<span class="ruby-node">&quot;#{@config.editor} #{file.name}&quot;</span>)
@@ -443,7 +443,7 @@
 
           
           <div class="method-source-code" id="load_preferences-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_preferences</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">preference_file</span>)
     <span class="ruby-operator">::</span><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">load_config_file</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">preference_file</span>)
@@ -483,7 +483,7 @@
 
           
           <div class="method-source-code" id="preference_file_loaded-3F-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preference_file_loaded?</span>
   <span class="ruby-ivar">@preference_file_loaded</span>
 <span class="ruby-keyword">end</span></pre>
@@ -518,7 +518,7 @@
 
           
           <div class="method-source-code" id="write_file-source">
-            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 109</span>
+            <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write_file</span>
   <span class="ruby-identifier">echo</span> <span class="ruby-node">&quot;Writing file #{file.name}&quot;</span>
   <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>

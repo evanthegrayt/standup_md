@@ -6,11 +6,9 @@ require_relative 'config/entry'
 require_relative 'config/entry_list'
 
 module StandupMD
-
   ##
   # This class provides a connector from StandupMD to the configuration classes.
   class Config
-
     ##
     # Reader for Cli config.
     #
