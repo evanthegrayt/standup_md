@@ -48,8 +48,8 @@ for the current month in your preferred editor. If an entry for today is already
 present, no text will be generated. If an entry for today doesn't exist, one
 will be generated with your preferred values. When generating, if a previous
 entry exists, it will be added to today's entry as your previous day's work. See
-[example](#example). There's also a very robust API if you'd like to use this
-in your own code somehow.
+[example](#cli-examples). There's also a very robust API if you'd like to use
+this in your own code somehow.
 
 ## Installation
 If you don't have the permissions to install system-wide gems, you're probabaly

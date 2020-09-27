@@ -34,7 +34,7 @@ module StandupMD
   # @example
   #   StandupMD.configure { |s| s.cli.editor = 'mate' }
   def self.configure
-    yield self.config
+    yield config
   end
 
   ##
@@ -52,6 +52,7 @@ module StandupMD
   def self.load_config_file(file)
     file = ::File.expand_path(file)
     raise "File #{file} does not exist." unless ::File.file?(file)
+
     @config_file_loaded = true
     load file
   end

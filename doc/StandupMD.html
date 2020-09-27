@@ -208,7 +208,7 @@
           <div class="method-source-code" id="configure-source">
             <pre><span class="ruby-comment"># File lib/standup_md.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">configure</span>
-  <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">config</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">config</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -245,6 +245,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_config_file</span>(<span class="ruby-identifier">file</span>)
   <span class="ruby-identifier">file</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">file</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File #{file} does not exist.&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">file</span>)
+
   <span class="ruby-ivar">@config_file_loaded</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">load</span> <span class="ruby-identifier">file</span>
 <span class="ruby-keyword">end</span></pre>

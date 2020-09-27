@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/standup_md'
 require 'bundler/gem_tasks'
 require 'rdoc/task'
@@ -16,4 +18,4 @@ RDoc::Task.new do |rdoc|
   rdoc.rdoc_files.include('README.md', 'lib/**/*.rb')
 end
 
-task :default => :test
+task default: :test

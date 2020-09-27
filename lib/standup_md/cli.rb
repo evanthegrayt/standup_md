@@ -4,7 +4,6 @@ require 'optparse'
 require_relative 'cli/helpers'
 
 module StandupMD
-
   ##
   # Class for handing the command-line interface.
   class Cli
@@ -66,10 +65,10 @@ module StandupMD
       @preference_file_loaded = false
       @options = options
       load_preferences if load_config
-      set_preferences(options)
+      load_runtime_preferences(options)
       @file = StandupMD::File.find_by_date(@config.date)
       @file.load
-      @entry = set_entry(@file)
+      @entry = new_entry(@file)
     end
 
     ##
