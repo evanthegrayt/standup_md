@@ -223,6 +223,7 @@ get large over time and possibly cause performance issues.
 
 #### Executable Flags
 Some of these options can be changed at runtime. They are as follows.
+
 ```
     --current ARRAY            List of current entry's tasks
     --previous ARRAY           List of precious entry's tasks
