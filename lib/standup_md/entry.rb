@@ -3,7 +3,6 @@
 require 'json'
 
 module StandupMD
-
   ##
   # Class for handling single entries. Includes the comparable module, and
   # compares by date.

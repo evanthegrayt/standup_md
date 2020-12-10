@@ -1,8 +1,8 @@
 # frozen_string_literal: true
+
 require 'forwardable'
 
 module StandupMD
-
   ##
   # Enumerable list of entries.
   class EntryList

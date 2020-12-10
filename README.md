@@ -32,6 +32,7 @@ View on: [Github](https://github.com/evanthegrayt/standup_md) |
             - [Adding an entry for today](#adding-an-entry-for-today)
             - [Finding a past entry](#finding-a-past-entry)
         - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
+    - [Vim](#vim)
 - [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
 - [Self-Promotion](#self-promotion)
 
@@ -337,10 +338,46 @@ file = StandupMD::File.find_by_date(date).load
 entry = file.entries.find(date)
 ```
 
+## Vim
+While there's no official support for vim, you can add this to your `vimrc`
+file, or something like `~/.vim/plugin/standup.vim`.
+
+```vim
+if executable('standup')
+  command! -complete=custom,s:StandupCompletion -nargs=? -bang Standup
+        \ call s:OpenStandupFile(<bang>0, <f-args>)
+endif
+
+function! s:StandupCompletion(...) abort
+  let l:dir = get(g:, 'standup_dir', $HOME . '/.cache/standup_md') . '/'
+  if !isdirectory(l:dir) | return '' | endif
+  let l:list = glob(l:dir . '*.md', 0, 1)
+  return join(map(l:list, "substitute(v:val, l:dir, '', '')"), "\n")
+endfunction
+
+function! s:OpenStandupFile(split, ...)
+  let l:dir = get(g:, 'standup_dir', $HOME . '/.cache/standup_md') . '/'
+  let l:file = a:0 ? a:1 : get(g:, 'standup_file', strftime('%Y_%m.md'))
+  call system('standup --no-edit')
+  execute a:split ? 'vsplit' : 'split' l:dir . l:file
+endfunction
+```
+
+This makes the `:Standup` command, which opens the standup file in a split,
+while `:Standup!` opens it in a vertical split. If a file is passed to the
+command, that file will be opened. There's tab completion for this. Lastly,
+it allows for a few variables to be set for customization.
+
+```vim
+g:standup_dir = $HOME . '/.cache/standup_md' " the directory where your file are
+g:standup_file = strftime('%Y_%m.md')        " the file format to use
+```
+
 ## Reporting Bugs and Requesting Features
 If you have an idea or find a bug, please [create an
-issue](https://github.com/evanthegrayt/standup_md/issues/new). Just make sure the topic
-doesn't already exist. Better yet, you can always submit a Pull Request.
+issue](https://github.com/evanthegrayt/standup_md/issues/new). Just make sure
+the topic doesn't already exist. Better yet, you can always submit a Pull
+Request.
 
 ## Self-Promotion
 I do these projects for fun, and I enjoy knowing that they're helpful to people.

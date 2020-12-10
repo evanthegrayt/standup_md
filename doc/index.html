@@ -159,6 +159,8 @@
 </li><li>
 <p><a href="https://evanthegrayt.github.io/standup_md/doc/index.html">Documentation</a></p>
 </li></ul>
+</li><li>
+<p><a href="#vim">Vim</a></p>
 </li></ul>
 </li><li>
 <p><a href="#reporting-bugs-and-requesting-features">Reporting Bugs and Requesting Features</a></p>
@@ -408,6 +410,34 @@ rake install</pre>
 <span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-identifier">date</span>).<span class="ruby-identifier">load</span>
 <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">date</span>)
 </pre>
+
+<h2 id="label-Vim">Vim<span><a href="#label-Vim">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>While there&#39;s no official support for vim, you can add this to your <code>vimrc</code> file, or something like <code>~/.vim/plugin/standup.vim</code>.</p>
+
+<pre>if executable(&#39;standup&#39;)
+  command! -complete=custom,s:StandupCompletion -nargs=? -bang Standup
+        \ call s:OpenStandupFile(&lt;bang&gt;0, &lt;f-args&gt;)
+endif
+
+function! s:StandupCompletion(...) abort
+  let l:dir = get(g:, &#39;standup_dir&#39;, $HOME . &#39;/.cache/standup_md&#39;) . &#39;/&#39;
+  if !isdirectory(l:dir) | return &#39;&#39; | endif
+  let l:list = glob(l:dir . &#39;*.md&#39;, 0, 1)
+  return join(map(l:list, &quot;substitute(v:val, l:dir, &#39;&#39;, &#39;&#39;)&quot;), &quot;\n&quot;)
+endfunction
+
+function! s:OpenStandupFile(split, ...)
+  let l:dir = get(g:, &#39;standup_dir&#39;, $HOME . &#39;/.cache/standup_md&#39;) . &#39;/&#39;
+  let l:file = a:0 ? a:1 : get(g:, &#39;standup_file&#39;, strftime(&#39;%Y_%m.md&#39;))
+  call system(&#39;standup --no-edit&#39;)
+  execute a:split ? &#39;vsplit&#39; : &#39;split&#39; l:dir . l:file
+endfunction</pre>
+
+<p>This makes the <code>:Standup</code> command, which opens the standup file in a split, while <code>:Standup!</code> opens it in a vertical split. If a file is passed to the command, that file will be opened. There&#39;s tab completion for this. Lastly, it allows for a few variables to be set for customization.</p>
+
+<pre>g:standup_dir = $HOME . &#39;/.cache/standup_md&#39; &quot; the directory where your file are
+g:standup_file = strftime(&#39;%Y_%m.md&#39;)        &quot; the file format to use</pre>
 
 <h2 id="label-Reporting+Bugs+and+Requesting+Features">Reporting Bugs and Requesting Features<span><a href="#label-Reporting+Bugs+and+Requesting+Features">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
