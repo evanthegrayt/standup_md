@@ -13,29 +13,6 @@ View on: [Github](https://github.com/evanthegrayt/standup_md) |
 [GitHub Pages](https://evanthegrayt.github.io/standup_md/) |
 [RubyGems](https://rubygems.org/gems/standup_md)
 
-## Table of Contents
-- [About](#about)
-- [Installation](#Installation)
-    - [Via RubyGems](#via-rubygems)
-    - [Manual Installation](#manual-installation)
-- [Usage](#usage)
-    - [Command Line](#command-line)
-        - [CLI Examples](#cli-examples)
-            - [Adding an entry for today via editor](#adding-an-entry-for-today-via-editor)
-            - [Copy the entry for today to clipboard](#copy-the-entry-for-today-to-clipboard)
-            - [Add entry to file without opening it](#add-entry-to-file-without-opening-it)
-            - [Find an entry by date and print it](#find-an-entry-by-date-and-print-it)
-        - [Customization and Runtime Options](#customization-and-runtime-options)
-        - [Using existing standup files](#using-existing-standup-files)
-    - [API](#api)
-        - [API Examples](#api-examples)
-            - [Adding an entry for today](#adding-an-entry-for-today)
-            - [Finding a past entry](#finding-a-past-entry)
-        - [Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html)
-    - [Vim](#vim)
-- [Reporting Bugs and Requesting Features](#reporting-bugs-and-requesting-features)
-- [Self-Promotion](#self-promotion)
-
 ## About
 I've now been at two separate companies where we post our daily standups in a
 chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day

@@ -1,5 +1,5 @@
-Thu, 10 Dec 2020 11:03:50 -0600
-README.md	Thu, 10 Dec 2020 10:11:00 -0600
+Mon, 12 Apr 2021 21:53:43 -0500
+README.md	Mon, 12 Apr 2021 21:53:19 -0500
 lib/standup_md.rb	Tue, 13 Oct 2020 21:04:02 -0500
 lib/standup_md/cli.rb	Tue, 13 Oct 2020 21:04:02 -0500
 lib/standup_md/cli/helpers.rb	Tue, 13 Oct 2020 21:49:05 -0500
@@ -9,7 +9,7 @@ lib/standup_md/config/entry.rb	Tue, 13 Oct 2020 21:04:02 -0500
 lib/standup_md/config/entry_list.rb	Wed, 17 Jun 2020 08:47:50 -0500
 lib/standup_md/config/file.rb	Wed, 17 Jun 2020 08:47:50 -0500
 lib/standup_md/entry.rb	Tue, 17 Nov 2020 11:34:44 -0600
-lib/standup_md/entry_list.rb	Tue, 17 Nov 2020 11:34:25 -0600
+lib/standup_md/entry_list.rb	Mon, 12 Apr 2021 21:51:46 -0500
 lib/standup_md/file.rb	Tue, 13 Oct 2020 21:04:02 -0500
 lib/standup_md/file/helpers.rb	Tue, 13 Oct 2020 21:04:02 -0500
 lib/standup_md/version.rb	Thu, 25 Jun 2020 17:00:46 -0500
