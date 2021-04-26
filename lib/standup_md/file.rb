@@ -25,6 +25,11 @@ module StandupMD
     #
     # @return [StandupMD::File]
     def self.load(file_name)
+      unless ::File.directory?(config.directory)
+        raise "Dir #{config.directory} not found." unless config.create
+
+        FileUtils.mkdir_p(config.directory)
+      end
       new(file_name).load
     end
 
@@ -33,6 +38,11 @@ module StandupMD
     #
     # @param [String] File_naem
     def self.find(file_name)
+      unless ::File.directory?(config.directory)
+        raise "Dir #{config.directory} not found." unless config.create
+
+        FileUtils.mkdir_p(config.directory)
+      end
       file = Dir.entries(config.directory).bsearch { |f| f == file_name }
       raise "File #{file_name} not found." if file.nil? && !config.create
 
@@ -46,6 +56,11 @@ module StandupMD
     def self.find_by_date(date)
       raise ArgumentError, 'Must be a Date object' unless date.is_a?(Date)
 
+      unless ::File.directory?(config.directory)
+        raise "Dir #{config.directory} not found." unless config.create
+
+        FileUtils.mkdir_p(config.directory)
+      end
       find(date.strftime(config.name_format))
     end
 
