@@ -21,8 +21,6 @@
 <link href="../../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,34 +57,27 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link">Object
-  
 </div>
 
     
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-bullet_character-3D">#bullet_character=</a>
-    
     <li ><a href="#method-i-directory-3D">#directory=</a>
-    
     <li ><a href="#method-i-header_depth-3D">#header_depth=</a>
-    
     <li ><a href="#method-i-reset">#reset</a>
-    
     <li ><a href="#method-i-sub_header_depth-3D">#sub_header_depth=</a>
-    
   </ul>
 </div>
 
@@ -104,37 +95,26 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
     <section class="constants-list">
       <header>
         <h3>Constants</h3>
       </header>
       <dl>
-      
         <dt id="DEFAULTS">DEFAULTS
-        
         <dd><p>The default options.</p>
 
 <p>@return [Hash]</p>
-        
-      
       </dl>
     </section>
-    
 
-    
     <section class="attribute-method-details" class="method-section">
       <header>
         <h3>Attributes</h3>
       </header>
 
-      
       <div id="attribute-i-bullet_character" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">bullet_character</span><span
@@ -142,16 +122,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>Character used as bullets for list entries.</p>
 
 <p>@return [String] either - (dash) or * (asterisk)</p>
 
 <p>@default “-” (dash)</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-create" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">create</span><span
@@ -159,16 +136,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>Should the file be created if it doesn&#39;t exist?</p>
 
 <p>@param [Boolean] create</p>
 
 <p>@return [boolean]</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-current_header" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">current_header</span><span
@@ -176,7 +150,6 @@
         </div>
 
         <div class="method-description">
-        
         <p>String to be used as “Current” header.</p>
 
 <p>@param [String] header</p>
@@ -184,10 +157,8 @@
 <p>@return [String]</p>
 
 <p>@default “Current”</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-directory" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">directory</span><span
@@ -195,16 +166,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>The directory in which the files are located.</p>
 
 <p>@return [String]</p>
 
 <p>@default “~/.cache/standup_md”</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-header_date_format" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">header_date_format</span><span
@@ -212,16 +180,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>The date format for entry headers. Will be parsed by <code>strftime</code>.</p>
 
 <p>@param [String] format</p>
 
 <p>@return [String]</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-header_depth" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">header_depth</span><span
@@ -229,16 +194,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>Number of octothorps that should preface entry headers.</p>
 
 <p>@return [Integer] between 1 and 5</p>
 
 <p>@default 1</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-impediments_header" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">impediments_header</span><span
@@ -246,7 +208,6 @@
         </div>
 
         <div class="method-description">
-        
         <p>String to be used as “Impediments” header.</p>
 
 <p>@param [String] header</p>
@@ -254,10 +215,8 @@
 <p>@return [String]</p>
 
 <p>@default “Impediments”</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-name_format" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">name_format</span><span
@@ -265,7 +224,6 @@
         </div>
 
         <div class="method-description">
-        
         <p>Format to be used for standup file names. Should be parse-able by strftime, and should be a monthly date.</p>
 
 <p>@param [String] <a href="File.html#attribute-i-name_format"><code>name_format</code></a></p>
@@ -273,10 +231,8 @@
 <p>@return [String]</p>
 
 <p>@default “%Y_%m.md”</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-notes_header" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">notes_header</span><span
@@ -284,7 +240,6 @@
         </div>
 
         <div class="method-description">
-        
         <p>String to be used as “Notes” header.</p>
 
 <p>@param [String] header</p>
@@ -292,10 +247,8 @@
 <p>@return [String]</p>
 
 <p>@default “Notes”</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-previous_header" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">previous_header</span><span
@@ -303,7 +256,6 @@
         </div>
 
         <div class="method-description">
-        
         <p>String to be used as “Previous” header.</p>
 
 <p>@param [String] header</p>
@@ -311,10 +263,8 @@
 <p>@return [String]</p>
 
 <p>@default “Previous”</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-sub_header_depth" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">sub_header_depth</span><span
@@ -322,16 +272,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>Number of octothorps that should preface sub-headers.</p>
 
 <p>@return [Integer] between 2 and 6</p>
 
 <p>@default 2</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-sub_header_order" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">sub_header_order</span><span
@@ -339,7 +286,6 @@
         </div>
 
         <div class="method-description">
-        
         <p>Preferred order for sub-headers.</p>
 
 <p>@param [Array] <a href="File.html#attribute-i-sub_header_order"><code>sub_header_order</code></a></p>
@@ -347,83 +293,58 @@
 <p>@return [Array]</p>
 
 <p>@default %w[previous current impediment notes]</p>
-        
         </div>
       </div>
-      
     </section>
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-new" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Initializes the config with default values.</p>
-          
-          
 
-          
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-identifier">reset</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-bullet_character-3D" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">bullet_character=</span><span
             class="method-args">(char)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Setter for bullet_character. Must be * (asterisk) or - (dash).</p>
 
 <p>@param [String] character</p>
 
 <p>@return [String]</p>
-          
-          
 
-          
           <div class="method-source-code" id="bullet_character-3D-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 189</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bullet_character=</span>(<span class="ruby-identifier">char</span>)
@@ -431,37 +352,25 @@
   <span class="ruby-ivar">@bullet_character</span> = <span class="ruby-identifier">char</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-directory-3D" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">directory=</span><span
             class="method-args">(directory)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Setter for directory. Must be expanded in case the user uses `~` for home. If the directory doesn&#39;t exist, it will be created. To reset instance variables after changing the directory, you&#39;ll need to call load.</p>
 
 <p>@param [String] directory</p>
 
 <p>@return [String]</p>
-          
-          
 
-          
           <div class="method-source-code" id="directory-3D-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
@@ -470,37 +379,25 @@
   <span class="ruby-ivar">@directory</span> = <span class="ruby-identifier">directory</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-header_depth-3D" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">header_depth=</span><span
             class="method-args">(depth)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Number of octothorps (#) to use before the main header.</p>
 
 <p>@param [Integer] depth</p>
 
 <p>@return [Integer]</p>
-          
-          
 
-          
           <div class="method-source-code" id="header_depth-3D-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 158</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">header_depth=</span>(<span class="ruby-identifier">depth</span>)
@@ -512,72 +409,48 @@
   <span class="ruby-ivar">@header_depth</span> = <span class="ruby-identifier">depth</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-reset" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">reset</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Sets all config values back to their defaults.</p>
 
 <p>@return [Hash]</p>
-          
-          
 
-          
           <div class="method-source-code" id="reset-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reset</span>
   <span class="ruby-constant">DEFAULTS</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-identifier">v</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-sub_header_depth-3D" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">sub_header_depth=</span><span
             class="method-args">(depth)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Number of octothorps (#) to use before sub headers (Current, Previous, etc).</p>
 
 <p>@param [Integer] depth</p>
 
 <p>@return [Integer]</p>
-          
-          
 
-          
           <div class="method-source-code" id="sub_header_depth-3D-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 174</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_header_depth=</span>(<span class="ruby-identifier">depth</span>)
@@ -589,25 +462,20 @@
   <span class="ruby-ivar">@sub_header_depth</span> = <span class="ruby-identifier">depth</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

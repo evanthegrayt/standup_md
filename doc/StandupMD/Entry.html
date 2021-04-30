@@ -21,8 +21,6 @@
 <link href="../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -59,45 +57,35 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link">Object
-  
 </div>
 
-    <div id="includes-section" class="nav-section">
+    
+<div id="includes-section" class="nav-section">
   <h3>Included Modules</h3>
 
   <ul class="link-list">
-  
-  
     <li><span class="include">Comparable</span>
-  
-  
   </ul>
 </div>
 
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-c-config">::config</a>
-    
     <li ><a href="#method-c-create">::create</a>
-    
     <li ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-3C-3D-3E">#&lt;=&gt;</a>
-    
     <li ><a href="#method-i-to_h">#to_h</a>
-    
     <li ><a href="#method-i-to_json">#to_json</a>
-    
   </ul>
 </div>
 
@@ -115,21 +103,15 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
     <section class="attribute-method-details" class="method-section">
       <header>
         <h3>Attributes</h3>
       </header>
 
-      
       <div id="attribute-i-current" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">current</span><span
@@ -137,14 +119,11 @@
         </div>
 
         <div class="method-description">
-        
         <p>The tasks for today.</p>
 
 <p>@return [Array]</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-date" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">date</span><span
@@ -152,16 +131,13 @@
         </div>
 
         <div class="method-description">
-        
         <p>The date of the entry.</p>
 
 <p>@param [Date] date</p>
 
 <p>@return [Date]</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-impediments" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">impediments</span><span
@@ -169,14 +145,11 @@
         </div>
 
         <div class="method-description">
-        
         <p>Impediments for this entry.</p>
 
 <p>@return [Array]</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-notes" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">notes</span><span
@@ -184,14 +157,11 @@
         </div>
 
         <div class="method-description">
-        
         <p>Nnotes to add to this entry.</p>
 
 <p>@return [Array]</p>
-        
         </div>
       </div>
-      
       <div id="attribute-i-previous" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">previous</span><span
@@ -199,79 +169,54 @@
         </div>
 
         <div class="method-description">
-        
         <p>The tasks from the previous day.</p>
 
 <p>@return [Array]</p>
-        
         </div>
       </div>
-      
     </section>
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-config" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">config</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Access to the class&#39;s configuration.</p>
 
 <p>@return [StandupMD::Config::Entry]</p>
-          
-          
 
-          
           <div class="method-source-code" id="config-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config</span>
   <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">entry</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-create" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">create</span><span
             class="method-args">() { |config| ... }</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Creates a generic entry. Default values can be set via configuration. Yields the entry if a block is passed so you can change values.</p>
 
 <p>@return [StandupMD::Entry]</p>
-          
-          
 
-          
           <div class="method-source-code" id="create-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">create</span>
@@ -286,28 +231,19 @@
   <span class="ruby-identifier">entry</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-new" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">(date, current, previous, impediments, notes = [])</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Constructs instance of <code>StandupMD::Entry</code>.</p>
 
 <p>@param [Date] date</p>
@@ -319,10 +255,7 @@
 <p>@param [Array] impediments</p>
 
 <p>@param [Array] notes</p>
-          
-          
 
-          
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">date</span>, <span class="ruby-identifier">current</span>, <span class="ruby-identifier">previous</span>, <span class="ruby-identifier">impediments</span>, <span class="ruby-identifier">notes</span> = [])
@@ -336,76 +269,51 @@
   <span class="ruby-ivar">@notes</span>          = <span class="ruby-identifier">notes</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-3C-3D-3E" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">&lt;=&gt;</span><span
             class="method-args">(other)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Sorting method for Comparable. Entries are compared by date.</p>
-          
-          
 
-          
           <div class="method-source-code" id="3C-3D-3E-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-identifier">date</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">date</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-to_h" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">to_h</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p><a href="Entry.html"><code>Entry</code></a> as a hash .</p>
 
 <p>@return [Hash]</p>
-          
-          
 
-          
           <div class="method-source-code" id="to_h-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_h</span>
@@ -419,60 +327,43 @@
   }
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-to_json" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">to_json</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p><a href="Entry.html"><code>Entry</code></a> as a json object.</p>
 
 <p>@return [String]</p>
-          
-          
 
-          
           <div class="method-source-code" id="to_json-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_json</span>
   <span class="ruby-identifier">to_h</span>.<span class="ruby-identifier">to_json</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

@@ -21,8 +21,6 @@
 <link href="./css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="module">
 <nav role="navigation">
   <div id="project-navigation">
@@ -62,22 +60,17 @@
     
     
     
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-c-config">::config</a>
-    
     <li ><a href="#method-c-config_file_loaded-3F">::config_file_loaded?</a>
-    
     <li ><a href="#method-c-configure">::configure</a>
-    
     <li ><a href="#method-c-load_config_file">::load_config_file</a>
-    
     <li ><a href="#method-c-reset_config">::reset_config</a>
-    
   </ul>
 </div>
 
@@ -95,151 +88,101 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-config" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">config</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Method for accessing the configuration.</p>
 
 <p>@return [StanupMD::Cli]</p>
-          
-          
 
-          
           <div class="method-source-code" id="config-source">
             <pre><span class="ruby-comment"># File lib/standup_md.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config</span>
   <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-config_file_loaded-3F" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">config_file_loaded?</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Has a config file been loaded?</p>
 
 <p>@return [Boolean]</p>
-          
-          
 
-          
           <div class="method-source-code" id="config_file_loaded-3F-source">
             <pre><span class="ruby-comment"># File lib/standup_md.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config_file_loaded?</span>
   <span class="ruby-ivar">@config_file_loaded</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-configure" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">configure</span><span
             class="method-args">() { |config| ... }</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Allows for configuration via a block. Useful when making config files.</p>
 
 <p>@example</p>
 
 <pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">editor</span> = <span class="ruby-string">&#39;mate&#39;</span> }
 </pre>
-          
-          
 
-          
           <div class="method-source-code" id="configure-source">
             <pre><span class="ruby-comment"># File lib/standup_md.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">configure</span>
   <span class="ruby-keyword">yield</span> <span class="ruby-identifier">config</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-load_config_file" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">load_config_file</span><span
             class="method-args">(file)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Loads a config file.</p>
 
 <p>@param [String] file</p>
-          
-          
 
-          
           <div class="method-source-code" id="load_config_file-source">
             <pre><span class="ruby-comment"># File lib/standup_md.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_config_file</span>(<span class="ruby-identifier">file</span>)
@@ -250,60 +193,43 @@
   <span class="ruby-identifier">load</span> <span class="ruby-identifier">file</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-reset_config" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">reset_config</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Reset all configuration values to their defaults.</p>
 
 <p>@return [StandupMD::Config]</p>
-          
-          
 
-          
           <div class="method-source-code" id="reset_config-source">
             <pre><span class="ruby-comment"># File lib/standup_md.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">reset_config</span>
   <span class="ruby-ivar">@config</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

@@ -273,9 +273,9 @@ end
 The API is fully documented in the
 [RDoc Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html).
 
-This was mainly written as a command line utility, but the API is ridiculously
-robust, and is available for use in your own projects. A quick example of how
-to write a new entry via code could look like the following:
+This was mainly written as a command line utility, but the API is very robust,
+and is available for use in your own projects. A quick example of how to write a
+new entry via code could look like the following:
 
 ### API Examples
 #### Adding an entry for today
@@ -320,16 +320,13 @@ While there's no official support for vim, you can add this to your `vimrc`
 file, or something like `~/.vim/plugin/standup.vim`.
 
 ```vim
-if executable('standup')
-  command! -complete=custom,s:StandupCompletion -nargs=? -bang Standup
-        \ call s:OpenStandupFile(<bang>0, <f-args>)
-endif
+command! -complete=custom,<SID>StandupCompletion -nargs=? -bang Standup
+    \ call s:OpenStandupFile(<bang>0, <f-args>)
 
 function! s:StandupCompletion(...) abort
   let l:dir = get(g:, 'standup_dir', $HOME . '/.cache/standup_md') . '/'
   if !isdirectory(l:dir) | return '' | endif
-  let l:list = glob(l:dir . '*.md', 0, 1)
-  return join(map(l:list, "substitute(v:val, l:dir, '', '')"), "\n")
+  return join(map(glob(l:dir . '*.md', 0, 1), "fnamemodify(v:val, ':t')"), "\n")
 endfunction
 
 function! s:OpenStandupFile(split, ...)

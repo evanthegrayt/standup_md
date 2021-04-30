@@ -21,8 +21,6 @@
 <link href="../css/rdoc.css" rel="stylesheet">
 
 
-
-
 <body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
@@ -58,80 +56,59 @@
   
 
   <div id="class-metadata">
-    <div id="sections-section" class="nav-section">
+    
+<div id="sections-section" class="nav-section">
   <h3>Sections</h3>
 
   <ul class="link-list" role="directory">
-    
       <li><a href="#5Buntitled-5D"></a></li>
-    
       <li><a href="#Delegators">Delegators</a></li>
-    
   </ul>
 </div>
 
-    <div id="parent-class-section" class="nav-section">
+    
+<div id="parent-class-section" class="nav-section">
   <h3>Parent</h3>
 
-  
   <p class="link">Object
-  
 </div>
 
-    <div id="includes-section" class="nav-section">
+    
+<div id="includes-section" class="nav-section">
   <h3>Included Modules</h3>
 
   <ul class="link-list">
-  
-  
     <li><span class="include">Enumerable</span>
-  
-  
   </ul>
 </div>
 
-    <div id="extends-section" class="nav-section">
+    
+<div id="extends-section" class="nav-section">
   <h3>Extended With Modules</h3>
 
   <ul class="link-list">
-    
-  
     <li><span class="extend">Forwardable</span>
-  
-  
   </ul>
 </div>
 
-    <!-- Method Quickref -->
+    
+<!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
     <li ><a href="#method-c-config">::config</a>
-    
     <li ><a href="#method-c-new">::new</a>
-    
     <li ><a href="#method-i-3C-3C">#&lt;&lt;</a>
-    
     <li ><a href="#method-i-40entries">#@entries</a>
-    
     <li ><a href="#method-i-filter">#filter</a>
-    
     <li ><a href="#method-i-filter-21">#filter!</a>
-    
     <li ><a href="#method-i-find">#find</a>
-    
     <li ><a href="#method-i-sort">#sort</a>
-    
     <li ><a href="#method-i-sort-21">#sort!</a>
-    
     <li ><a href="#method-i-sort_reverse">#sort_reverse</a>
-    
     <li ><a href="#method-i-to_h">#to_h</a>
-    
     <li ><a href="#method-i-to_json">#to_json</a>
-    
   </ul>
 </div>
 
@@ -149,80 +126,54 @@
 
   </section>
 
-  
   <section id="5Buntitled-5D" class="documentation-section">
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-    
       <div id="method-c-config" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">config</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Access to the class&#39;s configuration.</p>
 
 <p>@return [StandupMD::Config::EntryList]</p>
-          
-          
 
-          
           <div class="method-source-code" id="config-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">config</span>
   <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">entry_list</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-c-new" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">new</span><span
             class="method-args">(*entries)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Contruct a list. Can pass any amount of <code>StandupMD::Entry</code> instances.</p>
 
 <p>@param [Entry] entries</p>
 
 <p>@return [StandupMD::EntryList]</p>
-          
-          
 
-          
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">entries</span>)
@@ -233,45 +184,32 @@
   <span class="ruby-ivar">@entries</span> = <span class="ruby-identifier">entries</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-3C-3C" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">&lt;&lt;</span><span
             class="method-args">(entry)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Appends entries to list.</p>
 
 <p>@param [StandupMD::Entry] entry</p>
 
 <p>@return [Array]</p>
-          
-          
 
-          
           <div class="method-source-code" id="3C-3C-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;&lt;</span>(<span class="ruby-identifier">entry</span>)
@@ -281,28 +219,19 @@
   <span class="ruby-ivar">@entries</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">entry</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-filter" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">filter</span><span
             class="method-args">(start_date, end_date)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Returns entries that are between the start and end date. This method assumes the list has already been sorted.</p>
 
 <p>@param [Date] start_date</p>
@@ -310,10 +239,7 @@
 <p>@param [Date] end_date</p>
 
 <p>@return [Array]</p>
-          
-          
 
-          
           <div class="method-source-code" id="filter-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filter</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
@@ -322,28 +248,19 @@
   )
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-filter-21" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">filter!</span><span
             class="method-args">(start_date, end_date)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Replaces entries with results of filter.</p>
 
 <p>@param [Date] start_date</p>
@@ -351,10 +268,7 @@
 <p>@param [Date] end_date</p>
 
 <p>@return [Array]</p>
-          
-          
 
-          
           <div class="method-source-code" id="filter-21-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filter!</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
@@ -362,107 +276,71 @@
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-find" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">find</span><span
             class="method-args">(date)</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Finds an entry based on date. This method assumes the list has already been sorted.</p>
 
 <p>@param [Date] date</p>
 
 <p>@return [StandupMD::Entry]</p>
-          
-          
 
-          
           <div class="method-source-code" id="find-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">find</span>(<span class="ruby-identifier">date</span>)
   <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">bsearch</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">date</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">date</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-sort" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">sort</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Returns a copy of self sorted by date.</p>
 
 <p>@return [StandupMD::EntryList]</p>
-          
-          
 
-          
           <div class="method-source-code" id="sort-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-sort-21" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">sort!</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Replace entries with sorted entries by date.</p>
 
 <p>@return [StandupMD::EntryList]</p>
-          
-          
 
-          
           <div class="method-source-code" id="sort-21-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort!</span>
@@ -470,70 +348,46 @@
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-sort_reverse" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">sort_reverse</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>Returns a copy of self sorted by date.</p>
 
 <p>@return [StandupMD::EntryList]</p>
-          
-          
 
-          
           <div class="method-source-code" id="sort_reverse-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort_reverse</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-to_h" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">to_h</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>The list as a hash, with the dates as keys.</p>
 
 <p>@return [Hash]</p>
-          
-          
 
-          
           <div class="method-source-code" id="to_h-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_h</span>
@@ -545,56 +399,38 @@
   }]}]
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
       <div id="method-i-to_json" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">to_json</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>The entry list as a json object.</p>
 
 <p>@return [String]</p>
-          
-          
 
-          
           <div class="method-source-code" id="to_json-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_json</span>
   <span class="ruby-identifier">to_h</span>.<span class="ruby-identifier">to_json</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
   <section id="Delegators" class="documentation-section">
-    
     <header class="documentation-section-title">
       <h2>
         Delegators
@@ -603,34 +439,24 @@
         <a href="#top">&uarr; top</a>
       </span>
     </header>
-    
 
-    
 
-    
 
-    
 
-    
+
      <section id="public-instance-Delegators-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-    
       <div id="method-i-40entries" class="method-detail ">
-        
         <div class="method-heading">
           <span class="method-name">@entries</span><span
             class="method-args">()</span>
-          
           <span class="method-click-advice">click to toggle source</span>
-          
         </div>
-        
 
         <div class="method-description">
-          
           <p>The following are forwarded to @entries, which is the underly array of entries.</p>
 <dl class="rdoc-list note-list"><dt><code>each</code>
 <dd>
@@ -648,34 +474,26 @@
 <dd>
 <p>The last record in the list.</p>
 </dd></dl>
-          
-          
 
-          
           <div class="method-source-code" id="40entries-source">
             <pre><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 147</span>
 <span class="ruby-identifier">def_delegators</span> <span class="ruby-value">:@entries</span>, <span class="ruby-value">:each</span>, <span class="ruby-value">:empty?</span>, <span class="ruby-value">:size</span>, <span class="ruby-value">:first</span>, <span class="ruby-value">:last</span>
 </pre>
           </div>
-          
         </div>
 
-        
 
-        
       </div>
 
-    
     </section>
-  
-  </section>
 
+  </section>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
