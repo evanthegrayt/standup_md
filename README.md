@@ -313,7 +313,7 @@ file, or something like `~/.vim/plugin/standup.vim`.
 
 ```vim
 command! -complete=custom,<SID>StandupCompletion -nargs=? -bang Standup
-    \ call s:OpenStandupFile(<bang>0, <f-args>)
+    \ call <SID>OpenStandupFile(<bang>0, <f-args>)
 
 function! s:StandupCompletion(...) abort
   let l:dir = get(g:, 'standup_dir', $HOME . '/.cache/standup_md') . '/'

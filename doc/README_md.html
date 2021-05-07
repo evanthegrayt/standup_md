@@ -353,7 +353,7 @@ rake install</pre>
 <p>While there&#39;s no official support for vim, you can add this to your <code>vimrc</code> file, or something like <code>~/.vim/plugin/standup.vim</code>.</p>
 
 <pre>command! -complete=custom,&lt;SID&gt;StandupCompletion -nargs=? -bang Standup
-    \ call s:OpenStandupFile(&lt;bang&gt;0, &lt;f-args&gt;)
+    \ call &lt;SID&gt;OpenStandupFile(&lt;bang&gt;0, &lt;f-args&gt;)
 
 function! s:StandupCompletion(...) abort
   let l:dir = get(g:, &#39;standup_dir&#39;, $HOME . &#39;/.cache/standup_md&#39;) . &#39;/&#39;
