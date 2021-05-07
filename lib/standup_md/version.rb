@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module StandupMD
-
   ##
   # Module that contains all gem version information. Follows semantic
   # versioning. Read: https://semver.org/
@@ -17,7 +16,7 @@ module StandupMD
 
     ##
     # Patch version.
-    PATCH = 7
+    PATCH = 8
 
     ##
     # Version as +MAJOR.MINOR.PATCH+

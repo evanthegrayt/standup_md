@@ -55,15 +55,13 @@ module StandupMD
     #
     # @return [StandupMD::Entry]
     def self.create
-      entry = new(
+      new(
         Date.today,
         config.current,
         config.previous,
         config.impediments,
         config.notes
-      )
-      yield config if block_given?
-      entry
+      ).tap { |entry| yield entry if block_given? }
     end
 
     ##
