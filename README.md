@@ -113,20 +113,12 @@ your clipboard without even opening your editor.
 standup -p | pbcopy
 ```
 
-If you wanted to add today's entry without opening your editor, and print the
-result to the command line, you could use the following.
-
 #### Add entry to file without opening it
+You can add an entry for today without even opening your editor. Note that, if
+you have multiple entries, you must separate them with a comma and *no spaces*.
+
 ```sh
 standup --no-edit --current "Work on this thing","And another thing"
-```
-
-#### Find an entry by date and print it.
-If you wanted to find and print the entry for March 2nd, 2020, you could use the
-following.
-
-```sh
-standup -p 2020-03-02
 ```
 
 ### Customization and Runtime Options
