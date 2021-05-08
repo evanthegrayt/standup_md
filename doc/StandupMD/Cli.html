@@ -218,13 +218,13 @@
           <div class="method-source-code" id="execute-source">
             <pre><span class="ruby-comment"># File lib/standup_md/cli.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">execute</span>(<span class="ruby-identifier">options</span> = [])
-  <span class="ruby-identifier">exe</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)
-
-  <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">write_file</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">write</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">print</span>
-    <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print</span>(<span class="ruby-identifier">exe</span>.<span class="ruby-identifier">entry</span>)
-  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">edit</span>
-    <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">edit</span>
+  <span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exe</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">write_file</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">write</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">print</span>
+      <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">print</span>(<span class="ruby-identifier">exe</span>.<span class="ruby-identifier">entry</span>)
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">edit</span>
+      <span class="ruby-identifier">exe</span>.<span class="ruby-identifier">edit</span>
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

@@ -200,9 +200,9 @@ module StandupMD
       #
       # @return [String]
       def directory=(directory)
-        directory = ::File.expand_path(directory)
-        FileUtils.mkdir_p(directory) unless ::File.directory?(directory)
-        @directory = directory
+        @directory = ::File.expand_path(directory).tap do |directory|
+          FileUtils.mkdir_p(directory) unless ::File.directory?(directory)
+        end
       end
     end
   end

@@ -374,9 +374,9 @@
           <div class="method-source-code" id="directory-3D-source">
             <pre><span class="ruby-comment"># File lib/standup_md/config/file.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directory=</span>(<span class="ruby-identifier">directory</span>)
-  <span class="ruby-identifier">directory</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>)
-  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
-  <span class="ruby-ivar">@directory</span> = <span class="ruby-identifier">directory</span>
+  <span class="ruby-ivar">@directory</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>).<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">directory</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">unless</span> <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

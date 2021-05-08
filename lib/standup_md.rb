@@ -17,7 +17,7 @@ module StandupMD
   #
   # @return [StanupMD::Cli]
   def self.config
-    @config ||= StandupMD::Config.new
+    @config || reset_config
   end
 
   ##
@@ -49,11 +49,14 @@ module StandupMD
   # Loads a config file.
   #
   # @param [String] file
+  #
+  # @return [String] file
   def self.load_config_file(file)
-    file = ::File.expand_path(file)
-    raise "File #{file} does not exist." unless ::File.file?(file)
+    ::File.expand_path(file).tap do |file|
+      raise "File #{file} does not exist." unless ::File.file?(file)
 
-    @config_file_loaded = true
-    load file
+      @config_file_loaded = true
+      load file
+    end
   end
 end

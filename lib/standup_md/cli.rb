@@ -28,13 +28,13 @@ module StandupMD
     ##
     # Creates an instance of +StandupMD+ and runs what the user requested.
     def self.execute(options = [])
-      exe = new(options)
-
-      exe.write_file if config.write
-      if config.print
-        exe.print(exe.entry)
-      elsif config.edit
-        exe.edit
+      new(options).tap do |exe|
+        exe.write_file if config.write
+        if config.print
+          exe.print(exe.entry)
+        elsif config.edit
+          exe.edit
+        end
       end
     end
 

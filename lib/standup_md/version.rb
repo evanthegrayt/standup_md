@@ -16,7 +16,7 @@ module StandupMD
 
     ##
     # Patch version.
-    PATCH = 8
+    PATCH = 9
 
     ##
     # Version as +MAJOR.MINOR.PATCH+

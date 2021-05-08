@@ -80,11 +80,11 @@ module StandupMD
       raise unless date.is_a?(Date)
       @config = self.class.config
 
-      @date           = date
-      @current        = current
-      @previous       = previous
-      @impediments    = impediments
-      @notes          = notes
+      @date = date
+      @current = current
+      @previous = previous
+      @impediments = impediments
+      @notes = notes
     end
 
     ##

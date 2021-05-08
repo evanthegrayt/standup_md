@@ -125,25 +125,22 @@ module StandupMD
       # @return [StandupMD::Entry]
       def new_entry(file)
         entry = file.entries.find(config.cli.date)
-        if entry.nil? && config.cli.date == Date.today
-          previous_entry = set_previous_entry(file)
-          entry = StandupMD::Entry.new(
-            config.cli.date,
-            config.entry.current,
-            previous_entry,
-            config.entry.impediments,
-            config.entry.notes
-          )
-          file.entries << entry
-        end
-        entry
+        return entry unless entry.nil? && config.cli.date == Date.today
+
+        StandupMD::Entry.new(
+          config.cli.date,
+          config.entry.current,
+          previous_entry(file),
+          config.entry.impediments,
+          config.entry.notes
+        ).tap { |entry| file.entries << entry }
       end
 
       ##
       # The "previous" entries.
       #
       # @return [Array]
-      def set_previous_entry(file)
+      def previous_entry(file)
         return config.entry.previous_entry unless config.cli.auto_fill_previous
 
         return prev_entry(prev_file.load.entries) if file.new? && prev_file
