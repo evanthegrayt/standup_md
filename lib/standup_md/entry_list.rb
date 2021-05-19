@@ -26,7 +26,7 @@ module StandupMD
     def initialize(*entries)
       @config = self.class.config
       unless entries.all? { |e| e.is_a?(StandupMD::Entry) }
-        raise ArgumentError, 'Entry must instance of StandupMD::Entry'
+        raise ArgumentError, 'Entry must be an instance of StandupMD::Entry'
       end
       @entries = entries
     end
@@ -39,7 +39,7 @@ module StandupMD
     # @return [Array]
     def <<(entry)
       unless entry.is_a?(StandupMD::Entry)
-        raise ArgumentError, 'Entry must instance of StandupMD::Entry'
+        raise ArgumentError, 'Entry must be an instance of StandupMD::Entry'
       end
       @entries << entry
     end
