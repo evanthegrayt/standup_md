@@ -9,7 +9,7 @@
 A highly customizable and automated way to keep track of daily standups in
 markdown files.
 
-You can view the documentation [here](https://evanthegrayt.github.io/standup_md/)
+You can view the documentation [here](https://evanthegrayt.github.io/standup_md/).
 
 ## About
 I've now been at two separate companies where we post our daily standups in a
@@ -261,7 +261,7 @@ end
 
 ## API
 The API is fully documented in the
-[RDoc Documentation](https://evanthegrayt.github.io/standup_md/doc/index.html).
+[RDoc Documentation](https://evanthegrayt.github.io/standup_md/).
 
 This was mainly written as a command line utility, but the API is very robust,
 and is available for use in your own projects. A quick example of how to write a
