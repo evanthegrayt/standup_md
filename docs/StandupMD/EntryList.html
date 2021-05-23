@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>class StandupMD::EntryList - RDoc Documentation</title>
+
+
+  <meta
+    name="keywords"
+    content="ruby,class,StandupMD::EntryList"
+  >
+
+    <meta
+      name="description"
+      content="class StandupMD::EntryList: Enumerable list of entries."
+    >
+
+
+
+
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="class StandupMD::EntryList - RDoc Documentation">
+
+
+
+    <meta property="og:description" content="Enumerable list of entries.">
+
+
+
+
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="class StandupMD::EntryList - RDoc Documentation">
+
+
+
+    <meta name="twitter:description" content="Enumerable list of entries.">
+
+
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script
+  src="../js/theme-toggle.js?v=7.2.0"
+></script>
+
+<script
+  src="../js/search_navigation.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/search_data.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/search_ranker.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/search_controller.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/c_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/bash_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/aliki.js?v=7.2.0"
+  defer
+></script>
+
+<link
+  href="../css/rdoc.css?v=7.2.0"
+  rel="stylesheet"
+>
+
+
+
+
+<body role="document" class="class has-toc">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- Chevron (right arrow) - used for expand/collapse -->
+  <symbol
+    id="icon-chevron"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </symbol>
+
+  <!-- File/Document - Pages section -->
+  <symbol
+    id="icon-file"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+    ></path>
+
+    <polyline points="14 2 14 8 20 8"></polyline>
+  </symbol>
+
+  <!-- Layers/Stack - Classes and Modules section -->
+  <symbol
+    id="icon-layers"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+    <polyline points="2 17 12 22 22 17"></polyline>
+    <polyline points="2 12 12 17 22 12"></polyline>
+  </symbol>
+
+  <!-- Curly braces with C - Class Methods section -->
+  <symbol
+    id="icon-class-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      C
+    </text>
+  </symbol>
+
+  <!-- Curly braces with I - Instance Methods section -->
+  <symbol
+    id="icon-instance-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      I
+    </text>
+  </symbol>
+
+  <!-- Double chevrons up - Ancestors section -->
+  <symbol
+    id="icon-ancestors"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+  </symbol>
+
+  <!-- User with plus - Included Modules section -->
+  <symbol
+    id="icon-includes"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+
+    <line
+      x1="20"
+      y1="8"
+      x2="20"
+      y2="14"
+    ></line>
+
+    <line
+      x1="23"
+      y1="11"
+      x2="17"
+      y2="11"
+    ></line>
+  </symbol>
+
+  <!-- User with check - Extended Modules section -->
+  <symbol
+    id="icon-extends"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+    <polyline points="17 11 19 13 23 9"></polyline>
+  </symbol>
+
+  <!-- List - Sections section -->
+  <symbol
+    id="icon-list"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <line
+      x1="8"
+      y1="6"
+      x2="21"
+      y2="6"
+    ></line>
+
+    <line
+      x1="8"
+      y1="12"
+      x2="21"
+      y2="12"
+    ></line>
+
+    <line
+      x1="8"
+      y1="18"
+      x2="21"
+      y2="18"
+    ></line>
+
+    <line
+      x1="3"
+      y1="6"
+      x2="3.01"
+      y2="6"
+    ></line>
+
+    <line
+      x1="3"
+      y1="12"
+      x2="3.01"
+      y2="12"
+    ></line>
+
+    <line
+      x1="3"
+      y1="18"
+      x2="3.01"
+      y2="18"
+    ></line>
+  </symbol>
+</svg>
+
+<header class="top-navbar">
+  <a href="../index.html" class="navbar-brand">
+    RDoc Documentation
+  </a>
+
+  <!-- Desktop search bar -->
+  <div class="navbar-search navbar-search-desktop" role="search">
+    <form action="#" method="get" accept-charset="utf-8">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results-desktop"
+             type="text" name="search" placeholder="Search (/) for a class, method..."
+             spellcheck="false" autocomplete="off"
+             title="Type to search, Up and Down to navigate, Enter to load">
+      <ul id="search-results-desktop" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="initially-hidden search-results"></ul>
+    </form>
+  </div>
+
+  <!-- Mobile search icon button -->
+  <button id="search-toggle" class="navbar-search-mobile" aria-label="Open search" type="button">
+    <span aria-hidden="true">🔍</span>
+  </button>
+
+  <!-- Theme toggle button -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" type="button">
+    <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+  </button>
+</header>
+
+<!-- Search Modal (Mobile) -->
+<div id="search-modal" class="search-modal" hidden aria-modal="true" role="dialog" aria-label="Search">
+  <div class="search-modal-backdrop"></div>
+  <div class="search-modal-content">
+    <div class="search-modal-header">
+      <form class="search-modal-form" action="#" method="get" accept-charset="utf-8">
+        <span class="search-modal-icon" aria-hidden="true">🔍</span>
+        <input id="search-field-mobile" role="combobox" aria-label="Search"
+               aria-autocomplete="list" aria-controls="search-results-mobile"
+               type="text" name="search" placeholder="Search documentation"
+               spellcheck="false" autocomplete="off">
+        <button type="button" class="search-modal-close" aria-label="Close search" id="search-modal-close">
+          <span aria-hidden="true">esc</span>
+        </button>
+      </form>
+    </div>
+    <div class="search-modal-body">
+      <ul id="search-results-mobile" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="search-results search-modal-results initially-hidden"></ul>
+      <div class="search-modal-empty">
+        <p>No recent searches</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation" hidden>
+  
+
+
+
+
+  <div id="fileindex-section" class="nav-section">
+    <details class="nav-section-collapsible" >
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg>
+            <use href="#icon-file"></use>
+          </svg>
+        </span>
+
+        <span class="nav-section-title">Pages</span>
+
+        <span class="nav-section-chevron">
+          <svg>
+            <use href="#icon-chevron"></use>
+          </svg>
+        </span>
+      </summary>
+
+      <ul class="nav-list">
+
+
+
+
+
+
+            <li>
+              <a href="../README_md.html">
+                README
+              </a>
+            </li>
+
+      </ul>
+    </details>
+  </div>
+
+
+  
+<div id="sections-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-list"></use></svg>
+      </span>
+      <span class="nav-section-title">Sections</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+
+    <ul class="nav-list" role="directory">
+
+        <li><a href="#untitled"></a></li>
+
+        <li><a href="#delegators">Delegators</a></li>
+
+    </ul>
+  </details>
+</div>
+
+
+  
+<div id="parent-class-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-ancestors"></use></svg>
+      </span>
+      <span class="nav-section-title">Ancestors</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+    <ul><li>Object</li></ul>
+  </details>
+</div>
+
+
+  
+<div id="includes-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-includes"></use></svg>
+      </span>
+      <span class="nav-section-title">Included Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+
+    <ul class="nav-list">
+
+
+      <li><span class="include">Enumerable</span></li>
+
+
+    </ul>
+  </details>
+</div>
+
+
+  
+<div id="extends-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-extends"></use></svg>
+      </span>
+      <span class="nav-section-title">Extended With Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+
+    <ul class="nav-list">
+
+
+      <li><span class="extend">Forwardable</span></li>
+
+
+    </ul>
+  </details>
+</div>
+
+
+  
+  <div class="nav-section">
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg><use href="#icon-class-methods"></use></svg>
+        </span>
+        <span class="nav-section-title">Class Methods</span>
+        <span class="nav-section-chevron">
+          <svg><use href="#icon-chevron"></use></svg>
+        </span>
+      </summary>
+      <ul class="nav-list" role="directory">
+
+        <li ><a href="#method-c-new">new</a></li>
+
+      </ul>
+    </details>
+  </div>
+
+
+
+  <div class="nav-section">
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg><use href="#icon-instance-methods"></use></svg>
+        </span>
+        <span class="nav-section-title">Instance Methods</span>
+        <span class="nav-section-chevron">
+          <svg><use href="#icon-chevron"></use></svg>
+        </span>
+      </summary>
+      <ul class="nav-list" role="directory">
+
+        <li ><a href="#method-i-3C-3C">&lt;&lt;</a></li>
+
+        <li ><a href="#method-i-40entries">@entries</a></li>
+
+        <li ><a href="#method-i-filter">filter</a></li>
+
+        <li ><a href="#method-i-filter-21">filter!</a></li>
+
+        <li ><a href="#method-i-find">find</a></li>
+
+        <li ><a href="#method-i-sort">sort</a></li>
+
+        <li ><a href="#method-i-sort-21">sort!</a></li>
+
+        <li ><a href="#method-i-sort_reverse">sort_reverse</a></li>
+
+        <li ><a href="#method-i-to_h">to_h</a></li>
+
+      </ul>
+    </details>
+  </div>
+
+
+  <div id="classindex-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-layers"></use></svg>
+      </span>
+      <span class="nav-section-title">Classes and Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+
+    <ul class="link-list nav-list"><li><details open><summary><code><a href="../StandupMD.html">StandupMD</a></code></summary><ul class="link-list nav-list"><li><details><summary><code><a href="../StandupMD/Cli.html">Cli</a></code></summary><ul class="link-list nav-list"><li><code><a href="../StandupMD/Cli/Helpers.html">Helpers</a></code></li></ul></details></li><li><details><summary><code><a href="../StandupMD/Config.html">Config</a></code></summary><ul class="link-list nav-list"><li><code><a href="../StandupMD/Config/Cli.html">Cli</a></code></li><li><code><a href="../StandupMD/Config/Entry.html">Entry</a></code></li><li><code><a href="../StandupMD/Config/File.html">File</a></code></li><li><code><a href="../StandupMD/Config/Post.html">Post</a></code></li></ul></details></li><li><code><a href="../StandupMD/Entry.html">Entry</a></code></li><li><code><a href="../StandupMD/EntryList.html">EntryList</a></code></li><li><details><summary><code><a href="../StandupMD/File.html">File</a></code></summary><ul class="link-list nav-list"><li><code><a href="../StandupMD/File/NotFoundError.html">NotFoundError</a></code></li></ul></details></li><li><details><summary><code><a href="../StandupMD/Parsers.html">Parsers</a></code></summary><ul class="link-list nav-list"><li><details><summary><code><a href="../StandupMD/Parsers/Markdown.html">Markdown</a></code></summary><ul class="link-list nav-list"><li><code><a href="../StandupMD/Parsers/Markdown/Error.html">Error</a></code></li></ul></details></li></ul></details></li><li><details><summary><code><a href="../StandupMD/Post.html">Post</a></code></summary><ul class="link-list nav-list"><li><code><a href="../StandupMD/Post/Adapter.html">Adapter</a></code></li><li><details><summary><code><a href="../StandupMD/Post/Adapters.html">Adapters</a></code></summary><ul class="link-list nav-list"><li><code><a href="../StandupMD/Post/Adapters/Slack.html">Slack</a></code></li></ul></details></li><li><code><a href="../StandupMD/Post/Error.html">Error</a></code></li><li><code><a href="../StandupMD/Post/Message.html">Message</a></code></li><li><code><a href="../StandupMD/Post/Result.html">Result</a></code></li><li><code><a href="../StandupMD/Post/UnknownAdapter.html">UnknownAdapter</a></code></li></ul></details></li><li><code><a href="../StandupMD/Section.html">Section</a></code></li><li><code><a href="../StandupMD/Task.html">Task</a></code></li><li><code><a href="../StandupMD/Version.html">Version</a></code></li></ul></details></li></ul>
+  </details>
+</div>
+
+</nav>
+
+<main role="main" aria-labelledby="class-standupmd-entrylist">
+  
+  
+    <ol role="navigation" aria-label="Breadcrumb navigation" class="breadcrumb">
+      
+      <li>
+        
+        <a href="../StandupMD.html">StandupMD</a><span>::</span>
+        
+      </li>
+      
+      <li>
+        
+        <span>EntryList</span>
+        
+      </li>
+      
+    </ol>
+  
+
+  <span id="class-StandupMD::EntryList" class="legacy-anchor"></span>
+  <h1 id="class-standupmd-entrylist" class="anchor-link class">
+    class StandupMD::EntryList
+  </h1>
+
+  <section class="description">
+    
+<p>Enumerable list of entries.</p>
+
+  </section>
+
+
+  <span id="5Buntitled-5D" class="legacy-anchor"></span>
+  <section class="documentation-section anchor-link">
+
+
+
+
+
+
+
+
+
+
+
+
+     <section id="public-class-untitled-method-details" class="method-section anchor-link">
+       <header>
+         <h3 id="public-class-untitled-methods"><a href="#public-class-untitled-methods">Public Class Methods</a></h3>
+       </header>
+
+
+      <div id="method-c-new" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-c-new" title="Link to this method">
+                <span class="method-name">new</span>
+                <span class="method-args">(*entries)</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="new-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">entries</span>)
+  <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-identifier">validate_entry</span>(<span class="ruby-identifier">entry</span>) }
+
+  <span class="ruby-ivar">@entries</span> = <span class="ruby-identifier">entries</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Construct a list. Can pass any amount of <a href="Entry.html"><code>StandupMD::Entry</code></a> instances.</p>
+
+<p>@param [Entry] entries</p>
+
+<p>@return [StandupMD::EntryList]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+
+
+
+     <section id="public-instance-untitled-method-details" class="method-section anchor-link">
+       <header>
+         <h3 id="public-instance-untitled-methods"><a href="#public-instance-untitled-methods">Public Instance Methods</a></h3>
+       </header>
+
+
+      <div id="method-i-3C-3C" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-3C-3C" title="Link to this method">
+                <span class="method-name">&lt;&lt;</span>
+                <span class="method-args">(entry)</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="3C-3C-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;&lt;</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-identifier">validate_entry</span>(<span class="ruby-identifier">entry</span>)
+
+  <span class="ruby-ivar">@entries</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">entry</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Appends entries to list.</p>
+
+<p>@param [StandupMD::Entry] entry</p>
+
+<p>@return [StandupMD::EntryList]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-filter" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-filter" title="Link to this method">
+                <span class="method-name">filter</span>
+                <span class="method-args">(start_date, end_date)</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="filter-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filter</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">date</span>.<span class="ruby-identifier">between?</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>) }
+  )
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Returns entries that are between the start and end date. This method assumes the list has already been sorted.</p>
+
+<p>@param [Date] start_date</p>
+
+<p>@param [Date] end_date</p>
+
+<p>@return [Array]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-filter-21" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-filter-21" title="Link to this method">
+                <span class="method-name">filter!</span>
+                <span class="method-args">(start_date, end_date)</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="filter-21-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filter!</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>)
+  <span class="ruby-ivar">@entries</span> = <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">end_date</span>).<span class="ruby-identifier">to_a</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Replaces entries with results of filter.</p>
+
+<p>@param [Date] start_date</p>
+
+<p>@param [Date] end_date</p>
+
+<p>@return [StandupMD::EntryList]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-find" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-find" title="Link to this method">
+                <span class="method-name">find</span>
+                <span class="method-args">(date)</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="find-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">find</span>(<span class="ruby-identifier">date</span>)
+  <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">bsearch</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-identifier">date</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">date</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Finds an entry based on date. This method assumes the list has already been sorted.</p>
+
+<p>@param [Date] date</p>
+
+<p>@return [StandupMD::Entry]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-sort" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-sort" title="Link to this method">
+                <span class="method-name">sort</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="sort-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Returns a copy of self sorted by date.</p>
+
+<p>@return [StandupMD::EntryList]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-sort-21" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-sort-21" title="Link to this method">
+                <span class="method-name">sort!</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="sort-21-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort!</span>
+  <span class="ruby-ivar">@entries</span> = <span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Replace entries with sorted entries by date.</p>
+
+<p>@return [StandupMD::EntryList]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-sort_reverse" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-sort_reverse" title="Link to this method">
+                <span class="method-name">sort_reverse</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="sort_reverse-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sort_reverse</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>Returns a copy of self sorted by date, reversed.</p>
+
+<p>@return [StandupMD::EntryList]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      <div id="method-i-to_h" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-to_h" title="Link to this method">
+                <span class="method-name">to_h</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="to_h-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_h</span>
+  <span class="ruby-ivar">@entries</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    [
+      <span class="ruby-identifier">e</span>.<span class="ruby-identifier">date</span>,
+      {
+        <span class="ruby-string">&quot;current&quot;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">current</span>,
+        <span class="ruby-string">&quot;previous&quot;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">previous</span>,
+        <span class="ruby-string">&quot;impediments&quot;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">impediments</span>,
+        <span class="ruby-string">&quot;notes&quot;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">notes</span>
+      }
+    ]
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">to_h</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>The list as a hash, with the dates as keys.</p>
+
+<p>@return [Hash]</p>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+  </section>
+
+  <span id="Delegators" class="legacy-anchor"></span>
+  <section class="documentation-section anchor-link">
+
+    <header class="documentation-section-title">
+      <h2 id="delegators">
+        <a href="#delegators">Delegators</a>
+      </h2>
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <section id="public-instance-delegators-method-details" class="method-section anchor-link">
+       <header>
+         <h3 id="public-instance-delegators-methods"><a href="#public-instance-delegators-methods">Public Instance Methods</a></h3>
+       </header>
+
+
+      <div id="method-i-40entries" class="method-detail anchor-link ">
+        <div class="method-header">
+
+            <div class="method-heading">
+              <a href="#method-i-40entries" title="Link to this method">
+                <span class="method-name">@entries</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+
+        </div>
+
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+          <div class="method-source-code" id="40entries-source">
+            <pre class="ruby"><span class="ruby-comment"># File lib/standup_md/entry_list.rb, line 133</span>
+<span class="ruby-identifier">def_delegators</span> <span class="ruby-value">:@entries</span>, <span class="ruby-value">:each</span>, <span class="ruby-value">:empty?</span>, <span class="ruby-value">:size</span>, <span class="ruby-value">:first</span>, <span class="ruby-value">:last</span>
+</pre>
+          </div>
+
+
+
+        <div class="method-description">
+
+
+          <p>The following are forwarded to @entries, which is the underlying array of entries.</p>
+<dl class="rdoc-list note-list"><dt><code>each</code></dt>
+<dd>
+<p>Iterate over each entry.</p>
+</dd><dt><code>empty?</code></dt>
+<dd>
+<p>Is the list empty?</p>
+</dd><dt><code>size</code></dt>
+<dd>
+<p>How many items are in the list?</p>
+</dd><dt><code>first</code></dt>
+<dd>
+<p>The first record in the list.</p>
+</dd><dt><code>last</code></dt>
+<dd>
+<p>The last record in the list.</p>
+</dd></dl>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+  </section>
+
+</main>
+
+<aside class="table-of-contents" role="complementary" aria-label="Table of Contents">
+  <div class="toc-sticky">
+    <h3 class="toc-heading">On This Page</h3>
+    <nav class="toc-nav" id="toc-nav" aria-label="Page sections">
+      <!-- Generated by JavaScript based on page headings -->
+    </nav>
+  </div>
+</aside>
+
+
+<footer class="site-footer">
+  
+
+  <div class="footer-bottom">
+    <p>
+      Generated by <a href="https://ruby.github.io/rdoc/">RDoc 7.2.0</a>
+      using the Aliki theme by <a href="http://st0012.dev">Stan Lo</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+

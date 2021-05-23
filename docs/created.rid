@@ -1,0 +1,22 @@
+Wed, 01 Jul 2026 16:27:43 -0500
+README.md	Wed, 01 Jul 2026 16:27:38 -0500
+lib/standup_md.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/cli.rb	Wed, 01 Jul 2026 16:17:42 -0500
+lib/standup_md/cli/helpers.rb	Wed, 01 Jul 2026 16:17:42 -0500
+lib/standup_md/config.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/config/cli.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/config/entry.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/config/file.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/config/post.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/entry.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/entry_list.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/file.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/parsers/markdown.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/post.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/post/adapter.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/post/adapters/slack.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/post/message.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/post/result.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/section.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/task.rb	Sat, 27 Jun 2026 15:15:48 -0500
+lib/standup_md/version.rb	Wed, 01 Jul 2026 16:17:42 -0500

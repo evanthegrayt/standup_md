@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>RDoc Documentation</title>
+
+
+  <meta name="keywords" content="ruby,documentation,RDoc Documentation">
+
+    <meta
+      name="description"
+      content="RDoc Documentation: img. shields."
+    >
+
+
+
+
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="RDoc Documentation">
+
+
+  <meta
+    property="og:description"
+    content="API documentation for RDoc Documentation - Browse classes, modules, and methods"
+  >
+
+
+
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RDoc Documentation">
+
+
+  <meta
+    name="twitter:description"
+    content="API documentation for RDoc Documentation - Browse classes, modules, and methods"
+  >
+
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script
+  src="./js/theme-toggle.js?v=7.2.0"
+></script>
+
+<script
+  src="./js/search_navigation.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="./js/search_data.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="./js/search_ranker.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="./js/search_controller.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="./js/c_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="./js/bash_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="./js/aliki.js?v=7.2.0"
+  defer
+></script>
+
+<link
+  href="./css/rdoc.css?v=7.2.0"
+  rel="stylesheet"
+>
+
+
+
+
+<body role="document" class="file has-toc">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- Chevron (right arrow) - used for expand/collapse -->
+  <symbol
+    id="icon-chevron"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </symbol>
+
+  <!-- File/Document - Pages section -->
+  <symbol
+    id="icon-file"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+    ></path>
+
+    <polyline points="14 2 14 8 20 8"></polyline>
+  </symbol>
+
+  <!-- Layers/Stack - Classes and Modules section -->
+  <symbol
+    id="icon-layers"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+    <polyline points="2 17 12 22 22 17"></polyline>
+    <polyline points="2 12 12 17 22 12"></polyline>
+  </symbol>
+
+  <!-- Curly braces with C - Class Methods section -->
+  <symbol
+    id="icon-class-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      C
+    </text>
+  </symbol>
+
+  <!-- Curly braces with I - Instance Methods section -->
+  <symbol
+    id="icon-instance-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      I
+    </text>
+  </symbol>
+
+  <!-- Double chevrons up - Ancestors section -->
+  <symbol
+    id="icon-ancestors"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+  </symbol>
+
+  <!-- User with plus - Included Modules section -->
+  <symbol
+    id="icon-includes"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+
+    <line
+      x1="20"
+      y1="8"
+      x2="20"
+      y2="14"
+    ></line>
+
+    <line
+      x1="23"
+      y1="11"
+      x2="17"
+      y2="11"
+    ></line>
+  </symbol>
+
+  <!-- User with check - Extended Modules section -->
+  <symbol
+    id="icon-extends"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+    <polyline points="17 11 19 13 23 9"></polyline>
+  </symbol>
+
+  <!-- List - Sections section -->
+  <symbol
+    id="icon-list"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <line
+      x1="8"
+      y1="6"
+      x2="21"
+      y2="6"
+    ></line>
+
+    <line
+      x1="8"
+      y1="12"
+      x2="21"
+      y2="12"
+    ></line>
+
+    <line
+      x1="8"
+      y1="18"
+      x2="21"
+      y2="18"
+    ></line>
+
+    <line
+      x1="3"
+      y1="6"
+      x2="3.01"
+      y2="6"
+    ></line>
+
+    <line
+      x1="3"
+      y1="12"
+      x2="3.01"
+      y2="12"
+    ></line>
+
+    <line
+      x1="3"
+      y1="18"
+      x2="3.01"
+      y2="18"
+    ></line>
+  </symbol>
+</svg>
+
+<header class="top-navbar">
+  <a href="./index.html" class="navbar-brand">
+    RDoc Documentation
+  </a>
+
+  <!-- Desktop search bar -->
+  <div class="navbar-search navbar-search-desktop" role="search">
+    <form action="#" method="get" accept-charset="utf-8">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results-desktop"
+             type="text" name="search" placeholder="Search (/) for a class, method..."
+             spellcheck="false" autocomplete="off"
+             title="Type to search, Up and Down to navigate, Enter to load">
+      <ul id="search-results-desktop" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="initially-hidden search-results"></ul>
+    </form>
+  </div>
+
+  <!-- Mobile search icon button -->
+  <button id="search-toggle" class="navbar-search-mobile" aria-label="Open search" type="button">
+    <span aria-hidden="true">🔍</span>
+  </button>
+
+  <!-- Theme toggle button -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" type="button">
+    <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+  </button>
+</header>
+
+<!-- Search Modal (Mobile) -->
+<div id="search-modal" class="search-modal" hidden aria-modal="true" role="dialog" aria-label="Search">
+  <div class="search-modal-backdrop"></div>
+  <div class="search-modal-content">
+    <div class="search-modal-header">
+      <form class="search-modal-form" action="#" method="get" accept-charset="utf-8">
+        <span class="search-modal-icon" aria-hidden="true">🔍</span>
+        <input id="search-field-mobile" role="combobox" aria-label="Search"
+               aria-autocomplete="list" aria-controls="search-results-mobile"
+               type="text" name="search" placeholder="Search documentation"
+               spellcheck="false" autocomplete="off">
+        <button type="button" class="search-modal-close" aria-label="Close search" id="search-modal-close">
+          <span aria-hidden="true">esc</span>
+        </button>
+      </form>
+    </div>
+    <div class="search-modal-body">
+      <ul id="search-results-mobile" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="search-results search-modal-results initially-hidden"></ul>
+      <div class="search-modal-empty">
+        <p>No recent searches</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation" hidden>
+  
+
+
+
+
+
+
+  <div id="fileindex-section" class="nav-section">
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg>
+            <use href="#icon-file"></use>
+          </svg>
+        </span>
+
+        <span class="nav-section-title">Pages</span>
+
+        <span class="nav-section-chevron">
+          <svg>
+            <use href="#icon-chevron"></use>
+          </svg>
+        </span>
+      </summary>
+
+      <ul class="nav-list">
+
+
+
+
+
+
+            <li>
+              <a href="./README_md.html">
+                README
+              </a>
+            </li>
+
+      </ul>
+    </details>
+  </div>
+
+
+  <div id="classindex-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-layers"></use></svg>
+      </span>
+      <span class="nav-section-title">Classes and Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+
+    <ul class="link-list nav-list"><li><details open><summary><code><a href="./StandupMD.html">StandupMD</a></code></summary><ul class="link-list nav-list"><li><details><summary><code><a href="./StandupMD/Cli.html">Cli</a></code></summary><ul class="link-list nav-list"><li><code><a href="./StandupMD/Cli/Helpers.html">Helpers</a></code></li></ul></details></li><li><details><summary><code><a href="./StandupMD/Config.html">Config</a></code></summary><ul class="link-list nav-list"><li><code><a href="./StandupMD/Config/Cli.html">Cli</a></code></li><li><code><a href="./StandupMD/Config/Entry.html">Entry</a></code></li><li><code><a href="./StandupMD/Config/File.html">File</a></code></li><li><code><a href="./StandupMD/Config/Post.html">Post</a></code></li></ul></details></li><li><code><a href="./StandupMD/Entry.html">Entry</a></code></li><li><code><a href="./StandupMD/EntryList.html">EntryList</a></code></li><li><details><summary><code><a href="./StandupMD/File.html">File</a></code></summary><ul class="link-list nav-list"><li><code><a href="./StandupMD/File/NotFoundError.html">NotFoundError</a></code></li></ul></details></li><li><details><summary><code><a href="./StandupMD/Parsers.html">Parsers</a></code></summary><ul class="link-list nav-list"><li><details><summary><code><a href="./StandupMD/Parsers/Markdown.html">Markdown</a></code></summary><ul class="link-list nav-list"><li><code><a href="./StandupMD/Parsers/Markdown/Error.html">Error</a></code></li></ul></details></li></ul></details></li><li><details><summary><code><a href="./StandupMD/Post.html">Post</a></code></summary><ul class="link-list nav-list"><li><code><a href="./StandupMD/Post/Adapter.html">Adapter</a></code></li><li><details><summary><code><a href="./StandupMD/Post/Adapters.html">Adapters</a></code></summary><ul class="link-list nav-list"><li><code><a href="./StandupMD/Post/Adapters/Slack.html">Slack</a></code></li></ul></details></li><li><code><a href="./StandupMD/Post/Error.html">Error</a></code></li><li><code><a href="./StandupMD/Post/Message.html">Message</a></code></li><li><code><a href="./StandupMD/Post/Result.html">Result</a></code></li><li><code><a href="./StandupMD/Post/UnknownAdapter.html">UnknownAdapter</a></code></li></ul></details></li><li><code><a href="./StandupMD/Section.html">Section</a></code></li><li><code><a href="./StandupMD/Task.html">Task</a></code></li><li><code><a href="./StandupMD/Version.html">Version</a></code></li></ul></details></li></ul>
+  </details>
+</div>
+
+</nav>
+
+<main role="main">
+
+  
+<span id="label-The+Standup+Doctor" class="legacy-anchor"></span>
+<h1 id="the-standup-doctor"><a href="#the-standup-doctor">The Standup Doctor</a></h1>
+<!-- vi: set ts=4 sw=4 : -->
+<p><a href="https://actions-badge.atrox.dev/evanthegrayt/standup_md/goto?ref=master"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fevanthegrayt%2Fstandup_md%2Fbadge%3Fref%3Dmaster&amp;style=flat" alt="Build Status"></a> <a href="https://rubygems.org/gems/standup_md"><img src="https://img.shields.io/gem/v/standup_md.svg" alt="Gem Version"></a> <a href="https://www.ruby-lang.org/"><img src="https://img.shields.io/static/v1?label=language&amp;message=Ruby&amp;color=CC342D&amp;style=flat&amp;logo=ruby&amp;logoColor=CC342D" alt="Language: Ruby"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
+
+<blockquote>
+<p>The cure for all your standup woes.</p>
+</blockquote>
+
+<p>An automated, customizable way to keep track of daily standups in markdown files.</p>
+
+<p>You can view the documentation <a href="https://evanthegrayt.github.io/standup_md/">here</a>.</p>
+
+<span id="label-About" class="legacy-anchor"></span>
+<h2 id="about"><a href="#about">About</a></h2>
+
+<p>I’ve now been at multiple companies where we post our daily standups in a chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day became tedious, as I’d have to look up what I did the day before, copy and paste yesterday’s work into a new entry, and add today’s tasks. This gem automates most of this process, along with providing means of opening the file in your editor, finding and displaying entries from the command line, and posting today’s standup directly to a chat client.</p>
+
+<p>In a nutshell, calling <code>standup</code> from the command line will open a standup file for the current month in your preferred editor. If an entry for today is already present, no text will be generated. If an entry for today doesn’t exist, one will be generated with your preferred values. When generating, if a previous entry exists, it will be added to today’s entry as your previous day’s work. See <a href="#cli-examples">example</a>. There’s also a very robust API if you’d like to use this in your own code somehow.</p>
+
+<span id="label-Installation" class="legacy-anchor"></span>
+<h2 id="installation"><a href="#installation">Installation</a></h2>
+
+<p>Requires Ruby 3.2 or newer.</p>
+
+<p>If you don’t have the permissions to install system-wide gems, you’re probably also running an older version of ruby. I recommend installing <a href="https://github.com/rbenv/rbenv#installation">rbenv</a>, and then installing an up-to-date version of ruby.</p>
+
+<span id="label-Via+RubyGems" class="legacy-anchor"></span>
+<h3 id="via-rubygems"><a href="#via-rubygems">Via RubyGems</a></h3>
+
+<p>Just install the gem!</p>
+
+<pre class="sh">gem install standup_md</pre>
+
+<p>To include in your project, add the following to your <code>Gemfile</code>.</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;standup_md&quot;</span>
+</pre>
+
+<span id="label-Manual+Installation" class="legacy-anchor"></span>
+<h3 id="manual-installation"><a href="#manual-installation">Manual Installation</a></h3>
+
+<p>From your terminal, clone the repository where you want it, and use <code>rake</code> to install the gem.</p>
+
+<pre class="sh">git clone https://github.com/evanthegrayt/standup_md.git
+cd standup_md
+
+# Use rake to build and install the gem.
+rake install</pre>
+
+<span id="label-Zsh+Completion" class="legacy-anchor"></span>
+<h3 id="zsh-completion"><a href="#zsh-completion">Zsh Completion</a></h3>
+
+<p>The gem ships with a zsh completion file at <code>completion/zsh/_standup</code>. RubyGems doesn’t automatically add gem-provided completion directories to zsh’s <code>fpath</code>, so you’ll need to add the completion directory yourself after installation.</p>
+
+<p>For setup instructions and example, run the following.</p>
+
+<pre class="sh">standup --zsh-completion</pre>
+
+<span id="label-Usage" class="legacy-anchor"></span>
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<span id="label-Command+Line" class="legacy-anchor"></span>
+<h3 id="command-line"><a href="#command-line">Command Line</a></h3>
+
+<p>For the most basic usage, simply call the executable.</p>
+
+<pre class="sh">standup</pre>
+
+<p>This opens the current month’s standup file. If an entry already exists for today, nothing is added. If no entry exists for today, the previous “Current” is placed in the “Previous” section of a new entry. The format of this file is very important; you may add new entries, but don’t change any of the headers. Doing so will cause the parser to break. If you want to customize the headers, you can do so in the <a href="#available-config-file-options-and-defaults">configuration file</a>.</p>
+
+<p>To open a previous month’s standup file, pass the date as an argument. Both <code>YYYY-MM</code> and <code>YYYY-MM-DD</code> are accepted, and both open the file for that month.</p>
+
+<pre class="sh">standup 2026-06
+standup 2026-06-18</pre>
+
+<span id="label-CLI+Examples" class="legacy-anchor"></span>
+<h3 id="cli-examples"><a href="#cli-examples">CLI Examples</a></h3>
+
+<span id="label-Adding+an+entry+for+today+via+editor" class="legacy-anchor"></span>
+<h4 id="adding-an-entry-for-today-via-editor"><a href="#adding-an-entry-for-today-via-editor">Adding an entry for today via editor</a></h4>
+
+<p>For example, if the standup entry from yesterday reads as follows:</p>
+
+<pre class="markdown"># 2020-04-13
+## Previous
+- Did something else.
+## Current
+- Write new feature for `standup_md`
+- Fix bug in `standup_md`
+## Impediments
+- None</pre>
+
+<p>The following scaffolding will be added for current entry at the top of the file:</p>
+
+<pre class="markdown"># 2020-04-14
+## Previous
+- Write new feature for `standup_md`
+- Fix bug in `standup_md`
+## Current
+- &lt;!-- ADD TODAY&#39;S WORK HERE --&gt;
+## Impediments
+- None</pre>
+
+<span id="label-Copy+the+entry+for+today+to+clipboard" class="legacy-anchor"></span>
+<h4 id="copy-the-entry-for-today-to-clipboard"><a href="#copy-the-entry-for-today-to-clipboard">Copy the entry for today to clipboard</a></h4>
+
+<p>There are also flags that will print entries to the command line. There’s a full list of features below, but as a quick example, you can copy today’s entry to your clipboard without even opening your editor.</p>
+
+<pre class="sh">standup -p | pbcopy</pre>
+
+<span id="label-Post+the+entry+for+today+to+Slack" class="legacy-anchor"></span>
+<h4 id="post-the-entry-for-today-to-slack"><a href="#post-the-entry-for-today-to-slack">Post the entry for today to Slack</a></h4>
+
+<p>You can also post today’s entry directly to a chat client. Slack is the default adapter, so <code>standup -P</code> and <code>standup -P slack</code> are equivalent. Tokens are read from environment variables at post time, and are not stored in <code>~/.standuprc</code>. You can set a default channel via the <a href="#available-config-file-options-and-defaults">config</a> via <code>c.post.configure_adapter(:slack, channel: &quot;C123456&quot;)</code>.</p>
+
+<pre class="sh">export STANDUP_MD_SLACK_TOKEN=&quot;xoxb-your-token&quot;
+standup -P slack --post-channel C123456</pre>
+
+<p>The same posting path is available from Ruby:</p>
+
+<pre class="ruby"><span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>).<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">entry</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span>.<span class="ruby-identifier">find</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>)
+
+<span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-value">adapter:</span> <span class="ruby-value">:slack</span>, <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;C123456&quot;</span>)
+</pre>
+
+<span id="label-Add+entry+to+file+without+opening+it" class="legacy-anchor"></span>
+<h4 id="add-entry-to-file-without-opening-it"><a href="#add-entry-to-file-without-opening-it">Add entry to file without opening it</a></h4>
+
+<p>You can add an entry for today without even opening your editor. Note that, if you have multiple entries, you must separate them with a comma and <em>no spaces</em>.</p>
+
+<pre class="sh">standup --no-edit --current &quot;Work on this thing&quot;,&quot;And another thing&quot;</pre>
+
+<span id="label-Customization+and+Runtime+Options" class="legacy-anchor"></span>
+<h3 id="customization-and-runtime-options"><a href="#customization-and-runtime-options">Customization and Runtime Options</a></h3>
+
+<p>You can create a file in your home directory called <code>~/.standuprc</code>. Settings located in this file define your application defaults. CLI flags can override those defaults for a single invocation, but they do not persist back into <a href="StandupMD.html#method-i-config"><code>StandupMD.config</code></a> or <code>~/.standuprc</code>. You can view <a href="https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc">my config file</a> as an example.</p>
+
+<p>You’ll notice, a lot of settings don’t have the ability to be changed at runtime when calling the executable. This is because the markdown structure is very important, and changing values that affect formatting will cause problems with the markdown parser. If you don’t want to use a default, make the change in your config file before you start editing standups.</p>
+
+<span id="label-Available+Config+File+Options+and+Defaults" class="legacy-anchor"></span>
+<h4 id="available-config-file-options-and-defaults"><a href="#available-config-file-options-and-defaults">Available Config File Options and Defaults</a></h4>
+
+<p>For command-line usage, this file needs to be named <code>~/.standuprc</code>. To use in a rails project, create an initializer (<code>config/initializers/standup_md.rb</code>).</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-comment"># Defaults for how the file is formatted.</span>
+  <span class="ruby-comment"># See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/File.html</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_date_format</span> = <span class="ruby-string">&quot;%Y-%m-%d&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_depth</span>       = <span class="ruby-value">1</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_depth</span>   = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span>     = <span class="ruby-string">&quot;Current&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">previous_header</span>    = <span class="ruby-string">&quot;Previous&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">impediments_header</span> = <span class="ruby-string">&quot;Impediments&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">notes_header</span>       = <span class="ruby-string">&quot;Notes&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span>   = <span class="ruby-node">%w[previous current impediments notes]</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">directory</span>          = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;HOME&quot;</span>], <span class="ruby-string">&quot;.cache&quot;</span>, <span class="ruby-string">&quot;standup_md&quot;</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span>   = <span class="ruby-string">&quot;-&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">indent_width</span>       = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">name_format</span>        = <span class="ruby-string">&quot;%Y_%m.md&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">create</span>             = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-comment"># Defaults for entries.</span>
+  <span class="ruby-comment"># See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Entry.html</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">current</span>          = [<span class="ruby-string">&quot;&lt;!-- ADD TODAY&#39;S WORK HERE --&gt;&quot;</span>]
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">previous</span>         = []
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">impediments</span>      = [<span class="ruby-string">&quot;None&quot;</span>]
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">notes</span>            = []
+
+  <span class="ruby-comment"># Defaults for executable runtime behavior.</span>
+  <span class="ruby-comment"># See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">date</span>               = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">editor</span>             = <span class="ruby-string">&quot;vim&quot;</span> <span class="ruby-comment"># Checks $VISUAL and $EDITOR first, in that order</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">verbose</span>            = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">edit</span>               = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">write</span>              = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">print</span>              = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">post</span>               = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">post_adapter</span>       = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">post_channel</span>       = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">auto_fill_previous</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">cli</span>.<span class="ruby-identifier">preference_file</span>    = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;HOME&quot;</span>], <span class="ruby-string">&quot;.standuprc&quot;</span>))
+
+  <span class="ruby-comment"># Defaults for posting standups to chat clients.</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">default_adapter</span> = <span class="ruby-value">:slack</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">title</span>           = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">configure_adapter</span>(
+    <span class="ruby-value">:slack</span>,
+    <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;C123456&quot;</span>,
+    <span class="ruby-value">token_env:</span> <span class="ruby-string">&quot;STANDUP_MD_SLACK_TOKEN&quot;</span>
+  )
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Any options not set in this file will retain their default values. Note that if you change <code>name_format</code>, and don’t use a month or year, there will only ever be one standup file. This could cause issues long-term, as the files will get large over time and possibly cause performance issues.</p>
+
+<span id="label-Executable+Flags" class="legacy-anchor"></span>
+<h4 id="executable-flags"><a href="#executable-flags">Executable Flags</a></h4>
+
+<p>Some defaults can be overridden for a single CLI invocation. They are as follows.</p>
+
+<pre class="text">--current ARRAY            List of current entry&#39;s tasks
+    --previous ARRAY           List of previous entry&#39;s tasks
+    --impediments ARRAY        List of impediments for current entry
+    --notes ARRAY              List of notes for current entry
+-E, --editor EDITOR            Editor to use for opening standup files
+-d, --directory DIRECTORY      The directory where standup files are located
+-w, --[no-]write               Write current entry if it doesn&#39;t exist. Default is true
+-a, --[no-]auto-fill-previous  Auto-generate &#39;previous&#39; tasks for new entries
+-e, --[no-]edit                Open the file in the editor. Default is true
+-v, --[no-]verbose             Verbose output. Default is false.
+    --zsh-completion           Print zsh completion setup instructions
+-p, --print [DATE]             Print current entry.
+                               If DATE is passed, will print entry for DATE, if it exists.
+                               DATE must be in the same format as the entry header date.
+-P, --post [PLATFORM]          Post current entry to a chat client. Defaults to Slack.
+                               If PLATFORM is passed, use that post adapter.
+    --post-channel CHANNEL     Channel, room, or conversation to post to</pre>
+
+<span id="label-Posting+and+Secrets" class="legacy-anchor"></span>
+<h4 id="posting-and-secrets"><a href="#posting-and-secrets">Posting and Secrets</a></h4>
+
+<p>For a real-world example of how to get the Slack integration working, see <a href="SLACK_SETUP_GUIDE_md.html">the guide</a>.</p>
+
+<p>The built-in Slack adapter sends the rendered markdown entry to Slack’s <code>chat.postMessage</code> API. It needs a Slack token with the <code>chat:write</code> scope and a channel or conversation. Channel-like IDs such as <code>C123456</code>, <code>G123456</code>, and <code>D123456</code> are the most reliable values to use. By default, the token is read from <code>STANDUP_MD_SLACK_TOKEN</code>.</p>
+
+<p>The recommended pattern is to keep secret values in the environment and store only non-secret adapter defaults in <code>~/.standuprc</code>:</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">configure_adapter</span>(<span class="ruby-value">:slack</span>, <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;C123456&quot;</span>)
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Most chat clients now prefer messages to come from an installed app or bot instead of a long-lived user token. That keeps permissions clearer, but it also means the visible sender might be a general name like “StandupMD” rather than the person whose update is being posted. Set <code>c.post.title</code> to identify the standup owner in the message title without changing the markdown files that <a href="StandupMD.html"><code>StandupMD</code></a> parses.</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">title</span> = <span class="ruby-string">&quot;%s - Evan Gray&quot;</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The <code>%s</code> placeholder is replaced with the normal entry title, usually the entry date, so a stored <code># 2026-06-27</code> entry posts as <code># 2026-06-27 - Evan Gray</code>.</p>
+
+<p>To use a different token variable, set <code>token_env</code>.</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">configure_adapter</span>(
+    <span class="ruby-value">:slack</span>,
+    <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;C123456&quot;</span>,
+    <span class="ruby-value">token_env:</span> <span class="ruby-string">&quot;WORK_SLACK_TOKEN&quot;</span>
+  )
+<span class="ruby-keyword">end</span>
+</pre>
+
+<span id="label-Custom+Post+Adapters" class="legacy-anchor"></span>
+<h4 id="custom-post-adapters"><a href="#custom-post-adapters">Custom Post Adapters</a></h4>
+
+<p>Adapters are registered in <code>~/.standuprc</code>. They receive a <a href="StandupMD/Post/Message.html"><code>StandupMD::Post::Message</code></a>, which includes the rendered markdown text and the channel passed through <a href="StandupMD/Post.html#method-i-post"><code>StandupMD::Post.post</code></a> or <code>--post-channel</code>.</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">TeamsAdapter</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">options</span> = {})
+    <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">post</span>(<span class="ruby-identifier">message</span>)
+    <span class="ruby-identifier">channel</span> = <span class="ruby-identifier">message</span>.<span class="ruby-identifier">channel</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value">:channel</span>]
+    <span class="ruby-identifier">token</span> = <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&quot;TEAMS_TOKEN&quot;</span>)
+
+    <span class="ruby-comment"># Send message.text to channel with token.</span>
+
+    <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span><span class="ruby-operator">::</span><span class="ruby-constant">Result</span>.<span class="ruby-identifier">success</span>(
+      <span class="ruby-value">adapter:</span> <span class="ruby-identifier">message</span>.<span class="ruby-identifier">adapter</span>,
+      <span class="ruby-value">channel:</span> <span class="ruby-identifier">channel</span>
+    )
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">register_adapter</span>(<span class="ruby-value">:teams</span>, <span class="ruby-constant">TeamsAdapter</span>)
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">configure_adapter</span>(<span class="ruby-value">:teams</span>, <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;team-channel-id&quot;</span>)
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Custom adapters can be used from either the CLI or the Ruby API:</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-value">adapter:</span> <span class="ruby-value">:teams</span>, <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;team-channel-id&quot;</span>)
+</pre>
+
+<p>For request-scoped API usage, copy the global defaults and pass the copy into the operation:</p>
+
+<pre class="ruby"><span class="ruby-identifier">runtime</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">copy</span>
+<span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">default_adapter</span> = <span class="ruby-value">:teams</span>
+<span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">post</span>.<span class="ruby-identifier">configure_adapter</span>(<span class="ruby-value">:teams</span>, <span class="ruby-value">channel:</span> <span class="ruby-string">&quot;team-channel-id&quot;</span>)
+
+<span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-value">config:</span> <span class="ruby-identifier">runtime</span>)
+</pre>
+
+<span id="label-Using+Existing+Standup+Files" class="legacy-anchor"></span>
+<h4 id="using-existing-standup-files"><a href="#using-existing-standup-files">Using Existing Standup Files</a></h4>
+
+<p>If you already have a directory of existing standup files, you can use them, but they must be in a format that the parser can understand. The default is:</p>
+
+<pre class="markdown"># 2020-05-01
+## Previous
+- task
+## Current
+- task
+## Impediments
+- impediment
+## Notes
+- notes, if any are present</pre>
+
+<p>The order, words, date format, and header level are all customizable, but the overall format must be the same. If customization is necessary, set the defaults or pass a runtime config before reading the file, or else the parser will error.</p>
+
+<p>For example, if you wanted the format to be as follows:</p>
+
+<pre class="markdown">## 05/01/2020
+### Today
+* task
+### Yesterday
+* task
+### Hold-ups
+* impediment
+### Notes
+* notes, if any are present</pre>
+
+<p>Your <code>~/.standuprc</code> should contain:</p>
+
+<pre class="ruby"><span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_depth</span>       = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_depth</span>   = <span class="ruby-value">3</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span>     = <span class="ruby-string">&quot;Today&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">previous_header</span>    = <span class="ruby-string">&quot;Yesterday&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">impediments_header</span> = <span class="ruby-string">&quot;Hold-ups&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">bullet_character</span>   = <span class="ruby-string">&quot;*&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">indent_width</span>       = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">header_date_format</span> = <span class="ruby-string">&quot;%m/%d/%Y&quot;</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">sub_header_order</span>   = <span class="ruby-node">%w[current previous impediments notes]</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<span id="label-API" class="legacy-anchor"></span>
+<h2 id="api"><a href="#api">API</a></h2>
+
+<p>The API is fully documented in the <a href="https://evanthegrayt.github.io/standup_md/">RDoc Documentation</a>.</p>
+
+<p>This was mainly written as a command line utility, but the API is available for use in your own projects. <a href="StandupMD.html#method-i-config"><code>StandupMD.config</code></a> stores application defaults. For web requests, jobs, or any other multi-call environment, copy those defaults and pass the copy into the operation you are running.</p>
+
+<p><a href="StandupMD/File.html"><code>StandupMD::File</code></a> handles reading and writing files on disk. The markdown parser handles markdown strings:</p>
+
+<pre class="ruby"><span class="ruby-identifier">parser</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Parsers</span><span class="ruby-operator">::</span><span class="ruby-constant">Markdown</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">entries</span> = <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;2026_06.md&quot;</span>))
+<span class="ruby-identifier">markdown</span> = <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">render</span>(<span class="ruby-identifier">entries</span>, <span class="ruby-value">start_date:</span> <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">date</span>, <span class="ruby-value">end_date:</span> <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">date</span>)
+</pre>
+
+<pre class="ruby"><span class="ruby-identifier">runtime</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">copy</span>
+<span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">directory</span> = <span class="ruby-string">&quot;/tmp/request-standups&quot;</span>
+<span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">current</span> = [<span class="ruby-string">&quot;Work scoped to this request&quot;</span>]
+
+<span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>, <span class="ruby-value">config:</span> <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">file</span>).<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">entry</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">config:</span> <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">entry</span>)
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">entry</span>
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>
+</pre>
+
+<span id="label-API+Examples" class="legacy-anchor"></span>
+<h3 id="api-examples"><a href="#api-examples">API Examples</a></h3>
+
+<span id="label-Adding+an+entry+for+today" class="legacy-anchor"></span>
+<h4 id="adding-an-entry-for-today"><a href="#adding-an-entry-for-today">Adding an entry for today</a></h4>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&quot;standup_md&quot;</span>
+
+<span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&quot;Today&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>).<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">entry</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">current:</span> [<span class="ruby-string">&quot;Stuff I will do today&quot;</span>])
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">entry</span>
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>
+</pre>
+
+<p>The above example uses global defaults. To keep runtime choices scoped to one request, copy the defaults and pass the copy into each operation.</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&quot;standup_md&quot;</span>
+
+<span class="ruby-identifier">runtime</span> = <span class="ruby-constant">StandupMD</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">copy</span>
+<span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">file</span>.<span class="ruby-identifier">current_header</span> = <span class="ruby-string">&quot;Today&quot;</span>
+<span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">current</span> = [<span class="ruby-string">&quot;Stuff I will do today&quot;</span>]
+
+<span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>, <span class="ruby-value">config:</span> <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">file</span>).<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">entry</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">config:</span> <span class="ruby-identifier">runtime</span>.<span class="ruby-identifier">entry</span>)
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">entry</span>
+<span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>
+</pre>
+
+<span id="label-Finding+a+past+entry" class="legacy-anchor"></span>
+<h4 id="finding-a-past-entry"><a href="#finding-a-past-entry">Finding a past entry</a></h4>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&quot;standup_md&quot;</span>
+
+<span class="ruby-identifier">date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2020</span>, <span class="ruby-value">04</span>, <span class="ruby-value">15</span>)
+<span class="ruby-identifier">file</span> = <span class="ruby-constant">StandupMD</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">find_by_date</span>(<span class="ruby-identifier">date</span>).<span class="ruby-identifier">load</span>
+<span class="ruby-identifier">entry</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">entries</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">date</span>)
+</pre>
+
+<span id="label-Vim" class="legacy-anchor"></span>
+<h2 id="vim"><a href="#vim">Vim</a></h2>
+
+<p>While there’s no official support for vim, you can add this to your <code>vimrc</code> file, or something like <code>~/.vim/plugin/standup.vim</code>.</p>
+
+<pre class="vim">command! -complete=custom,&lt;SID&gt;StandupCompletion -nargs=? -bang Standup
+    \ call &lt;SID&gt;OpenStandupFile(&lt;bang&gt;0, &lt;f-args&gt;)
+
+function! s:StandupCompletion(...) abort
+  let l:dir = get(g:, &#39;standup_dir&#39;, $HOME . &#39;/.cache/standup_md&#39;) . &#39;/&#39;
+  if !isdirectory(l:dir) | return &#39;&#39; | endif
+  return join(map(glob(l:dir . &#39;*.md&#39;, 0, 1), &quot;fnamemodify(v:val, &#39;:t&#39;)&quot;), &quot;\n&quot;)
+endfunction
+
+function! s:OpenStandupFile(split, ...)
+  let l:dir = get(g:, &#39;standup_dir&#39;, $HOME . &#39;/.cache/standup_md&#39;) . &#39;/&#39;
+  let l:file = a:0 ? a:1 : get(g:, &#39;standup_file&#39;, strftime(&#39;%Y_%m.md&#39;))
+  call system(&#39;standup --no-edit&#39;)
+  execute a:split ? &#39;vsplit&#39; : &#39;split&#39; l:dir . l:file
+endfunction</pre>
+
+<p>This makes the <code>:Standup</code> command, which opens the standup file in a split, while <code>:Standup!</code> opens it in a vertical split. If a file is passed to the command, that file will be opened. There’s tab completion for this. Lastly, it allows for a few variables to be set for customization.</p>
+
+<pre class="vim">g:standup_dir = $HOME . &#39;/.cache/standup_md&#39; &quot; the directory where your files are
+g:standup_file = strftime(&#39;%Y_%m.md&#39;)        &quot; the file format to use</pre>
+
+<span id="label-Support+this+project" class="legacy-anchor"></span>
+<h2 id="support-this-project"><a href="#support-this-project">Support this project</a></h2>
+
+<p>I love knowing when people find my work useful. Any kind of support is very much appreciated!</p>
+<ul><li>
+<p>⭐️ Like the project? Star <a href="https://github.com/evanthegrayt/standup_md">the repository</a>!</p>
+</li><li>
+<p>❤️ Love the project? Follow me <a href="https://github.com/evanthegrayt">on GitHub</a>!</p>
+</li><li>
+<p>💸 <em>Really</em> love it? Consider <a href="https://paypal.me/evanrgray">buying me a tea</a>!</p>
+</li></ul>
+
+
+</main>
+
+<aside class="table-of-contents" role="complementary" aria-label="Table of Contents">
+  <div class="toc-sticky">
+    <h3 class="toc-heading">On This Page</h3>
+    <nav class="toc-nav" id="toc-nav" aria-label="Page sections">
+      <!-- Generated by JavaScript based on page headings -->
+    </nav>
+  </div>
+</aside>
+
+
+<footer class="site-footer">
+  
+
+  <div class="footer-bottom">
+    <p>
+      Generated by <a href="https://ruby.github.io/rdoc/">RDoc 7.2.0</a>
+      using the Aliki theme by <a href="http://st0012.dev">Stan Lo</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+
