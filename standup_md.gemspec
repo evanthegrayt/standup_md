@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri'] =
     'https://github.com/evanthegrayt/standup_md'
   spec.metadata['documentation_uri'] =
-    'https://evanthegrayt.github.io/standup_md/doc/index.html'
+    'https://evanthegrayt.github.io/standup_md/'
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
