@@ -9,9 +9,7 @@
 A highly customizable and automated way to keep track of daily standups in
 markdown files.
 
-View on: [Github](https://github.com/evanthegrayt/standup_md) |
-[GitHub Pages](https://evanthegrayt.github.io/standup_md/) |
-[RubyGems](https://rubygems.org/gems/standup_md)
+You can view the documentation [here](https://evanthegrayt.github.io/standup_md/)
 
 ## About
 I've now been at two separate companies where we post our daily standups in a
