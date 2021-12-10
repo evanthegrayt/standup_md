@@ -2,11 +2,9 @@
 
 module StandupMD
   class Config
-
     ##
     # The configuration class for StandupMD::EntryList
     class EntryList
-
       ##
       # The default options.
       #

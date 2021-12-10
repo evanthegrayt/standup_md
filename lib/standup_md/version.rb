@@ -21,7 +21,7 @@ module StandupMD
     # Patch version.
     #
     # @return [Integer]
-    PATCH = 13
+    PATCH = 14
 
     ##
     # Version as +[MAJOR, MINOR, PATCH]+
@@ -47,4 +47,6 @@ module StandupMD
       Hash[%i[major minor patch].zip(to_a)]
     end
   end
+
+  VERSION = StandupMD::Version.to_s
 end

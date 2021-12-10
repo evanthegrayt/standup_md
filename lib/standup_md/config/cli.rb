@@ -19,8 +19,9 @@ module StandupMD
         write: true,
         print: false,
         auto_fill_previous: true,
-        preference_file:
-          ::File.expand_path(::File.join(ENV['HOME'], '.standuprc'))
+        preference_file: ::File.expand_path(
+          ::File.join(ENV['HOME'], '.standuprc')
+        )
       }.freeze
 
       ##
