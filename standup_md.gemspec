@@ -2,7 +2,7 @@ require_relative 'lib/standup_md/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'standup_md'
-  spec.version       = StandupMD::Version.to_s
+  spec.version       = StandupMD::VERSION
   spec.authors       = ['Evan Gray']
   spec.email         = 'evanthegrayt@vivaldi.net'
   spec.license       = 'MIT'

@@ -78,8 +78,8 @@ module StandupMD
     # @param [Array] notes
     def initialize(date, current, previous, impediments, notes = [])
       raise unless date.is_a?(Date)
-      @config = self.class.config
 
+      @config = self.class.config
       @date = date
       @current = current
       @previous = previous

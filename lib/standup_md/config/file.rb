@@ -2,11 +2,9 @@
 
 module StandupMD
   class Config
-
     ##
     # The configuration class for StandupMD::File
     class File
-
       ##
       # The default options.
       #
@@ -156,11 +154,9 @@ module StandupMD
       #
       # @return [Integer]
       def header_depth=(depth)
-        if !depth.between?(1, 5)
-          raise 'Header depth out of bounds (1..5)'
-        elsif depth >= sub_header_depth
-          @sub_header_depth = depth + 1
-        end
+        raise 'Header depth out of bounds (1..5)' if !depth.between?(1, 5)
+
+        @sub_header_depth = depth + 1 if depth >= sub_header_depth
         @header_depth = depth
       end
 
@@ -172,11 +168,9 @@ module StandupMD
       #
       # @return [Integer]
       def sub_header_depth=(depth)
-        if !depth.between?(2, 6)
-          raise 'Sub-header depth out of bounds (2..6)'
-        elsif depth <= header_depth
-          @header_depth = depth - 1
-        end
+        raise 'Sub-header depth out of bounds (2..6)' if !depth.between?(2, 6)
+
+        @header_depth = depth - 1 if depth <= header_depth
         @sub_header_depth = depth
       end
 
@@ -188,13 +182,15 @@ module StandupMD
       # @return [String]
       def bullet_character=(char)
         raise 'Must be "-" or "*"' unless %w[- *].include?(char)
+
         @bullet_character = char
       end
 
       ##
-      # Setter for directory. Must be expanded in case the user uses `~` for home.
-      # If the directory doesn't exist, it will be created. To reset instance
-      # variables after changing the directory, you'll need to call load.
+      # Setter for directory. Must be expanded in case the user uses `~` for
+      # home. If the directory doesn't exist, it will be created. To reset
+      # instance variables after changing the directory, you'll need to call
+      # load.
       #
       # @param [String] directory
       #

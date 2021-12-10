@@ -24,10 +24,9 @@ module StandupMD
     #
     # @return [StandupMD::EntryList]
     def initialize(*entries)
+      entries.each { |entry| validate_entry(entry) }
+
       @config = self.class.config
-      unless entries.all? { |e| e.is_a?(StandupMD::Entry) }
-        raise ArgumentError, 'Entry must be an instance of StandupMD::Entry'
-      end
       @entries = entries
     end
 
@@ -38,9 +37,8 @@ module StandupMD
     #
     # @return [Array]
     def <<(entry)
-      unless entry.is_a?(StandupMD::Entry)
-        raise ArgumentError, 'Entry must be an instance of StandupMD::Entry'
-      end
+      validate_entry(entry)
+
       @entries << entry
     end
 
@@ -145,5 +143,13 @@ module StandupMD
     #
     # +last+:: The last record in the list.
     def_delegators :@entries, :each, :empty?, :size, :first, :last
+
+    private
+
+    def validate_entry(entry)
+      return if entry.is_a?(StandupMD::Entry)
+
+      raise ArgumentError, 'Entry must be an instance of StandupMD::Entry'
+    end
   end
 end

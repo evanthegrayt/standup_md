@@ -40,7 +40,10 @@ module StandupMD
 
       def new_entry(record) # :nodoc:
         Entry.new(
-          Date.strptime(record['header'], StandupMD.config.file.header_date_format),
+          Date.strptime(
+            record['header'],
+            StandupMD.config.file.header_date_format
+          ),
           record[StandupMD.config.file.current_header],
           record[StandupMD.config.file.previous_header],
           record[StandupMD.config.file.impediments_header],
@@ -49,7 +52,9 @@ module StandupMD
       end
 
       def header(date)
-        '#' * StandupMD.config.file.header_depth + ' ' + date.strftime(StandupMD.config.file.header_date_format)
+        '#' * StandupMD.config.file.header_depth +
+          ' ' +
+          date.strftime(StandupMD.config.file.header_date_format)
       end
 
       def sub_header(subhead)

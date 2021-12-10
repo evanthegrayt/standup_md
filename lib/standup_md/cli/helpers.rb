@@ -12,10 +12,8 @@ module StandupMD
       #
       # @return [nil]
       def print(entry)
-        if entry.nil?
-          puts "No record found for #{config.cli.date}"
-          return
-        end
+        return puts "No record found for #{config.cli.date}" if entry.nil?
+
         puts header(entry)
         config.file.sub_header_order.each do |header_type|
           tasks = entry.public_send(header_type)
@@ -142,7 +140,6 @@ module StandupMD
       # @return [Array]
       def previous_entry(file)
         return config.entry.previous_entry unless config.cli.auto_fill_previous
-
         return prev_entry(prev_file.load.entries) if file.new? && prev_file
 
         prev_entry(file.entries)
@@ -155,9 +152,7 @@ module StandupMD
       #
       # @return [StandupMD::Entry]
       def prev_entry(entries)
-        return [] if entries.empty?
-
-        entries.last.current
+        entries.empty? ? [] : entries.last.current
       end
 
       ##

@@ -32,6 +32,10 @@ class TestStandupMD < TestHelper
     assert_instance_of(StandupMD::Config::EntryList, StandupMD.config.entry_list)
   end
 
+  def test_version
+    assert_match(/\d+\.\d+.\d+/, StandupMD::VERSION)
+  end
+
   def test_configure
     assert_nothing_raised do
       StandupMD.configure do |s|
