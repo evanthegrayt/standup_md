@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    standup_md (0.3.13)
+    standup_md (0.3.14)
 
 GEM
   remote: https://rubygems.org/

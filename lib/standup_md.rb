@@ -15,7 +15,7 @@ module StandupMD
   ##
   # Method for accessing the configuration.
   #
-  # @return [StanupMD::Cli]
+  # @return [StanupMD::Config]
   def self.config
     @config || reset_config
   end
