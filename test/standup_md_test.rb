@@ -52,7 +52,7 @@ class TestStandupMD < TestHelper
   def test_load_config_file
     create_config_file(test_config_file_name)
     refute(StandupMD.config_file_loaded?)
-    assert_nothing_raised { StandupMD.load_config_file(test_config_file_name)}
+    assert_nothing_raised { StandupMD.load_config_file(test_config_file_name) }
     assert(StandupMD.config_file_loaded?)
     assert_equal(['NONE'], StandupMD.config.entry.impediments)
     assert_equal('Current', StandupMD.config.file.current_header)

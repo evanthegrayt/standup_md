@@ -6,12 +6,12 @@ require 'date'
 require 'yaml'
 require 'test/unit'
 require 'fileutils'
+
 SimpleCov.start { add_filter %r{^/test/} }
 
 ##
 # Module to include in tests that provides helper functions.
 class TestHelper < Test::Unit::TestCase
-
   ##
   # The default setup method for all tests that inherit from this class.
   def setup
@@ -51,9 +51,12 @@ class TestHelper < Test::Unit::TestCase
   ##
   # Reads the fixtures in as a hash.
   def fixtures
-    @fixtures ||= YAML.safe_load(ERB.new(File.read(
-      File.join(__dir__, 'fixtures.yml.erb')
-    )).result(binding))
+    @fixtures ||=
+      YAML.safe_load(
+        ERB.new(
+          File.read(File.join(__dir__, 'fixtures.yml.erb'))
+        ).result(binding)
+      )
   end
 
   ##
@@ -80,8 +83,8 @@ class TestHelper < Test::Unit::TestCase
 
   ##
   # Creates instance of +Cli+.
-  def cli(options = [], load_config = false)
-    StandupMD::Cli.new(options, load_config)
+  def cli(options = [], load_config: false)
+    StandupMD::Cli.new(options, load_config: load_config)
   end
 
   ##

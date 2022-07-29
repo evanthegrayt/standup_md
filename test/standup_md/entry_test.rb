@@ -10,14 +10,14 @@ class TestEntry < TestHelper
       Date.today,
       ['Current task'],
       ['Previous task'],
-      ['Impediment'],
+      ['Impediment']
     )
     @entry_two = StandupMD::Entry.new(
       Date.today.prev_day,
       ['Current task'],
       ['Previous task'],
       ['Impediment'],
-      ['Notes'],
+      ['Notes']
     )
   end
 
@@ -65,10 +65,10 @@ class TestEntry < TestHelper
     assert_equal(
       {
         Date.today => {
-          'current'     => ['Current task'],
+          'current' => ['Current task'],
           'impediments' => ['Impediment'],
-          'notes'       => [],
-          'previous'    => ['Previous task']
+          'notes' => [],
+          'previous' => ['Previous task']
         }
       },
       @entry_one.to_h
@@ -79,7 +79,7 @@ class TestEntry < TestHelper
     assert_instance_of(String, @entry_one.to_json)
     assert_equal(
       "{\"#{Date.today}\":{\"current\":[\"Current task\"],\"previous\":" \
-      "[\"Previous task\"],\"impediments\":[\"Impediment\"],\"notes\":[]}}",
+      '["Previous task"],"impediments":["Impediment"],"notes":[]}}',
       @entry_one.to_json
     )
   end

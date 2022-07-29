@@ -51,7 +51,7 @@ class TestFile < TestHelper
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
     StandupMD.config.file.create = false
-    assert_raise {StandupMD::File.find_by_date(Date.today.prev_year) }
+    assert_raise { StandupMD::File.find_by_date(Date.today.prev_year) }
     StandupMD.config.file.create = true
     assert_nothing_raised { StandupMD::File.find_by_date(Date.today.prev_year) }
   end

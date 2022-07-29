@@ -60,7 +60,7 @@ module StandupMD
     # Constructor. Sets defaults.
     #
     # @param [Array] options
-    def initialize(options = [], load_config = true)
+    def initialize(options = [], load_config: true)
       @config = self.class.config
       @preference_file_loaded = false
       @options = options

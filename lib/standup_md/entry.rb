@@ -100,10 +100,10 @@ module StandupMD
     def to_h
       {
         date => {
-          'current'     => current,
-          'previous'    => previous,
+          'current' => current,
+          'previous' => previous,
           'impediments' => impediments,
-          'notes'       => notes
+          'notes' => notes
         }
       }
     end

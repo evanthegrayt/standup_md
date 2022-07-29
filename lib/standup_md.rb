@@ -12,11 +12,13 @@ require_relative 'standup_md/config'
 module StandupMD
   @config_file_loaded = false
 
+  module_function
+
   ##
   # Method for accessing the configuration.
   #
   # @return [StanupMD::Config]
-  def self.config
+  def config
     @config || reset_config
   end
 
@@ -24,7 +26,7 @@ module StandupMD
   # Reset all configuration values to their defaults.
   #
   # @return [StandupMD::Config]
-  def self.reset_config
+  def reset_config
     @config = StandupMD::Config.new
   end
 
@@ -33,7 +35,7 @@ module StandupMD
   #
   # @example
   #   StandupMD.configure { |s| s.cli.editor = 'mate' }
-  def self.configure
+  def configure
     yield config
   end
 
@@ -41,7 +43,7 @@ module StandupMD
   # Has a config file been loaded?
   #
   # @return [Boolean]
-  def self.config_file_loaded?
+  def config_file_loaded?
     @config_file_loaded
   end
 
@@ -51,8 +53,8 @@ module StandupMD
   # @param [String] file
   #
   # @return [String] file
-  def self.load_config_file(file)
-    ::File.expand_path(file).tap do |file|
+  def load_config_file(config_file)
+    ::File.expand_path(config_file).tap do |file|
       raise "File #{file} does not exist." unless ::File.file?(file)
 
       @config_file_loaded = true

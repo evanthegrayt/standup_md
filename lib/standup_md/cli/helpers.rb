@@ -20,7 +20,7 @@ module StandupMD
           next if !tasks || tasks.empty?
 
           puts sub_header(header_type)
-          tasks.each { |task| puts config.file.bullet_character + ' ' + task }
+          tasks.each { |task| puts "#{config.file.bullet_character} #{task}" }
         end
         puts
       end
@@ -131,7 +131,7 @@ module StandupMD
           previous_entry(file),
           config.entry.impediments,
           config.entry.notes
-        ).tap { |entry| file.entries << entry }
+        ).tap { |e| file.entries << e }
       end
 
       ##

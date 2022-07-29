@@ -111,12 +111,17 @@ module StandupMD
     #
     # @return [Hash]
     def to_h
-      Hash[@entries.map { |e| [e.date, {
-        'current'     => e.current,
-        'previous'    => e.previous,
-        'impediments' => e.impediments,
-        'notes'       => e.notes
-      }]}]
+      @entries.map do |e|
+        [
+          e.date,
+          {
+            'current' => e.current,
+            'previous' => e.previous,
+            'impediments' => e.impediments,
+            'notes' => e.notes
+          }
+        ]
+      end.to_h
     end
 
     ##
