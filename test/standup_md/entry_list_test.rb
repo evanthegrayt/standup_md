@@ -10,21 +10,21 @@ class TestEntryList < TestHelper
       Date.today.prev_day.prev_day,
       ['Current task'],
       ['Previous task'],
-      ['Impediment'],
+      ['Impediment']
     )
     @entry_two = StandupMD::Entry.new(
       Date.today.prev_day,
       ['Current task'],
       ['Previous task'],
       ['Impediment'],
-      ['Notes'],
+      ['Notes']
     )
     @entry_three = StandupMD::Entry.new(
       Date.today,
       ['Current task'],
       ['Previous task'],
       ['Impediment'],
-      ['Notes'],
+      ['Notes']
     )
     @entry_list = StandupMD::EntryList.new(@entry_one)
   end
@@ -34,7 +34,7 @@ class TestEntryList < TestHelper
     assert_raise { StandupMD::EntryList.new('string') }
   end
 
-  def test_each(&block)
+  def test_each
     assert_respond_to(@entry_list, :each)
     assert_nothing_raised do
       @entry_list.each { |i| assert_instance_of(StandupMD::Entry, i) }
@@ -79,9 +79,7 @@ class TestEntryList < TestHelper
     assert_equal(3, @entry_list.size)
     assert_equal(2, @entry_list.filter(@entry_one.date, @entry_two.date).size)
     assert_equal(3, @entry_list.size)
-    assert_nothing_raised do
-      @entry_list.filter!(@entry_one.date, @entry_two.date).size
-    end
+    assert_nothing_raised { @entry_list.filter!(@entry_one.date, @entry_two.date).size }
     assert_equal(2, @entry_list.size)
     assert_instance_of(StandupMD::EntryList, @entry_list.filter(@entry_one.date, @entry_two.date))
     assert_instance_of(StandupMD::EntryList, @entry_list.filter!(@entry_one.date, @entry_two.date))
@@ -90,26 +88,28 @@ class TestEntryList < TestHelper
   def test_first
     @entry_list << @entry_two
     @entry_list << @entry_three
-    assert_equal(@entry_one, @entry_list.sort.first)
+    assert_equal(@entry_one, @entry_list.min)
     assert_instance_of(StandupMD::Entry, @entry_list.first)
   end
 
   def test_last
     @entry_list << @entry_two
     @entry_list << @entry_three
-    assert_equal(@entry_three, @entry_list.sort.last)
+    assert_equal(@entry_three, @entry_list.max)
     assert_instance_of(StandupMD::Entry, @entry_list.last)
   end
 
   def test_to_h
     assert_instance_of(Hash, @entry_list.to_h)
     assert_equal(
-      {Date.today.prev_day.prev_day =>
-       {"current" => ["Current task"],
-        "previous" => ["Previous task"],
-        "impediments" => ["Impediment"],
-        "notes" => []
-       }},
+      {
+        Date.today.prev_day.prev_day => {
+          'current' => ['Current task'],
+          'previous' => ['Previous task'],
+          'impediments' => %w[Impediment],
+          'notes' => []
+        }
+      },
       @entry_list.to_h
     )
   end

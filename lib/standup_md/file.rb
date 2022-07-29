@@ -10,58 +10,60 @@ module StandupMD
   class File
     include StandupMD::File::Helpers
 
-    ##
-    # Access to the class's configuration.
-    #
-    # @return [StandupMD::Config::EntryList]
-    def self.config
-      @config ||= StandupMD.config.file
-    end
-
-    ##
-    # Convenience method for calling File.find(file_name).load
-    #
-    # @param [String] file_name
-    #
-    # @return [StandupMD::File]
-    def self.load(file_name)
-      unless ::File.directory?(config.directory)
-        raise "Dir #{config.directory} not found." unless config.create
-
-        FileUtils.mkdir_p(config.directory)
+    class << self
+      ##
+      # Access to the class's configuration.
+      #
+      # @return [StandupMD::Config::EntryList]
+      def config
+        @config ||= StandupMD.config.file
       end
-      new(file_name).load
-    end
 
-    ##
-    # Find standup file in directory by file name.
-    #
-    # @param [String] File_naem
-    def self.find(file_name)
-      unless ::File.directory?(config.directory)
-        raise "Dir #{config.directory} not found." unless config.create
+      ##
+      # Convenience method for calling File.find(file_name).load
+      #
+      # @param [String] file_name
+      #
+      # @return [StandupMD::File]
+      def load(file_name)
+        unless ::File.directory?(config.directory)
+          raise "Dir #{config.directory} not found." unless config.create
 
-        FileUtils.mkdir_p(config.directory)
+          FileUtils.mkdir_p(config.directory)
+        end
+        new(file_name).load
       end
-      file = Dir.entries(config.directory).bsearch { |f| f == file_name }
-      raise "File #{file_name} not found." if file.nil? && !config.create
 
-      new(file_name)
-    end
+      ##
+      # Find standup file in directory by file name.
+      #
+      # @param [String] File_naem
+      def find(file_name)
+        unless ::File.directory?(config.directory)
+          raise "Dir #{config.directory} not found." unless config.create
 
-    ##
-    # Find standup file in directory by Date object.
-    #
-    # @param [Date] date
-    def self.find_by_date(date)
-      raise ArgumentError, 'Must be a Date object' unless date.is_a?(Date)
+          FileUtils.mkdir_p(config.directory)
+        end
+        file = Dir.entries(config.directory).bsearch { |f| f == file_name }
+        raise "File #{file_name} not found." if file.nil? && !config.create
 
-      unless ::File.directory?(config.directory)
-        raise "Dir #{config.directory} not found." unless config.create
-
-        FileUtils.mkdir_p(config.directory)
+        new(file_name)
       end
-      find(date.strftime(config.name_format))
+
+      ##
+      # Find standup file in directory by Date object.
+      #
+      # @param [Date] date
+      def find_by_date(date)
+        raise ArgumentError, 'Must be a Date object' unless date.is_a?(Date)
+
+        unless ::File.directory?(config.directory)
+          raise "Dir #{config.directory} not found." unless config.create
+
+          FileUtils.mkdir_p(config.directory)
+        end
+        find(date.strftime(config.name_format))
+      end
     end
 
     ##
@@ -189,7 +191,7 @@ module StandupMD
             next if !tasks || tasks.empty?
 
             f.puts sub_header(@config.public_send("#{attr}_header").capitalize)
-            tasks.each { |task| f.puts @config.bullet_character + ' ' + task }
+            tasks.each { |task| f.puts "#{@config.bullet_character} #{task}" }
           end
           f.puts
         end

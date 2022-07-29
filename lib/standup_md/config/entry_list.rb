@@ -9,7 +9,7 @@ module StandupMD
       # The default options.
       #
       # @return [Hash]
-      DEFAULTS = {}
+      DEFAULTS = {}.freeze
 
       ##
       # Initializes the config with default values.

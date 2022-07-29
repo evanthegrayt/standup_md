@@ -21,8 +21,8 @@ module StandupMD
         directory: ::File.join(ENV['HOME'], '.cache', 'standup_md'),
         bullet_character: '-',
         name_format: '%Y_%m.md',
-        create: true,
-      }
+        create: true
+      }.freeze
 
       ##
       # Number of octothorps that should preface entry headers.
