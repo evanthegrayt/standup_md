@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'standup_md/version'
-require_relative 'standup_md/file'
-require_relative 'standup_md/entry'
-require_relative 'standup_md/entry_list'
-require_relative 'standup_md/cli'
-require_relative 'standup_md/config'
+require_relative "standup_md/version"
+require_relative "standup_md/file"
+require_relative "standup_md/entry"
+require_relative "standup_md/entry_list"
+require_relative "standup_md/cli"
+require_relative "standup_md/config"
 
 ##
 # The main module for the gem. Provides access to configuration classes.

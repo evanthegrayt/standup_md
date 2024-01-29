@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'optparse'
-require_relative 'cli/helpers'
+require "optparse"
+require_relative "cli/helpers"
 
 module StandupMD
   ##
@@ -76,18 +76,16 @@ module StandupMD
     #
     # @return [nil]
     def load_preferences
-      if ::File.exist?(@config.preference_file)
-        ::StandupMD.load_config_file(@config.preference_file)
-        @preference_file_loaded = true
-      else
-        echo "Preference file #{@config.preference_file} does not exist."
-      end
+      ::StandupMD::ConfigFile.new(@config.preference_file)
+      @preference_file_loaded = true
+    rescue
+      echo "Preference file #{@config.preference_file} does not exist."
     end
 
     ##
     # Has the preference file been loaded?
     #
-    # @return boolean
+    # @return [Boolean]
     def preference_file_loaded?
       @preference_file_loaded
     end
@@ -111,7 +109,7 @@ module StandupMD
     end
 
     ##
-    # Quick access to Cli.echo.
+    # Quick access to +Cli.echo+.
     #
     # @return [nil]
     def echo(msg)
