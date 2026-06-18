@@ -44,6 +44,38 @@ class TestFile < TestHelper
     assert_nothing_raised { StandupMD::File.find("noexist") }
   end
 
+  def test_find_does_not_depend_on_directory_entry_order
+    earlier_file = Date.today.prev_month.strftime("%Y_%m.md")
+    create_standup_file(::File.join(workdir, earlier_file), "previous_month_entry")
+    directory = StandupMD.config.file.directory
+    current_file = ::File.basename(test_file_name)
+    active = true
+    Dir.singleton_class.prepend(
+      Module.new do
+        define_method(:entries) do |requested_directory|
+          if active && requested_directory == directory
+            [
+              current_file,
+              earlier_file,
+              ".",
+              ".."
+            ]
+          else
+            super(requested_directory)
+          end
+        end
+      end
+    )
+
+    StandupMD.config.file.create = false
+    file = StandupMD::File.find(earlier_file)
+
+    assert_instance_of(StandupMD::File, file)
+    assert_equal(::File.join(workdir, earlier_file), file.name)
+  ensure
+    active = false
+  end
+
   def test_find_by_date
     assert_raise { StandupMD::File.find_by_date(fixtures["today_date"]) }
     file = StandupMD::File.find_by_date(Date.today)
