@@ -50,6 +50,22 @@ class TestCli < TestHelper
     disable_stdout_redireaction
   end
 
+  def test_self_execute_with_file_date_argument
+    previous_month = Date.today.prev_month
+    create_standup_file(@previous_month_test_file, "previous_month_entry")
+
+    assert_nothing_raised do
+      StandupMD::Cli.execute(
+        [
+          "--no-edit",
+          "--directory", workdir.to_s,
+          previous_month.strftime("%Y-%m")
+        ]
+      )
+    end
+    assert(File.file?(@previous_month_test_file))
+  end
+
   def test_current_entry
     c = cli(@options)
     assert_instance_of(StandupMD::Entry, c.entry)
@@ -59,6 +75,83 @@ class TestCli < TestHelper
 
     c = cli(@options)
     assert_nil(c.entry)
+  end
+
+  def test_file_date_argument
+    previous_month = Date.today.prev_month
+    create_standup_file(@previous_month_test_file, "previous_month_entry")
+
+    c = cli(@options + [previous_month.strftime("%Y-%m")])
+
+    assert_equal(previous_month.strftime("%Y_%m.md"), File.basename(c.file.name))
+    assert_equal(Date.new(previous_month.year, previous_month.month, 1), StandupMD.config.cli.date)
+  end
+
+  def test_file_date_argument_accepts_full_date
+    previous_month = Date.today.prev_month
+    create_standup_file(@previous_month_test_file, "previous_month_entry")
+
+    c = cli(@options + [previous_month.strftime("%Y-%m-%d")])
+
+    assert_equal(previous_month.strftime("%Y_%m.md"), File.basename(c.file.name))
+    assert_equal(previous_month, StandupMD.config.cli.date)
+  end
+
+  def test_file_date_argument_is_read_only
+    previous_month = Date.today.prev_month
+    create_standup_file(@previous_month_test_file, "previous_month_entry")
+
+    c = cli(["--no-edit", "--directory", workdir.to_s, previous_month.strftime("%Y-%m-%d")])
+
+    assert(c.file_date_argument?)
+    refute(c.write?)
+  end
+
+  def test_file_date_argument_does_not_create_missing_file
+    previous_month = Date.today.prev_month
+
+    assert_raise do
+      cli(@options + [previous_month.strftime("%Y-%m")])
+    end
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
+  end
+
+  def test_print_is_read_only
+    c = cli(["--print", "--directory", workdir.to_s])
+
+    refute(c.file_date_argument?)
+    refute(c.write?)
+  end
+
+  def test_print_does_not_create_missing_file
+    previous_month = Date.today.prev_month
+
+    c = cli(
+      [
+        "--print", previous_month.strftime(StandupMD.config.file.header_date_format),
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_nil(c.file)
+    assert_nil(c.entry)
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
+  end
+
+  def test_file_date_argument_rejects_invalid_date
+    assert_raise(OptionParser::InvalidArgument) do
+      cli(@options + ["2026-6"])
+    end
+
+    assert_raise(OptionParser::InvalidArgument) do
+      cli(@options + ["2026-02-31"])
+    end
+
+    assert_raise(OptionParser::InvalidArgument) do
+      cli(@options + %w[2026-06 2026-07])
+    end
   end
 
   def test_options

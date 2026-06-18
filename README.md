@@ -6,10 +6,11 @@
 
 > The cure for all your standup woes.
 
-A highly customizable and automated way to keep track of daily standups in
-markdown files.
+An automated, customizable way to keep track of daily standups in markdown
+files.
 
-You can view the documentation [here](https://evanthegrayt.github.io/standup_md/).
+You can view the documentation
+[here](https://evanthegrayt.github.io/standup_md/).
 
 ## About
 I've now been at two separate companies where we post our daily standups in a
@@ -43,7 +44,7 @@ gem install standup_md
 To include in your project, add the following to your `Gemfile`.
 
 ```ruby
-gem 'standup_md'
+gem "standup_md"
 ```
 
 ### Manual Installation
@@ -72,6 +73,14 @@ placed in the "Previous" section of a new entry. The format of this file is very
 important; you may add new entries, but don't change any of the headers. Doing
 so will cause the parser to break. If you want to customize the headers, you can
 do so in the [configuration file](#available-config-file-options-and-defaults).
+
+To open a previous month's standup file, pass the date as an argument. Both
+`YYYY-MM` and `YYYY-MM-DD` are accepted, and both open the file for that month.
+
+```sh
+standup 2026-06
+standup 2026-06-18
+```
 
 ### CLI Examples
 #### Adding an entry for today via editor
@@ -150,36 +159,36 @@ rails project, create an initializer (`config/initializers/standup_md.rb`).
 StandupMD.configure do |c|
   # Defaults for how the file is formatted.
   # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html
-  c.file.header_date_format = '%Y-%m-%d'
+  c.file.header_date_format = "%Y-%m-%d"
   c.file.header_depth       = 1
   c.file.sub_header_depth   = 2
-  c.file.current_header     = 'Current'
-  c.file.previous_header    = 'Previous'
-  c.file.impediments_header = 'Impediments'
-  c.file.notes_header       = 'Notes'
+  c.file.current_header     = "Current"
+  c.file.previous_header    = "Previous"
+  c.file.impediments_header = "Impediments"
+  c.file.notes_header       = "Notes"
   c.file.sub_header_order   = %w[previous current impediments notes]
-  c.file.directory          = ::File.join(ENV['HOME'], '.cache', 'standup_md')
-  c.file.bullet_character   = '-'
-  c.file.name_format        = '%Y_%m.md'
+  c.file.directory          = ::File.join(ENV["HOME"], ".cache", "standup_md")
+  c.file.bullet_character   = "-"
+  c.file.name_format        = "%Y_%m.md"
   c.file.create             = true
 
-  # Defaults for entries
+  # Defaults for entries.
   # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Entry.html
   c.entry.current          = ["<!-- ADD TODAY'S WORK HERE -->"]
   c.entry.previous         = []
-  c.entry.impediments      = ['None']
+  c.entry.impediments      = ["None"]
   c.entry.notes            = []
 
   # Defaults for executable runtime behavior.
   # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html
   c.cli.date               = Date.today
-  c.cli.editor             = 'vim' # Checks $VISUAL and $EDITOR first, in that order
+  c.cli.editor             = "vim" # Checks $VISUAL and $EDITOR first, in that order
   c.cli.verbose            = false
   c.cli.edit               = true
   c.cli.write              = true
   c.cli.print              = false
   c.cli.auto_fill_previous = true
-  c.cli.preference_file    = ::File.expand_path(::File.join(ENV['HOME'], '.standuprc'))
+  c.cli.preference_file    = ::File.expand_path(::File.join(ENV["HOME"], ".standuprc"))
 end
 ```
 
@@ -250,11 +259,11 @@ Your `~/.standuprc` should contain:
 StandupMD.configure do |c|
   c.file.header_depth       = 2
   c.file.sub_header_depth   = 3
-  c.file.current_header     = 'Today'
-  c.file.previous_header    = 'Yesterday'
-  c.file.impediments_header = 'Hold-ups'
-  c.file.bullet_character   = '*'
-  c.file.header_date_format = '%m/%d/%Y'
+  c.file.current_header     = "Today"
+  c.file.previous_header    = "Yesterday"
+  c.file.impediments_header = "Hold-ups"
+  c.file.bullet_character   = "*"
+  c.file.header_date_format = "%m/%d/%Y"
   c.file.sub_header_order   = %w[current previous impediments notes]
 end
 ```
@@ -270,14 +279,14 @@ new entry via code could look like the following:
 ### API Examples
 #### Adding an entry for today
 ```ruby
-require 'standup_md'
+require "standup_md"
 
 StandupMD.configure do |c|
-  c.file.current_header = 'Today',
+  c.file.current_header = "Today",
 end
 
 file = StandupMD::File.find_by_date(Date.today)
-entry = StandupMD::Entry.create { |e| e.current = ['Stuff I will do today'] }
+entry = StandupMD::Entry.create { |e| e.current = ["Stuff I will do today"] }
 file.entries << entry
 file.write
 ```
@@ -286,11 +295,11 @@ The above example was written as such to show how the different pieces of the
 API fit together. The code can actually be simplified to the following.
 
 ```ruby
-require 'standup_md'
+require "standup_md"
 
 StandupMD.configure do |c|
-  c.file.current_header = 'Today',
-  c.entry.current = ['Stuff I will do today']
+  c.file.current_header = "Today",
+  c.entry.current = ["Stuff I will do today"]
 end
 
 StandupMD::File.find_by_date(Date.today).load.write
@@ -298,7 +307,7 @@ StandupMD::File.find_by_date(Date.today).load.write
 
 #### Finding a past entry
 ```ruby
-require 'standup_md'
+require "standup_md"
 
 date = Date.new(2020, 04, 15)
 file = StandupMD::File.find_by_date(date).load
