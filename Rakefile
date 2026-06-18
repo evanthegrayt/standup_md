@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "lib/standup_md"
+$LOAD_PATH.unshift(File.expand_path("lib", __dir__))
+
+require "standup_md"
 require "bundler/gem_tasks"
 require "rdoc/task"
 require "rake/testtask"

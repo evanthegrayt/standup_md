@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "optparse"
-require_relative "cli/helpers"
+require "standup_md/cli/helpers"
 
 module StandupMD
   ##
@@ -87,7 +87,7 @@ module StandupMD
     ##
     # Has the preference file been loaded?
     #
-    # @return boolean
+    # @return [boolean]
     def preference_file_loaded?
       @preference_file_loaded
     end
@@ -111,7 +111,7 @@ module StandupMD
     end
 
     ##
-    # Quick access to Cli.echo.
+    # Quick access to +Cli.echo+.
     #
     # @return [nil]
     def echo(msg)

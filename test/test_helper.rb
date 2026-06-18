@@ -7,7 +7,11 @@ require "yaml"
 require "test/unit"
 require "fileutils"
 
+$LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
+
 SimpleCov.start { add_filter %r{^/test/} }
+
+require "standup_md"
 
 ORIGINAL_STDOUT = $stdout
 
