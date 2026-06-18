@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "config/cli"
-require_relative "config/file"
-require_relative "config/entry"
-require_relative "config/entry_list"
+require "standup_md/config/cli"
+require "standup_md/config/file"
+require "standup_md/config/entry"
+require "standup_md/config/entry_list"
 
 module StandupMD
   ##

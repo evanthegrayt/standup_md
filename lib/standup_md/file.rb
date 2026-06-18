@@ -2,7 +2,7 @@
 
 require "date"
 require "fileutils"
-require_relative "file/helpers"
+require "standup_md/file/helpers"
 
 module StandupMD
   ##
