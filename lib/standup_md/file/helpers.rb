@@ -16,11 +16,11 @@ module StandupMD
       end
 
       def header_regex # :nodoc:
-        /^#{'#' * StandupMD.config.file.header_depth}\s+/
+        /^#{"#" * StandupMD.config.file.header_depth}\s+/
       end
 
       def sub_header_regex # :nodoc:
-        /^#{'#' * StandupMD.config.file.sub_header_depth}\s+/
+        /^#{"#" * StandupMD.config.file.sub_header_depth}\s+/
       end
 
       def bullet_character_regex # :nodoc:
@@ -28,7 +28,7 @@ module StandupMD
       end
 
       def determine_section_type(line) # :nodoc:
-        line = line.sub(/^\#{#{StandupMD.config.file.sub_header_depth}}\s*/, '')
+        line = line.sub(/^\#{#{StandupMD.config.file.sub_header_depth}}\s*/, "")
         [
           StandupMD.config.file.current_header,
           StandupMD.config.file.previous_header,
@@ -41,7 +41,7 @@ module StandupMD
       def new_entry(record) # :nodoc:
         Entry.new(
           Date.strptime(
-            record['header'],
+            record["header"],
             StandupMD.config.file.header_date_format
           ),
           record[StandupMD.config.file.current_header],
@@ -52,13 +52,13 @@ module StandupMD
       end
 
       def header(date)
-        '#' * StandupMD.config.file.header_depth +
-          ' ' +
+        "#" * StandupMD.config.file.header_depth +
+          " " +
           date.strftime(StandupMD.config.file.header_date_format)
       end
 
       def sub_header(subhead)
-        '#' * StandupMD.config.file.sub_header_depth + ' ' + subhead
+        "#" * StandupMD.config.file.sub_header_depth + " " + subhead
       end
     end
   end

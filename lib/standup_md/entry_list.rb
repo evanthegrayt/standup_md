@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'forwardable'
+require "forwardable"
 
 module StandupMD
   ##
@@ -115,10 +115,10 @@ module StandupMD
         [
           e.date,
           {
-            'current' => e.current,
-            'previous' => e.previous,
-            'impediments' => e.impediments,
-            'notes' => e.notes
+            "current" => e.current,
+            "previous" => e.previous,
+            "impediments" => e.impediments,
+            "notes" => e.notes
           }
         ]
       end.to_h
@@ -154,7 +154,7 @@ module StandupMD
     def validate_entry(entry)
       return if entry.is_a?(StandupMD::Entry)
 
-      raise ArgumentError, 'Entry must be an instance of StandupMD::Entry'
+      raise ArgumentError, "Entry must be an instance of StandupMD::Entry"
     end
   end
 end

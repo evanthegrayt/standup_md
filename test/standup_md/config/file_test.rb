@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../test_helper'
-require_relative '../../../lib/standup_md'
+require_relative "../../test_helper"
+require_relative "../../../lib/standup_md"
 
 class TestFileConfig < TestHelper
   def setup
@@ -17,10 +17,10 @@ class TestFileConfig < TestHelper
   end
 
   def test_bullet_character
-    assert_equal('-', StandupMD.config.file.bullet_character)
-    assert_nothing_raised { StandupMD.config.file.bullet_character = '*' }
-    assert_equal('*', StandupMD.config.file.bullet_character)
-    assert_raise { StandupMD.config.file.bullet_character = '>' }
+    assert_equal("-", StandupMD.config.file.bullet_character)
+    assert_nothing_raised { StandupMD.config.file.bullet_character = "*" }
+    assert_equal("*", StandupMD.config.file.bullet_character)
+    assert_raise { StandupMD.config.file.bullet_character = ">" }
   end
 
   def test_header_depth
@@ -47,32 +47,32 @@ class TestFileConfig < TestHelper
   end
 
   def test_name_format
-    assert_equal('%Y_%m.md', StandupMD.config.file.name_format)
-    assert_nothing_raised { StandupMD.config.file.name_format = '%y_%m.markdown' }
-    assert_equal('%y_%m.markdown', StandupMD.config.file.name_format)
+    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
+    assert_nothing_raised { StandupMD.config.file.name_format = "%y_%m.markdown" }
+    assert_equal("%y_%m.markdown", StandupMD.config.file.name_format)
   end
 
   def test_current_header
-    assert_equal('Current', StandupMD.config.file.current_header)
-    assert_nothing_raised { StandupMD.config.file.current_header = 'Today' }
-    assert_equal('Today', StandupMD.config.file.current_header)
+    assert_equal("Current", StandupMD.config.file.current_header)
+    assert_nothing_raised { StandupMD.config.file.current_header = "Today" }
+    assert_equal("Today", StandupMD.config.file.current_header)
   end
 
   def test_previous_header
-    assert_equal('Previous', StandupMD.config.file.previous_header)
-    assert_nothing_raised { StandupMD.config.file.previous_header = 'Yesterday' }
-    assert_equal('Yesterday', StandupMD.config.file.previous_header)
+    assert_equal("Previous", StandupMD.config.file.previous_header)
+    assert_nothing_raised { StandupMD.config.file.previous_header = "Yesterday" }
+    assert_equal("Yesterday", StandupMD.config.file.previous_header)
   end
 
   def test_impediments_header
-    assert_equal('Impediments', StandupMD.config.file.impediments_header)
-    assert_nothing_raised { StandupMD.config.file.impediments_header = 'Hold Ups' }
-    assert_equal('Hold Ups', StandupMD.config.file.impediments_header)
+    assert_equal("Impediments", StandupMD.config.file.impediments_header)
+    assert_nothing_raised { StandupMD.config.file.impediments_header = "Hold Ups" }
+    assert_equal("Hold Ups", StandupMD.config.file.impediments_header)
   end
 
   def test_notes_header
-    assert_equal('Notes', StandupMD.config.file.notes_header)
-    assert_nothing_raised { StandupMD.config.file.notes_header = 'Remember' }
-    assert_equal('Remember', StandupMD.config.file.notes_header)
+    assert_equal("Notes", StandupMD.config.file.notes_header)
+    assert_nothing_raised { StandupMD.config.file.notes_header = "Remember" }
+    assert_equal("Remember", StandupMD.config.file.notes_header)
   end
 end

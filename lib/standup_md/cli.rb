@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'optparse'
-require_relative 'cli/helpers'
+require "optparse"
+require_relative "cli/helpers"
 
 module StandupMD
   ##

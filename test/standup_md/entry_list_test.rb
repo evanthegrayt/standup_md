@@ -1,37 +1,37 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-require_relative '../../lib/standup_md'
+require_relative "../test_helper"
+require_relative "../../lib/standup_md"
 
 class TestEntryList < TestHelper
   def setup
     super
     @entry_one = StandupMD::Entry.new(
       Date.today.prev_day.prev_day,
-      ['Current task'],
-      ['Previous task'],
-      ['Impediment']
+      ["Current task"],
+      ["Previous task"],
+      ["Impediment"]
     )
     @entry_two = StandupMD::Entry.new(
       Date.today.prev_day,
-      ['Current task'],
-      ['Previous task'],
-      ['Impediment'],
-      ['Notes']
+      ["Current task"],
+      ["Previous task"],
+      ["Impediment"],
+      ["Notes"]
     )
     @entry_three = StandupMD::Entry.new(
       Date.today,
-      ['Current task'],
-      ['Previous task'],
-      ['Impediment'],
-      ['Notes']
+      ["Current task"],
+      ["Previous task"],
+      ["Impediment"],
+      ["Notes"]
     )
     @entry_list = StandupMD::EntryList.new(@entry_one)
   end
 
   def test_initialize
     assert_nothing_raised { StandupMD::EntryList.new(@entry_one, @entry_two) }
-    assert_raise { StandupMD::EntryList.new('string') }
+    assert_raise { StandupMD::EntryList.new("string") }
   end
 
   def test_each
@@ -104,10 +104,10 @@ class TestEntryList < TestHelper
     assert_equal(
       {
         Date.today.prev_day.prev_day => {
-          'current' => ['Current task'],
-          'previous' => ['Previous task'],
-          'impediments' => %w[Impediment],
-          'notes' => []
+          "current" => ["Current task"],
+          "previous" => ["Previous task"],
+          "impediments" => %w[Impediment],
+          "notes" => []
         }
       },
       @entry_list.to_h

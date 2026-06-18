@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'config/cli'
-require_relative 'config/file'
-require_relative 'config/entry'
-require_relative 'config/entry_list'
+require_relative "config/cli"
+require_relative "config/file"
+require_relative "config/entry"
+require_relative "config/entry_list"
 
 module StandupMD
   ##
@@ -36,9 +36,9 @@ module StandupMD
     ##
     # Builds the links to the configuration classes.
     def initialize
-      @cli        = StandupMD::Config::Cli.new
-      @file       = StandupMD::Config::File.new
-      @entry      = StandupMD::Config::Entry.new
+      @cli = StandupMD::Config::Cli.new
+      @file = StandupMD::Config::File.new
+      @entry = StandupMD::Config::Entry.new
       @entry_list = StandupMD::Config::EntryList.new
     end
   end

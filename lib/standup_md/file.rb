@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'fileutils'
-require_relative 'file/helpers'
+require "date"
+require "fileutils"
+require_relative "file/helpers"
 
 module StandupMD
   ##
@@ -55,7 +55,7 @@ module StandupMD
       #
       # @param [Date] date
       def find_by_date(date)
-        raise ArgumentError, 'Must be a Date object' unless date.is_a?(Date)
+        raise ArgumentError, "Must be a Date object" unless date.is_a?(Date)
 
         unless ::File.directory?(config.directory)
           raise "Dir #{config.directory} not found." unless config.create
@@ -143,7 +143,7 @@ module StandupMD
 
       entry_list = EntryList.new
       record = {}
-      section_type = ''
+      section_type = ""
       ::File.foreach(name) do |line|
         line.chomp!
         next if line.strip.empty?
@@ -153,14 +153,14 @@ module StandupMD
             entry_list << new_entry(record)
             record = {}
           end
-          record['header'] = line.sub(/^\#{#{@config.header_depth}}\s*/, '')
+          record["header"] = line.sub(/^\#{#{@config.header_depth}}\s*/, "")
           section_type = @config.notes_header
           record[section_type] = []
         elsif sub_header?(line)
           section_type = determine_section_type(line)
           record[section_type] = []
         else
-          record[section_type] << line.sub(bullet_character_regex, '')
+          record[section_type] << line.sub(bullet_character_regex, "")
         end
       end
       entry_list << new_entry(record) unless record.empty?
@@ -183,7 +183,7 @@ module StandupMD
       sorted_entries = entries.sort
       start_date = dates.fetch(:start_date, sorted_entries.first.date)
       end_date = dates.fetch(:end_date, sorted_entries.last.date)
-      ::File.open(name, 'w') do |f|
+      ::File.open(name, "w") do |f|
         sorted_entries.filter(start_date, end_date).sort_reverse.each do |entry|
           f.puts header(entry.date)
           @config.sub_header_order.each do |attr|

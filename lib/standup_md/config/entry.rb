@@ -12,7 +12,7 @@ module StandupMD
       DEFAULTS = {
         current: ["<!-- ADD TODAY'S WORK HERE -->"],
         previous: [],
-        impediments: ['None'],
+        impediments: ["None"],
         notes: []
       }.freeze
 

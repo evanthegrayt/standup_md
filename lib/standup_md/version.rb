@@ -36,7 +36,7 @@ module StandupMD
     #
     # @return [String]
     def self.to_s
-      to_a.join('.')
+      to_a.join(".")
     end
 
     ##
@@ -44,7 +44,7 @@ module StandupMD
     #
     # @return [Hash]
     def self.to_h
-      Hash[%i[major minor patch].zip(to_a)]
+      %i[major minor patch].zip(to_a).to_h
     end
   end
 

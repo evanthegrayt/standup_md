@@ -10,17 +10,17 @@ module StandupMD
       #
       # @return [Hash]
       DEFAULTS = {
-        header_date_format: '%Y-%m-%d',
+        header_date_format: "%Y-%m-%d",
         header_depth: 1,
         sub_header_depth: 2,
-        current_header: 'Current',
-        previous_header: 'Previous',
-        impediments_header: 'Impediments',
-        notes_header: 'Notes',
+        current_header: "Current",
+        previous_header: "Previous",
+        impediments_header: "Impediments",
+        notes_header: "Notes",
         sub_header_order: %w[previous current impediments notes],
-        directory: ::File.join(ENV['HOME'], '.cache', 'standup_md'),
-        bullet_character: '-',
-        name_format: '%Y_%m.md',
+        directory: ::File.join(ENV["HOME"], ".cache", "standup_md"),
+        bullet_character: "-",
+        name_format: "%Y_%m.md",
         create: true
       }.freeze
 
@@ -154,7 +154,7 @@ module StandupMD
       #
       # @return [Integer]
       def header_depth=(depth)
-        raise 'Header depth out of bounds (1..5)' if !depth.between?(1, 5)
+        raise "Header depth out of bounds (1..5)" if !depth.between?(1, 5)
 
         @sub_header_depth = depth + 1 if depth >= sub_header_depth
         @header_depth = depth
@@ -168,7 +168,7 @@ module StandupMD
       #
       # @return [Integer]
       def sub_header_depth=(depth)
-        raise 'Sub-header depth out of bounds (2..6)' if !depth.between?(2, 6)
+        raise "Sub-header depth out of bounds (2..6)" if !depth.between?(2, 6)
 
         @header_depth = depth - 1 if depth <= header_depth
         @sub_header_depth = depth
