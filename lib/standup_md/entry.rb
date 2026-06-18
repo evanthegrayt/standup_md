@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'json'
+require "json"
 
 module StandupMD
   ##
@@ -100,10 +100,10 @@ module StandupMD
     def to_h
       {
         date => {
-          'current' => current,
-          'previous' => previous,
-          'impediments' => impediments,
-          'notes' => notes
+          "current" => current,
+          "previous" => previous,
+          "impediments" => impediments,
+          "notes" => notes
         }
       }
     end

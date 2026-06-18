@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../test_helper'
-require_relative '../../../lib/standup_md'
+require_relative "../../test_helper"
+require_relative "../../../lib/standup_md"
 
 class TestCliConfig < TestHelper
   def setup
@@ -10,23 +10,23 @@ class TestCliConfig < TestHelper
   end
 
   def test_reset
-    StandupMD.config.cli.editor = 'mate'
-    assert_equal('mate', StandupMD.config.cli.editor)
-    ENV['VISUAL'] = 'vim'
+    StandupMD.config.cli.editor = "mate"
+    assert_equal("mate", StandupMD.config.cli.editor)
+    ENV["VISUAL"] = "vim"
     assert(StandupMD.config.cli.reset)
-    assert_equal('vim', StandupMD.config.cli.editor)
+    assert_equal("vim", StandupMD.config.cli.editor)
   end
 
   def test_editor
-    if ENV['VISUAL']
-      assert_equal(ENV['VISUAL'], StandupMD.config.cli.editor)
-    elsif ENV['EDITOR']
-      assert_equal(ENV['EDITOR'], StandupMD.config.cli.editor)
+    if ENV["VISUAL"]
+      assert_equal(ENV["VISUAL"], StandupMD.config.cli.editor)
+    elsif ENV["EDITOR"]
+      assert_equal(ENV["EDITOR"], StandupMD.config.cli.editor)
     else
-      assert_equal('vim', StandupMD.config.cli.editor)
+      assert_equal("vim", StandupMD.config.cli.editor)
     end
-    assert_nothing_raised { StandupMD.config.cli.editor = 'mate' }
-    assert_equal('mate', StandupMD.config.cli.editor)
+    assert_nothing_raised { StandupMD.config.cli.editor = "mate" }
+    assert_equal("mate", StandupMD.config.cli.editor)
   end
 
   def test_verbose

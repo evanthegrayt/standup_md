@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-require_relative '../../lib/standup_md'
+require_relative "../test_helper"
+require_relative "../../lib/standup_md"
 
 ##
 # The test suite for +Cli+.
@@ -14,10 +14,10 @@ class TestCli < TestHelper
     StandupMD.config.entry.reset
     StandupMD.config.entry_list.reset
     StandupMD.config.cli.preference_file = test_config_file_name
-    StandupMD.instance_variable_set('@config_file_loaded', false)
+    StandupMD.instance_variable_set(:@config_file_loaded, false)
     @previous_month_test_file =
-      File.join(workdir, Date.today.prev_month.strftime('%Y_%m.md'))
-    @options = ['--no-edit', '--no-write', '--directory', workdir.to_s]
+      File.join(workdir, Date.today.prev_month.strftime("%Y_%m.md"))
+    @options = ["--no-edit", "--no-write", "--directory", workdir.to_s]
   end
 
   def teardown
@@ -83,7 +83,7 @@ class TestCli < TestHelper
     cli(@options)
     refute(StandupMD.config.cli.verbose)
 
-    cli(['--directory', workdir.to_s, '-v'] + @options)
+    cli(["--directory", workdir.to_s, "-v"] + @options)
     assert(StandupMD.config.cli.verbose)
   end
 
@@ -91,7 +91,7 @@ class TestCli < TestHelper
     cli(@options)
     refute(StandupMD.config.cli.write)
 
-    cli(['--directory', workdir.to_s, '--write'] + @options)
+    cli(["--directory", workdir.to_s, "--write"] + @options)
     assert(StandupMD.config.cli.write)
   end
 
@@ -99,7 +99,7 @@ class TestCli < TestHelper
     assert(StandupMD.config.cli.auto_fill_previous)
     cli(@options)
 
-    cli(['--no-auto-fill-previous'] + @options)
+    cli(["--no-auto-fill-previous"] + @options)
     refute(StandupMD.config.cli.auto_fill_previous)
   end
 
@@ -109,43 +109,43 @@ class TestCli < TestHelper
   end
 
   def test_current
-    cli(['--directory', workdir.to_s])
+    cli(["--directory", workdir.to_s])
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
 
-    cli(['--current', 'test', '--directory', workdir.to_s])
+    cli(["--current", "test", "--directory", workdir.to_s])
     assert_equal(%w[test], StandupMD.config.entry.current)
   end
 
   def test_previous
-    cli(['--directory', workdir.to_s])
+    cli(["--directory", workdir.to_s])
     assert_equal([], StandupMD.config.entry.previous)
 
-    cli(['--previous', 'test', '--directory', workdir.to_s])
+    cli(["--previous", "test", "--directory", workdir.to_s])
     assert_equal(%w[test], StandupMD.config.entry.previous)
   end
 
   def test_impediments
-    cli(['--directory', workdir.to_s])
-    assert_equal(['None'], StandupMD.config.entry.impediments)
+    cli(["--directory", workdir.to_s])
+    assert_equal(["None"], StandupMD.config.entry.impediments)
 
-    cli(['--impediments', 'test', '--directory', workdir.to_s])
+    cli(["--impediments", "test", "--directory", workdir.to_s])
     assert_equal(%w[test], StandupMD.config.entry.impediments)
   end
 
   def test_notes
-    cli(['--directory', workdir.to_s])
+    cli(["--directory", workdir.to_s])
     assert_equal([], StandupMD.config.entry.notes)
 
-    cli(['--notes', 'test', '--directory', workdir.to_s])
+    cli(["--notes", "test", "--directory", workdir.to_s])
     assert_equal(%w[test], StandupMD.config.entry.notes)
   end
 
   def test_sub_header_order
-    cli(['--directory', workdir.to_s])
+    cli(["--directory", workdir.to_s])
     assert_equal(%w[previous current impediments notes], StandupMD.config.file.sub_header_order)
 
     cli(
-      ['--sub-header-order', 'current,previous,notes,impediments', '--directory', workdir.to_s],
+      ["--sub-header-order", "current,previous,notes,impediments", "--directory", workdir.to_s],
       load_config: false
     )
     assert_equal(
@@ -155,37 +155,37 @@ class TestCli < TestHelper
   end
 
   def test_file_name_format
-    cli(['--directory', workdir.to_s], load_config: false)
-    assert_equal('%Y_%m.md', StandupMD.config.file.name_format)
+    cli(["--directory", workdir.to_s], load_config: false)
+    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
 
-    cli(['--file-name-format', '%y_%m.md', '--directory', workdir.to_s])
-    assert_equal('%y_%m.md', StandupMD.config.file.name_format)
+    cli(["--file-name-format", "%y_%m.md", "--directory", workdir.to_s])
+    assert_equal("%y_%m.md", StandupMD.config.file.name_format)
   end
 
   def test_editor
-    ENV['VISUAL'] = 'vim'
-    cli(['--directory', workdir.to_s])
-    assert_equal('vim', StandupMD.config.cli.editor)
+    ENV["VISUAL"] = "vim"
+    cli(["--directory", workdir.to_s])
+    assert_equal("vim", StandupMD.config.cli.editor)
 
-    cli(['--editor', 'mate', '--directory', workdir.to_s])
-    assert_equal('mate', StandupMD.config.cli.editor)
+    cli(["--editor", "mate", "--directory", workdir.to_s])
+    assert_equal("mate", StandupMD.config.cli.editor)
   end
 
   def test_print
     enable_stdout_redirection
 
-    cli(['--directory', workdir.to_s])
+    cli(["--directory", workdir.to_s])
     refute(StandupMD.config.cli.print)
 
-    cli(['--print', '--directory', workdir.to_s])
+    cli(["--print", "--directory", workdir.to_s])
     assert(StandupMD.config.cli.print)
     assert_equal(Date.today, StandupMD.config.cli.date)
 
     cli(
       [
-        '--print',
-        '--directory', workdir.to_s,
-        '--print', Date.today.prev_day.strftime(StandupMD.config.file.header_date_format).to_s
+        "--print",
+        "--directory", workdir.to_s,
+        "--print", Date.today.prev_day.strftime(StandupMD.config.file.header_date_format).to_s
       ]
     )
     assert(StandupMD.config.cli.print)

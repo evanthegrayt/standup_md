@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'date'
+require "date"
 
 module StandupMD
   class Config
@@ -13,14 +13,14 @@ module StandupMD
       # @return [Hash]
       DEFAULTS = {
         date: Date.today,
-        editor: ENV['VISUAL'] || ENV['EDITOR'] || 'vim',
+        editor: ENV["VISUAL"] || ENV["EDITOR"] || "vim",
         verbose: false,
         edit: true,
         write: true,
         print: false,
         auto_fill_previous: true,
         preference_file: ::File.expand_path(
-          ::File.join(ENV['HOME'], '.standuprc')
+          ::File.join(ENV["HOME"], ".standuprc")
         )
       }.freeze
 

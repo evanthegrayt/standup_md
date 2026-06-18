@@ -42,73 +42,73 @@ module StandupMD
       # @return [Hash]
       def load_runtime_preferences(options)
         OptionParser.new do |opts|
-          opts.banner = 'The Standup Doctor'
+          opts.banner = "The Standup Doctor"
           opts.version = "[StandupMD] #{::StandupMD::Version}"
           opts.on(
-            '--current ARRAY', Array,
+            "--current ARRAY", Array,
             "List of current entry's tasks"
           ) { |v| config.entry.current = v }
 
           opts.on(
-            '--previous ARRAY', Array,
+            "--previous ARRAY", Array,
             "List of precious entry's tasks"
           ) { |v| config.entry.previous = v }
 
           opts.on(
-            '--impediments ARRAY', Array,
-            'List of impediments for current entry'
+            "--impediments ARRAY", Array,
+            "List of impediments for current entry"
           ) { |v| config.entry.impediments = v }
 
           opts.on(
-            '--notes ARRAY', Array,
-            'List of notes for current entry'
+            "--notes ARRAY", Array,
+            "List of notes for current entry"
           ) { |v| config.entry.notes = v }
 
           opts.on(
-            '--sub-header-order ARRAY', Array,
-            'The order of the sub-headers when writing the file'
+            "--sub-header-order ARRAY", Array,
+            "The order of the sub-headers when writing the file"
           ) { |v| config.file.sub_header_order = v }
 
           opts.on(
-            '-f', '--file-name-format STRING',
-            'Date-formattable string to use for standup file name'
+            "-f", "--file-name-format STRING",
+            "Date-formattable string to use for standup file name"
           ) { |v| config.file.name_format = v }
 
           opts.on(
-            '-E', '--editor EDITOR',
-            'Editor to use for opening standup files'
+            "-E", "--editor EDITOR",
+            "Editor to use for opening standup files"
           ) { |v| config.cli.editor = v }
 
           opts.on(
-            '-d', '--directory DIRECTORY',
-            'The directories where standup files are located'
+            "-d", "--directory DIRECTORY",
+            "The directories where standup files are located"
           ) { |v| config.file.directory = v }
 
           opts.on(
-            '-w', '--[no-]write',
+            "-w", "--[no-]write",
             "Write current entry if it doesn't exist. Default is true"
           ) { |v| config.cli.write = v }
 
           opts.on(
-            '-a', '--[no-]auto-fill-previous',
+            "-a", "--[no-]auto-fill-previous",
             "Auto-generate 'previous' tasks for new entries. Default is true"
           ) { |v| config.cli.auto_fill_previous = v }
 
           opts.on(
-            '-e', '--[no-]edit',
-            'Open the file in the editor. Default is true'
+            "-e", "--[no-]edit",
+            "Open the file in the editor. Default is true"
           ) { |v| config.cli.edit = v }
 
           opts.on(
-            '-v', '--[no-]verbose',
-            'Verbose output. Default is false.'
+            "-v", "--[no-]verbose",
+            "Verbose output. Default is false."
           ) { |v| config.cli.verbose = v }
 
           opts.on(
-            '-p', '--print [DATE]',
-            'Print current entry.',
-            'If DATE is passed, will print entry for DATE, if it exists.',
-            'DATE must be in the same format as file-name-format'
+            "-p", "--print [DATE]",
+            "Print current entry.",
+            "If DATE is passed, will print entry for DATE, if it exists.",
+            "DATE must be in the same format as file-name-format"
           ) do |v|
             config.cli.print = true
             config.cli.date =
@@ -170,7 +170,7 @@ module StandupMD
       #
       # @return [String]
       def header(entry)
-        '#' * config.file.header_depth + ' ' +
+        "#" * config.file.header_depth + " " +
           entry.date.strftime(config.file.header_date_format)
       end
 
@@ -181,7 +181,7 @@ module StandupMD
       #
       # @return [String]
       def sub_header(header_type)
-        '#' * config.file.sub_header_depth + ' ' +
+        "#" * config.file.sub_header_depth + " " +
           config.file.public_send("#{header_type}_header").capitalize
       end
     end

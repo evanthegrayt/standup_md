@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-require_relative '../../lib/standup_md'
+require_relative "../test_helper"
+require_relative "../../lib/standup_md"
 
 class TestFile < TestHelper
   def setup
     super
     StandupMD.config.file.reset
     StandupMD.config.file.directory = workdir
-    @previous_month_test_file = Date.today.prev_month.strftime('%Y_%m.md')
+    @previous_month_test_file = Date.today.prev_month.strftime("%Y_%m.md")
     create_standup_file(test_file_name)
     @file = StandupMD::File.new(::File.basename(test_file_name))
   end
@@ -40,13 +40,13 @@ class TestFile < TestHelper
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
     StandupMD.config.file.create = false
-    assert_raise { StandupMD::File.find('noexist') }
+    assert_raise { StandupMD::File.find("noexist") }
     StandupMD.config.file.create = true
-    assert_nothing_raised { StandupMD::File.find('noexist') }
+    assert_nothing_raised { StandupMD::File.find("noexist") }
   end
 
   def test_find_by_date
-    assert_raise { StandupMD::File.find_by_date(fixtures['today_date']) }
+    assert_raise { StandupMD::File.find_by_date(fixtures["today_date"]) }
     file = StandupMD::File.find_by_date(Date.today)
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
@@ -75,7 +75,7 @@ class TestFile < TestHelper
     entry_list = file.entries
     assert_instance_of(StandupMD::EntryList, entry_list)
     assert_equal(2, entry_list.size)
-    StandupMD.config.file.current_header = 'Today'
+    StandupMD.config.file.current_header = "Today"
     assert_raise { @file.load }
   end
 
