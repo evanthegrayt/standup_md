@@ -44,8 +44,10 @@ module StandupMD
 
           FileUtils.mkdir_p(config.directory)
         end
-        file = Dir.entries(config.directory).bsearch { |f| f == file_name }
-        raise "File #{file_name} not found." if file.nil? && !config.create
+        file_path = ::File.join(config.directory, file_name)
+        unless ::File.file?(file_path) || config.create
+          raise "File #{file_name} not found."
+        end
 
         new(file_name)
       end

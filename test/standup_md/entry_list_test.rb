@@ -52,6 +52,23 @@ class TestEntryList < TestHelper
     assert_equal(@entry_one, @entry_list.find(@entry_one.date))
   end
 
+  def test_find_searches_all_sorted_entries
+    start_date = Date.new(2020, 1, 1)
+    entries = (0...10).map do |days|
+      StandupMD::Entry.new(
+        start_date + days,
+        ["Current task #{days}"],
+        ["Previous task"],
+        ["Impediment"]
+      )
+    end
+    entry_list = StandupMD::EntryList.new(*entries).sort
+
+    entries.each do |entry|
+      assert_equal(entry, entry_list.find(entry.date))
+    end
+  end
+
   def test_sort
     s = StandupMD::EntryList.new(@entry_two, @entry_one)
     assert_equal([@entry_one, @entry_two], s.sort.to_a)

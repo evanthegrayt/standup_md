@@ -50,7 +50,7 @@ module StandupMD
     #
     # @return [StandupMD::Entry]
     def find(date)
-      entries.bsearch { |e| e.date == date }
+      entries.bsearch { |entry| date <=> entry.date }
     end
 
     ##
