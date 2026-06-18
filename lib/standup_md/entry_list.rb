@@ -71,7 +71,7 @@ module StandupMD
     end
 
     ##
-    # Returns a copy of self sorted by date.
+    # Returns a copy of self sorted by date, reversed.
     #
     # @return [StandupMD::EntryList]
     def sort_reverse
