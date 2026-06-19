@@ -21,7 +21,7 @@ module StandupMD
     # Patch version.
     #
     # @return [Integer]
-    PATCH = 15
+    PATCH = 16
 
     ##
     # Version as +[MAJOR, MINOR, PATCH]+

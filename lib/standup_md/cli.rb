@@ -29,7 +29,7 @@ module StandupMD
     # Creates an instance of +StandupMD+ and runs what the user requested.
     def self.execute(options = [])
       new(options).tap do |exe|
-        exe.write_file if config.write
+        exe.write_file if exe.write?
         if config.print
           exe.print(exe.entry)
         elsif config.edit
@@ -57,18 +57,27 @@ module StandupMD
     attr_reader :file
 
     ##
+    # Was a file date argument passed?
+    #
+    # @return [Boolean]
+    def file_date_argument?
+      @file_date_argument
+    end
+
+    ##
     # Constructor. Sets defaults.
     #
     # @param [Array] options
     def initialize(options = [], load_config: true)
       @config = self.class.config
       @preference_file_loaded = false
+      @file_date_argument = false
       @options = options
       load_preferences if load_config
       load_runtime_preferences(options)
-      @file = StandupMD::File.find_by_date(@config.date)
-      @file.load
-      @entry = new_entry(@file)
+      @file = find_file
+      @file&.load
+      @entry = @file.nil? ? nil : new_entry(@file)
     end
 
     ##
@@ -111,11 +120,55 @@ module StandupMD
     end
 
     ##
+    # Should the file be written?
+    #
+    # @return [Boolean]
+    def write?
+      !!(@config.write && !read_only? && entry)
+    end
+
+    ##
     # Quick access to +Cli.echo+.
     #
     # @return [nil]
     def echo(msg)
       self.class.echo(msg)
+    end
+
+    private
+
+    ##
+    # Is this a read-only action?
+    #
+    # @return [Boolean]
+    def read_only?
+      @config.print || file_date_argument?
+    end
+
+    ##
+    # Finds the file, avoiding file creation for read-only actions.
+    #
+    # @return [StandupMD::File, nil]
+    def find_file
+      return StandupMD::File.find_by_date(@config.date) unless read_only?
+
+      without_file_creation { StandupMD::File.find_by_date(@config.date) }
+    rescue
+      raise unless @config.print
+
+      nil
+    end
+
+    ##
+    # Temporarily disables file creation while looking for a file.
+    #
+    # @return [StandupMD::File]
+    def without_file_creation
+      original_create = config.file.create
+      config.file.create = false
+      yield
+    ensure
+      config.file.create = original_create
     end
   end
 end

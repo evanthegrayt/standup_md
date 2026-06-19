@@ -115,6 +115,11 @@ module StandupMD
               v.nil? ? Date.today : Date.strptime(v, config.file.header_date_format)
           end
         end.parse!(options)
+        unless options.empty?
+          @file_date_argument = true
+          config.cli.date = parse_file_date(options.shift)
+        end
+        raise OptionParser::InvalidArgument, options.join(" ") unless options.empty?
       end
 
       ##
@@ -123,7 +128,7 @@ module StandupMD
       # @return [StandupMD::Entry]
       def new_entry(file)
         entry = file.entries.find(config.cli.date)
-        return entry unless entry.nil? && config.cli.date == Date.today
+        return entry if read_only? || entry || config.cli.date != Date.today
 
         StandupMD::Entry.new(
           config.cli.date,
@@ -143,6 +148,25 @@ module StandupMD
         return prev_entry(prev_file.load.entries) if file.new? && prev_file
 
         prev_entry(file.entries)
+      end
+
+      ##
+      # Parses the optional file date argument.
+      #
+      # @param [String] value
+      #
+      # @return [Date]
+      def parse_file_date(value)
+        case value
+        when /\A\d{4}-\d{2}-\d{2}\z/
+          Date.strptime(value, "%Y-%m-%d")
+        when /\A\d{4}-\d{2}\z/
+          Date.strptime(value, "%Y-%m")
+        else
+          raise OptionParser::InvalidArgument, value
+        end
+      rescue ArgumentError
+        raise OptionParser::InvalidArgument, value
       end
 
       ##
