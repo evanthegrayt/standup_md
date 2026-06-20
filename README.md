@@ -151,16 +151,7 @@ You'll notice, a lot of settings don't have the ability to be changed at runtime
 when calling the executable. This is because the file structure is very
 important, and changing values that affect formatting will cause problems with
 the file parser. If you don't want to use a default, make the change in your
-config file before you start editing standups. There is an [open
-issue](https://github.com/evanthegrayt/standup_md/issues/16) for handling this
-for the user, but they're not available yet.
-
-There are no options to change the headers at runtime because it uses the
-headers to detect tasks from previous entries. If changed at runtime, this would
-cause errors. For this reason, if you don't like the default headers, change
-them in your configuration file after installation, and then try to not change
-them again.
-
+config file before you start editing standups.
 
 #### Available Config File Options and Defaults
 For command-line usage, this file needs to be named `~/.standuprc`. To use in a
