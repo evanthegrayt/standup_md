@@ -62,6 +62,7 @@ _arguments -s -S \
   '--impediments[List of impediments for current entry]:impediments:_standup_array_values' \
   '--notes[List of notes for current entry]:notes:_standup_array_values' \
   '--sub-header-order[The order of the sub-headers when writing the file]:sub-header order:_standup_sub_header_order' \
+  '--indent-width[Number of spaces used for each nested task level]:indent width:' \
   '(-f --file-name-format)-f[Date-formattable string to use for standup file name]:strftime format:' \
   '(-f --file-name-format)--file-name-format[Date-formattable string to use for standup file name]:strftime format:' \
   '(-E --editor)-E[Editor to use for opening standup files]:editor:_path_commands' \

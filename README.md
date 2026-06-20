@@ -180,6 +180,7 @@ StandupMD.configure do |c|
   c.file.sub_header_order   = %w[previous current impediments notes]
   c.file.directory          = ::File.join(ENV["HOME"], ".cache", "standup_md")
   c.file.bullet_character   = "-"
+  c.file.indent_width       = 2
   c.file.name_format        = "%Y_%m.md"
   c.file.create             = true
 
@@ -218,6 +219,7 @@ Some of these options can be changed at runtime. They are as follows.
     --impediments ARRAY        List of impediments for current entry
     --notes ARRAY              List of notes for current entry
     --sub-header-order ARRAY   The order of the sub-headers when writing the file
+    --indent-width INTEGER     Number of spaces used for each nested task level
 -f, --file-name-format STRING  Date-formattable string to use for standup file name
 -E, --editor EDITOR            Editor to use for opening standup files
 -d, --directory DIRECTORY      The directories where standup files are located
@@ -275,6 +277,7 @@ StandupMD.configure do |c|
   c.file.previous_header    = "Yesterday"
   c.file.impediments_header = "Hold-ups"
   c.file.bullet_character   = "*"
+  c.file.indent_width       = 2
   c.file.header_date_format = "%m/%d/%Y"
   c.file.sub_header_order   = %w[current previous impediments notes]
 end

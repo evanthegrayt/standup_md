@@ -2,14 +2,12 @@
 
 require "date"
 require "fileutils"
-require "standup_md/file/helpers"
+require "standup_md/parsers/markdown"
 
 module StandupMD
   ##
   # Class for handling reading and writing standup files.
   class File
-    include StandupMD::File::Helpers
-
     class << self
       ##
       # Access to the class's configuration.
@@ -88,6 +86,7 @@ module StandupMD
     # @return [StandupMP::File]
     def initialize(file_name)
       @config = self.class.config
+      @parser = StandupMD::Parsers::Markdown.new(@config)
       if file_name.include?(::File::SEPARATOR)
         raise ArgumentError,
           "#{file_name} contains directory. Please use `StandupMD.config.file.directory=`"
@@ -137,40 +136,14 @@ module StandupMD
 
     ##
     # Loads the file's contents.
-    # TODO clean up this method.
     #
     # @return [StandupMD::FileList]
     def load
       raise "File #{name} does not exist." unless ::File.file?(name)
 
-      entry_list = EntryList.new
-      record = {}
-      section_type = ""
-      ::File.foreach(name) do |line|
-        line.chomp!
-        next if line.strip.empty?
-
-        if header?(line)
-          unless record.empty?
-            entry_list << new_entry(record)
-            record = {}
-          end
-          record["header"] = line.sub(/^\#{#{@config.header_depth}}\s*/, "")
-          section_type = @config.notes_header
-          record[section_type] = []
-        elsif sub_header?(line)
-          section_type = determine_section_type(line)
-          record[section_type] = []
-        else
-          record[section_type] << line.sub(bullet_character_regex, "")
-        end
-      end
-      entry_list << new_entry(record) unless record.empty?
       @loaded = true
-      @entries = entry_list.sort
+      @entries = @parser.read(name)
       self
-    rescue => e
-      raise "File malformation: #{e}"
     end
 
     ##
@@ -185,20 +158,7 @@ module StandupMD
       sorted_entries = entries.sort
       start_date = dates.fetch(:start_date, sorted_entries.first.date)
       end_date = dates.fetch(:end_date, sorted_entries.last.date)
-      ::File.open(name, "w") do |f|
-        sorted_entries.filter(start_date, end_date).sort_reverse.each do |entry|
-          f.puts header(entry.date)
-          @config.sub_header_order.each do |attr|
-            tasks = entry.public_send(attr)
-            next if !tasks || tasks.empty?
-
-            f.puts sub_header(@config.public_send("#{attr}_header").capitalize)
-            tasks.each { |task| f.puts "#{@config.bullet_character} #{task}" }
-          end
-          f.puts
-        end
-      end
-      true
+      @parser.write(name, sorted_entries, start_date: start_date, end_date: end_date)
     end
   end
 end

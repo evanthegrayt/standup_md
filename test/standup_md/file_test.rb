@@ -110,10 +110,82 @@ class TestFile < TestHelper
     assert_raise { @file.load }
   end
 
+  def test_load_preserves_indented_markdown_tasks
+    create_indented_standup_file
+
+    entry = @file.load.entries.find(Date.today)
+
+    assert_equal(
+      [
+        "Working issue number 1",
+        "Did this supporting subtask",
+        "Also did this thing",
+        "Issue 2",
+        "Another supporting task"
+      ],
+      entry.current
+    )
+    assert_equal([0, 1, 1, 0, 1], entry.current_tasks.map(&:indent_level))
+  end
+
   def test_write
     @file.load
     assert(@file.write)
     refute(::File.zero?(@file.name))
     assert_nothing_raised { @file.load }
+  end
+
+  def test_write_preserves_indented_markdown_tasks
+    create_indented_standup_file
+
+    assert(@file.load.write)
+    assert_equal(
+      [
+        "# #{Date.today.strftime(StandupMD.config.file.header_date_format)}",
+        "## Previous",
+        "- Yesterday",
+        "## Current",
+        "- Working issue number 1",
+        "  - Did this supporting subtask",
+        "  - Also did this thing",
+        "- Issue 2",
+        "  - Another supporting task",
+        "## Impediments",
+        "- None",
+        ""
+      ],
+      ::File.read(@file.name).lines.map(&:chomp)
+    )
+  end
+
+  def test_load_and_write_use_configured_indent_width
+    StandupMD.config.file.indent_width = 4
+    create_indented_standup_file(indent: 4)
+
+    entry = @file.load.entries.find(Date.today)
+
+    assert_equal([0, 1, 1, 0, 1], entry.current_tasks.map(&:indent_level))
+    assert(@file.write)
+    assert_match(
+      /^    - Did this supporting subtask$/,
+      ::File.read(@file.name)
+    )
+  end
+
+  def create_indented_standup_file(indent: 2)
+    nested_bullet = "#{" " * indent}-"
+    ::File.open(@file.name, "w") do |f|
+      f.puts "# #{Date.today.strftime(StandupMD.config.file.header_date_format)}"
+      f.puts "## Previous"
+      f.puts "- Yesterday"
+      f.puts "## Current"
+      f.puts "- Working issue number 1"
+      f.puts "#{nested_bullet} Did this supporting subtask"
+      f.puts "#{nested_bullet} Also did this thing"
+      f.puts "- Issue 2"
+      f.puts "#{nested_bullet} Another supporting task"
+      f.puts "## Impediments"
+      f.puts "- None"
+    end
   end
 end

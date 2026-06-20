@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "standup_md/parsers/markdown"
+
 module StandupMD
   class Cli
     ##
@@ -20,7 +22,9 @@ module StandupMD
           next if !tasks || tasks.empty?
 
           puts sub_header(header_type)
-          tasks.each { |task| puts "#{config.file.bullet_character} #{task}" }
+          entry.public_send("#{header_type}_tasks").each do |task|
+            puts parser.task_line(task)
+          end
         end
         puts
       end
@@ -68,6 +72,11 @@ module StandupMD
             "--sub-header-order ARRAY", Array,
             "The order of the sub-headers when writing the file"
           ) { |v| config.file.sub_header_order = v }
+
+          opts.on(
+            "--indent-width INTEGER", Integer,
+            "Number of spaces used for each nested task level"
+          ) { |v| config.file.indent_width = v }
 
           opts.on(
             "-f", "--file-name-format STRING",
@@ -217,7 +226,11 @@ module StandupMD
       # @return [String]
       def sub_header(header_type)
         "#" * config.file.sub_header_depth + " " +
-          config.file.public_send("#{header_type}_header").capitalize
+          config.file.public_send("#{header_type}_header")
+      end
+
+      def parser
+        StandupMD::Parsers::Markdown.new(config.file)
       end
     end
   end

@@ -272,6 +272,14 @@ class TestCli < TestHelper
     )
   end
 
+  def test_indent_width
+    cli(["--directory", workdir.to_s])
+    assert_equal(2, StandupMD.config.file.indent_width)
+
+    cli(["--indent-width", "4", "--directory", workdir.to_s])
+    assert_equal(4, StandupMD.config.file.indent_width)
+  end
+
   def test_file_name_format
     cli(["--directory", workdir.to_s], load_config: false)
     assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
@@ -322,6 +330,29 @@ class TestCli < TestHelper
     )
     assert_nothing_raised { cli(@options).print(entry) }
     assert_nothing_raised { cli(@options).print(nil) }
+  ensure
+    disable_stdout_redireaction
+  end
+
+  def test_class_print_preserves_indented_markdown_tasks
+    enable_stdout_redirection
+    entry = StandupMD::Entry.new(
+      Date.today,
+      [
+        "Working issue number 1",
+        StandupMD::Task.new("Did this supporting subtask", indent_level: 1)
+      ],
+      %w[Previous task],
+      %w[Impediment]
+    )
+
+    cli(@options).print(entry)
+    $stdout.flush
+
+    assert_match(
+      /\n- Working issue number 1\n  - Did this supporting subtask\n/,
+      ::File.read(test_output_file)
+    )
   ensure
     disable_stdout_redireaction
   end
