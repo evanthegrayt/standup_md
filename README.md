@@ -59,6 +59,17 @@ cd standup_md
 rake install
 ```
 
+### Zsh Completion
+The gem ships with a zsh completion file at `completion/zsh/_standup`. RubyGems
+doesn't automatically add gem-provided completion directories to zsh's `fpath`,
+so you'll need to add the completion directory yourself after installation.
+
+For setup instructions and example, run the following.
+
+```sh
+standup --zsh-completion
+```
+
 ## Usage
 ### Command Line
 For the most basic usage, simply call the executable.
@@ -214,6 +225,7 @@ Some of these options can be changed at runtime. They are as follows.
 -a  --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
 -e  --[no-]edit                Open the file in the editor. Default is true
 -v, --[no-]verbose             Verbose output. Default is false.
+    --zsh-completion           Print zsh completion setup instructions
 -p, --print [DATE]             Print current entry.
                                If DATE is passed, will print entry for DATE, if it exists.
                                DATE must be in the same format as file-name-format

@@ -9,6 +9,10 @@ module StandupMD
   class Cli
     include Helpers
 
+    ZSH_COMPLETION_FILE = ::File.expand_path(
+      ::File.join(__dir__, "..", "..", "completion", "zsh", "_standup")
+    ).freeze
+
     ##
     # Access to the class's configuration.
     #
@@ -26,9 +30,44 @@ module StandupMD
     end
 
     ##
+    # Prints zsh completion setup instructions.
+    #
+    # @return [String]
+    def self.zsh_completion_instructions
+      completion_dir = ::File.dirname(ZSH_COMPLETION_FILE)
+
+      <<~INSTRUCTIONS
+        Zsh completion file:
+          #{ZSH_COMPLETION_FILE}
+
+        To load it directly, add this before compinit runs:
+
+          fpath=("#{completion_dir}" $fpath)
+          autoload -Uz compinit
+          compinit
+
+        Or symlink it into your own completion directory:
+
+          mkdir -p ~/.zsh/completions
+          ln -sf "#{ZSH_COMPLETION_FILE}" ~/.zsh/completions/_standup
+
+        Then make sure that directory is in fpath before compinit runs:
+
+          fpath=(~/.zsh/completions $fpath)
+          autoload -Uz compinit
+          compinit
+      INSTRUCTIONS
+    end
+
+    ##
     # Creates an instance of +StandupMD+ and runs what the user requested.
     def self.execute(options = [])
       new(options).tap do |exe|
+        if exe.zsh_completion_requested?
+          puts zsh_completion_instructions
+          next
+        end
+
         exe.write_file if exe.write?
         if config.print
           exe.print(exe.entry)
@@ -65,6 +104,14 @@ module StandupMD
     end
 
     ##
+    # Was zsh completion output requested?
+    #
+    # @return [Boolean]
+    def zsh_completion_requested?
+      @zsh_completion_requested
+    end
+
+    ##
     # Constructor. Sets defaults.
     #
     # @param [Array] options
@@ -72,9 +119,14 @@ module StandupMD
       @config = self.class.config
       @preference_file_loaded = false
       @file_date_argument = false
+      @zsh_completion_requested = false
       @options = options
+      return if load_zsh_completion_request(options)
+
       load_preferences if load_config
       load_runtime_preferences(options)
+      return if zsh_completion_requested?
+
       @file = find_file
       @file&.load
       @entry = @file.nil? ? nil : new_entry(@file)
@@ -136,6 +188,19 @@ module StandupMD
     end
 
     private
+
+    ##
+    # Detects zsh completion setup requests before loading user preferences.
+    #
+    # @return [Boolean]
+    def load_zsh_completion_request(options)
+      return false unless options.include?("--zsh-completion")
+
+      invalid_options = options - ["--zsh-completion"]
+      raise OptionParser::InvalidArgument, invalid_options.join(" ") unless invalid_options.empty?
+
+      @zsh_completion_requested = true
+    end
 
     ##
     # Is this a read-only action?

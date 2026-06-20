@@ -105,6 +105,11 @@ module StandupMD
           ) { |v| config.cli.verbose = v }
 
           opts.on(
+            "--zsh-completion",
+            "Print zsh completion setup instructions"
+          ) { @zsh_completion_requested = true }
+
+          opts.on(
             "-p", "--print [DATE]",
             "Print current entry.",
             "If DATE is passed, will print entry for DATE, if it exists.",
@@ -115,6 +120,12 @@ module StandupMD
               v.nil? ? Date.today : Date.strptime(v, config.file.header_date_format)
           end
         end.parse!(options)
+        if zsh_completion_requested?
+          raise OptionParser::InvalidArgument, options.join(" ") unless options.empty?
+
+          return
+        end
+
         unless options.empty?
           @file_date_argument = true
           config.cli.date = parse_file_date(options.shift)

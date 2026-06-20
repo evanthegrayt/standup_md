@@ -1,0 +1,80 @@
+#compdef standup
+
+_standup_array_values() {
+  _message -e values 'comma-separated list'
+}
+
+_standup_sub_header_order() {
+  local -a headers
+
+  headers=(
+    'previous:previous entry tasks'
+    'current:current entry tasks'
+    'impediments:current entry impediments'
+    'notes:current entry notes'
+  )
+
+  _values -s , 'sub-header' $headers
+}
+
+_standup_dates() {
+  local directory="${STANDUP_MD_DIR:-$HOME/.cache/standup_md}"
+  local index
+  local file
+  local -a dates
+
+  for (( index = 1; index <= $#words; index++ )); do
+    case "$words[index]" in
+      --directory=*)
+        directory="${words[index]#--directory=}"
+        ;;
+      --directory|-d)
+        if (( index < $#words )); then
+          directory="$words[index + 1]"
+        fi
+        ;;
+    esac
+  done
+
+  directory=${~directory}
+  if [[ -d "$directory" ]]; then
+    for file in "$directory"/*.md(N); do
+      file="${file:t:r}"
+      if [[ "$file" == <->_<-> ]]; then
+        dates+=("${file/_/-}:standup file ${file}.md")
+      fi
+    done
+  fi
+
+  if (( ${#dates} )); then
+    _describe -t dates 'standup date' dates
+  else
+    _message -e dates 'date (YYYY-MM or YYYY-MM-DD)'
+  fi
+}
+
+_arguments -s -S \
+  '(- *)'{-h,--help}'[show help]' \
+  '(- *)--version[show version]' \
+  '(- *)--zsh-completion[print zsh completion setup instructions]' \
+  '--current[List of current entry tasks]:tasks:_standup_array_values' \
+  '--previous[List of previous entry tasks]:tasks:_standup_array_values' \
+  '--impediments[List of impediments for current entry]:impediments:_standup_array_values' \
+  '--notes[List of notes for current entry]:notes:_standup_array_values' \
+  '--sub-header-order[The order of the sub-headers when writing the file]:sub-header order:_standup_sub_header_order' \
+  '(-f --file-name-format)-f[Date-formattable string to use for standup file name]:strftime format:' \
+  '(-f --file-name-format)--file-name-format[Date-formattable string to use for standup file name]:strftime format:' \
+  '(-E --editor)-E[Editor to use for opening standup files]:editor:_path_commands' \
+  '(-E --editor)--editor[Editor to use for opening standup files]:editor:_path_commands' \
+  '(-d --directory)-d[The directory where standup files are located]:directory:_directories' \
+  '(-d --directory)--directory[The directory where standup files are located]:directory:_directories' \
+  '(-w --write --no-write)'{-w,--write}'[write current entry if it does not exist]' \
+  '(-w --write --no-write)--no-write[do not write current entry if it does not exist]' \
+  '(-a --auto-fill-previous --no-auto-fill-previous)'{-a,--auto-fill-previous}'[auto-generate previous tasks for new entries]' \
+  '(-a --auto-fill-previous --no-auto-fill-previous)--no-auto-fill-previous[do not auto-generate previous tasks for new entries]' \
+  '(-e --edit --no-edit)'{-e,--edit}'[open the file in the editor]' \
+  '(-e --edit --no-edit)--no-edit[do not open the file in the editor]' \
+  '(-v --verbose --no-verbose)'{-v,--verbose}'[use verbose output]' \
+  '(-v --verbose --no-verbose)--no-verbose[disable verbose output]' \
+  '(-p --print)'{-p,--print}'[print current entry]::date:_standup_dates' \
+  '1:standup file date:_standup_dates'
