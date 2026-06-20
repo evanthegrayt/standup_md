@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 require "standup_md/version"
-require "standup_md/file"
+require "standup_md/config"
+require "standup_md/task"
+require "standup_md/title"
+require "standup_md/section"
 require "standup_md/entry"
 require "standup_md/entry_list"
+require "standup_md/parsers/markdown"
+require "standup_md/file"
 require "standup_md/cli"
-require "standup_md/config"
 
 ##
 # The main module for the gem. Provides access to configuration classes.

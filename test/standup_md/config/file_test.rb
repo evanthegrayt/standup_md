@@ -22,6 +22,14 @@ class TestFileConfig < TestHelper
     assert_raise { StandupMD.config.file.bullet_character = ">" }
   end
 
+  def test_indent_width
+    assert_equal(2, StandupMD.config.file.indent_width)
+    assert_nothing_raised { StandupMD.config.file.indent_width = 4 }
+    assert_equal(4, StandupMD.config.file.indent_width)
+    assert_raise { StandupMD.config.file.indent_width = 0 }
+    assert_raise { StandupMD.config.file.indent_width = "2" }
+  end
+
   def test_header_depth
     assert_equal(1, StandupMD.config.file.header_depth)
     assert_raise { StandupMD.config.file.header_depth = 6 }

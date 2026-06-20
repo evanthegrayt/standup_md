@@ -9,19 +9,19 @@ module StandupMD
     # Major version.
     #
     # @return [Integer]
-    MAJOR = 0
+    MAJOR = 1
 
     ##
     # Minor version.
     #
     # @return [Integer]
-    MINOR = 3
+    MINOR = 0
 
     ##
     # Patch version.
     #
     # @return [Integer]
-    PATCH = 17
+    PATCH = 0
 
     ##
     # Version as +[MAJOR, MINOR, PATCH]+

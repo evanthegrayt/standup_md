@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "standup_md/section"
 
 module StandupMD
   ##
@@ -8,6 +9,8 @@ module StandupMD
   # compares by date.
   class Entry
     include Comparable
+
+    SECTION_TYPES = %i[current previous impediments notes].freeze
 
     ##
     # Access to the class's configuration.
@@ -24,30 +27,6 @@ module StandupMD
     #
     # @return [Date]
     attr_accessor :date
-
-    ##
-    # The tasks for today.
-    #
-    # @return [Array]
-    attr_accessor :current
-
-    ##
-    # The tasks from the previous day.
-    #
-    # @return [Array]
-    attr_accessor :previous
-
-    ##
-    # Impediments for this entry.
-    #
-    # @return [Array]
-    attr_accessor :impediments
-
-    ##
-    # Nnotes to add to this entry.
-    #
-    # @return [Array]
-    attr_accessor :notes
 
     ##
     # Creates a generic entry. Default values can be set via configuration.
@@ -81,10 +60,43 @@ module StandupMD
 
       @config = self.class.config
       @date = date
-      @current = current
-      @previous = previous
-      @impediments = impediments
-      @notes = notes
+      @sections = {}
+      self.current = current
+      self.previous = previous
+      self.impediments = impediments
+      self.notes = notes
+    end
+
+    SECTION_TYPES.each do |type|
+      define_method(type) do
+        section(type).tasks.map(&:to_s)
+      end
+
+      define_method("#{type}=") do |tasks|
+        set_section(type, tasks)
+      end
+
+      define_method("#{type}_tasks") do
+        section(type).tasks
+      end
+    end
+
+    ##
+    # Sections for this entry.
+    #
+    # @return [Array<StandupMD::Section>]
+    def sections
+      SECTION_TYPES.map { |type| section(type) }
+    end
+
+    ##
+    # Find a section by type.
+    #
+    # @param [Symbol, String] type
+    #
+    # @return [StandupMD::Section]
+    def section(type)
+      @sections[type.to_sym] ||= Section.new(type)
     end
 
     ##
@@ -114,6 +126,12 @@ module StandupMD
     # @return [String]
     def to_json
       to_h.to_json
+    end
+
+    private
+
+    def set_section(type, tasks)
+      @sections[type.to_sym] = Section.new(type, tasks || [])
     end
   end
 end

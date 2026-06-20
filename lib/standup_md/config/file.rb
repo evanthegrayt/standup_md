@@ -20,6 +20,7 @@ module StandupMD
         sub_header_order: %w[previous current impediments notes],
         directory: ::File.join(ENV["HOME"], ".cache", "standup_md"),
         bullet_character: "-",
+        indent_width: 2,
         name_format: "%Y_%m.md",
         create: true
       }.freeze
@@ -55,6 +56,14 @@ module StandupMD
       #
       # @default "-" (dash)
       attr_reader :bullet_character
+
+      ##
+      # Number of spaces used for each nested task level.
+      #
+      # @return [Integer]
+      #
+      # @default 2
+      attr_reader :indent_width
 
       ##
       # String to be used as "Current" header.
@@ -184,6 +193,18 @@ module StandupMD
         raise 'Must be "-" or "*"' unless %w[- *].include?(char)
 
         @bullet_character = char
+      end
+
+      ##
+      # Setter for indent_width. Must be a positive integer.
+      #
+      # @param [Integer] width
+      #
+      # @return [Integer]
+      def indent_width=(width)
+        raise "Indent width must be a positive integer" unless width.is_a?(Integer) && width.positive?
+
+        @indent_width = width
       end
 
       ##
