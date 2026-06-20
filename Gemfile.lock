@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    standup_md (0.3.16)
+    standup_md (0.3.17)
 
 GEM
   remote: https://rubygems.org/
@@ -115,7 +115,7 @@ CHECKSUMS
   standard (1.54.0) sha256=7a4b08f83d9893083c8f03bc486f0feeb6a84d48233b40829c03ef4767ea0100
   standard-custom (1.0.2) sha256=424adc84179a074f1a2a309bb9cf7cd6bfdb2b6541f20c6bf9436c0ba22a652b
   standard-performance (1.9.0) sha256=49483d31be448292951d80e5e67cdcb576c2502103c7b40aec6f1b6e9c88e3f2
-  standup_md (0.3.16)
+  standup_md (0.3.17)
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   test-unit (3.7.8) sha256=689d1ca53f4d46f678b4e5d68d8e4294f87fc5e8b9238cc4de7c5727e8d65943
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f

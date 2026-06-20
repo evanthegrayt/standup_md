@@ -171,6 +171,32 @@ class TestCli < TestHelper
     assert_nothing_raised { StandupMD::Cli.new(@options) }
   end
 
+  def test_zsh_completion
+    c = cli(["--zsh-completion"])
+
+    assert(c.zsh_completion_requested?)
+    assert_nil(c.file)
+    assert_nil(c.entry)
+    assert_match(
+      %r{completion/zsh/_standup},
+      StandupMD::Cli.zsh_completion_instructions
+    )
+  end
+
+  def test_self_execute_with_zsh_completion
+    enable_stdout_redirection
+
+    assert_nothing_raised { StandupMD::Cli.execute(["--zsh-completion"]) }
+    $stdout.flush
+
+    output = File.read(test_output_file)
+    assert_match(/Zsh completion file:/, output)
+    assert_match(%r{completion/zsh/_standup}, output)
+    assert_match(/fpath=/, output)
+  ensure
+    disable_stdout_redireaction
+  end
+
   def test_verbose
     cli(@options)
     refute(StandupMD.config.cli.verbose)
