@@ -1,7 +1,8 @@
 # The Standup Doctor
 <!-- vi: set ts=4 sw=4 : -->
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fevanthegrayt%2Fstandup_md%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/evanthegrayt/standup_md/goto?ref=master)
-[![Gem Version](https://badge.fury.io/rb/standup_md.svg)](https://badge.fury.io/rb/standup_md)
+[![Gem Version](https://img.shields.io/gem/v/standup_md.svg)](https://rubygems.org/gems/standup_md)
+![Language: Ruby](https://img.shields.io/static/v1?label=language&message=Ruby&color=CC342D&style=flat&logo=ruby&logoColor=CC342D)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > The cure for all your standup woes.
