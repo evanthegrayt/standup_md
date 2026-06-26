@@ -221,6 +221,70 @@ class TestCli < TestHelper
     refute(StandupMD.config.cli.auto_fill_previous)
   end
 
+  def test_no_auto_fill_previous_uses_configured_previous_tasks
+    ::File.open(test_file_name, "w") do |f|
+      f.puts "# #{Date.today.prev_day.strftime(StandupMD.config.file.header_date_format)}"
+      f.puts "## Previous"
+      f.puts "- Yesterday"
+      f.puts "## Current"
+      f.puts "- Yesterday's current task"
+      f.puts "## Impediments"
+      f.puts "- None"
+    end
+
+    c = cli(
+      [
+        "--no-auto-fill-previous",
+        "--previous", "Configured previous task",
+        "--no-edit",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_equal(["Configured previous task"], c.entry.previous)
+  end
+
+  def test_auto_fill_previous_preserves_indented_markdown_tasks
+    StandupMD.config.file.current_header = "Today"
+    ::File.open(test_file_name, "w") do |f|
+      f.puts "# #{Date.today.prev_day.strftime(StandupMD.config.file.header_date_format)}"
+      f.puts "## Previous"
+      f.puts "- Upgrade React 16.8 to React 17"
+      f.puts "  - Test, test, test"
+      f.puts "## Today"
+      f.puts "- Standing 10:30 meeting"
+      f.puts "- Get React 17 upgrade across the finish line"
+      f.puts "  - Meet with Chris to look over things"
+      f.puts "  - Continue to test, test, test"
+      f.puts "- Spike: Plan React 17 cleanup and 18 upgrade"
+      f.puts "  - A skeleton plan exists but it needs to be fleshed out with all new details"
+      f.puts "## Impediments"
+      f.puts "- None"
+    end
+
+    c = cli(["--no-edit", "--directory", workdir.to_s])
+    c.write_file
+
+    assert_equal(
+      [
+        "# #{Date.today.strftime(StandupMD.config.file.header_date_format)}",
+        "## Previous",
+        "- Standing 10:30 meeting",
+        "- Get React 17 upgrade across the finish line",
+        "  - Meet with Chris to look over things",
+        "  - Continue to test, test, test",
+        "- Spike: Plan React 17 cleanup and 18 upgrade",
+        "  - A skeleton plan exists but it needs to be fleshed out with all new details",
+        "## Today",
+        "- <!-- ADD TODAY'S WORK HERE -->",
+        "## Impediments",
+        "- None",
+        ""
+      ],
+      ::File.read(test_file_name).lines.map(&:chomp).first(13)
+    )
+  end
+
   def test_write_file
     c = cli(@options)
     assert_nothing_raised { c.write_file }

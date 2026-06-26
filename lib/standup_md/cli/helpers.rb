@@ -18,11 +18,11 @@ module StandupMD
 
         puts header(entry)
         config.file.sub_header_order.each do |header_type|
-          tasks = entry.public_send(header_type)
-          next if !tasks || tasks.empty?
+          tasks = entry.public_send("#{header_type}_tasks")
+          next if tasks.empty?
 
           puts sub_header(header_type)
-          entry.public_send("#{header_type}_tasks").each do |task|
+          tasks.each do |task|
             puts parser.task_line(task)
           end
         end
@@ -55,7 +55,7 @@ module StandupMD
 
           opts.on(
             "--previous ARRAY", Array,
-            "List of precious entry's tasks"
+            "List of previous entry's tasks"
           ) { |v| config.entry.previous = v }
 
           opts.on(
@@ -160,14 +160,14 @@ module StandupMD
       end
 
       ##
-      # The "previous" entries.
+      # The "previous" tasks.
       #
       # @return [Array]
       def previous_entry(file)
-        return config.entry.previous_entry unless config.cli.auto_fill_previous
-        return prev_entry(prev_file.load.entries) if file.new? && prev_file
+        return config.entry.previous unless config.cli.auto_fill_previous
+        return prev_entry_tasks(prev_file.load.entries) if file.new? && prev_file
 
-        prev_entry(file.entries)
+        prev_entry_tasks(file.entries)
       end
 
       ##
@@ -190,13 +190,13 @@ module StandupMD
       end
 
       ##
-      # The previous entry.
+      # The previous entry's current tasks.
       #
       # @param [StandupMD::EntryList] entries
       #
-      # @return [StandupMD::Entry]
-      def prev_entry(entries)
-        entries.empty? ? [] : entries.last.current
+      # @return [Array<StandupMD::Task>]
+      def prev_entry_tasks(entries)
+        entries.empty? ? [] : entries.last.current_tasks
       end
 
       ##
