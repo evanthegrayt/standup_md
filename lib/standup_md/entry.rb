@@ -10,6 +10,10 @@ module StandupMD
   class Entry
     include Comparable
 
+    ##
+    # Section identifiers supported by each standup entry.
+    #
+    # @return [Array<Symbol>]
     SECTION_TYPES = %i[current previous impediments notes].freeze
 
     ##

@@ -8,6 +8,8 @@ require "standup_md/task"
 require "standup_md/title"
 
 module StandupMD
+  ##
+  # Namespace for standup file parsers and renderers.
   module Parsers
     ##
     # Parser and renderer for the markdown standup format.
