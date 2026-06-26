@@ -207,7 +207,7 @@ Some of these options can be changed at runtime. They are as follows.
 
 ```
     --current ARRAY            List of current entry's tasks
-    --previous ARRAY           List of precious entry's tasks
+    --previous ARRAY           List of previous entry's tasks
     --impediments ARRAY        List of impediments for current entry
     --notes ARRAY              List of notes for current entry
     --sub-header-order ARRAY   The order of the sub-headers when writing the file
