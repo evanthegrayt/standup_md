@@ -48,5 +48,9 @@ module StandupMD
     end
   end
 
+  ##
+  # Full gem version string.
+  #
+  # @return [String]
   VERSION = StandupMD::Version.to_s
 end

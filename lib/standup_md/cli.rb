@@ -9,6 +9,10 @@ module StandupMD
   class Cli
     include Helpers
 
+    ##
+    # Path to the bundled zsh completion script.
+    #
+    # @return [String]
     ZSH_COMPLETION_FILE = ::File.expand_path(
       ::File.join(__dir__, "..", "..", "completion", "zsh", "_standup")
     ).freeze
