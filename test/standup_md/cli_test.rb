@@ -280,6 +280,27 @@ class TestCli < TestHelper
     )
   end
 
+  def test_zsh_completion_omits_file_format_options
+    completion = File.read(StandupMD::Cli::ZSH_COMPLETION_FILE)
+    unsafe_options = %w[
+      --sub-header-order
+      --indent-width
+      --file-name-format
+      --header-depth
+      --sub-header-depth
+      --bullet-character
+      --header-date-format
+      --current-header
+      --previous-header
+      --impediments-header
+      --notes-header
+    ]
+
+    unsafe_options.each do |option|
+      refute_includes(completion, option)
+    end
+  end
+
   def test_self_execute_with_zsh_completion
     enable_stdout_redirection
 
