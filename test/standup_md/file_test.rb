@@ -39,7 +39,7 @@ class TestFile < TestHelper
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
     StandupMD.config.file.create = false
-    assert_raise { StandupMD::File.find("noexist") }
+    assert_raise(StandupMD::File::NotFoundError) { StandupMD::File.find("noexist") }
     StandupMD.config.file.create = true
     assert_nothing_raised { StandupMD::File.find("noexist") }
   end
@@ -82,9 +82,36 @@ class TestFile < TestHelper
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
     StandupMD.config.file.create = false
-    assert_raise { StandupMD::File.find_by_date(Date.today.prev_year) }
+    assert_raise(StandupMD::File::NotFoundError) { StandupMD::File.find_by_date(Date.today.prev_year) }
     StandupMD.config.file.create = true
     assert_nothing_raised { StandupMD::File.find_by_date(Date.today.prev_year) }
+  end
+
+  def test_find_by_date_accepts_runtime_config
+    runtime = StandupMD.config.file.copy
+    runtime.directory = File.join(workdir, "runtime")
+    runtime.name_format = "%Y-%m.markdown"
+    runtime.create = true
+
+    file = StandupMD::File.find_by_date(Date.today, config: runtime)
+
+    assert_equal(
+      File.join(runtime.directory, Date.today.strftime("%Y-%m.markdown")),
+      file.name
+    )
+    refute_equal(runtime.directory, StandupMD.config.file.directory)
+    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
+  end
+
+  def test_find_by_date_runtime_config_does_not_toggle_global_creation
+    runtime = StandupMD.config.file.copy
+    runtime.create = false
+    missing = Date.today.prev_year
+
+    assert_raise(StandupMD::File::NotFoundError) do
+      StandupMD::File.find_by_date(missing, config: runtime)
+    end
+    assert(StandupMD.config.file.create)
   end
 
   def test_name
@@ -110,6 +137,21 @@ class TestFile < TestHelper
     assert_raise { @file.load }
   end
 
+  def test_load_reads_file_before_parsing
+    parser = Object.new
+    parsed_entries = StandupMD::EntryList.new
+    captured_text = nil
+    parser.define_singleton_method(:parse) do |text|
+      captured_text = text
+      parsed_entries
+    end
+    @file.instance_variable_set(:@parser, parser)
+
+    assert_same(@file, @file.load)
+    assert_equal(::File.read(@file.name), captured_text)
+    assert_same(parsed_entries, @file.entries)
+  end
+
   def test_load_preserves_indented_markdown_tasks
     create_indented_standup_file
 
@@ -133,6 +175,29 @@ class TestFile < TestHelper
     assert(@file.write)
     refute(::File.zero?(@file.name))
     assert_nothing_raised { @file.load }
+  end
+
+  def test_write_requires_loaded_entries
+    assert_raise(ArgumentError) { @file.write }
+  end
+
+  def test_write_renders_entries_before_writing_file
+    entry = StandupMD::Entry.new(Date.today, ["Current"], [], [])
+    parser = Object.new
+    captured_entries = nil
+    captured_dates = nil
+    parser.define_singleton_method(:render) do |entries, **dates|
+      captured_entries = entries
+      captured_dates = dates
+      "rendered markdown\n"
+    end
+    @file.instance_variable_set(:@entries, StandupMD::EntryList.new(entry))
+    @file.instance_variable_set(:@parser, parser)
+
+    assert(@file.write)
+    assert_instance_of(StandupMD::EntryList, captured_entries)
+    assert_equal({start_date: Date.today, end_date: Date.today}, captured_dates)
+    assert_equal("rendered markdown\n", ::File.read(@file.name))
   end
 
   def test_write_preserves_indented_markdown_tasks

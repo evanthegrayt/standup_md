@@ -5,7 +5,6 @@ require "standup_md/entry"
 require "standup_md/entry_list"
 require "standup_md/section"
 require "standup_md/task"
-require "standup_md/title"
 
 module StandupMD
   ##
@@ -14,6 +13,10 @@ module StandupMD
     ##
     # Parser and renderer for the markdown standup format.
     class Markdown
+      ##
+      # Raised when markdown cannot be parsed into standup entries.
+      class Error < StandardError; end
+
       ##
       # Access to file configuration.
       #
@@ -29,17 +32,17 @@ module StandupMD
       end
 
       ##
-      # Reads entries from a markdown standup file.
+      # Parses entries from markdown text.
       #
-      # @param [String] file_name
+      # @param [String] text
       #
       # @return [StandupMD::EntryList]
-      def read(file_name)
+      def parse(text)
         entry_list = EntryList.new
         record = nil
         section = nil
 
-        ::File.foreach(file_name) do |line|
+        text.to_s.each_line do |line|
           line.chomp!
           next if line.strip.empty?
 
@@ -59,42 +62,40 @@ module StandupMD
         entry_list << entry(record) if record
         entry_list.sort
       rescue => e
-        raise "File malformation: #{e}"
+        raise Error, "Markdown malformation: #{e.message}"
       end
 
       ##
-      # Writes entries to a markdown standup file.
+      # Renders entries as markdown text.
       #
-      # @param [String] file_name
       # @param [StandupMD::EntryList] entries
       # @param [Date] start_date
       # @param [Date] end_date
       #
-      # @return [Boolean]
-      def write(file_name, entries, start_date:, end_date:)
-        ::File.open(file_name, "w") do |f|
-          entries.filter(start_date, end_date).sort_reverse.each do |entry|
-            f.puts Title.new(entry.date).to_markdown
-            config.sub_header_order.each do |attr|
-              section = Section.new(attr, entry.public_send("#{attr}_tasks"))
-              next if section.empty?
-
-              f.puts section.to_markdown
-            end
-            f.puts
-          end
-        end
-        true
+      # @return [String]
+      def render(entries, start_date:, end_date:)
+        entries.filter(start_date, end_date).sort_reverse.map do |entry|
+          render_entry(entry)
+        end.join
       end
 
       ##
-      # Renders a task as a markdown list item.
+      # Renders a single entry as markdown text.
       #
-      # @param [String, StandupMD::Task] task
+      # @param [StandupMD::Entry] entry
       #
       # @return [String]
-      def task_line(task)
-        build_task(task).to_markdown
+      def render_entry(entry)
+        lines = [entry_header(entry)]
+        config.sub_header_order.each do |type|
+          section = Section.new(type, entry.public_send("#{type}_tasks"))
+          next if section.empty?
+
+          lines << section_header(type)
+          section.tasks.each { |task| lines << task_line(task) }
+        end
+        lines << ""
+        lines.join("\n") + "\n"
       end
 
       private
@@ -123,11 +124,19 @@ module StandupMD
         Section.new(type)
       end
 
+      def entry_header(entry)
+        "#{"#" * config.header_depth} #{entry.date.strftime(config.header_date_format)}"
+      end
+
+      def section_header(type)
+        "#{"#" * config.sub_header_depth} #{config.public_send("#{type}_header")}"
+      end
+
       def section_type(line)
         sub_header = line.sub(/^\#{#{config.sub_header_depth}}\s*/, "")
         Entry::SECTION_TYPES.each do |type|
           header = config.public_send("#{type}_header")
-          return type if sub_header.include?(header)
+          return type if sub_header == header
         end
         raise "Unrecognized header [#{sub_header}]"
       end
@@ -146,6 +155,11 @@ module StandupMD
         /\A(?<indent>\s*)#{Regexp.escape(config.bullet_character)}\s*(?<text>.*)\z/
       end
 
+      def task_line(task)
+        indent = " " * config.indent_width * task.indent_level
+        "#{indent}#{config.bullet_character} #{task.text}"
+      end
+
       def entry(record)
         Entry.new(
           Date.strptime(record[:title], config.header_date_format),
@@ -158,12 +172,6 @@ module StandupMD
 
       def tasks(record, type)
         record[:sections].fetch(type, Section.new(type)).tasks
-      end
-
-      def build_task(task)
-        return task if task.is_a?(Task)
-
-        Task.new(task)
       end
     end
   end

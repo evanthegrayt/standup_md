@@ -5,7 +5,7 @@ require "standup_md/cli/helpers"
 
 module StandupMD
   ##
-  # Class for handing the command-line interface.
+  # Class for handling the command-line interface.
   class Cli
     include Helpers
 
@@ -22,7 +22,7 @@ module StandupMD
     #
     # @return [StandupMD::Config::Cli]
     def self.config
-      @config ||= StandupMD.config.cli
+      StandupMD.config.cli
     end
 
     ##
@@ -73,13 +73,21 @@ module StandupMD
         end
 
         exe.write_file if exe.write?
-        if config.print
+        if exe.config.cli.print
           exe.print(exe.entry)
-        elsif config.edit
+        elsif exe.config.cli.post
+          exe.post(exe.entry)
+        elsif exe.config.cli.edit
           exe.edit
         end
       end
     end
+
+    ##
+    # Runtime configuration snapshot for this CLI invocation.
+    #
+    # @return [StandupMD::Config]
+    attr_reader :config
 
     ##
     # The entry searched for, usually today.
@@ -120,7 +128,7 @@ module StandupMD
     #
     # @param [Array] options
     def initialize(options = [], load_config: true)
-      @config = self.class.config
+      @config = nil
       @preference_file_loaded = false
       @file_date_argument = false
       @zsh_completion_requested = false
@@ -128,6 +136,7 @@ module StandupMD
       return if load_zsh_completion_request(options)
 
       load_preferences if load_config
+      @config = StandupMD.config.copy
       load_runtime_preferences(options)
       return if zsh_completion_requested?
 
@@ -141,11 +150,12 @@ module StandupMD
     #
     # @return [nil]
     def load_preferences
-      if ::File.exist?(@config.preference_file)
-        ::StandupMD.load_config_file(@config.preference_file)
+      preference_file = StandupMD.config.cli.preference_file
+      if ::File.exist?(preference_file)
+        ::StandupMD.load_config_file(preference_file)
         @preference_file_loaded = true
       else
-        echo "Preference file #{@config.preference_file} does not exist."
+        self.class.echo "Preference file #{preference_file} does not exist."
       end
     end
 
@@ -162,8 +172,8 @@ module StandupMD
     #
     # @return [nil]
     def edit
-      echo "Opening file in #{@config.editor}"
-      exec("#{@config.editor} #{file.name}")
+      echo "Opening file in #{@config.cli.editor}"
+      exec("#{@config.cli.editor} #{file.name}")
     end
 
     ##
@@ -180,7 +190,15 @@ module StandupMD
     #
     # @return [Boolean]
     def write?
-      !!(@config.write && !read_only? && entry)
+      !!(@config.cli.write && !read_only? && entry)
+    end
+
+    ##
+    # Should the CLI post the entry to a chat adapter?
+    #
+    # @return [Boolean]
+    def post?
+      @config.cli.post
     end
 
     ##
@@ -188,7 +206,7 @@ module StandupMD
     #
     # @return [nil]
     def echo(msg)
-      self.class.echo(msg)
+      puts msg if @config&.cli&.verbose
     end
 
     private
@@ -211,7 +229,7 @@ module StandupMD
     #
     # @return [Boolean]
     def read_only?
-      @config.print || file_date_argument?
+      @config.cli.print || @config.cli.post || file_date_argument?
     end
 
     ##
@@ -219,11 +237,13 @@ module StandupMD
     #
     # @return [StandupMD::File, nil]
     def find_file
-      return StandupMD::File.find_by_date(@config.date) unless read_only?
+      return StandupMD::File.find_by_date(@config.cli.date, config: @config.file) unless read_only?
 
-      without_file_creation { StandupMD::File.find_by_date(@config.date) }
-    rescue
-      raise unless @config.print
+      without_file_creation do |file_config|
+        StandupMD::File.find_by_date(@config.cli.date, config: file_config)
+      end
+    rescue StandupMD::File::NotFoundError
+      raise unless @config.cli.print || @config.cli.post
 
       nil
     end
@@ -233,11 +253,9 @@ module StandupMD
     #
     # @return [StandupMD::File]
     def without_file_creation
-      original_create = config.file.create
-      config.file.create = false
-      yield
-    ensure
-      config.file.create = original_create
+      file_config = @config.file.copy
+      file_config.create = false
+      yield file_config
     end
   end
 end

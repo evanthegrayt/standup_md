@@ -9,7 +9,10 @@ require "fileutils"
 
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 
-SimpleCov.start { add_filter %r{^/test/} }
+SimpleCov.start do
+  add_filter %r{^/test/}
+  minimum_coverage 90
+end
 
 require "standup_md"
 
@@ -63,16 +66,6 @@ class TestHelper < Test::Unit::TestCase
           File.read(File.join(__dir__, "fixtures.yml.erb"))
         ).result(binding)
       )
-  end
-
-  ##
-  # Creates +StandupUP+ instance. Directory must be passed, usually a
-  # subdirectory of +test+, so we don't overwrite the user's standup file.
-  def standup(directory, **args)
-    args["directory"] = directory
-    StandupMD.load do |s|
-      args.each { |k, v| s.public_send("#{k}=", v) }
-    end
   end
 
   ##

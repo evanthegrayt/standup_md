@@ -5,14 +5,36 @@ require_relative "../test_helper"
 ##
 # The test suite for +Cli+.
 class TestCli < TestHelper
+  class RecordingPostAdapter
+    class << self
+      attr_accessor :messages
+    end
+
+    attr_reader :options
+
+    def initialize(options = {})
+      @options = options
+    end
+
+    def post(message)
+      self.class.messages << [message, options]
+      StandupMD::Post::Result.success(
+        adapter: message.adapter,
+        channel: message.channel || options[:channel]
+      )
+    end
+  end
+
   def setup
     super
-    create_standup_file(test_file_name)
+    RecordingPostAdapter.messages = []
     StandupMD.config.cli.reset
     StandupMD.config.file.reset
     StandupMD.config.entry.reset
-    StandupMD.config.entry_list.reset
+    StandupMD.config.post.reset
     StandupMD.config.cli.preference_file = test_config_file_name
+    StandupMD.config.file.directory = workdir
+    create_standup_file(test_file_name)
     StandupMD.instance_variable_set(:@config_file_loaded, false)
     @previous_month_test_file =
       File.join(workdir, Date.today.prev_month.strftime("%Y_%m.md"))
@@ -24,7 +46,7 @@ class TestCli < TestHelper
     StandupMD.config.cli.reset
     StandupMD.config.file.reset
     StandupMD.config.entry.reset
-    StandupMD.config.entry_list.reset
+    StandupMD.config.post.reset
   end
 
   def test_preference_file
@@ -84,7 +106,8 @@ class TestCli < TestHelper
     c = cli(@options + [previous_month.strftime("%Y-%m")])
 
     assert_equal(previous_month.strftime("%Y_%m.md"), File.basename(c.file.name))
-    assert_equal(Date.new(previous_month.year, previous_month.month, 1), StandupMD.config.cli.date)
+    assert_equal(Date.new(previous_month.year, previous_month.month, 1), c.config.cli.date)
+    assert_equal(Date.today, StandupMD.config.cli.date)
   end
 
   def test_file_date_argument_accepts_full_date
@@ -94,7 +117,8 @@ class TestCli < TestHelper
     c = cli(@options + [previous_month.strftime("%Y-%m-%d")])
 
     assert_equal(previous_month.strftime("%Y_%m.md"), File.basename(c.file.name))
-    assert_equal(previous_month, StandupMD.config.cli.date)
+    assert_equal(previous_month, c.config.cli.date)
+    assert_equal(Date.today, StandupMD.config.cli.date)
   end
 
   def test_file_date_argument_is_read_only
@@ -117,9 +141,28 @@ class TestCli < TestHelper
     assert(StandupMD.config.file.create)
   end
 
+  def test_auto_fill_previous_does_not_create_missing_previous_file
+    FileUtils.rm(test_file_name)
+
+    c = cli(["--no-edit", "--directory", workdir.to_s])
+
+    assert(c.file.new?)
+    assert_equal([], c.entry.previous)
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
+  end
+
   def test_print_is_read_only
     c = cli(["--print", "--directory", workdir.to_s])
 
+    refute(c.file_date_argument?)
+    refute(c.write?)
+  end
+
+  def test_post_is_read_only
+    c = cli(["--post", "--directory", workdir.to_s])
+
+    assert(c.post?)
     refute(c.file_date_argument?)
     refute(c.write?)
   end
@@ -130,6 +173,23 @@ class TestCli < TestHelper
     c = cli(
       [
         "--print", previous_month.strftime(StandupMD.config.file.header_date_format),
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_nil(c.file)
+    assert_nil(c.entry)
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
+  end
+
+  def test_post_does_not_create_missing_file
+    previous_month = Date.today.prev_month
+
+    c = cli(
+      [
+        "--post", "slack",
+        previous_month.strftime(StandupMD.config.file.header_date_format),
         "--directory", workdir.to_s
       ]
     )
@@ -159,11 +219,48 @@ class TestCli < TestHelper
     assert_equal(@options, c.options)
   end
 
+  def test_cli_options_do_not_mutate_global_config
+    c = cli(
+      [
+        "--current", "Runtime current",
+        "--no-edit",
+        "--no-write",
+        "--print",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_equal(["Runtime current"], c.config.entry.current)
+    assert(c.config.cli.print)
+    refute(c.config.cli.edit)
+    refute(c.config.cli.write)
+
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
+    refute(StandupMD.config.cli.print)
+    assert(StandupMD.config.cli.edit)
+    assert(StandupMD.config.cli.write)
+  end
+
+  def test_sequential_cli_instances_do_not_leak_runtime_options
+    first = cli(["--current", "One", "--no-edit", "--directory", workdir.to_s])
+    second = cli(["--previous", "Two", "--print", "--directory", workdir.to_s])
+
+    assert_equal(["One"], first.config.entry.current)
+    refute(first.config.cli.print)
+    assert_equal([], first.config.entry.previous)
+
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], second.config.entry.current)
+    assert(second.config.cli.print)
+    assert_equal(["Two"], second.config.entry.previous)
+  end
+
   def test_preferences
-    cli(@options)
-    refute(StandupMD.config.cli.write)
-    refute(StandupMD.config.cli.edit)
-    assert_equal(workdir, StandupMD.config.file.directory)
+    c = cli(@options)
+    refute(c.config.cli.write)
+    refute(c.config.cli.edit)
+    assert_equal(workdir, c.config.file.directory)
+    assert(StandupMD.config.cli.write)
+    assert(StandupMD.config.cli.edit)
   end
 
   def test_initialize
@@ -198,27 +295,33 @@ class TestCli < TestHelper
   end
 
   def test_verbose
-    cli(@options)
+    c = cli(@options)
+    refute(c.config.cli.verbose)
     refute(StandupMD.config.cli.verbose)
 
-    cli(["--directory", workdir.to_s, "-v"] + @options)
-    assert(StandupMD.config.cli.verbose)
+    c = cli(["--directory", workdir.to_s, "-v"] + @options)
+    assert(c.config.cli.verbose)
+    refute(StandupMD.config.cli.verbose)
   end
 
   def test_write
-    cli(@options)
-    refute(StandupMD.config.cli.write)
+    c = cli(@options)
+    refute(c.config.cli.write)
+    assert(StandupMD.config.cli.write)
 
-    cli(["--directory", workdir.to_s, "--write"] + @options)
+    c = cli(["--directory", workdir.to_s, "--write"] + @options)
+    assert(c.config.cli.write)
     assert(StandupMD.config.cli.write)
   end
 
   def test_auto_fill_previous
     assert(StandupMD.config.cli.auto_fill_previous)
-    cli(@options)
+    c = cli(@options)
+    assert(c.config.cli.auto_fill_previous)
 
-    cli(["--no-auto-fill-previous"] + @options)
-    refute(StandupMD.config.cli.auto_fill_previous)
+    c = cli(["--no-auto-fill-previous"] + @options)
+    refute(c.config.cli.auto_fill_previous)
+    assert(StandupMD.config.cli.auto_fill_previous)
   end
 
   def test_no_auto_fill_previous_uses_configured_previous_tasks
@@ -291,97 +394,158 @@ class TestCli < TestHelper
   end
 
   def test_current
-    cli(["--directory", workdir.to_s])
+    c = cli(["--directory", workdir.to_s])
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], c.config.entry.current)
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
 
-    cli(["--current", "test", "--directory", workdir.to_s])
-    assert_equal(%w[test], StandupMD.config.entry.current)
+    c = cli(["--current", "test", "--directory", workdir.to_s])
+    assert_equal(%w[test], c.config.entry.current)
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
   end
 
   def test_previous
-    cli(["--directory", workdir.to_s])
+    c = cli(["--directory", workdir.to_s])
+    assert_equal([], c.config.entry.previous)
     assert_equal([], StandupMD.config.entry.previous)
 
-    cli(["--previous", "test", "--directory", workdir.to_s])
-    assert_equal(%w[test], StandupMD.config.entry.previous)
+    c = cli(["--previous", "test", "--directory", workdir.to_s])
+    assert_equal(%w[test], c.config.entry.previous)
+    assert_equal([], StandupMD.config.entry.previous)
   end
 
   def test_impediments
-    cli(["--directory", workdir.to_s])
+    c = cli(["--directory", workdir.to_s])
+    assert_equal(["None"], c.config.entry.impediments)
     assert_equal(["None"], StandupMD.config.entry.impediments)
 
-    cli(["--impediments", "test", "--directory", workdir.to_s])
-    assert_equal(%w[test], StandupMD.config.entry.impediments)
+    c = cli(["--impediments", "test", "--directory", workdir.to_s])
+    assert_equal(%w[test], c.config.entry.impediments)
+    assert_equal(["None"], StandupMD.config.entry.impediments)
   end
 
   def test_notes
-    cli(["--directory", workdir.to_s])
+    c = cli(["--directory", workdir.to_s])
+    assert_equal([], c.config.entry.notes)
     assert_equal([], StandupMD.config.entry.notes)
 
-    cli(["--notes", "test", "--directory", workdir.to_s])
-    assert_equal(%w[test], StandupMD.config.entry.notes)
+    c = cli(["--notes", "test", "--directory", workdir.to_s])
+    assert_equal(%w[test], c.config.entry.notes)
+    assert_equal([], StandupMD.config.entry.notes)
   end
 
-  def test_sub_header_order
-    cli(["--directory", workdir.to_s])
-    assert_equal(%w[previous current impediments notes], StandupMD.config.file.sub_header_order)
+  def test_file_format_options_are_config_only
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["--sub-header-order", "current,previous", "--directory", workdir.to_s])
+    end
 
-    cli(
-      ["--sub-header-order", "current,previous,notes,impediments", "--directory", workdir.to_s],
-      load_config: false
-    )
-    assert_equal(
-      %w[current previous notes impediments],
-      StandupMD.config.file.sub_header_order
-    )
-  end
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["--indent-width", "4", "--directory", workdir.to_s])
+    end
 
-  def test_indent_width
-    cli(["--directory", workdir.to_s])
-    assert_equal(2, StandupMD.config.file.indent_width)
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["--file-name-format", "%y_%m.md", "--directory", workdir.to_s])
+    end
 
-    cli(["--indent-width", "4", "--directory", workdir.to_s])
-    assert_equal(4, StandupMD.config.file.indent_width)
-  end
-
-  def test_file_name_format
-    cli(["--directory", workdir.to_s], load_config: false)
-    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
-
-    cli(["--file-name-format", "%y_%m.md", "--directory", workdir.to_s])
-    assert_equal("%y_%m.md", StandupMD.config.file.name_format)
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["-f", "%y_%m.md", "--directory", workdir.to_s])
+    end
   end
 
   def test_editor
     ENV["VISUAL"] = "vim"
-    cli(["--directory", workdir.to_s])
+    c = cli(["--directory", workdir.to_s])
+    assert_equal("vim", c.config.cli.editor)
     assert_equal("vim", StandupMD.config.cli.editor)
 
-    cli(["--editor", "mate", "--directory", workdir.to_s])
-    assert_equal("mate", StandupMD.config.cli.editor)
+    c = cli(["--editor", "mate", "--directory", workdir.to_s])
+    assert_equal("mate", c.config.cli.editor)
+    assert_equal("vim", StandupMD.config.cli.editor)
   end
 
   def test_print
     enable_stdout_redirection
 
-    cli(["--directory", workdir.to_s])
+    c = cli(["--directory", workdir.to_s])
+    refute(c.config.cli.print)
     refute(StandupMD.config.cli.print)
 
-    cli(["--print", "--directory", workdir.to_s])
-    assert(StandupMD.config.cli.print)
-    assert_equal(Date.today, StandupMD.config.cli.date)
+    c = cli(["--print", "--directory", workdir.to_s])
+    assert(c.config.cli.print)
+    assert_equal(Date.today, c.config.cli.date)
+    refute(StandupMD.config.cli.print)
 
-    cli(
+    c = cli(
       [
         "--print",
         "--directory", workdir.to_s,
         "--print", Date.today.prev_day.strftime(StandupMD.config.file.header_date_format).to_s
       ]
     )
-    assert(StandupMD.config.cli.print)
-    assert_equal(Date.today.prev_day, StandupMD.config.cli.date)
+    assert(c.config.cli.print)
+    assert_equal(Date.today.prev_day, c.config.cli.date)
+    refute(StandupMD.config.cli.print)
   ensure
     disable_stdout_redireaction
+  end
+
+  def test_post
+    c = cli(["--post", "--directory", workdir.to_s])
+
+    assert(c.config.cli.post)
+    assert_equal(:slack, c.config.cli.post_adapter)
+    refute(StandupMD.config.cli.post)
+    assert_nil(StandupMD.config.cli.post_adapter)
+
+    c = cli(["--post", "slack", "--directory", workdir.to_s])
+
+    assert(c.config.cli.post)
+    assert_equal(:slack, c.config.cli.post_adapter)
+    refute(StandupMD.config.cli.post)
+    assert_nil(StandupMD.config.cli.post_adapter)
+  end
+
+  def test_post_channel
+    c = cli(["--post", "slack", "--post-channel", "C123", "--directory", workdir.to_s])
+
+    assert_equal("C123", c.config.cli.post_channel)
+    assert_nil(StandupMD.config.cli.post_channel)
+  end
+
+  def test_post_invokes_custom_adapter
+    StandupMD.config.post.register_adapter(:test, RecordingPostAdapter)
+    StandupMD.config.post.configure_adapter(:test, channel: "configured")
+
+    StandupMD::Cli.execute(
+      [
+        "--post", "test",
+        "--post-channel", "runtime",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_equal(1, RecordingPostAdapter.messages.size)
+    message, options = RecordingPostAdapter.messages.first
+    assert_equal(:test, message.adapter)
+    assert_equal("runtime", message.channel)
+    assert_equal({channel: "configured"}, options)
+    assert_match(/# #{Date.today.strftime(StandupMD.config.file.header_date_format)}/, message.text)
+    assert_match(/\n- <!-- ADD TODAY'S WORK HERE -->\n/, message.text)
+  end
+
+  def test_post_uses_configured_channel_when_runtime_channel_is_omitted
+    StandupMD.config.post.register_adapter(:test, RecordingPostAdapter)
+    StandupMD.config.post.configure_adapter(:test, channel: "configured")
+
+    StandupMD::Cli.execute(
+      [
+        "--post", "test",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    message, options = RecordingPostAdapter.messages.first
+    assert_nil(message.channel)
+    assert_equal({channel: "configured"}, options)
   end
 
   def test_class_print

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
 require "standup_md/section"
 
 module StandupMD
@@ -21,7 +20,7 @@ module StandupMD
     #
     # @return [StandupMD::Config::Entry]
     def self.config
-      @config ||= StandupMD.config.entry
+      StandupMD.config.entry
     end
 
     ##
@@ -36,14 +35,33 @@ module StandupMD
     # Creates a generic entry. Default values can be set via configuration.
     # Yields the entry if a block is passed so you can change values.
     #
+    # @param [StandupMD::Config::Entry] config
+    #
+    # @param [Date] date
+    #
+    # @param [Array, nil] current
+    #
+    # @param [Array, nil] previous
+    #
+    # @param [Array, nil] impediments
+    #
+    # @param [Array, nil] notes
+    #
     # @return [StandupMD::Entry]
-    def self.create
+    def self.create(
+      config: StandupMD.config.entry,
+      date: Date.today,
+      current: nil,
+      previous: nil,
+      impediments: nil,
+      notes: nil
+    )
       new(
-        Date.today,
-        config.current,
-        config.previous,
-        config.impediments,
-        config.notes
+        date,
+        current || config.current,
+        previous || config.previous,
+        impediments || config.impediments,
+        notes || config.notes
       ).tap { |entry| yield entry if block_given? }
     end
 
@@ -62,7 +80,6 @@ module StandupMD
     def initialize(date, current, previous, impediments, notes = [])
       raise unless date.is_a?(Date)
 
-      @config = self.class.config
       @date = date
       @sections = {}
       self.current = current
@@ -110,7 +127,7 @@ module StandupMD
     end
 
     ##
-    # Entry as a hash .
+    # Entry as a hash.
     #
     # @return [Hash]
     def to_h
@@ -122,14 +139,6 @@ module StandupMD
           "notes" => notes
         }
       }
-    end
-
-    ##
-    # Entry as a json object.
-    #
-    # @return [String]
-    def to_json
-      to_h.to_json
     end
 
     private

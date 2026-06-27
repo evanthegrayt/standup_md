@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require "standup_md/parsers/markdown"
+require "standup_md/post"
 
 module StandupMD
   class Cli
     ##
-    # Module responsible for reading and writing standup files.
+    # Helpers for CLI commands and option handling.
     module Helpers
       ##
       # Print an entry to the command line.
@@ -16,17 +17,26 @@ module StandupMD
       def print(entry)
         return puts "No record found for #{config.cli.date}" if entry.nil?
 
-        puts header(entry)
-        config.file.sub_header_order.each do |header_type|
-          tasks = entry.public_send("#{header_type}_tasks")
-          next if tasks.empty?
+        $stdout.print markdown.render_entry(entry)
+      end
 
-          puts sub_header(header_type)
-          tasks.each do |task|
-            puts parser.task_line(task)
-          end
-        end
-        puts
+      ##
+      # Post an entry to the configured chat adapter.
+      #
+      # @param [StandupMD::Entry] entry
+      #
+      # @return [StandupMD::Post::Result, nil]
+      def post(entry)
+        return puts "No record found for #{config.cli.date}" if entry.nil?
+
+        result = StandupMD::Post.post(
+          entry,
+          adapter: config.cli.post_adapter,
+          channel: config.cli.post_channel,
+          config: config
+        )
+        puts "Could not post to #{result.adapter}: #{result.error}" if result.failure?
+        result
       end
 
       private
@@ -36,12 +46,12 @@ module StandupMD
       #
       # @return [StandupMD::Config]
       def config # :nodoc:
-        StandupMD.config
+        @config
       end
 
       ##
-      # Parses options passed at runtime and concatenates them with the options
-      # in the user's preferences file. Reveal source to see options.
+      # Parses options passed at runtime into this CLI invocation's config
+      # snapshot. Reveal source to see options.
       #
       # @return [Hash]
       def load_runtime_preferences(options)
@@ -69,28 +79,13 @@ module StandupMD
           ) { |v| config.entry.notes = v }
 
           opts.on(
-            "--sub-header-order ARRAY", Array,
-            "The order of the sub-headers when writing the file"
-          ) { |v| config.file.sub_header_order = v }
-
-          opts.on(
-            "--indent-width INTEGER", Integer,
-            "Number of spaces used for each nested task level"
-          ) { |v| config.file.indent_width = v }
-
-          opts.on(
-            "-f", "--file-name-format STRING",
-            "Date-formattable string to use for standup file name"
-          ) { |v| config.file.name_format = v }
-
-          opts.on(
             "-E", "--editor EDITOR",
             "Editor to use for opening standup files"
           ) { |v| config.cli.editor = v }
 
           opts.on(
             "-d", "--directory DIRECTORY",
-            "The directories where standup files are located"
+            "The directory where standup files are located"
           ) { |v| config.file.directory = v }
 
           opts.on(
@@ -122,12 +117,26 @@ module StandupMD
             "-p", "--print [DATE]",
             "Print current entry.",
             "If DATE is passed, will print entry for DATE, if it exists.",
-            "DATE must be in the same format as file-name-format"
+            "DATE must be in the same format as the entry header date."
           ) do |v|
             config.cli.print = true
             config.cli.date =
               v.nil? ? Date.today : Date.strptime(v, config.file.header_date_format)
           end
+
+          opts.on(
+            "-P", "--post [PLATFORM]",
+            "Post current entry to a chat client. Defaults to Slack.",
+            "If PLATFORM is passed, use that post adapter."
+          ) do |v|
+            config.cli.post = true
+            config.cli.post_adapter = v.nil? ? config.post.default_adapter : v.to_sym
+          end
+
+          opts.on(
+            "--post-channel CHANNEL",
+            "Channel, room, or conversation to post to"
+          ) { |v| config.cli.post_channel = v }
         end.parse!(options)
         if zsh_completion_requested?
           raise OptionParser::InvalidArgument, options.join(" ") unless options.empty?
@@ -165,7 +174,10 @@ module StandupMD
       # @return [Array]
       def previous_entry(file)
         return config.entry.previous unless config.cli.auto_fill_previous
-        return prev_entry_tasks(prev_file.load.entries) if file.new? && prev_file
+        if file.new?
+          previous_file = prev_file_exists?
+          return prev_entry_tasks(previous_file.load.entries) if previous_file
+        end
 
         prev_entry_tasks(file.entries)
       end
@@ -202,34 +214,24 @@ module StandupMD
       ##
       # The previous month's file.
       #
+      # @param [StandupMD::Config::File] config
+      #
       # @return [StandupMD::File]
-      def prev_file
-        StandupMD::File.find_by_date(Date.today.prev_month)
+      def prev_file(config: self.config.file)
+        StandupMD::File.find_by_date(Date.today.prev_month, config: config)
+      end
+
+      def prev_file_exists?
+        without_file_creation { |file_config| prev_file(config: file_config) }
+      rescue StandupMD::File::NotFoundError
+        nil
       end
 
       ##
-      # The header.
+      # Markdown renderer used for CLI output.
       #
-      # @param [StandupMD::Entry] entry
-      #
-      # @return [String]
-      def header(entry)
-        "#" * config.file.header_depth + " " +
-          entry.date.strftime(config.file.header_date_format)
-      end
-
-      ##
-      # The sub-header.
-      #
-      # @param [String] header_type
-      #
-      # @return [String]
-      def sub_header(header_type)
-        "#" * config.file.sub_header_depth + " " +
-          config.file.public_send("#{header_type}_header")
-      end
-
-      def parser
+      # @return [StandupMD::Parsers::Markdown]
+      def markdown
         StandupMD::Parsers::Markdown.new(config.file)
       end
     end

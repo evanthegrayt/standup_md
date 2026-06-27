@@ -3,7 +3,7 @@
 require "standup_md/config/cli"
 require "standup_md/config/file"
 require "standup_md/config/entry"
-require "standup_md/config/entry_list"
+require "standup_md/config/post"
 
 module StandupMD
   ##
@@ -28,10 +28,10 @@ module StandupMD
     attr_reader :entry
 
     ##
-    # Reader for EntryList config.
+    # Reader for Post config.
     #
-    # @return [StandupMD::Config::EntryList]
-    attr_reader :entry_list
+    # @return [StandupMD::Config::Post]
+    attr_reader :post
 
     ##
     # Builds the links to the configuration classes.
@@ -39,7 +39,20 @@ module StandupMD
       @cli = StandupMD::Config::Cli.new
       @file = StandupMD::Config::File.new
       @entry = StandupMD::Config::Entry.new
-      @entry_list = StandupMD::Config::EntryList.new
+      @post = StandupMD::Config::Post.new
+    end
+
+    ##
+    # Builds an independent snapshot of the current configuration.
+    #
+    # @return [StandupMD::Config]
+    def copy
+      self.class.new.tap do |config|
+        config.cli.copy_from(cli)
+        config.file.copy_from(file)
+        config.entry.copy_from(entry)
+        config.post.copy_from(post)
+      end
     end
   end
 end

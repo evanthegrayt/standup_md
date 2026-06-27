@@ -15,6 +15,15 @@ class TestFileConfig < TestHelper
     assert_equal(1, StandupMD.config.file.header_depth)
   end
 
+  def test_reset_copies_mutable_defaults
+    StandupMD.config.file.reset
+    StandupMD.config.file.sub_header_order << "mutated"
+
+    StandupMD.config.file.reset
+
+    assert_equal(%w[previous current impediments notes], StandupMD.config.file.sub_header_order)
+  end
+
   def test_bullet_character
     assert_equal("-", StandupMD.config.file.bullet_character)
     assert_nothing_raised { StandupMD.config.file.bullet_character = "*" }
@@ -57,6 +66,16 @@ class TestFileConfig < TestHelper
     assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
     assert_nothing_raised { StandupMD.config.file.name_format = "%y_%m.markdown" }
     assert_equal("%y_%m.markdown", StandupMD.config.file.name_format)
+  end
+
+  def test_directory_does_not_create_directory
+    directory = File.join(workdir, "missing")
+
+    refute(File.directory?(directory))
+    StandupMD.config.file.directory = directory
+
+    assert_equal(directory, StandupMD.config.file.directory)
+    refute(File.directory?(directory))
   end
 
   def test_current_header

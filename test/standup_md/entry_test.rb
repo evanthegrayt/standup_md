@@ -29,6 +29,29 @@ class TestEntry < TestHelper
     assert_equal(["testing"], standup.current)
   end
 
+  def test_create_accepts_runtime_config_and_overrides
+    runtime = StandupMD.config.entry.class.new
+    runtime.current = ["Runtime current"]
+    runtime.previous = ["Runtime previous"]
+    runtime.impediments = ["Runtime impediment"]
+    runtime.notes = ["Runtime note"]
+    date = Date.today.prev_day
+
+    standup = StandupMD::Entry.create(
+      config: runtime,
+      date: date,
+      current: ["Explicit current"],
+      notes: []
+    )
+
+    assert_equal(date, standup.date)
+    assert_equal(["Explicit current"], standup.current)
+    assert_equal(["Runtime previous"], standup.previous)
+    assert_equal(["Runtime impediment"], standup.impediments)
+    assert_equal([], standup.notes)
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
+  end
+
   def test_current
     assert_equal(["Current task"], @entry_one.current)
     @entry_one.current = ["test"]
@@ -53,6 +76,13 @@ class TestEntry < TestHelper
     assert_equal(["test"], @entry_one.notes)
   end
 
+  def test_sections
+    assert_equal(
+      StandupMD::Entry::SECTION_TYPES,
+      @entry_one.sections.map(&:type)
+    )
+  end
+
   def test_date
     assert_equal(Date.today, @entry_one.date)
     @entry_one.date = ["test"]
@@ -71,15 +101,6 @@ class TestEntry < TestHelper
         }
       },
       @entry_one.to_h
-    )
-  end
-
-  def test_to_json
-    assert_instance_of(String, @entry_one.to_json)
-    assert_equal(
-      "{\"#{Date.today}\":{\"current\":[\"Current task\"],\"previous\":" \
-      '["Previous task"],"impediments":["Impediment"],"notes":[]}}',
-      @entry_one.to_json
     )
   end
 end

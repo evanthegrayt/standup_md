@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "standup_md/version"
+require "standup_md/post"
 require "standup_md/config"
 require "standup_md/task"
-require "standup_md/title"
 require "standup_md/section"
 require "standup_md/entry"
 require "standup_md/entry_list"
@@ -21,7 +21,7 @@ module StandupMD
   ##
   # Method for accessing the configuration.
   #
-  # @return [StanupMD::Config]
+  # @return [StandupMD::Config]
   def config
     @config || reset_config
   end

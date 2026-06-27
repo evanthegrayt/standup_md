@@ -14,8 +14,8 @@ You can view the documentation
 [here](https://evanthegrayt.github.io/standup_md/).
 
 ## About
-I've now been at two separate companies where we post our daily standups in a
-chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day
+I've now been at multiple companies where we post our daily standups in a chat
+client, such as Slack, Mattermost, or Riot. Typing out my standup every day
 became tedious, as I'd have to look up what I did the day before, copy and paste
 yesterday's work into a new entry, and add today's tasks. This gem automates
 most of this process, along with providing means of opening the file in your
@@ -30,7 +30,9 @@ entry exists, it will be added to today's entry as your previous day's work. See
 this in your own code somehow.
 
 ## Installation
-If you don't have the permissions to install system-wide gems, you're probabaly
+Requires Ruby 3.2 or newer.
+
+If you don't have the permissions to install system-wide gems, you're probably
 also running an older version of ruby. I recommend installing
 [rbenv](https://github.com/rbenv/rbenv#installation), and then installing an
 up-to-date version of ruby.
@@ -132,6 +134,28 @@ your clipboard without even opening your editor.
 standup -p | pbcopy
 ```
 
+#### Post the entry for today to Slack
+You can also post today's entry directly to a chat client. Slack is the default
+adapter, so `standup -P` and `standup -P slack` are equivalent. Tokens are read
+from environment variables at post time, and are not stored in `~/.standuprc`.
+You can set a default channel via the
+[config](#available-config-file-options-and-defaults) via
+`c.post.configure_adapter(:slack, channel: "C123456")`.
+
+```sh
+export STANDUP_MD_SLACK_TOKEN="xoxb-your-token"
+standup -P slack --post-channel C123456
+```
+
+The same posting path is available from Ruby:
+
+```ruby
+file = StandupMD::File.find_by_date(Date.today).load
+entry = file.entries.find(Date.today)
+
+StandupMD::Post.post(entry, adapter: :slack, channel: "C123456")
+```
+
 #### Add entry to file without opening it
 You can add an entry for today without even opening your editor. Note that, if
 you have multiple entries, you must separate them with a comma and *no spaces*.
@@ -142,17 +166,17 @@ standup --no-edit --current "Work on this thing","And another thing"
 
 ### Customization and Runtime Options
 You can create a file in your home directory called `~/.standuprc`. Settings
-located in this file will override default behavior. This file can also have
-settings overwritten at runtime by the use of options. You can view [my config
-file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc)
-as an example. Any setting in this file can still be overridden at runtime by
-passing flags to the executable.
+located in this file define your application defaults. CLI flags can override
+those defaults for a single invocation, but they do not persist back into
+`StandupMD.config` or `~/.standuprc`. You can view
+[my config file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc)
+as an example.
 
 You'll notice, a lot of settings don't have the ability to be changed at runtime
-when calling the executable. This is because the file structure is very
+when calling the executable. This is because the markdown structure is very
 important, and changing values that affect formatting will cause problems with
-the file parser. If you don't want to use a default, make the change in your
-config file before you start editing standups.
+the markdown parser. If you don't want to use a default, make the change in
+your config file before you start editing standups.
 
 #### Available Config File Options and Defaults
 For command-line usage, this file needs to be named `~/.standuprc`. To use in a
@@ -161,7 +185,7 @@ rails project, create an initializer (`config/initializers/standup_md.rb`).
 ```ruby
 StandupMD.configure do |c|
   # Defaults for how the file is formatted.
-  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html
+  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/File.html
   c.file.header_date_format = "%Y-%m-%d"
   c.file.header_depth       = 1
   c.file.sub_header_depth   = 2
@@ -191,38 +215,143 @@ StandupMD.configure do |c|
   c.cli.edit               = true
   c.cli.write              = true
   c.cli.print              = false
+  c.cli.post               = false
+  c.cli.post_adapter       = nil
+  c.cli.post_channel       = nil
   c.cli.auto_fill_previous = true
   c.cli.preference_file    = ::File.expand_path(::File.join(ENV["HOME"], ".standuprc"))
+
+  # Defaults for posting standups to chat clients.
+  c.post.default_adapter = :slack
+  c.post.title           = nil
+  c.post.configure_adapter(
+    :slack,
+    channel: "C123456",
+    token_env: "STANDUP_MD_SLACK_TOKEN"
+  )
 end
 ```
 
 Any options not set in this file will retain their default values. Note that if
-you change `file_name_format`, and don't use a month or year, there will only
+you change `name_format`, and don't use a month or year, there will only
 ever be one standup file. This could cause issues long-term, as the files will
 get large over time and possibly cause performance issues.
 
 
 #### Executable Flags
-Some of these options can be changed at runtime. They are as follows.
+Some defaults can be overridden for a single CLI invocation. They are as
+follows.
 
-```
+```text
     --current ARRAY            List of current entry's tasks
     --previous ARRAY           List of previous entry's tasks
     --impediments ARRAY        List of impediments for current entry
     --notes ARRAY              List of notes for current entry
-    --sub-header-order ARRAY   The order of the sub-headers when writing the file
-    --indent-width INTEGER     Number of spaces used for each nested task level
--f, --file-name-format STRING  Date-formattable string to use for standup file name
 -E, --editor EDITOR            Editor to use for opening standup files
--d, --directory DIRECTORY      The directories where standup files are located
--w  --[no-]write               Write current entry if it doesn't exist. Default is true
--a  --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
--e  --[no-]edit                Open the file in the editor. Default is true
+-d, --directory DIRECTORY      The directory where standup files are located
+-w, --[no-]write               Write current entry if it doesn't exist. Default is true
+-a, --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
+-e, --[no-]edit                Open the file in the editor. Default is true
 -v, --[no-]verbose             Verbose output. Default is false.
     --zsh-completion           Print zsh completion setup instructions
 -p, --print [DATE]             Print current entry.
                                If DATE is passed, will print entry for DATE, if it exists.
-                               DATE must be in the same format as file-name-format
+                               DATE must be in the same format as the entry header date.
+-P, --post [PLATFORM]          Post current entry to a chat client. Defaults to Slack.
+                               If PLATFORM is passed, use that post adapter.
+    --post-channel CHANNEL     Channel, room, or conversation to post to
+```
+
+#### Posting and Secrets
+The built-in Slack adapter sends the rendered markdown entry to Slack's
+`chat.postMessage` API. It needs a Slack token with the `chat:write` scope and a
+channel or conversation. Channel-like IDs such as `C123456`, `G123456`, and
+`D123456` are the most reliable values to use. By default, the token is read
+from `STANDUP_MD_SLACK_TOKEN`.
+
+The recommended pattern is to keep secret values in the environment and store
+only non-secret adapter defaults in `~/.standuprc`:
+
+```ruby
+StandupMD.configure do |c|
+  c.post.configure_adapter(:slack, channel: "C123456")
+end
+```
+
+Most chat clients now prefer messages to come from an installed app or bot
+instead of a long-lived user token. That keeps permissions clearer, but it also
+means the visible sender might be a general name like "StandupMD" rather than
+the person whose update is being posted. Set `c.post.title` to identify the
+standup owner in the message title without changing the markdown files that
+StandupMD parses.
+
+```ruby
+StandupMD.configure do |c|
+  c.post.title = "%s - Evan Gray"
+end
+```
+
+The `%s` placeholder is replaced with the normal entry title, usually the entry
+date, so a stored `# 2026-06-27` entry posts as
+`# 2026-06-27 - Evan Gray`.
+
+To use a different token variable, set `token_env`.
+
+```ruby
+StandupMD.configure do |c|
+  c.post.configure_adapter(
+    :slack,
+    channel: "C123456",
+    token_env: "WORK_SLACK_TOKEN"
+  )
+end
+```
+
+#### Custom Post Adapters
+Adapters are registered in `~/.standuprc`. They receive a
+`StandupMD::Post::Message`, which includes the rendered markdown text and the
+channel passed through `StandupMD::Post.post` or `--post-channel`.
+
+```ruby
+class TeamsAdapter
+  def initialize(options = {})
+    @options = options
+  end
+
+  def post(message)
+    channel = message.channel || @options[:channel]
+    token = ENV.fetch("TEAMS_TOKEN")
+
+    # Send message.text to channel with token.
+
+    StandupMD::Post::Result.success(
+      adapter: message.adapter,
+      channel: channel
+    )
+  end
+end
+
+StandupMD.configure do |c|
+  c.post.register_adapter(:teams, TeamsAdapter)
+  c.post.configure_adapter(:teams, channel: "team-channel-id")
+end
+```
+
+Custom adapters can be used from either the CLI or the Ruby API:
+
+```ruby
+StandupMD::Post.post(entry, adapter: :teams, channel: "team-channel-id")
+```
+
+For request-scoped API usage, copy the global defaults and pass the copy into
+the operation:
+
+```ruby
+runtime = StandupMD.config.copy
+runtime.post.default_adapter = :teams
+runtime.post.configure_adapter(:teams, channel: "team-channel-id")
+
+StandupMD::Post.post(entry, config: runtime)
 ```
 
 #### Using Existing Standup Files
@@ -242,8 +371,8 @@ they must be in a format that the parser can understand. The default is:
 ```
 
 The order, words, date format, and header level are all customizable, but the
-overall format must be the same. If customization is necessary, this must be
-done in `~/.standuprc` before execution, or else the parser will error.
+overall format must be the same. If customization is necessary, set the defaults
+or pass a runtime config before reading the file, or else the parser will error.
 
 For example, if you wanted the format to be as follows:
 
@@ -279,9 +408,30 @@ end
 The API is fully documented in the
 [RDoc Documentation](https://evanthegrayt.github.io/standup_md/).
 
-This was mainly written as a command line utility, but the API is very robust,
-and is available for use in your own projects. A quick example of how to write a
-new entry via code could look like the following:
+This was mainly written as a command line utility, but the API is available for
+use in your own projects. `StandupMD.config` stores application defaults. For
+web requests, jobs, or any other multi-call environment, copy those defaults and
+pass the copy into the operation you are running.
+
+`StandupMD::File` handles reading and writing files on disk. The markdown parser
+handles markdown strings:
+
+```ruby
+parser = StandupMD::Parsers::Markdown.new
+entries = parser.parse(File.read("2026_06.md"))
+markdown = parser.render(entries, start_date: entries.first.date, end_date: entries.last.date)
+```
+
+```ruby
+runtime = StandupMD.config.copy
+runtime.file.directory = "/tmp/request-standups"
+runtime.entry.current = ["Work scoped to this request"]
+
+file = StandupMD::File.find_by_date(Date.today, config: runtime.file).load
+entry = StandupMD::Entry.create(config: runtime.entry)
+file.entries << entry
+file.write
+```
 
 ### API Examples
 #### Adding an entry for today
@@ -289,27 +439,29 @@ new entry via code could look like the following:
 require "standup_md"
 
 StandupMD.configure do |c|
-  c.file.current_header = "Today",
+  c.file.current_header = "Today"
 end
 
-file = StandupMD::File.find_by_date(Date.today)
-entry = StandupMD::Entry.create { |e| e.current = ["Stuff I will do today"] }
+file = StandupMD::File.find_by_date(Date.today).load
+entry = StandupMD::Entry.create(current: ["Stuff I will do today"])
 file.entries << entry
 file.write
 ```
 
-The above example was written as such to show how the different pieces of the
-API fit together. The code can actually be simplified to the following.
+The above example uses global defaults. To keep runtime choices scoped to one
+request, copy the defaults and pass the copy into each operation.
 
 ```ruby
 require "standup_md"
 
-StandupMD.configure do |c|
-  c.file.current_header = "Today",
-  c.entry.current = ["Stuff I will do today"]
-end
+runtime = StandupMD.config.copy
+runtime.file.current_header = "Today"
+runtime.entry.current = ["Stuff I will do today"]
 
-StandupMD::File.find_by_date(Date.today).load.write
+file = StandupMD::File.find_by_date(Date.today, config: runtime.file).load
+entry = StandupMD::Entry.create(config: runtime.entry)
+file.entries << entry
+file.write
 ```
 
 #### Finding a past entry
@@ -349,7 +501,7 @@ command, that file will be opened. There's tab completion for this. Lastly,
 it allows for a few variables to be set for customization.
 
 ```vim
-g:standup_dir = $HOME . '/.cache/standup_md' " the directory where your file are
+g:standup_dir = $HOME . '/.cache/standup_md' " the directory where your files are
 g:standup_file = strftime('%Y_%m.md')        " the file format to use
 ```
 

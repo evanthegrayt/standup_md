@@ -15,6 +15,15 @@ class TestEntryConfig < TestHelper
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
   end
 
+  def test_reset_copies_mutable_defaults
+    StandupMD.config.entry.reset
+    StandupMD.config.entry.current << "mutated"
+
+    StandupMD.config.entry.reset
+
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
+  end
+
   def test_current
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
     assert_nothing_raised { StandupMD.config.entry.current = ["An array"] }

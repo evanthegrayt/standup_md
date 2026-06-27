@@ -26,6 +26,12 @@ module StandupMD
       }.freeze
 
       ##
+      # Attributes copied into request-scoped config snapshots.
+      #
+      # @return [Array<Symbol>]
+      CONFIG_ATTRIBUTES = DEFAULTS.keys.freeze
+
+      ##
       # Number of octothorps that should preface entry headers.
       #
       # @return [Integer] between 1 and 5
@@ -153,7 +159,31 @@ module StandupMD
       #
       # @return [Hash]
       def reset
-        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", copy_default(v)) }
+      end
+
+      ##
+      # Builds an independent copy of this file config.
+      #
+      # @return [StandupMD::Config::File]
+      def copy
+        self.class.new.copy_from(self)
+      end
+
+      ##
+      # Copies values from another file config.
+      #
+      # @param [StandupMD::Config::File] config
+      #
+      # @return [StandupMD::Config::File]
+      def copy_from(config)
+        CONFIG_ATTRIBUTES.each do |attribute|
+          instance_variable_set(
+            "@#{attribute}",
+            copy_default(config.public_send(attribute))
+          )
+        end
+        self
       end
 
       ##
@@ -209,17 +239,21 @@ module StandupMD
 
       ##
       # Setter for directory. Must be expanded in case the user uses `~` for
-      # home. If the directory doesn't exist, it will be created. To reset
-      # instance variables after changing the directory, you'll need to call
-      # load.
+      # home. Directory creation is handled by StandupMD::File.
       #
       # @param [String] directory
       #
       # @return [String]
       def directory=(directory)
-        @directory = ::File.expand_path(directory).tap do |directory|
-          FileUtils.mkdir_p(directory) unless ::File.directory?(directory)
-        end
+        @directory = ::File.expand_path(directory)
+      end
+
+      private
+
+      def copy_default(value)
+        return value.dup if value.is_a?(Array) || value.is_a?(Hash)
+
+        value
       end
     end
   end
