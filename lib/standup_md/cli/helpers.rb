@@ -79,21 +79,6 @@ module StandupMD
           ) { |v| config.entry.notes = v }
 
           opts.on(
-            "--sub-header-order ARRAY", Array,
-            "The order of the sub-headers when writing the file"
-          ) { |v| config.file.sub_header_order = v }
-
-          opts.on(
-            "--indent-width INTEGER", Integer,
-            "Number of spaces used for each nested task level"
-          ) { |v| config.file.indent_width = v }
-
-          opts.on(
-            "-f", "--file-name-format STRING",
-            "Date-formattable string to use for standup file name"
-          ) { |v| config.file.name_format = v }
-
-          opts.on(
             "-E", "--editor EDITOR",
             "Editor to use for opening standup files"
           ) { |v| config.cli.editor = v }
@@ -132,7 +117,7 @@ module StandupMD
             "-p", "--print [DATE]",
             "Print current entry.",
             "If DATE is passed, will print entry for DATE, if it exists.",
-            "DATE must be in the same format as file-name-format"
+            "DATE must be in the same format as the entry header date."
           ) do |v|
             config.cli.print = true
             config.cli.date =
@@ -238,7 +223,7 @@ module StandupMD
 
       def prev_file_exists?
         without_file_creation { |file_config| prev_file(config: file_config) }
-      rescue
+      rescue StandupMD::File::NotFoundError
         nil
       end
 

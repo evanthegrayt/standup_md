@@ -4,19 +4,6 @@ _standup_array_values() {
   _message -e values 'comma-separated list'
 }
 
-_standup_sub_header_order() {
-  local -a headers
-
-  headers=(
-    'previous:previous entry tasks'
-    'current:current entry tasks'
-    'impediments:current entry impediments'
-    'notes:current entry notes'
-  )
-
-  _values -s , 'sub-header' $headers
-}
-
 _standup_dates() {
   local directory="${STANDUP_MD_DIR:-$HOME/.cache/standup_md}"
   local index
@@ -71,10 +58,6 @@ _arguments -s -S \
   '--previous[List of previous entry tasks]:tasks:_standup_array_values' \
   '--impediments[List of impediments for current entry]:impediments:_standup_array_values' \
   '--notes[List of notes for current entry]:notes:_standup_array_values' \
-  '--sub-header-order[The order of the sub-headers when writing the file]:sub-header order:_standup_sub_header_order' \
-  '--indent-width[Number of spaces used for each nested task level]:indent width:' \
-  '(-f --file-name-format)-f[Date-formattable string to use for standup file name]:strftime format:' \
-  '(-f --file-name-format)--file-name-format[Date-formattable string to use for standup file name]:strftime format:' \
   '(-E --editor)-E[Editor to use for opening standup files]:editor:_path_commands' \
   '(-E --editor)--editor[Editor to use for opening standup files]:editor:_path_commands' \
   '(-d --directory)-d[The directory where standup files are located]:directory:_directories' \

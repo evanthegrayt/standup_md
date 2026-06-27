@@ -110,6 +110,40 @@ class TestPost < TestHelper
     assert_match(/\n- Current task\n/, message.text)
   end
 
+  def test_post_entry_applies_configured_title
+    StandupMD.config.post.register_adapter(:test, RecordingAdapter)
+    StandupMD.config.post.title = "%s - Evan Gray"
+    entry = StandupMD::Entry.new(
+      Date.new(2026, 6, 27),
+      ["Current task"],
+      ["Previous task"],
+      []
+    )
+
+    StandupMD::Post.post(entry, adapter: :test)
+
+    message, = RecordingAdapter.messages.first
+    assert_equal("# 2026-06-27 - Evan Gray", message.text.lines.first.chomp)
+    assert_match(/\n## Current\n- Current task\n/, message.text)
+  end
+
+  def test_post_entry_title_uses_configured_date_format
+    StandupMD.config.file.header_date_format = "%m/%d/%Y"
+    StandupMD.config.post.register_adapter(:test, RecordingAdapter)
+    StandupMD.config.post.title = "%s - Evan Gray"
+    entry = StandupMD::Entry.new(
+      Date.new(2026, 6, 27),
+      ["Current task"],
+      [],
+      []
+    )
+
+    StandupMD::Post.post(entry, adapter: :test)
+
+    message, = RecordingAdapter.messages.first
+    assert_equal("# 06/27/2026 - Evan Gray", message.text.lines.first.chomp)
+  end
+
   def test_post_entry_uses_default_adapter
     StandupMD.config.post.default_adapter = :test
     StandupMD.config.post.register_adapter(:test, RecordingAdapter)
@@ -123,6 +157,7 @@ class TestPost < TestHelper
   def test_post_entry_accepts_runtime_config
     runtime = StandupMD.config.copy
     runtime.file.current_header = "Today"
+    runtime.post.title = "%s - Evan Gray"
     runtime.post.default_adapter = :test
     runtime.post.register_adapter(:test, RecordingAdapter)
     runtime.post.configure_adapter(:test, channel: "runtime-config")
@@ -131,14 +166,17 @@ class TestPost < TestHelper
 
     message, options = RecordingAdapter.messages.first
     assert_equal(:test, message.adapter)
+    assert_match(/\A# .+ - Evan Gray/, message.text)
     assert_match(/## Today/, message.text)
     assert_equal({channel: "runtime-config"}, options)
     assert_equal("Current", StandupMD.config.file.current_header)
     assert_equal(:slack, StandupMD.config.post.default_adapter)
+    assert_nil(StandupMD.config.post.title)
   end
 
   def test_post_entry_allows_pre_rendered_text
     StandupMD.config.post.register_adapter(:test, RecordingAdapter)
+    StandupMD.config.post.title = "%s - Evan Gray"
     entry = StandupMD::Entry.create
 
     StandupMD::Post.post(entry, adapter: :test, text: "custom body")

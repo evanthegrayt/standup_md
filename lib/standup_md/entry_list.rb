@@ -10,14 +10,6 @@ module StandupMD
     include Enumerable
 
     ##
-    # Access to the class's configuration.
-    #
-    # @return [StandupMD::Config::EntryList]
-    def self.config
-      StandupMD.config.entry_list
-    end
-
-    ##
     # Construct a list. Can pass any amount of +StandupMD::Entry+ instances.
     #
     # @param [Entry] entries

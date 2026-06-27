@@ -12,7 +12,8 @@ module StandupMD
       #
       # @return [Hash]
       DEFAULTS = {
-        default_adapter: :slack
+        default_adapter: :slack,
+        title: nil
       }.freeze
 
       ##
@@ -26,6 +27,21 @@ module StandupMD
       #
       # @return [Symbol]
       attr_accessor :default_adapter
+
+      ##
+      # Format string for posted entry titles.
+      #
+      # This only affects messages sent through chat posting adapters. It does
+      # not change stored standup markdown files. Use `%s` as a placeholder for
+      # the normal entry title, such as the entry date. This is useful when chat
+      # clients post through workspace apps or bots with shared names like
+      # "StandupMD", but the message should still identify whose standup it is.
+      #
+      # @example Include the person's name after the entry date
+      #   StandupMD.config.post.title = "%s - Evan Gray"
+      #
+      # @return [String, nil]
+      attr_accessor :title
 
       ##
       # Registered adapter classes or instances.

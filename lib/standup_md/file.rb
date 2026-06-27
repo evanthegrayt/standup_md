@@ -8,6 +8,10 @@ module StandupMD
   ##
   # Class for handling reading and writing standup files.
   class File
+    ##
+    # Raised when a standup file or directory is missing and creation is off.
+    class NotFoundError < StandardError; end
+
     class << self
       ##
       # Access to the class's configuration.
@@ -25,11 +29,6 @@ module StandupMD
       #
       # @return [StandupMD::File]
       def load(file_name, config: StandupMD.config.file)
-        unless ::File.directory?(config.directory)
-          raise "Dir #{config.directory} not found." unless config.create
-
-          FileUtils.mkdir_p(config.directory)
-        end
         new(file_name, config: config).load
       end
 
@@ -41,16 +40,6 @@ module StandupMD
       #
       # @return [StandupMD::File]
       def find(file_name, config: StandupMD.config.file)
-        unless ::File.directory?(config.directory)
-          raise "Dir #{config.directory} not found." unless config.create
-
-          FileUtils.mkdir_p(config.directory)
-        end
-        file_path = ::File.join(config.directory, file_name)
-        unless ::File.file?(file_path) || config.create
-          raise "File #{file_name} not found."
-        end
-
         new(file_name, config: config)
       end
 
@@ -64,11 +53,6 @@ module StandupMD
       def find_by_date(date, config: StandupMD.config.file)
         raise ArgumentError, "Must be a Date object" unless date.is_a?(Date)
 
-        unless ::File.directory?(config.directory)
-          raise "Dir #{config.directory} not found." unless config.create
-
-          FileUtils.mkdir_p(config.directory)
-        end
         find(date.strftime(config.name_format), config: config)
       end
     end
@@ -100,19 +84,9 @@ module StandupMD
           "#{file_name} contains directory. Configure the file directory separately."
       end
 
-      unless ::File.directory?(@config.directory)
-        raise "Dir #{@config.directory} not found." unless @config.create
-
-        FileUtils.mkdir_p(@config.directory)
-      end
-
+      ensure_directory
       @name = ::File.expand_path(::File.join(@config.directory, file_name))
-
-      unless ::File.file?(@name)
-        raise "File #{@name} not found." unless @config.create
-
-        FileUtils.touch(@name)
-      end
+      ensure_file
 
       @new = ::File.zero?(@name)
       @loaded = false
@@ -147,7 +121,7 @@ module StandupMD
     #
     # @return [StandupMD::File]
     def load
-      raise "File #{name} does not exist." unless ::File.file?(name)
+      raise NotFoundError, "File #{name} does not exist." unless ::File.file?(name)
 
       @loaded = true
       @entries = @parser.parse(::File.read(name))
@@ -162,6 +136,8 @@ module StandupMD
     #
     # @return [Boolean] true if successful
     def write(**dates)
+      raise ArgumentError, "No entries loaded for #{name}" if entries.nil? || entries.empty?
+
       sorted_entries = entries.sort
       start_date = dates.fetch(:start_date, sorted_entries.first.date)
       end_date = dates.fetch(:end_date, sorted_entries.last.date)
@@ -170,6 +146,22 @@ module StandupMD
         @parser.render(sorted_entries, start_date: start_date, end_date: end_date)
       )
       true
+    end
+
+    private
+
+    def ensure_directory
+      return if ::File.directory?(@config.directory)
+      raise NotFoundError, "Dir #{@config.directory} not found." unless @config.create
+
+      FileUtils.mkdir_p(@config.directory)
+    end
+
+    def ensure_file
+      return if ::File.file?(@name)
+      raise NotFoundError, "File #{@name} not found." unless @config.create
+
+      FileUtils.touch(@name)
     end
   end
 end

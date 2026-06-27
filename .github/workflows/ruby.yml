@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-22.04
+    env:
+      BUNDLER_VERSION: 4.0.10
 
     strategy:
       fail-fast: false
@@ -17,23 +19,19 @@ jobs:
         ruby-version: ['3.2', '3.3', '4.0']
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Set up Ruby and Bundler
       - name: Set up Ruby ${{ matrix.ruby-version }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler: ${{ matrix.ruby-version == '4.0' && '4.0.9' || '2.4.13' }}
+          bundler: ${{ env.BUNDLER_VERSION }}
           bundler-cache: true
 
       - name: Print Ruby and Bundler versions
         run: |
           ruby -v
           bundle -v
-
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
 
       - name: Run tests
         run: bundle exec rake

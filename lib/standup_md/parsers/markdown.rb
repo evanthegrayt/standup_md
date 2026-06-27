@@ -14,6 +14,10 @@ module StandupMD
     # Parser and renderer for the markdown standup format.
     class Markdown
       ##
+      # Raised when markdown cannot be parsed into standup entries.
+      class Error < StandardError; end
+
+      ##
       # Access to file configuration.
       #
       # @return [StandupMD::Config::File]
@@ -58,7 +62,7 @@ module StandupMD
         entry_list << entry(record) if record
         entry_list.sort
       rescue => e
-        raise "Markdown malformation: #{e}"
+        raise Error, "Markdown malformation: #{e.message}"
       end
 
       ##

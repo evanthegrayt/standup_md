@@ -35,7 +35,7 @@ module StandupMD
       adapter_name = (adapter || config.post.default_adapter).to_sym
       message = Message.new(
         entry: entry,
-        text: text || (renderer || default_renderer(config)).render_entry(entry),
+        text: text || render_post_text(entry, renderer, config),
         channel: channel,
         adapter: adapter_name
       )
@@ -50,6 +50,35 @@ module StandupMD
     # @return [StandupMD::Parsers::Markdown]
     def default_renderer(config = StandupMD.config)
       StandupMD::Parsers::Markdown.new(config.file)
+    end
+
+    ##
+    # Renders text for a posted entry.
+    #
+    # @param entry [StandupMD::Entry]
+    # @param renderer [Object, nil]
+    # @param config [StandupMD::Config]
+    #
+    # @return [String]
+    def render_post_text(entry, renderer, config)
+      text = (renderer || default_renderer(config)).render_entry(entry)
+      apply_post_title(text, entry, config)
+    end
+
+    ##
+    # Applies the configured post title format to the first entry header.
+    #
+    # @param text [String]
+    # @param entry [StandupMD::Entry]
+    # @param config [StandupMD::Config]
+    #
+    # @return [String]
+    def apply_post_title(text, entry, config)
+      return text unless config.post.title
+
+      title = config.post.title % entry.date.strftime(config.file.header_date_format)
+      header = "#" * config.file.header_depth
+      text.sub(/\A#{Regexp.escape(header)}\s+.*$/, "#{header} #{title}")
     end
   end
 end

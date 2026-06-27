@@ -69,16 +69,6 @@ class TestHelper < Test::Unit::TestCase
   end
 
   ##
-  # Creates +StandupUP+ instance. Directory must be passed, usually a
-  # subdirectory of +test+, so we don't overwrite the user's standup file.
-  def standup(directory, **args)
-    args["directory"] = directory
-    StandupMD.load do |s|
-      args.each { |k, v| s.public_send("#{k}=", v) }
-    end
-  end
-
-  ##
   # Creates the standup file with entries.
   def create_standup_file(file, fixture = "previous_entry")
     dir = File.dirname(file)

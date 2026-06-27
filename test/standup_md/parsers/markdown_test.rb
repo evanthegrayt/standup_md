@@ -31,7 +31,7 @@ class TestMarkdownParser < TestHelper
   end
 
   def test_parse_requires_exact_section_header
-    assert_raise_message(/Unrecognized header \[Currently\]/) do
+    error = assert_raise(StandupMD::Parsers::Markdown::Error) do
       @parser.parse(
         <<~MARKDOWN
           # 2026-06-26
@@ -40,6 +40,7 @@ class TestMarkdownParser < TestHelper
         MARKDOWN
       )
     end
+    assert_match(/Unrecognized header \[Currently\]/, error.message)
   end
 
   def test_render_entry

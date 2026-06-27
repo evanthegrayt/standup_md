@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary = %(The cure for all your standup woes)
   spec.description = %(Generate and edit standups in markdown format)
   spec.homepage = "https://evanthegrayt.github.io/standup_md/"
+  spec.required_ruby_version = ">= 3.2"
 
   unless spec.respond_to?(:metadata)
     raise "RubyGems 2.0 or newer is required to protect against " \

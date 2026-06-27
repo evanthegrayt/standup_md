@@ -39,7 +39,7 @@ class TestFile < TestHelper
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
     StandupMD.config.file.create = false
-    assert_raise { StandupMD::File.find("noexist") }
+    assert_raise(StandupMD::File::NotFoundError) { StandupMD::File.find("noexist") }
     StandupMD.config.file.create = true
     assert_nothing_raised { StandupMD::File.find("noexist") }
   end
@@ -82,7 +82,7 @@ class TestFile < TestHelper
     assert_instance_of(StandupMD::File, file)
     assert_equal(test_file_name, file.name)
     StandupMD.config.file.create = false
-    assert_raise { StandupMD::File.find_by_date(Date.today.prev_year) }
+    assert_raise(StandupMD::File::NotFoundError) { StandupMD::File.find_by_date(Date.today.prev_year) }
     StandupMD.config.file.create = true
     assert_nothing_raised { StandupMD::File.find_by_date(Date.today.prev_year) }
   end
@@ -108,7 +108,9 @@ class TestFile < TestHelper
     runtime.create = false
     missing = Date.today.prev_year
 
-    assert_raise { StandupMD::File.find_by_date(missing, config: runtime) }
+    assert_raise(StandupMD::File::NotFoundError) do
+      StandupMD::File.find_by_date(missing, config: runtime)
+    end
     assert(StandupMD.config.file.create)
   end
 
@@ -173,6 +175,10 @@ class TestFile < TestHelper
     assert(@file.write)
     refute(::File.zero?(@file.name))
     assert_nothing_raised { @file.load }
+  end
+
+  def test_write_requires_loaded_entries
+    assert_raise(ArgumentError) { @file.write }
   end
 
   def test_write_renders_entries_before_writing_file

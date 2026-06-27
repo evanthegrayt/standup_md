@@ -14,8 +14,8 @@ You can view the documentation
 [here](https://evanthegrayt.github.io/standup_md/).
 
 ## About
-I've now been at two separate companies where we post our daily standups in a
-chat client, such as Slack, Mattermost, or Riot. Typing out my standup every day
+I've now been at multiple companies where we post our daily standups in a chat
+client, such as Slack, Mattermost, or Riot. Typing out my standup every day
 became tedious, as I'd have to look up what I did the day before, copy and paste
 yesterday's work into a new entry, and add today's tasks. This gem automates
 most of this process, along with providing means of opening the file in your
@@ -30,6 +30,8 @@ entry exists, it will be added to today's entry as your previous day's work. See
 this in your own code somehow.
 
 ## Installation
+Requires Ruby 3.2 or newer.
+
 If you don't have the permissions to install system-wide gems, you're probably
 also running an older version of ruby. I recommend installing
 [rbenv](https://github.com/rbenv/rbenv#installation), and then installing an
@@ -136,6 +138,9 @@ standup -p | pbcopy
 You can also post today's entry directly to a chat client. Slack is the default
 adapter, so `standup -P` and `standup -P slack` are equivalent. Tokens are read
 from environment variables at post time, and are not stored in `~/.standuprc`.
+You can set a default channel via the
+[config](#available-config-file-options-and-defaults) via
+`c.post.configure_adapter(:slack, channel: "C123456")`.
 
 ```sh
 export STANDUP_MD_SLACK_TOKEN="xoxb-your-token"
@@ -218,6 +223,7 @@ StandupMD.configure do |c|
 
   # Defaults for posting standups to chat clients.
   c.post.default_adapter = :slack
+  c.post.title           = nil
   c.post.configure_adapter(
     :slack,
     channel: "C123456",
@@ -236,24 +242,21 @@ get large over time and possibly cause performance issues.
 Some defaults can be overridden for a single CLI invocation. They are as
 follows.
 
-```
+```text
     --current ARRAY            List of current entry's tasks
     --previous ARRAY           List of previous entry's tasks
     --impediments ARRAY        List of impediments for current entry
     --notes ARRAY              List of notes for current entry
-    --sub-header-order ARRAY   The order of the sub-headers when writing the file
-    --indent-width INTEGER     Number of spaces used for each nested task level
--f, --file-name-format STRING  Date-formattable string to use for standup file name
 -E, --editor EDITOR            Editor to use for opening standup files
 -d, --directory DIRECTORY      The directory where standup files are located
--w  --[no-]write               Write current entry if it doesn't exist. Default is true
--a  --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
--e  --[no-]edit                Open the file in the editor. Default is true
+-w, --[no-]write               Write current entry if it doesn't exist. Default is true
+-a, --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
+-e, --[no-]edit                Open the file in the editor. Default is true
 -v, --[no-]verbose             Verbose output. Default is false.
     --zsh-completion           Print zsh completion setup instructions
 -p, --print [DATE]             Print current entry.
                                If DATE is passed, will print entry for DATE, if it exists.
-                               DATE must be in the same format as file-name-format
+                               DATE must be in the same format as the entry header date.
 -P, --post [PLATFORM]          Post current entry to a chat client. Defaults to Slack.
                                If PLATFORM is passed, use that post adapter.
     --post-channel CHANNEL     Channel, room, or conversation to post to
@@ -274,6 +277,23 @@ StandupMD.configure do |c|
   c.post.configure_adapter(:slack, channel: "C123456")
 end
 ```
+
+Most chat clients now prefer messages to come from an installed app or bot
+instead of a long-lived user token. That keeps permissions clearer, but it also
+means the visible sender might be a general name like "StandupMD" rather than
+the person whose update is being posted. Set `c.post.title` to identify the
+standup owner in the message title without changing the markdown files that
+StandupMD parses.
+
+```ruby
+StandupMD.configure do |c|
+  c.post.title = "%s - Evan Gray"
+end
+```
+
+The `%s` placeholder is replaced with the normal entry title, usually the entry
+date, so a stored `# 2026-06-27` entry posts as
+`# 2026-06-27 - Evan Gray`.
 
 To use a different token variable, set `token_env`.
 

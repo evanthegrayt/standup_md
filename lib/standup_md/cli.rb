@@ -242,7 +242,7 @@ module StandupMD
       without_file_creation do |file_config|
         StandupMD::File.find_by_date(@config.cli.date, config: file_config)
       end
-    rescue
+    rescue StandupMD::File::NotFoundError
       raise unless @config.cli.print || @config.cli.post
 
       nil

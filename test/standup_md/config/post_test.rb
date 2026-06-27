@@ -27,15 +27,30 @@ class TestPostConfig < TestHelper
 
   def test_reset
     StandupMD.config.post.default_adapter = :teams
+    StandupMD.config.post.title = "%s - Test"
     StandupMD.config.post.register_adapter(:teams, OptionAdapter)
     StandupMD.config.post.reset
 
     assert_equal(:slack, StandupMD.config.post.default_adapter)
+    assert_nil(StandupMD.config.post.title)
     assert_equal(
       StandupMD::Post::Adapters::Slack,
       StandupMD.config.post.adapters[:slack]
     )
     refute(StandupMD.config.post.adapters.key?(:teams))
+  end
+
+  def test_title
+    assert_nil(StandupMD.config.post.title)
+    assert_nothing_raised { StandupMD.config.post.title = "%s - Evan Gray" }
+    assert_equal("%s - Evan Gray", StandupMD.config.post.title)
+  end
+
+  def test_copy_from_copies_title
+    StandupMD.config.post.title = "%s - Evan Gray"
+    copy = StandupMD.config.post.class.new.copy_from(StandupMD.config.post)
+
+    assert_equal("%s - Evan Gray", copy.title)
   end
 
   def test_configure_adapter

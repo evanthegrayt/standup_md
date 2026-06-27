@@ -3,7 +3,6 @@
 require "standup_md/config/cli"
 require "standup_md/config/file"
 require "standup_md/config/entry"
-require "standup_md/config/entry_list"
 require "standup_md/config/post"
 
 module StandupMD
@@ -29,12 +28,6 @@ module StandupMD
     attr_reader :entry
 
     ##
-    # Reader for EntryList config.
-    #
-    # @return [StandupMD::Config::EntryList]
-    attr_reader :entry_list
-
-    ##
     # Reader for Post config.
     #
     # @return [StandupMD::Config::Post]
@@ -46,7 +39,6 @@ module StandupMD
       @cli = StandupMD::Config::Cli.new
       @file = StandupMD::Config::File.new
       @entry = StandupMD::Config::Entry.new
-      @entry_list = StandupMD::Config::EntryList.new
       @post = StandupMD::Config::Post.new
     end
 
@@ -59,7 +51,6 @@ module StandupMD
         config.cli.copy_from(cli)
         config.file.copy_from(file)
         config.entry.copy_from(entry)
-        config.entry_list.copy_from(entry_list)
         config.post.copy_from(post)
       end
     end

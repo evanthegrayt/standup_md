@@ -31,7 +31,6 @@ class TestCli < TestHelper
     StandupMD.config.cli.reset
     StandupMD.config.file.reset
     StandupMD.config.entry.reset
-    StandupMD.config.entry_list.reset
     StandupMD.config.post.reset
     StandupMD.config.cli.preference_file = test_config_file_name
     StandupMD.config.file.directory = workdir
@@ -47,7 +46,6 @@ class TestCli < TestHelper
     StandupMD.config.cli.reset
     StandupMD.config.file.reset
     StandupMD.config.entry.reset
-    StandupMD.config.entry_list.reset
     StandupMD.config.post.reset
   end
 
@@ -435,43 +433,22 @@ class TestCli < TestHelper
     assert_equal([], StandupMD.config.entry.notes)
   end
 
-  def test_sub_header_order
-    c = cli(["--directory", workdir.to_s])
-    assert_equal(%w[previous current impediments notes], c.config.file.sub_header_order)
-    assert_equal(%w[previous current impediments notes], StandupMD.config.file.sub_header_order)
+  def test_file_format_options_are_config_only
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["--sub-header-order", "current,previous", "--directory", workdir.to_s])
+    end
 
-    c = cli(
-      ["--sub-header-order", "current,previous,notes,impediments", "--directory", workdir.to_s],
-      load_config: false
-    )
-    assert_equal(
-      %w[current previous notes impediments],
-      c.config.file.sub_header_order
-    )
-    assert_equal(
-      %w[previous current impediments notes],
-      StandupMD.config.file.sub_header_order
-    )
-  end
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["--indent-width", "4", "--directory", workdir.to_s])
+    end
 
-  def test_indent_width
-    c = cli(["--directory", workdir.to_s])
-    assert_equal(2, c.config.file.indent_width)
-    assert_equal(2, StandupMD.config.file.indent_width)
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["--file-name-format", "%y_%m.md", "--directory", workdir.to_s])
+    end
 
-    c = cli(["--indent-width", "4", "--directory", workdir.to_s])
-    assert_equal(4, c.config.file.indent_width)
-    assert_equal(2, StandupMD.config.file.indent_width)
-  end
-
-  def test_file_name_format
-    c = cli(["--directory", workdir.to_s], load_config: false)
-    assert_equal("%Y_%m.md", c.config.file.name_format)
-    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
-
-    c = cli(["--file-name-format", "%y_%m.md", "--directory", workdir.to_s])
-    assert_equal("%y_%m.md", c.config.file.name_format)
-    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
+    assert_raise(OptionParser::InvalidOption) do
+      cli(["-f", "%y_%m.md", "--directory", workdir.to_s])
+    end
   end
 
   def test_editor
