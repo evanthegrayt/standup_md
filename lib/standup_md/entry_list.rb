@@ -124,14 +124,6 @@ module StandupMD
       end.to_h
     end
 
-    ##
-    # The entry list as a json object.
-    #
-    # @return [String]
-    def to_json
-      to_h.to_json
-    end
-
     # :section: Delegators
 
     ##

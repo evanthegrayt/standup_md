@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "standup_md/parsers/markdown"
+require "standup_md/post"
 
 module StandupMD
   class Cli
@@ -16,7 +17,7 @@ module StandupMD
       def print(entry)
         return puts "No record found for #{config.cli.date}" if entry.nil?
 
-        puts entry_markdown(entry)
+        $stdout.print markdown.render_entry(entry)
       end
 
       ##
@@ -28,37 +29,13 @@ module StandupMD
       def post(entry)
         return puts "No record found for #{config.cli.date}" if entry.nil?
 
-        adapter = config.cli.post_adapter || config.post.default_adapter
-        message = StandupMD::Post::Message.new(
-          entry: entry,
-          text: entry_markdown(entry),
-          channel: config.cli.post_channel,
-          adapter: adapter
+        result = StandupMD::Post.post(
+          entry,
+          adapter: config.cli.post_adapter,
+          channel: config.cli.post_channel
         )
-        result = config.post.build_adapter(adapter).post(message)
         puts "Could not post to #{result.adapter}: #{result.error}" if result.failure?
         result
-      end
-
-      ##
-      # Render an entry as markdown.
-      #
-      # @param [StandupMD::Entry] entry
-      #
-      # @return [String]
-      def entry_markdown(entry)
-        lines = [header(entry)]
-        config.file.sub_header_order.each do |header_type|
-          tasks = entry.public_send("#{header_type}_tasks")
-          next if tasks.empty?
-
-          lines << sub_header(header_type)
-          tasks.each do |task|
-            lines << parser.task_line(task)
-          end
-        end
-        lines << ""
-        lines.join("\n")
       end
 
       private
@@ -253,29 +230,7 @@ module StandupMD
         StandupMD::File.find_by_date(Date.today.prev_month)
       end
 
-      ##
-      # The header.
-      #
-      # @param [StandupMD::Entry] entry
-      #
-      # @return [String]
-      def header(entry)
-        "#" * config.file.header_depth + " " +
-          entry.date.strftime(config.file.header_date_format)
-      end
-
-      ##
-      # The sub-header.
-      #
-      # @param [String] header_type
-      #
-      # @return [String]
-      def sub_header(header_type)
-        "#" * config.file.sub_header_depth + " " +
-          config.file.public_send("#{header_type}_header")
-      end
-
-      def parser
+      def markdown
         StandupMD::Parsers::Markdown.new(config.file)
       end
     end

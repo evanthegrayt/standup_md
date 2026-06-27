@@ -40,15 +40,6 @@ module StandupMD
     end
 
     ##
-    # The task rendered as a markdown list item.
-    #
-    # @return [String]
-    def to_markdown
-      indent = " " * StandupMD.config.file.indent_width * indent_level
-      "#{indent}#{StandupMD.config.file.bullet_character} #{text}"
-    end
-
-    ##
     # Compares task contents.
     def ==(other)
       return text == other if other.is_a?(String)

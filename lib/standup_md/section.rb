@@ -48,22 +48,11 @@ module StandupMD
     end
 
     ##
-    # The configured section heading.
+    # The semantic section type.
     #
     # @return [String]
     def to_s
-      StandupMD.config.file.public_send("#{type}_header")
-    end
-
-    ##
-    # The section rendered as markdown lines.
-    #
-    # @return [Array<String>]
-    def to_markdown
-      [
-        "#" * StandupMD.config.file.sub_header_depth + " " + to_s,
-        *tasks.map(&:to_markdown)
-      ]
+      type.to_s
     end
 
     private

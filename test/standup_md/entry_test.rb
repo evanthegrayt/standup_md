@@ -74,12 +74,4 @@ class TestEntry < TestHelper
     )
   end
 
-  def test_to_json
-    assert_instance_of(String, @entry_one.to_json)
-    assert_equal(
-      "{\"#{Date.today}\":{\"current\":[\"Current task\"],\"previous\":" \
-      '["Previous task"],"impediments":["Impediment"],"notes":[]}}',
-      @entry_one.to_json
-    )
-  end
 end

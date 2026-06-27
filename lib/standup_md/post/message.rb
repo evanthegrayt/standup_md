@@ -24,7 +24,7 @@ module StandupMD
       attr_reader :channel
 
       ##
-      # The adapter name requested by the user.
+      # The adapter name requested by the caller.
       #
       # @return [Symbol]
       attr_reader :adapter

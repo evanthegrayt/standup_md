@@ -134,11 +134,4 @@ class TestEntryList < TestHelper
     assert_empty(StandupMD::EntryList.new)
   end
 
-  def test_to_json
-    assert_instance_of(String, @entry_list.to_json)
-    assert_equal(
-      "{\"#{Date.today.prev_day.prev_day}\":{\"current\":[\"Current task\"],\"previous\":[\"Previous task\"],\"impediments\":[\"Impediment\"],\"notes\":[]}}",
-      @entry_list.to_json
-    )
-  end
 end

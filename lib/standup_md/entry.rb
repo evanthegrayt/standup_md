@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
 require "standup_md/section"
 
 module StandupMD
@@ -122,14 +121,6 @@ module StandupMD
           "notes" => notes
         }
       }
-    end
-
-    ##
-    # Entry as a json object.
-    #
-    # @return [String]
-    def to_json
-      to_h.to_json
     end
 
     private

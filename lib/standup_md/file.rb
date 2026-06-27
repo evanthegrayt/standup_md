@@ -142,7 +142,7 @@ module StandupMD
       raise "File #{name} does not exist." unless ::File.file?(name)
 
       @loaded = true
-      @entries = @parser.read(name)
+      @entries = @parser.parse(::File.read(name))
       self
     end
 
@@ -158,7 +158,11 @@ module StandupMD
       sorted_entries = entries.sort
       start_date = dates.fetch(:start_date, sorted_entries.first.date)
       end_date = dates.fetch(:end_date, sorted_entries.last.date)
-      @parser.write(name, sorted_entries, start_date: start_date, end_date: end_date)
+      ::File.write(
+        name,
+        @parser.render(sorted_entries, start_date: start_date, end_date: end_date)
+      )
+      true
     end
   end
 end

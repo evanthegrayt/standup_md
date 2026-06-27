@@ -59,6 +59,16 @@ class TestFileConfig < TestHelper
     assert_equal("%y_%m.markdown", StandupMD.config.file.name_format)
   end
 
+  def test_directory_does_not_create_directory
+    directory = File.join(workdir, "missing")
+
+    refute(File.directory?(directory))
+    StandupMD.config.file.directory = directory
+
+    assert_equal(directory, StandupMD.config.file.directory)
+    refute(File.directory?(directory))
+  end
+
   def test_current_header
     assert_equal("Current", StandupMD.config.file.current_header)
     assert_nothing_raised { StandupMD.config.file.current_header = "Today" }

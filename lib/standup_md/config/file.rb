@@ -209,17 +209,13 @@ module StandupMD
 
       ##
       # Setter for directory. Must be expanded in case the user uses `~` for
-      # home. If the directory doesn't exist, it will be created. To reset
-      # instance variables after changing the directory, you'll need to call
-      # load.
+      # home. Directory creation is handled by StandupMD::File.
       #
       # @param [String] directory
       #
       # @return [String]
       def directory=(directory)
-        @directory = ::File.expand_path(directory).tap do |directory|
-          FileUtils.mkdir_p(directory) unless ::File.directory?(directory)
-        end
+        @directory = ::File.expand_path(directory)
       end
     end
   end

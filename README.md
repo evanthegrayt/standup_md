@@ -142,6 +142,15 @@ export STANDUP_MD_SLACK_TOKEN="xoxb-your-token"
 standup -P slack --post-channel C123456
 ```
 
+The same posting path is available from Ruby:
+
+```ruby
+file = StandupMD::File.find_by_date(Date.today).load
+entry = file.entries.find(Date.today)
+
+StandupMD::Post.post(entry, adapter: :slack, channel: "C123456")
+```
+
 #### Add entry to file without opening it
 You can add an entry for today without even opening your editor. Note that, if
 you have multiple entries, you must separate them with a comma and *no spaces*.
@@ -159,10 +168,10 @@ as an example. Any setting in this file can still be overridden at runtime by
 passing flags to the executable.
 
 You'll notice, a lot of settings don't have the ability to be changed at runtime
-when calling the executable. This is because the file structure is very
+when calling the executable. This is because the markdown structure is very
 important, and changing values that affect formatting will cause problems with
-the file parser. If you don't want to use a default, make the change in your
-config file before you start editing standups.
+the markdown parser. If you don't want to use a default, make the change in
+your config file before you start editing standups.
 
 #### Available Config File Options and Defaults
 For command-line usage, this file needs to be named `~/.standuprc`. To use in a
@@ -252,17 +261,15 @@ Some of these options can be changed at runtime. They are as follows.
 #### Posting and Secrets
 The built-in Slack adapter sends the rendered markdown entry to Slack's
 `chat.postMessage` API. It needs a Slack token with the `chat:write` scope and a
-channel ID or name. By default, the token is read from
-`STANDUP_MD_SLACK_TOKEN`.
+channel or conversation. Channel-like IDs such as `C123456`, `G123456`, and
+`D123456` are the most reliable values to use. By default, the token is read
+from `STANDUP_MD_SLACK_TOKEN`.
 
-It is fine for `~/.standuprc` to reference environment variables, especially for
-non-secret values or to fail fast when a required variable is missing. The
-recommended pattern is to keep secret values in the environment and configure
-the adapter with the variable name:
+The recommended pattern is to keep secret values in the environment and store
+only non-secret adapter defaults in `~/.standuprc`:
 
 ```ruby
 StandupMD.configure do |c|
-  ENV.fetch("STANDUP_MD_SLACK_TOKEN")
   c.post.configure_adapter(:slack, channel: "C123456")
 end
 ```
@@ -282,7 +289,7 @@ end
 #### Custom Post Adapters
 Adapters are registered in `~/.standuprc`. They receive a
 `StandupMD::Post::Message`, which includes the rendered markdown text and the
-runtime channel passed with `--post-channel`.
+channel passed through `StandupMD::Post.post` or `--post-channel`.
 
 ```ruby
 class TeamsAdapter
@@ -307,6 +314,12 @@ StandupMD.configure do |c|
   c.post.register_adapter(:teams, TeamsAdapter)
   c.post.configure_adapter(:teams, channel: "team-channel-id")
 end
+```
+
+Custom adapters can be used from either the CLI or the Ruby API:
+
+```ruby
+StandupMD::Post.post(entry, adapter: :teams, channel: "team-channel-id")
 ```
 
 #### Using Existing Standup Files
@@ -366,6 +379,15 @@ The API is fully documented in the
 This was mainly written as a command line utility, but the API is very robust,
 and is available for use in your own projects. A quick example of how to write a
 new entry via code could look like the following:
+
+`StandupMD::File` handles reading and writing files on disk. The markdown parser
+handles markdown strings:
+
+```ruby
+parser = StandupMD::Parsers::Markdown.new
+entries = parser.parse(File.read("2026_06.md"))
+markdown = parser.render(entries, start_date: entries.first.date, end_date: entries.last.date)
+```
 
 ### API Examples
 #### Adding an entry for today

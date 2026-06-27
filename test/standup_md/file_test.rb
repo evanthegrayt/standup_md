@@ -110,6 +110,21 @@ class TestFile < TestHelper
     assert_raise { @file.load }
   end
 
+  def test_load_reads_file_before_parsing
+    parser = Object.new
+    parsed_entries = StandupMD::EntryList.new
+    captured_text = nil
+    parser.define_singleton_method(:parse) do |text|
+      captured_text = text
+      parsed_entries
+    end
+    @file.instance_variable_set(:@parser, parser)
+
+    assert_same(@file, @file.load)
+    assert_equal(::File.read(@file.name), captured_text)
+    assert_same(parsed_entries, @file.entries)
+  end
+
   def test_load_preserves_indented_markdown_tasks
     create_indented_standup_file
 
@@ -133,6 +148,25 @@ class TestFile < TestHelper
     assert(@file.write)
     refute(::File.zero?(@file.name))
     assert_nothing_raised { @file.load }
+  end
+
+  def test_write_renders_entries_before_writing_file
+    entry = StandupMD::Entry.new(Date.today, ["Current"], [], [])
+    parser = Object.new
+    captured_entries = nil
+    captured_dates = nil
+    parser.define_singleton_method(:render) do |entries, **dates|
+      captured_entries = entries
+      captured_dates = dates
+      "rendered markdown\n"
+    end
+    @file.instance_variable_set(:@entries, StandupMD::EntryList.new(entry))
+    @file.instance_variable_set(:@parser, parser)
+
+    assert(@file.write)
+    assert_instance_of(StandupMD::EntryList, captured_entries)
+    assert_equal({start_date: Date.today, end_date: Date.today}, captured_dates)
+    assert_equal("rendered markdown\n", ::File.read(@file.name))
   end
 
   def test_write_preserves_indented_markdown_tasks
