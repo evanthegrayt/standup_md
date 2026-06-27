@@ -29,6 +29,29 @@ class TestEntry < TestHelper
     assert_equal(["testing"], standup.current)
   end
 
+  def test_create_accepts_runtime_config_and_overrides
+    runtime = StandupMD.config.entry.class.new
+    runtime.current = ["Runtime current"]
+    runtime.previous = ["Runtime previous"]
+    runtime.impediments = ["Runtime impediment"]
+    runtime.notes = ["Runtime note"]
+    date = Date.today.prev_day
+
+    standup = StandupMD::Entry.create(
+      config: runtime,
+      date: date,
+      current: ["Explicit current"],
+      notes: []
+    )
+
+    assert_equal(date, standup.date)
+    assert_equal(["Explicit current"], standup.current)
+    assert_equal(["Runtime previous"], standup.previous)
+    assert_equal(["Runtime impediment"], standup.impediments)
+    assert_equal([], standup.notes)
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], StandupMD.config.entry.current)
+  end
+
   def test_current
     assert_equal(["Current task"], @entry_one.current)
     @entry_one.current = ["test"]

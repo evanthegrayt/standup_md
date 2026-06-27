@@ -16,6 +16,12 @@ module StandupMD
       }.freeze
 
       ##
+      # Attributes copied into request-scoped config snapshots.
+      #
+      # @return [Array<Symbol>]
+      CONFIG_ATTRIBUTES = DEFAULTS.keys.freeze
+
+      ##
       # The adapter used when `standup --post` is called without a platform.
       #
       # @return [Symbol]
@@ -49,6 +55,24 @@ module StandupMD
         @adapter_options = Hash.new { |hash, key| hash[key] = {} }
         register_adapter(:slack, StandupMD::Post::Adapters::Slack)
         DEFAULTS
+      end
+
+      ##
+      # Copies values from another post config.
+      #
+      # @param [StandupMD::Config::Post] config
+      #
+      # @return [StandupMD::Config::Post]
+      def copy_from(config)
+        CONFIG_ATTRIBUTES.each do |attribute|
+          instance_variable_set("@#{attribute}", config.public_send(attribute))
+        end
+        @adapters = config.adapters.dup
+        @adapter_options = Hash.new { |hash, key| hash[key] = {} }
+        config.adapter_options.each do |name, options|
+          @adapter_options[name] = options.dup
+        end
+        self
       end
 
       ##

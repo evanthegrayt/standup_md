@@ -120,6 +120,23 @@ class TestPost < TestHelper
     assert_equal(:test, message.adapter)
   end
 
+  def test_post_entry_accepts_runtime_config
+    runtime = StandupMD.config.copy
+    runtime.file.current_header = "Today"
+    runtime.post.default_adapter = :test
+    runtime.post.register_adapter(:test, RecordingAdapter)
+    runtime.post.configure_adapter(:test, channel: "runtime-config")
+
+    StandupMD::Post.post(StandupMD::Entry.create, config: runtime)
+
+    message, options = RecordingAdapter.messages.first
+    assert_equal(:test, message.adapter)
+    assert_match(/## Today/, message.text)
+    assert_equal({channel: "runtime-config"}, options)
+    assert_equal("Current", StandupMD.config.file.current_header)
+    assert_equal(:slack, StandupMD.config.post.default_adapter)
+  end
+
   def test_post_entry_allows_pre_rendered_text
     StandupMD.config.post.register_adapter(:test, RecordingAdapter)
     entry = StandupMD::Entry.create

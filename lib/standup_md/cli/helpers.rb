@@ -32,7 +32,8 @@ module StandupMD
         result = StandupMD::Post.post(
           entry,
           adapter: config.cli.post_adapter,
-          channel: config.cli.post_channel
+          channel: config.cli.post_channel,
+          config: config
         )
         puts "Could not post to #{result.adapter}: #{result.error}" if result.failure?
         result
@@ -45,12 +46,12 @@ module StandupMD
       #
       # @return [StandupMD::Config]
       def config # :nodoc:
-        StandupMD.config
+        @config
       end
 
       ##
-      # Parses options passed at runtime and concatenates them with the options
-      # in the user's preferences file. Reveal source to see options.
+      # Parses options passed at runtime into this CLI invocation's config
+      # snapshot. Reveal source to see options.
       #
       # @return [Hash]
       def load_runtime_preferences(options)
@@ -188,7 +189,10 @@ module StandupMD
       # @return [Array]
       def previous_entry(file)
         return config.entry.previous unless config.cli.auto_fill_previous
-        return prev_entry_tasks(prev_file.load.entries) if file.new? && prev_file_exists?
+        if file.new?
+          previous_file = prev_file_exists?
+          return prev_entry_tasks(previous_file.load.entries) if previous_file
+        end
 
         prev_entry_tasks(file.entries)
       end
@@ -225,13 +229,15 @@ module StandupMD
       ##
       # The previous month's file.
       #
+      # @param [StandupMD::Config::File] config
+      #
       # @return [StandupMD::File]
-      def prev_file
-        StandupMD::File.find_by_date(Date.today.prev_month)
+      def prev_file(config: self.config.file)
+        StandupMD::File.find_by_date(Date.today.prev_month, config: config)
       end
 
       def prev_file_exists?
-        without_file_creation { prev_file }
+        without_file_creation { |file_config| prev_file(config: file_config) }
       rescue
         nil
       end

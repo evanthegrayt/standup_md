@@ -12,8 +12,8 @@ module StandupMD
       #
       # @return [Hash]
       DEFAULTS = {
-        date: Date.today,
-        editor: ENV["VISUAL"] || ENV["EDITOR"] || "vim",
+        date: -> { Date.today },
+        editor: -> { ENV["VISUAL"] || ENV["EDITOR"] || "vim" },
         verbose: false,
         edit: true,
         write: true,
@@ -26,6 +26,12 @@ module StandupMD
           ::File.join(ENV["HOME"], ".standuprc")
         )
       }.freeze
+
+      ##
+      # Attributes copied into request-scoped config snapshots.
+      #
+      # @return [Array<Symbol>]
+      CONFIG_ATTRIBUTES = DEFAULTS.keys.freeze
 
       ##
       # The editor to use when opening standup files. If one is not set, the
@@ -128,10 +134,32 @@ module StandupMD
       #
       # @return [Hash]
       def reset
-        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", copy_default(v)) }
+        DEFAULTS.each do |key, value|
+          instance_variable_set("@#{key}", copy_default(resolve_default(value)))
+        end
+      end
+
+      ##
+      # Copies values from another CLI config.
+      #
+      # @param [StandupMD::Config::Cli] config
+      #
+      # @return [StandupMD::Config::Cli]
+      def copy_from(config)
+        CONFIG_ATTRIBUTES.each do |attribute|
+          instance_variable_set(
+            "@#{attribute}",
+            copy_default(config.public_send(attribute))
+          )
+        end
+        self
       end
 
       private
+
+      def resolve_default(value)
+        value.respond_to?(:call) ? value.call : value
+      end
 
       def copy_default(value)
         return value.dup if value.is_a?(Array) || value.is_a?(Hash)

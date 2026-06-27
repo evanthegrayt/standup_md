@@ -4,11 +4,40 @@ require_relative "test_helper"
 
 class TestStandupMD < TestHelper
   def setup
+    StandupMD.reset_config
     StandupMD.instance_variable_set(:@config_file_loaded, false)
   end
 
   def test_config
     assert_instance_of(StandupMD::Config, StandupMD.config)
+  end
+
+  def test_config_copy
+    StandupMD.config.cli.verbose = true
+    StandupMD.config.file.sub_header_order = %w[current previous]
+    StandupMD.config.entry.current = ["Global current"]
+    StandupMD.config.post.default_adapter = :test
+    StandupMD.config.post.register_adapter(:test, StandupMD::Post::Adapter)
+    StandupMD.config.post.configure_adapter(:test, channel: "configured")
+
+    copy = StandupMD.config.copy
+    copy.cli.verbose = false
+    copy.file.sub_header_order << "notes"
+    copy.entry.current << "Runtime current"
+    copy.post.default_adapter = :runtime
+    copy.post.configure_adapter(:test, channel: "runtime")
+
+    refute(copy.cli.verbose)
+    assert_equal(%w[current previous notes], copy.file.sub_header_order)
+    assert_equal(["Global current", "Runtime current"], copy.entry.current)
+    assert_equal(:runtime, copy.post.default_adapter)
+    assert_equal({channel: "runtime"}, copy.post.options_for(:test))
+
+    assert(StandupMD.config.cli.verbose)
+    assert_equal(%w[current previous], StandupMD.config.file.sub_header_order)
+    assert_equal(["Global current"], StandupMD.config.entry.current)
+    assert_equal(:test, StandupMD.config.post.default_adapter)
+    assert_equal({channel: "configured"}, StandupMD.config.post.options_for(:test))
   end
 
   def test_reset_config

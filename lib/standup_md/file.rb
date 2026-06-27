@@ -18,27 +18,29 @@ module StandupMD
       end
 
       ##
-      # Convenience method for calling File.find(file_name).load
+      # Convenience method for calling File.find(file_name).load.
       #
       # @param [String] file_name
+      # @param [StandupMD::Config::File] config
       #
       # @return [StandupMD::File]
-      def load(file_name)
+      def load(file_name, config: StandupMD.config.file)
         unless ::File.directory?(config.directory)
           raise "Dir #{config.directory} not found." unless config.create
 
           FileUtils.mkdir_p(config.directory)
         end
-        new(file_name).load
+        new(file_name, config: config).load
       end
 
       ##
       # Find standup file in directory by file name.
       #
       # @param [String] file_name
+      # @param [StandupMD::Config::File] config
       #
       # @return [StandupMD::File]
-      def find(file_name)
+      def find(file_name, config: StandupMD.config.file)
         unless ::File.directory?(config.directory)
           raise "Dir #{config.directory} not found." unless config.create
 
@@ -49,14 +51,17 @@ module StandupMD
           raise "File #{file_name} not found."
         end
 
-        new(file_name)
+        new(file_name, config: config)
       end
 
       ##
       # Find standup file in directory by Date object.
       #
       # @param [Date] date
-      def find_by_date(date)
+      # @param [StandupMD::Config::File] config
+      #
+      # @return [StandupMD::File]
+      def find_by_date(date, config: StandupMD.config.file)
         raise ArgumentError, "Must be a Date object" unless date.is_a?(Date)
 
         unless ::File.directory?(config.directory)
@@ -64,7 +69,7 @@ module StandupMD
 
           FileUtils.mkdir_p(config.directory)
         end
-        find(date.strftime(config.name_format))
+        find(date.strftime(config.name_format), config: config)
       end
     end
 
@@ -84,14 +89,15 @@ module StandupMD
     # Constructs the instance.
     #
     # @param [String] file_name
+    # @param [StandupMD::Config::File] config
     #
     # @return [StandupMD::File]
-    def initialize(file_name)
-      @config = self.class.config
+    def initialize(file_name, config: StandupMD.config.file)
+      @config = config
       @parser = StandupMD::Parsers::Markdown.new(@config)
       if file_name.include?(::File::SEPARATOR)
         raise ArgumentError,
-          "#{file_name} contains directory. Please use `StandupMD.config.file.directory=`"
+          "#{file_name} contains directory. Configure the file directory separately."
       end
 
       unless ::File.directory?(@config.directory)

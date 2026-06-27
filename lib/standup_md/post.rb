@@ -28,25 +28,28 @@ module StandupMD
     # @param channel [String, nil]
     # @param text [String, nil]
     # @param renderer [Object, nil]
+    # @param config [StandupMD::Config]
     #
     # @return [StandupMD::Post::Result]
-    def post(entry, adapter: nil, channel: nil, text: nil, renderer: nil)
-      adapter_name = (adapter || StandupMD.config.post.default_adapter).to_sym
+    def post(entry, adapter: nil, channel: nil, text: nil, renderer: nil, config: StandupMD.config)
+      adapter_name = (adapter || config.post.default_adapter).to_sym
       message = Message.new(
         entry: entry,
-        text: text || (renderer || default_renderer).render_entry(entry),
+        text: text || (renderer || default_renderer(config)).render_entry(entry),
         channel: channel,
         adapter: adapter_name
       )
-      StandupMD.config.post.build_adapter(adapter_name).post(message)
+      config.post.build_adapter(adapter_name).post(message)
     end
 
     ##
     # Default renderer used when posting an entry.
     #
+    # @param config [StandupMD::Config]
+    #
     # @return [StandupMD::Parsers::Markdown]
-    def default_renderer
-      StandupMD::Parsers::Markdown.new(StandupMD.config.file)
+    def default_renderer(config = StandupMD.config)
+      StandupMD::Parsers::Markdown.new(config.file)
     end
   end
 end

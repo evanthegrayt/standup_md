@@ -49,5 +49,19 @@ module StandupMD
       @entry_list = StandupMD::Config::EntryList.new
       @post = StandupMD::Config::Post.new
     end
+
+    ##
+    # Builds an independent snapshot of the current configuration.
+    #
+    # @return [StandupMD::Config]
+    def copy
+      self.class.new.tap do |config|
+        config.cli.copy_from(cli)
+        config.file.copy_from(file)
+        config.entry.copy_from(entry)
+        config.entry_list.copy_from(entry_list)
+        config.post.copy_from(post)
+      end
+    end
   end
 end

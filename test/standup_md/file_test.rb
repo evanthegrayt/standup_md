@@ -87,6 +87,31 @@ class TestFile < TestHelper
     assert_nothing_raised { StandupMD::File.find_by_date(Date.today.prev_year) }
   end
 
+  def test_find_by_date_accepts_runtime_config
+    runtime = StandupMD.config.file.copy
+    runtime.directory = File.join(workdir, "runtime")
+    runtime.name_format = "%Y-%m.markdown"
+    runtime.create = true
+
+    file = StandupMD::File.find_by_date(Date.today, config: runtime)
+
+    assert_equal(
+      File.join(runtime.directory, Date.today.strftime("%Y-%m.markdown")),
+      file.name
+    )
+    refute_equal(runtime.directory, StandupMD.config.file.directory)
+    assert_equal("%Y_%m.md", StandupMD.config.file.name_format)
+  end
+
+  def test_find_by_date_runtime_config_does_not_toggle_global_creation
+    runtime = StandupMD.config.file.copy
+    runtime.create = false
+    missing = Date.today.prev_year
+
+    assert_raise { StandupMD::File.find_by_date(missing, config: runtime) }
+    assert(StandupMD.config.file.create)
+  end
+
   def test_name
     assert_equal(test_file_name, @file.name)
   end

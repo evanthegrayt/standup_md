@@ -161,11 +161,11 @@ standup --no-edit --current "Work on this thing","And another thing"
 
 ### Customization and Runtime Options
 You can create a file in your home directory called `~/.standuprc`. Settings
-located in this file will override default behavior. This file can also have
-settings overwritten at runtime by the use of options. You can view [my config
-file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc)
-as an example. Any setting in this file can still be overridden at runtime by
-passing flags to the executable.
+located in this file define your application defaults. CLI flags can override
+those defaults for a single invocation, but they do not persist back into
+`StandupMD.config` or `~/.standuprc`. You can view
+[my config file](https://github.com/evanthegrayt/dotfiles/blob/master/dotfiles/standuprc)
+as an example.
 
 You'll notice, a lot of settings don't have the ability to be changed at runtime
 when calling the executable. This is because the markdown structure is very
@@ -233,7 +233,8 @@ get large over time and possibly cause performance issues.
 
 
 #### Executable Flags
-Some of these options can be changed at runtime. They are as follows.
+Some defaults can be overridden for a single CLI invocation. They are as
+follows.
 
 ```
     --current ARRAY            List of current entry's tasks
@@ -322,6 +323,17 @@ Custom adapters can be used from either the CLI or the Ruby API:
 StandupMD::Post.post(entry, adapter: :teams, channel: "team-channel-id")
 ```
 
+For request-scoped API usage, copy the global defaults and pass the copy into
+the operation:
+
+```ruby
+runtime = StandupMD.config.copy
+runtime.post.default_adapter = :teams
+runtime.post.configure_adapter(:teams, channel: "team-channel-id")
+
+StandupMD::Post.post(entry, config: runtime)
+```
+
 #### Using Existing Standup Files
 If you already have a directory of existing standup files, you can use them, but
 they must be in a format that the parser can understand. The default is:
@@ -339,8 +351,8 @@ they must be in a format that the parser can understand. The default is:
 ```
 
 The order, words, date format, and header level are all customizable, but the
-overall format must be the same. If customization is necessary, this must be
-done in `~/.standuprc` before execution, or else the parser will error.
+overall format must be the same. If customization is necessary, set the defaults
+or pass a runtime config before reading the file, or else the parser will error.
 
 For example, if you wanted the format to be as follows:
 
@@ -376,9 +388,10 @@ end
 The API is fully documented in the
 [RDoc Documentation](https://evanthegrayt.github.io/standup_md/).
 
-This was mainly written as a command line utility, but the API is very robust,
-and is available for use in your own projects. A quick example of how to write a
-new entry via code could look like the following:
+This was mainly written as a command line utility, but the API is available for
+use in your own projects. `StandupMD.config` stores application defaults. For
+web requests, jobs, or any other multi-call environment, copy those defaults and
+pass the copy into the operation you are running.
 
 `StandupMD::File` handles reading and writing files on disk. The markdown parser
 handles markdown strings:
@@ -389,33 +402,46 @@ entries = parser.parse(File.read("2026_06.md"))
 markdown = parser.render(entries, start_date: entries.first.date, end_date: entries.last.date)
 ```
 
+```ruby
+runtime = StandupMD.config.copy
+runtime.file.directory = "/tmp/request-standups"
+runtime.entry.current = ["Work scoped to this request"]
+
+file = StandupMD::File.find_by_date(Date.today, config: runtime.file).load
+entry = StandupMD::Entry.create(config: runtime.entry)
+file.entries << entry
+file.write
+```
+
 ### API Examples
 #### Adding an entry for today
 ```ruby
 require "standup_md"
 
 StandupMD.configure do |c|
-  c.file.current_header = "Today",
+  c.file.current_header = "Today"
 end
 
-file = StandupMD::File.find_by_date(Date.today)
-entry = StandupMD::Entry.create { |e| e.current = ["Stuff I will do today"] }
+file = StandupMD::File.find_by_date(Date.today).load
+entry = StandupMD::Entry.create(current: ["Stuff I will do today"])
 file.entries << entry
 file.write
 ```
 
-The above example was written as such to show how the different pieces of the
-API fit together. The code can actually be simplified to the following.
+The above example uses global defaults. To keep runtime choices scoped to one
+request, copy the defaults and pass the copy into each operation.
 
 ```ruby
 require "standup_md"
 
-StandupMD.configure do |c|
-  c.file.current_header = "Today",
-  c.entry.current = ["Stuff I will do today"]
-end
+runtime = StandupMD.config.copy
+runtime.file.current_header = "Today"
+runtime.entry.current = ["Stuff I will do today"]
 
-StandupMD::File.find_by_date(Date.today).load.write
+file = StandupMD::File.find_by_date(Date.today, config: runtime.file).load
+entry = StandupMD::Entry.create(config: runtime.entry)
+file.entries << entry
+file.write
 ```
 
 #### Finding a past entry

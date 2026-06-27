@@ -17,6 +17,12 @@ module StandupMD
       }.freeze
 
       ##
+      # Attributes copied into request-scoped config snapshots.
+      #
+      # @return [Array<Symbol>]
+      CONFIG_ATTRIBUTES = DEFAULTS.keys.freeze
+
+      ##
       # Tasks for "Current" section.
       #
       # @param [Array] current
@@ -60,6 +66,22 @@ module StandupMD
       # @return [Hash]
       def reset
         DEFAULTS.each { |k, v| instance_variable_set("@#{k}", copy_default(v)) }
+      end
+
+      ##
+      # Copies values from another entry config.
+      #
+      # @param [StandupMD::Config::Entry] config
+      #
+      # @return [StandupMD::Config::Entry]
+      def copy_from(config)
+        CONFIG_ATTRIBUTES.each do |attribute|
+          instance_variable_set(
+            "@#{attribute}",
+            copy_default(config.public_send(attribute))
+          )
+        end
+        self
       end
 
       private
