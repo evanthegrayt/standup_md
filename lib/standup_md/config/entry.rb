@@ -59,7 +59,15 @@ module StandupMD
       #
       # @return [Hash]
       def reset
-        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", copy_default(v)) }
+      end
+
+      private
+
+      def copy_default(value)
+        return value.dup if value.is_a?(Array) || value.is_a?(Hash)
+
+        value
       end
     end
   end

@@ -132,7 +132,7 @@ module StandupMD
         sub_header = line.sub(/^\#{#{config.sub_header_depth}}\s*/, "")
         Entry::SECTION_TYPES.each do |type|
           header = config.public_send("#{type}_header")
-          return type if sub_header.include?(header)
+          return type if sub_header == header
         end
         raise "Unrecognized header [#{sub_header}]"
       end
@@ -152,7 +152,6 @@ module StandupMD
       end
 
       def task_line(task)
-        task = build_task(task)
         indent = " " * config.indent_width * task.indent_level
         "#{indent}#{config.bullet_character} #{task.text}"
       end
@@ -169,12 +168,6 @@ module StandupMD
 
       def tasks(record, type)
         record[:sections].fetch(type, Section.new(type)).tasks
-      end
-
-      def build_task(task)
-        return task if task.is_a?(Task)
-
-        Task.new(task)
       end
     end
   end

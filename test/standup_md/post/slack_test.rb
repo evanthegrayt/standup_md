@@ -112,6 +112,18 @@ class TestSlackPostAdapter < TestHelper
     assert_equal("Slack returned HTTP 500", result.error)
   end
 
+  def test_malformed_success_response
+    ENV["STANDUP_MD_SLACK_TOKEN"] = "secret"
+    http = fake_http({}, body: "not json")
+
+    adapter = StandupMD::Post::Adapters::Slack.new(http: http)
+    result = adapter.post(@message)
+
+    refute(result.success?)
+    assert_equal("Slack returned HTTP 200", result.error)
+    assert_equal({}, result.response)
+  end
+
   private
 
   def fake_http(captured, body:, code: "200", message: "OK")

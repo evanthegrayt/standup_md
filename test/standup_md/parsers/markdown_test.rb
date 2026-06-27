@@ -30,6 +30,18 @@ class TestMarkdownParser < TestHelper
     assert_equal([0, 1], entry.current_tasks.map(&:indent_level))
   end
 
+  def test_parse_requires_exact_section_header
+    assert_raise_message(/Unrecognized header \[Currently\]/) do
+      @parser.parse(
+        <<~MARKDOWN
+          # 2026-06-26
+          ## Currently
+          - Main task
+        MARKDOWN
+      )
+    end
+  end
+
   def test_render_entry
     entry = StandupMD::Entry.new(
       Date.new(2026, 6, 26),

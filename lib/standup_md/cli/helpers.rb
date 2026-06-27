@@ -6,7 +6,7 @@ require "standup_md/post"
 module StandupMD
   class Cli
     ##
-    # Module responsible for reading and writing standup files.
+    # Helpers for CLI commands and option handling.
     module Helpers
       ##
       # Print an entry to the command line.
@@ -99,7 +99,7 @@ module StandupMD
 
           opts.on(
             "-d", "--directory DIRECTORY",
-            "The directories where standup files are located"
+            "The directory where standup files are located"
           ) { |v| config.file.directory = v }
 
           opts.on(
@@ -188,7 +188,7 @@ module StandupMD
       # @return [Array]
       def previous_entry(file)
         return config.entry.previous unless config.cli.auto_fill_previous
-        return prev_entry_tasks(prev_file.load.entries) if file.new? && prev_file
+        return prev_entry_tasks(prev_file.load.entries) if file.new? && prev_file_exists?
 
         prev_entry_tasks(file.entries)
       end
@@ -230,6 +230,16 @@ module StandupMD
         StandupMD::File.find_by_date(Date.today.prev_month)
       end
 
+      def prev_file_exists?
+        without_file_creation { prev_file }
+      rescue
+        nil
+      end
+
+      ##
+      # Markdown renderer used for CLI output.
+      #
+      # @return [StandupMD::Parsers::Markdown]
       def markdown
         StandupMD::Parsers::Markdown.new(config.file)
       end

@@ -30,7 +30,7 @@ entry exists, it will be added to today's entry as your previous day's work. See
 this in your own code somehow.
 
 ## Installation
-If you don't have the permissions to install system-wide gems, you're probabaly
+If you don't have the permissions to install system-wide gems, you're probably
 also running an older version of ruby. I recommend installing
 [rbenv](https://github.com/rbenv/rbenv#installation), and then installing an
 up-to-date version of ruby.
@@ -180,7 +180,7 @@ rails project, create an initializer (`config/initializers/standup_md.rb`).
 ```ruby
 StandupMD.configure do |c|
   # Defaults for how the file is formatted.
-  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/Cli.html
+  # See https://evanthegrayt.github.io/standup_md/doc/StandupMD/Config/File.html
   c.file.header_date_format = "%Y-%m-%d"
   c.file.header_depth       = 1
   c.file.sub_header_depth   = 2
@@ -227,7 +227,7 @@ end
 ```
 
 Any options not set in this file will retain their default values. Note that if
-you change `file_name_format`, and don't use a month or year, there will only
+you change `name_format`, and don't use a month or year, there will only
 ever be one standup file. This could cause issues long-term, as the files will
 get large over time and possibly cause performance issues.
 
@@ -244,7 +244,7 @@ Some of these options can be changed at runtime. They are as follows.
     --indent-width INTEGER     Number of spaces used for each nested task level
 -f, --file-name-format STRING  Date-formattable string to use for standup file name
 -E, --editor EDITOR            Editor to use for opening standup files
--d, --directory DIRECTORY      The directories where standup files are located
+-d, --directory DIRECTORY      The directory where standup files are located
 -w  --[no-]write               Write current entry if it doesn't exist. Default is true
 -a  --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
 -e  --[no-]edit                Open the file in the editor. Default is true
@@ -455,7 +455,7 @@ command, that file will be opened. There's tab completion for this. Lastly,
 it allows for a few variables to be set for customization.
 
 ```vim
-g:standup_dir = $HOME . '/.cache/standup_md' " the directory where your file are
+g:standup_dir = $HOME . '/.cache/standup_md' " the directory where your files are
 g:standup_file = strftime('%Y_%m.md')        " the file format to use
 ```
 

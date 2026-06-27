@@ -14,11 +14,11 @@ module StandupMD
     #
     # @return [StandupMD::Config::EntryList]
     def self.config
-      @config ||= StandupMD.config.entry_list
+      StandupMD.config.entry_list
     end
 
     ##
-    # Contruct a list. Can pass any amount of +StandupMD::Entry+ instances.
+    # Construct a list. Can pass any amount of +StandupMD::Entry+ instances.
     #
     # @param [Entry] entries
     #
@@ -26,7 +26,6 @@ module StandupMD
     def initialize(*entries)
       entries.each { |entry| validate_entry(entry) }
 
-      @config = self.class.config
       @entries = entries
     end
 
@@ -35,7 +34,7 @@ module StandupMD
     #
     # @param [StandupMD::Entry] entry
     #
-    # @return [Array]
+    # @return [StandupMD::EntryList]
     def <<(entry)
       validate_entry(entry)
 
@@ -100,9 +99,9 @@ module StandupMD
     #
     # @param [Date] end_date
     #
-    # @return [Array]
+    # @return [StandupMD::EntryList]
     def filter!(start_date, end_date)
-      @entries = filter(start_date, end_date)
+      @entries = filter(start_date, end_date).to_a
       self
     end
 
@@ -127,7 +126,7 @@ module StandupMD
     # :section: Delegators
 
     ##
-    # The following are forwarded to @entries, which is the underly array of
+    # The following are forwarded to @entries, which is the underlying array of
     # entries.
     #
     # +each+:: Iterate over each entry.

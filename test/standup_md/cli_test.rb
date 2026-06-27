@@ -140,6 +140,17 @@ class TestCli < TestHelper
     assert(StandupMD.config.file.create)
   end
 
+  def test_auto_fill_previous_does_not_create_missing_previous_file
+    FileUtils.rm(test_file_name)
+
+    c = cli(["--no-edit", "--directory", workdir.to_s])
+
+    assert(c.file.new?)
+    assert_equal([], c.entry.previous)
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
+  end
+
   def test_print_is_read_only
     c = cli(["--print", "--directory", workdir.to_s])
 

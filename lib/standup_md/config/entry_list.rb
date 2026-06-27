@@ -13,7 +13,7 @@ module StandupMD
 
       ##
       # Initializes the config with default values.
-      def initalize
+      def initialize
         reset
       end
 

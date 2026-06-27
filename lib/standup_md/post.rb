@@ -41,6 +41,10 @@ module StandupMD
       StandupMD.config.post.build_adapter(adapter_name).post(message)
     end
 
+    ##
+    # Default renderer used when posting an entry.
+    #
+    # @return [StandupMD::Parsers::Markdown]
     def default_renderer
       StandupMD::Parsers::Markdown.new(StandupMD.config.file)
     end

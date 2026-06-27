@@ -15,6 +15,15 @@ class TestFileConfig < TestHelper
     assert_equal(1, StandupMD.config.file.header_depth)
   end
 
+  def test_reset_copies_mutable_defaults
+    StandupMD.config.file.reset
+    StandupMD.config.file.sub_header_order << "mutated"
+
+    StandupMD.config.file.reset
+
+    assert_equal(%w[previous current impediments notes], StandupMD.config.file.sub_header_order)
+  end
+
   def test_bullet_character
     assert_equal("-", StandupMD.config.file.bullet_character)
     assert_nothing_raised { StandupMD.config.file.bullet_character = "*" }

@@ -5,7 +5,7 @@ require "standup_md/cli/helpers"
 
 module StandupMD
   ##
-  # Class for handing the command-line interface.
+  # Class for handling the command-line interface.
   class Cli
     include Helpers
 
@@ -22,7 +22,7 @@ module StandupMD
     #
     # @return [StandupMD::Config::Cli]
     def self.config
-      @config ||= StandupMD.config.cli
+      StandupMD.config.cli
     end
 
     ##
@@ -186,7 +186,7 @@ module StandupMD
     end
 
     ##
-    # Should the cli post the entry to a chat adapter?
+    # Should the CLI post the entry to a chat adapter?
     #
     # @return [Boolean]
     def post?
@@ -243,11 +243,11 @@ module StandupMD
     #
     # @return [StandupMD::File]
     def without_file_creation
-      original_create = config.file.create
-      config.file.create = false
+      original_create = StandupMD.config.file.create
+      StandupMD.config.file.create = false
       yield
     ensure
-      config.file.create = original_create
+      StandupMD.config.file.create = original_create
     end
   end
 end

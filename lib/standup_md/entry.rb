@@ -20,7 +20,7 @@ module StandupMD
     #
     # @return [StandupMD::Config::Entry]
     def self.config
-      @config ||= StandupMD.config.entry
+      StandupMD.config.entry
     end
 
     ##
@@ -61,7 +61,6 @@ module StandupMD
     def initialize(date, current, previous, impediments, notes = [])
       raise unless date.is_a?(Date)
 
-      @config = self.class.config
       @date = date
       @sections = {}
       self.current = current
@@ -109,7 +108,7 @@ module StandupMD
     end
 
     ##
-    # Entry as a hash .
+    # Entry as a hash.
     #
     # @return [Hash]
     def to_h

@@ -15,6 +15,20 @@ class TestStandupMD < TestHelper
     assert_instance_of(StandupMD::Config, StandupMD.reset_config)
   end
 
+  def test_class_config_readers_use_current_config
+    original_file_config = StandupMD::File.config
+    original_cli_config = StandupMD::Cli.config
+    original_entry_config = StandupMD::Entry.config
+    original_entry_list_config = StandupMD::EntryList.config
+
+    StandupMD.reset_config
+
+    refute_same(original_file_config, StandupMD::File.config)
+    refute_same(original_cli_config, StandupMD::Cli.config)
+    refute_same(original_entry_config, StandupMD::Entry.config)
+    refute_same(original_entry_list_config, StandupMD::EntryList.config)
+  end
+
   def test_file
     assert_instance_of(StandupMD::Config::File, StandupMD.config.file)
   end

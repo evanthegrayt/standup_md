@@ -12,9 +12,9 @@ module StandupMD
       ##
       # Access to the class's configuration.
       #
-      # @return [StandupMD::Config::EntryList]
+      # @return [StandupMD::Config::File]
       def config
-        @config ||= StandupMD.config.file
+        StandupMD.config.file
       end
 
       ##
@@ -35,7 +35,9 @@ module StandupMD
       ##
       # Find standup file in directory by file name.
       #
-      # @param [String] File_naem
+      # @param [String] file_name
+      #
+      # @return [StandupMD::File]
       def find(file_name)
         unless ::File.directory?(config.directory)
           raise "Dir #{config.directory} not found." unless config.create
@@ -69,7 +71,7 @@ module StandupMD
     ##
     # The list of entries in the file.
     #
-    # @return [StandupMP::EntryList]
+    # @return [StandupMD::EntryList]
     attr_reader :entries
 
     ##
@@ -83,7 +85,7 @@ module StandupMD
     #
     # @param [String] file_name
     #
-    # @return [StandupMP::File]
+    # @return [StandupMD::File]
     def initialize(file_name)
       @config = self.class.config
       @parser = StandupMD::Parsers::Markdown.new(@config)
@@ -137,7 +139,7 @@ module StandupMD
     ##
     # Loads the file's contents.
     #
-    # @return [StandupMD::FileList]
+    # @return [StandupMD::File]
     def load
       raise "File #{name} does not exist." unless ::File.file?(name)
 
@@ -147,9 +149,8 @@ module StandupMD
     end
 
     ##
-    # Writes a new entry to the file if the first entry in the file isn't today.
-    # This method is destructive; if a file for entries in the date range
-    # already exists, it will be clobbered with the entries in the range.
+    # Writes entries to disk. This method is destructive; existing file contents
+    # are replaced by the rendered entries in the requested date range.
     #
     # @param [Hash] {start_date: Date, end_date: Date}
     #

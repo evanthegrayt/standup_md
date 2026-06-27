@@ -53,6 +53,13 @@ class TestEntry < TestHelper
     assert_equal(["test"], @entry_one.notes)
   end
 
+  def test_sections
+    assert_equal(
+      StandupMD::Entry::SECTION_TYPES,
+      @entry_one.sections.map(&:type)
+    )
+  end
+
   def test_date
     assert_equal(Date.today, @entry_one.date)
     @entry_one.date = ["test"]
@@ -73,5 +80,4 @@ class TestEntry < TestHelper
       @entry_one.to_h
     )
   end
-
 end

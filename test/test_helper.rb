@@ -9,7 +9,10 @@ require "fileutils"
 
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 
-SimpleCov.start { add_filter %r{^/test/} }
+SimpleCov.start do
+  add_filter %r{^/test/}
+  minimum_coverage 90
+end
 
 require "standup_md"
 

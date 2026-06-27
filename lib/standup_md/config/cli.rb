@@ -37,7 +37,7 @@ module StandupMD
       attr_accessor :editor
 
       ##
-      # Should the cli print verbose output?
+      # Should the CLI print verbose output?
       #
       # @param [Boolean] verbose
       #
@@ -45,7 +45,7 @@ module StandupMD
       attr_accessor :verbose
 
       ##
-      # Should the cli edit?
+      # Should the CLI edit?
       #
       # @param [Boolean] edit
       #
@@ -53,7 +53,7 @@ module StandupMD
       attr_accessor :edit
 
       ##
-      # Should the cli automatically write the new entry to the file?
+      # Should the CLI automatically write the new entry to the file?
       #
       # @param [Boolean] write
       #
@@ -61,7 +61,7 @@ module StandupMD
       attr_accessor :write
 
       ##
-      # Should the cli print the entry to the command line?
+      # Should the CLI print the entry to the command line?
       #
       # @param [Boolean] print
       #
@@ -69,7 +69,7 @@ module StandupMD
       attr_accessor :print
 
       ##
-      # Should the cli post the entry to a chat client?
+      # Should the CLI post the entry to a chat client?
       #
       # @param [Boolean] post
       #
@@ -128,7 +128,15 @@ module StandupMD
       #
       # @return [Hash]
       def reset
-        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", v) }
+        DEFAULTS.each { |k, v| instance_variable_set("@#{k}", copy_default(v)) }
+      end
+
+      private
+
+      def copy_default(value)
+        return value.dup if value.is_a?(Array) || value.is_a?(Hash)
+
+        value
       end
     end
   end

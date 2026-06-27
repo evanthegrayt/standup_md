@@ -12,6 +12,15 @@ class TestTextComponents < TestHelper
     task = StandupMD::Task.new("Supporting task", indent_level: 1)
 
     assert_equal("Supporting task", task.to_s)
+    assert(task == "Supporting task")
+    assert_equal(task, StandupMD::Task.new("Supporting task", indent_level: 1))
+    refute_equal(task, StandupMD::Task.new("Supporting task", indent_level: 2))
+    refute_equal(task, Object.new)
+  end
+
+  def test_task_rejects_invalid_indent_level
+    assert_raise(ArgumentError) { StandupMD::Task.new("Task", indent_level: -1) }
+    assert_raise(ArgumentError) { StandupMD::Task.new("Task", indent_level: "1") }
   end
 
   def test_section

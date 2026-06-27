@@ -99,6 +99,7 @@ class TestEntryList < TestHelper
     assert_equal(2, @entry_list.size)
     assert_instance_of(StandupMD::EntryList, @entry_list.filter(@entry_one.date, @entry_two.date))
     assert_instance_of(StandupMD::EntryList, @entry_list.filter!(@entry_one.date, @entry_two.date))
+    assert_equal([@entry_one, @entry_two], @entry_list.to_a)
   end
 
   def test_first
@@ -133,5 +134,4 @@ class TestEntryList < TestHelper
   def test_empty?
     assert_empty(StandupMD::EntryList.new)
   end
-
 end
