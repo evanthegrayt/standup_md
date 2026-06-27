@@ -16,17 +16,49 @@ module StandupMD
       def print(entry)
         return puts "No record found for #{config.cli.date}" if entry.nil?
 
-        puts header(entry)
+        puts entry_markdown(entry)
+      end
+
+      ##
+      # Post an entry to the configured chat adapter.
+      #
+      # @param [StandupMD::Entry] entry
+      #
+      # @return [StandupMD::Post::Result, nil]
+      def post(entry)
+        return puts "No record found for #{config.cli.date}" if entry.nil?
+
+        adapter = config.cli.post_adapter || config.post.default_adapter
+        message = StandupMD::Post::Message.new(
+          entry: entry,
+          text: entry_markdown(entry),
+          channel: config.cli.post_channel,
+          adapter: adapter
+        )
+        result = config.post.build_adapter(adapter).post(message)
+        puts "Could not post to #{result.adapter}: #{result.error}" if result.failure?
+        result
+      end
+
+      ##
+      # Render an entry as markdown.
+      #
+      # @param [StandupMD::Entry] entry
+      #
+      # @return [String]
+      def entry_markdown(entry)
+        lines = [header(entry)]
         config.file.sub_header_order.each do |header_type|
           tasks = entry.public_send("#{header_type}_tasks")
           next if tasks.empty?
 
-          puts sub_header(header_type)
+          lines << sub_header(header_type)
           tasks.each do |task|
-            puts parser.task_line(task)
+            lines << parser.task_line(task)
           end
         end
-        puts
+        lines << ""
+        lines.join("\n")
       end
 
       private
@@ -128,6 +160,20 @@ module StandupMD
             config.cli.date =
               v.nil? ? Date.today : Date.strptime(v, config.file.header_date_format)
           end
+
+          opts.on(
+            "-P", "--post [PLATFORM]",
+            "Post current entry to a chat client. Defaults to Slack.",
+            "If PLATFORM is passed, use that post adapter."
+          ) do |v|
+            config.cli.post = true
+            config.cli.post_adapter = v.nil? ? config.post.default_adapter : v.to_sym
+          end
+
+          opts.on(
+            "--post-channel CHANNEL",
+            "Channel, room, or conversation to post to"
+          ) { |v| config.cli.post_channel = v }
         end.parse!(options)
         if zsh_completion_requested?
           raise OptionParser::InvalidArgument, options.join(" ") unless options.empty?

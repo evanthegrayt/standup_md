@@ -5,13 +5,35 @@ require_relative "../test_helper"
 ##
 # The test suite for +Cli+.
 class TestCli < TestHelper
+  class RecordingPostAdapter
+    class << self
+      attr_accessor :messages
+    end
+
+    attr_reader :options
+
+    def initialize(options = {})
+      @options = options
+    end
+
+    def post(message)
+      self.class.messages << [message, options]
+      StandupMD::Post::Result.success(
+        adapter: message.adapter,
+        channel: message.channel || options[:channel]
+      )
+    end
+  end
+
   def setup
     super
+    RecordingPostAdapter.messages = []
     create_standup_file(test_file_name)
     StandupMD.config.cli.reset
     StandupMD.config.file.reset
     StandupMD.config.entry.reset
     StandupMD.config.entry_list.reset
+    StandupMD.config.post.reset
     StandupMD.config.cli.preference_file = test_config_file_name
     StandupMD.instance_variable_set(:@config_file_loaded, false)
     @previous_month_test_file =
@@ -25,6 +47,7 @@ class TestCli < TestHelper
     StandupMD.config.file.reset
     StandupMD.config.entry.reset
     StandupMD.config.entry_list.reset
+    StandupMD.config.post.reset
   end
 
   def test_preference_file
@@ -124,12 +147,37 @@ class TestCli < TestHelper
     refute(c.write?)
   end
 
+  def test_post_is_read_only
+    c = cli(["--post", "--directory", workdir.to_s])
+
+    assert(c.post?)
+    refute(c.file_date_argument?)
+    refute(c.write?)
+  end
+
   def test_print_does_not_create_missing_file
     previous_month = Date.today.prev_month
 
     c = cli(
       [
         "--print", previous_month.strftime(StandupMD.config.file.header_date_format),
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_nil(c.file)
+    assert_nil(c.entry)
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
+  end
+
+  def test_post_does_not_create_missing_file
+    previous_month = Date.today.prev_month
+
+    c = cli(
+      [
+        "--post", "slack",
+        previous_month.strftime(StandupMD.config.file.header_date_format),
         "--directory", workdir.to_s
       ]
     )
@@ -382,6 +430,61 @@ class TestCli < TestHelper
     assert_equal(Date.today.prev_day, StandupMD.config.cli.date)
   ensure
     disable_stdout_redireaction
+  end
+
+  def test_post
+    cli(["--post", "--directory", workdir.to_s])
+
+    assert(StandupMD.config.cli.post)
+    assert_equal(:slack, StandupMD.config.cli.post_adapter)
+
+    cli(["--post", "slack", "--directory", workdir.to_s])
+
+    assert(StandupMD.config.cli.post)
+    assert_equal(:slack, StandupMD.config.cli.post_adapter)
+  end
+
+  def test_post_channel
+    cli(["--post", "slack", "--post-channel", "C123", "--directory", workdir.to_s])
+
+    assert_equal("C123", StandupMD.config.cli.post_channel)
+  end
+
+  def test_post_invokes_custom_adapter
+    StandupMD.config.post.register_adapter(:test, RecordingPostAdapter)
+    StandupMD.config.post.configure_adapter(:test, channel: "configured")
+
+    StandupMD::Cli.execute(
+      [
+        "--post", "test",
+        "--post-channel", "runtime",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    assert_equal(1, RecordingPostAdapter.messages.size)
+    message, options = RecordingPostAdapter.messages.first
+    assert_equal(:test, message.adapter)
+    assert_equal("runtime", message.channel)
+    assert_equal({channel: "configured"}, options)
+    assert_match(/# #{Date.today.strftime(StandupMD.config.file.header_date_format)}/, message.text)
+    assert_match(/\n- <!-- ADD TODAY'S WORK HERE -->\n/, message.text)
+  end
+
+  def test_post_uses_configured_channel_when_runtime_channel_is_omitted
+    StandupMD.config.post.register_adapter(:test, RecordingPostAdapter)
+    StandupMD.config.post.configure_adapter(:test, channel: "configured")
+
+    StandupMD::Cli.execute(
+      [
+        "--post", "test",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    message, options = RecordingPostAdapter.messages.first
+    assert_nil(message.channel)
+    assert_equal({channel: "configured"}, options)
   end
 
   def test_class_print

@@ -53,6 +53,16 @@ _standup_dates() {
   fi
 }
 
+_standup_post_adapters() {
+  local -a adapters
+
+  adapters=(
+    'slack:Slack chat.postMessage adapter'
+  )
+
+  _describe -t adapters 'post adapter' adapters
+}
+
 _arguments -s -S \
   '(- *)'{-h,--help}'[show help]' \
   '(- *)--version[show version]' \
@@ -78,4 +88,6 @@ _arguments -s -S \
   '(-v --verbose --no-verbose)'{-v,--verbose}'[use verbose output]' \
   '(-v --verbose --no-verbose)--no-verbose[disable verbose output]' \
   '(-p --print)'{-p,--print}'[print current entry]::date:_standup_dates' \
+  '(-P --post)'{-P,--post}'[post current entry to a chat client]::platform:_standup_post_adapters' \
+  '--post-channel[channel, room, or conversation to post to]:channel:' \
   '1:standup file date:_standup_dates'

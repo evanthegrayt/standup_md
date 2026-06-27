@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "standup_md/version"
+require "standup_md/post"
 require "standup_md/config"
 require "standup_md/task"
 require "standup_md/title"

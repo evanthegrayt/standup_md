@@ -63,4 +63,22 @@ class TestCliConfig < TestHelper
     assert_nothing_raised { StandupMD.config.cli.print = true }
     assert(StandupMD.config.cli.print)
   end
+
+  def test_post
+    refute(StandupMD.config.cli.post)
+    assert_nothing_raised { StandupMD.config.cli.post = true }
+    assert(StandupMD.config.cli.post)
+  end
+
+  def test_post_adapter
+    assert_nil(StandupMD.config.cli.post_adapter)
+    assert_nothing_raised { StandupMD.config.cli.post_adapter = :slack }
+    assert_equal(:slack, StandupMD.config.cli.post_adapter)
+  end
+
+  def test_post_channel
+    assert_nil(StandupMD.config.cli.post_channel)
+    assert_nothing_raised { StandupMD.config.cli.post_channel = "C123" }
+    assert_equal("C123", StandupMD.config.cli.post_channel)
+  end
 end

@@ -18,6 +18,9 @@ module StandupMD
         edit: true,
         write: true,
         print: false,
+        post: false,
+        post_adapter: nil,
+        post_channel: nil,
         auto_fill_previous: true,
         preference_file: ::File.expand_path(
           ::File.join(ENV["HOME"], ".standuprc")
@@ -64,6 +67,30 @@ module StandupMD
       #
       # @return [Boolean]
       attr_accessor :print
+
+      ##
+      # Should the cli post the entry to a chat client?
+      #
+      # @param [Boolean] post
+      #
+      # @return [Boolean]
+      attr_accessor :post
+
+      ##
+      # The chat adapter to use for posting.
+      #
+      # @param [String, Symbol, nil] post_adapter
+      #
+      # @return [String, Symbol, nil]
+      attr_accessor :post_adapter
+
+      ##
+      # The channel to use for posting.
+      #
+      # @param [String, nil] post_channel
+      #
+      # @return [String, nil]
+      attr_accessor :post_channel
 
       ##
       # The date to use to find the entry.

@@ -132,6 +132,16 @@ your clipboard without even opening your editor.
 standup -p | pbcopy
 ```
 
+#### Post the entry for today to Slack
+You can also post today's entry directly to a chat client. Slack is the default
+adapter, so `standup -P` and `standup -P slack` are equivalent. Tokens are read
+from environment variables at post time, and are not stored in `~/.standuprc`.
+
+```sh
+export STANDUP_MD_SLACK_TOKEN="xoxb-your-token"
+standup -P slack --post-channel C123456
+```
+
 #### Add entry to file without opening it
 You can add an entry for today without even opening your editor. Note that, if
 you have multiple entries, you must separate them with a comma and *no spaces*.
@@ -191,8 +201,19 @@ StandupMD.configure do |c|
   c.cli.edit               = true
   c.cli.write              = true
   c.cli.print              = false
+  c.cli.post               = false
+  c.cli.post_adapter       = nil
+  c.cli.post_channel       = nil
   c.cli.auto_fill_previous = true
   c.cli.preference_file    = ::File.expand_path(::File.join(ENV["HOME"], ".standuprc"))
+
+  # Defaults for posting standups to chat clients.
+  c.post.default_adapter = :slack
+  c.post.configure_adapter(
+    :slack,
+    channel: "C123456",
+    token_env: "STANDUP_MD_SLACK_TOKEN"
+  )
 end
 ```
 
@@ -223,6 +244,69 @@ Some of these options can be changed at runtime. They are as follows.
 -p, --print [DATE]             Print current entry.
                                If DATE is passed, will print entry for DATE, if it exists.
                                DATE must be in the same format as file-name-format
+-P, --post [PLATFORM]          Post current entry to a chat client. Defaults to Slack.
+                               If PLATFORM is passed, use that post adapter.
+    --post-channel CHANNEL     Channel, room, or conversation to post to
+```
+
+#### Posting and Secrets
+The built-in Slack adapter sends the rendered markdown entry to Slack's
+`chat.postMessage` API. It needs a Slack token with the `chat:write` scope and a
+channel ID or name. By default, the token is read from
+`STANDUP_MD_SLACK_TOKEN`.
+
+It is fine for `~/.standuprc` to reference environment variables, especially for
+non-secret values or to fail fast when a required variable is missing. The
+recommended pattern is to keep secret values in the environment and configure
+the adapter with the variable name:
+
+```ruby
+StandupMD.configure do |c|
+  ENV.fetch("STANDUP_MD_SLACK_TOKEN")
+  c.post.configure_adapter(:slack, channel: "C123456")
+end
+```
+
+To use a different token variable, set `token_env`.
+
+```ruby
+StandupMD.configure do |c|
+  c.post.configure_adapter(
+    :slack,
+    channel: "C123456",
+    token_env: "WORK_SLACK_TOKEN"
+  )
+end
+```
+
+#### Custom Post Adapters
+Adapters are registered in `~/.standuprc`. They receive a
+`StandupMD::Post::Message`, which includes the rendered markdown text and the
+runtime channel passed with `--post-channel`.
+
+```ruby
+class TeamsAdapter
+  def initialize(options = {})
+    @options = options
+  end
+
+  def post(message)
+    channel = message.channel || @options[:channel]
+    token = ENV.fetch("TEAMS_TOKEN")
+
+    # Send message.text to channel with token.
+
+    StandupMD::Post::Result.success(
+      adapter: message.adapter,
+      channel: channel
+    )
+  end
+end
+
+StandupMD.configure do |c|
+  c.post.register_adapter(:teams, TeamsAdapter)
+  c.post.configure_adapter(:teams, channel: "team-channel-id")
+end
 ```
 
 #### Using Existing Standup Files

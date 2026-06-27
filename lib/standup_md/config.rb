@@ -4,6 +4,7 @@ require "standup_md/config/cli"
 require "standup_md/config/file"
 require "standup_md/config/entry"
 require "standup_md/config/entry_list"
+require "standup_md/config/post"
 
 module StandupMD
   ##
@@ -34,12 +35,19 @@ module StandupMD
     attr_reader :entry_list
 
     ##
+    # Reader for Post config.
+    #
+    # @return [StandupMD::Config::Post]
+    attr_reader :post
+
+    ##
     # Builds the links to the configuration classes.
     def initialize
       @cli = StandupMD::Config::Cli.new
       @file = StandupMD::Config::File.new
       @entry = StandupMD::Config::Entry.new
       @entry_list = StandupMD::Config::EntryList.new
+      @post = StandupMD::Config::Post.new
     end
   end
 end

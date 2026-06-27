@@ -75,6 +75,8 @@ module StandupMD
         exe.write_file if exe.write?
         if config.print
           exe.print(exe.entry)
+        elsif config.post
+          exe.post(exe.entry)
         elsif config.edit
           exe.edit
         end
@@ -184,6 +186,14 @@ module StandupMD
     end
 
     ##
+    # Should the cli post the entry to a chat adapter?
+    #
+    # @return [Boolean]
+    def post?
+      @config.post
+    end
+
+    ##
     # Quick access to +Cli.echo+.
     #
     # @return [nil]
@@ -211,7 +221,7 @@ module StandupMD
     #
     # @return [Boolean]
     def read_only?
-      @config.print || file_date_argument?
+      @config.print || @config.post || file_date_argument?
     end
 
     ##
@@ -223,7 +233,7 @@ module StandupMD
 
       without_file_creation { StandupMD::File.find_by_date(@config.date) }
     rescue
-      raise unless @config.print
+      raise unless @config.print || @config.post
 
       nil
     end
