@@ -264,6 +264,9 @@ follows.
 ```
 
 #### Posting and Secrets
+For a real-world example of how to get the Slack integration working, see [the
+guide](SLACK_SETUP_GUIDE.md).
+
 The built-in Slack adapter sends the rendered markdown entry to Slack's
 `chat.postMessage` API. It needs a Slack token with the `chat:write` scope and a
 channel or conversation. Channel-like IDs such as `C123456`, `G123456`, and
