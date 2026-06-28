@@ -19,7 +19,8 @@ client, such as Slack, Mattermost, or Riot. Typing out my standup every day
 became tedious, as I'd have to look up what I did the day before, copy and paste
 yesterday's work into a new entry, and add today's tasks. This gem automates
 most of this process, along with providing means of opening the file in your
-editor, and finding and displaying entries from the command line.
+editor, finding and displaying entries from the command line, and posting
+today's standup directly to a chat client.
 
 In a nutshell, calling `standup` from the command line will open a standup file
 for the current month in your preferred editor. If an entry for today is already
