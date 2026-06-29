@@ -510,8 +510,9 @@ g:standup_file = strftime('%Y_%m.md')        " the file format to use
 ```
 
 ## Support this project
-I love knowing when people find my work useful!
+I love knowing when people find my work useful. Any kind of support is very much
+appreciated!
 
-:star: Like the project? Consider starring [the repository](https://github.com/evanthegrayt/standup_md).\
-:heart: Love the project? Follow me [on GitHub](https://github.com/evanthegrayt).\
-:money_with_wings: *Really* love it? Consider [buying me a tea](https://paypal.me/evanrgray)!
+- ⭐️ Like the project? Star [the repository](https://github.com/evanthegrayt/standup_md)!
+- ❤️ Love the project? Follow me [on GitHub](https://github.com/evanthegrayt)!
+- 💸 *Really* love it? Consider [buying me a tea](https://paypal.me/evanrgray)!
