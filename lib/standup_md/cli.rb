@@ -131,6 +131,7 @@ module StandupMD
       @config = nil
       @preference_file_loaded = false
       @file_date_argument = false
+      @current_option_passed = false
       @zsh_completion_requested = false
       @options = options
       return if load_zsh_completion_request(options)

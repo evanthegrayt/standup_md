@@ -61,7 +61,10 @@ module StandupMD
           opts.on(
             "--current ARRAY", Array,
             "List of current entry's tasks"
-          ) { |v| config.entry.current = v }
+          ) do |v|
+            @current_option_passed = true
+            config.entry.current = v
+          end
 
           opts.on(
             "--previous ARRAY", Array,
@@ -157,7 +160,11 @@ module StandupMD
       # @return [StandupMD::Entry]
       def new_entry(file)
         entry = file.entries.find(config.cli.date)
-        return entry if read_only? || entry || config.cli.date != Date.today
+        return entry if read_only? || config.cli.date != Date.today
+        if entry
+          append_current_entry(entry) if current_option_passed?
+          return entry
+        end
 
         StandupMD::Entry.new(
           config.cli.date,
@@ -180,6 +187,15 @@ module StandupMD
         end
 
         prev_entry_tasks(file.entries)
+      end
+
+      def append_current_entry(entry)
+        current = entry.section(:current)
+        config.entry.current.each { |task| current << task }
+      end
+
+      def current_option_passed?
+        @current_option_passed
       end
 
       ##

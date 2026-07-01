@@ -414,6 +414,38 @@ class TestCli < TestHelper
     assert_nothing_raised { c.write_file }
   end
 
+  def test_existing_current_entry_does_not_append_configured_current
+    StandupMD.config.entry.current = ["Configured current"]
+
+    c = cli(["--no-edit", "--directory", workdir.to_s])
+    c.write_file
+
+    entry = StandupMD::File.load(
+      File.basename(test_file_name),
+      config: c.config.file
+    ).entries.find(Date.today)
+
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], entry.current)
+  end
+
+  def test_current_option_appends_to_existing_current_entry
+    StandupMD::Cli.execute(
+      [
+        "--current", "New task",
+        "--no-edit",
+        "--directory", workdir.to_s
+      ]
+    )
+
+    entry = StandupMD::File.load(
+      File.basename(test_file_name),
+      config: StandupMD.config.file
+    )
+      .entries.find(Date.today)
+
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->", "New task"], entry.current)
+  end
+
   def test_current
     c = cli(["--directory", workdir.to_s])
     assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], c.config.entry.current)
