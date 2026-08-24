@@ -126,6 +126,13 @@ file:
 - None
 ```
 
+Impediments are not carried forward by default. To copy the previous entry's
+impediments into a new entry, pass `-i` or `--carry-forward-impediments`.
+
+```sh
+standup -i
+```
+
 #### Copy the entry for today to clipboard
 There are also flags that will print entries to the command line. There's a full
 list of features below, but as a quick example, you can copy today's entry to
@@ -220,6 +227,7 @@ StandupMD.configure do |c|
   c.cli.post_adapter       = nil
   c.cli.post_channel       = nil
   c.cli.auto_fill_previous = true
+  c.cli.carry_forward_impediments = false
   c.cli.preference_file    = ::File.expand_path(::File.join(ENV["HOME"], ".standuprc"))
 
   # Defaults for posting standups to chat clients.
@@ -252,6 +260,8 @@ follows.
 -d, --directory DIRECTORY      The directory where standup files are located
 -w, --[no-]write               Write current entry if it doesn't exist. Default is true
 -a, --[no-]auto-fill-previous  Auto-generate 'previous' tasks for new entries
+-i, --[no-]carry-forward-impediments
+                               Carry impediments forward for new entries
 -e, --[no-]edit                Open the file in the editor. Default is true
 -v, --[no-]verbose             Verbose output. Default is false.
     --zsh-completion           Print zsh completion setup instructions
@@ -430,11 +440,11 @@ markdown = parser.render(entries, start_date: entries.first.date, end_date: entr
 runtime = StandupMD.config.copy
 runtime.file.directory = "/tmp/request-standups"
 runtime.entry.current = ["Work scoped to this request"]
+runtime.cli.carry_forward_impediments = true
 
-file = StandupMD::File.find_by_date(Date.today, config: runtime.file).load
-entry = StandupMD::Entry.create(config: runtime.entry)
-file.entries << entry
-file.write
+cli = StandupMD::Cli.new(["--no-edit"], config: runtime)
+entry = cli.entry
+cli.write_file
 ```
 
 ### API Examples

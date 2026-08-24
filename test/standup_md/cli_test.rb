@@ -241,6 +241,35 @@ class TestCli < TestHelper
     assert(StandupMD.config.cli.write)
   end
 
+  def test_initialize_accepts_request_scoped_config
+    runtime = StandupMD.config.copy
+    runtime.file.directory = workdir
+    runtime.entry.current = ["Runtime current"]
+    runtime.cli.edit = false
+    runtime.cli.write = false
+
+    c = StandupMD::Cli.new([], config: runtime)
+
+    assert_equal(workdir, c.config.file.directory)
+    assert_equal(["Runtime current"], c.config.entry.current)
+    refute(c.config.cli.edit)
+    refute(c.config.cli.write)
+    assert(StandupMD.config.cli.edit)
+    assert(StandupMD.config.cli.write)
+  end
+
+  def test_cli_options_do_not_mutate_request_scoped_config
+    runtime = StandupMD.config.copy
+    runtime.file.directory = workdir
+
+    c = StandupMD::Cli.new(["--current", "Runtime option", "--no-edit"], config: runtime)
+
+    assert_equal(["Runtime option"], c.config.entry.current)
+    refute(c.config.cli.edit)
+    assert_equal(["<!-- ADD TODAY'S WORK HERE -->"], runtime.entry.current)
+    assert(runtime.cli.edit)
+  end
+
   def test_sequential_cli_instances_do_not_leak_runtime_options
     first = cli(["--current", "One", "--no-edit", "--directory", workdir.to_s])
     second = cli(["--previous", "Two", "--print", "--directory", workdir.to_s])
@@ -343,6 +372,107 @@ class TestCli < TestHelper
     c = cli(["--no-auto-fill-previous"] + @options)
     refute(c.config.cli.auto_fill_previous)
     assert(StandupMD.config.cli.auto_fill_previous)
+  end
+
+  def test_carry_forward_impediments
+    refute(StandupMD.config.cli.carry_forward_impediments)
+    c = cli(@options)
+    refute(c.config.cli.carry_forward_impediments)
+
+    c = cli(["--carry-forward-impediments"] + @options)
+    assert(c.config.cli.carry_forward_impediments)
+    refute(StandupMD.config.cli.carry_forward_impediments)
+
+    c = cli(["-i"] + @options)
+    assert(c.config.cli.carry_forward_impediments)
+    refute(StandupMD.config.cli.carry_forward_impediments)
+  end
+
+  def test_no_carry_forward_impediments_overrides_config
+    StandupMD.config.cli.carry_forward_impediments = true
+
+    c = cli(["--no-carry-forward-impediments"] + @options)
+
+    refute(c.config.cli.carry_forward_impediments)
+    assert(StandupMD.config.cli.carry_forward_impediments)
+  end
+
+  def test_carry_forward_impediments_uses_previous_entry_impediments
+    ::File.open(test_file_name, "w") do |f|
+      f.puts "# #{Date.today.prev_day.strftime(StandupMD.config.file.header_date_format)}"
+      f.puts "## Previous"
+      f.puts "- Yesterday"
+      f.puts "## Current"
+      f.puts "- Yesterday's current task"
+      f.puts "## Impediments"
+      f.puts "- Waiting on account access"
+      f.puts "- Blocked by review"
+    end
+
+    c = cli(["--carry-forward-impediments"] + @options)
+
+    assert_equal(["Waiting on account access", "Blocked by review"], c.entry.impediments)
+  end
+
+  def test_carry_forward_impediments_can_be_enabled_through_config
+    ::File.open(test_file_name, "w") do |f|
+      f.puts "# #{Date.today.prev_day.strftime(StandupMD.config.file.header_date_format)}"
+      f.puts "## Previous"
+      f.puts "- Yesterday"
+      f.puts "## Current"
+      f.puts "- Yesterday's current task"
+      f.puts "## Impediments"
+      f.puts "- Waiting on account access"
+    end
+
+    runtime = StandupMD.config.copy
+    runtime.file.directory = workdir
+    runtime.cli.edit = false
+    runtime.cli.write = false
+    runtime.cli.carry_forward_impediments = true
+
+    c = StandupMD::Cli.new([], config: runtime)
+
+    assert_equal(["Waiting on account access"], c.entry.impediments)
+  end
+
+  def test_carry_forward_impediments_uses_previous_month_file
+    FileUtils.rm(test_file_name)
+    ::File.open(@previous_month_test_file, "w") do |f|
+      f.puts "# #{Date.today.prev_month.strftime(StandupMD.config.file.header_date_format)}"
+      f.puts "## Previous"
+      f.puts "- Last month previous"
+      f.puts "## Current"
+      f.puts "- Last month current"
+      f.puts "## Impediments"
+      f.puts "- Waiting on procurement"
+    end
+
+    c = cli(["--carry-forward-impediments", "--no-edit", "--directory", workdir.to_s])
+
+    assert(c.file.new?)
+    assert_equal(["Waiting on procurement"], c.entry.impediments)
+    assert(File.file?(@previous_month_test_file))
+  end
+
+  def test_previous_month_file_predicate
+    c = cli(@options)
+    refute(c.send(:previous_month_file?))
+
+    create_standup_file(@previous_month_test_file, "previous_month_entry")
+
+    assert(c.send(:previous_month_file?))
+  end
+
+  def test_carry_forward_impediments_does_not_create_missing_previous_file
+    FileUtils.rm(test_file_name)
+
+    c = cli(["--carry-forward-impediments", "--no-edit", "--directory", workdir.to_s])
+
+    assert(c.file.new?)
+    assert_equal(["None"], c.entry.impediments)
+    refute(File.file?(@previous_month_test_file))
+    assert(StandupMD.config.file.create)
   end
 
   def test_no_auto_fill_previous_uses_configured_previous_tasks
@@ -505,7 +635,9 @@ class TestCli < TestHelper
   end
 
   def test_editor
+    original_visual = ENV["VISUAL"]
     ENV["VISUAL"] = "vim"
+    StandupMD.config.cli.reset
     c = cli(["--directory", workdir.to_s])
     assert_equal("vim", c.config.cli.editor)
     assert_equal("vim", StandupMD.config.cli.editor)
@@ -513,6 +645,9 @@ class TestCli < TestHelper
     c = cli(["--editor", "mate", "--directory", workdir.to_s])
     assert_equal("mate", c.config.cli.editor)
     assert_equal("vim", StandupMD.config.cli.editor)
+  ensure
+    ENV["VISUAL"] = original_visual
+    StandupMD.config.cli.reset
   end
 
   def test_print

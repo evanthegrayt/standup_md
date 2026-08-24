@@ -66,6 +66,8 @@ _arguments -s -S \
   '(-w --write --no-write)--no-write[do not write current entry if it does not exist]' \
   '(-a --auto-fill-previous --no-auto-fill-previous)'{-a,--auto-fill-previous}'[auto-generate previous tasks for new entries]' \
   '(-a --auto-fill-previous --no-auto-fill-previous)--no-auto-fill-previous[do not auto-generate previous tasks for new entries]' \
+  '(-i --carry-forward-impediments --no-carry-forward-impediments)'{-i,--carry-forward-impediments}'[carry impediments forward for new entries]' \
+  '(-i --carry-forward-impediments --no-carry-forward-impediments)--no-carry-forward-impediments[do not carry impediments forward for new entries]' \
   '(-e --edit --no-edit)'{-e,--edit}'[open the file in the editor]' \
   '(-e --edit --no-edit)--no-edit[do not open the file in the editor]' \
   '(-v --verbose --no-verbose)'{-v,--verbose}'[use verbose output]' \

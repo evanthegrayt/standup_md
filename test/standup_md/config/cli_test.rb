@@ -46,6 +46,12 @@ class TestCliConfig < TestHelper
     refute(StandupMD.config.cli.auto_fill_previous)
   end
 
+  def test_carry_forward_impediments
+    refute(StandupMD.config.cli.carry_forward_impediments)
+    assert_nothing_raised { StandupMD.config.cli.carry_forward_impediments = true }
+    assert(StandupMD.config.cli.carry_forward_impediments)
+  end
+
   def test_date
     assert_equal(Date.today, StandupMD.config.cli.date)
     assert_nothing_raised { StandupMD.config.cli.date = Date.today.prev_day }

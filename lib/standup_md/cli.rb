@@ -127,7 +127,11 @@ module StandupMD
     # Constructor. Sets defaults.
     #
     # @param [Array] options
-    def initialize(options = [], load_config: true)
+    #
+    # @param [Boolean] load_config
+    #
+    # @param [StandupMD::Config, nil] config
+    def initialize(options = [], load_config: true, config: nil)
       @config = nil
       @preference_file_loaded = false
       @file_date_argument = false
@@ -136,8 +140,8 @@ module StandupMD
       @options = options
       return if load_zsh_completion_request(options)
 
-      load_preferences if load_config
-      @config = StandupMD.config.copy
+      load_preferences if load_config && config.nil?
+      @config = config.nil? ? StandupMD.config.copy : config.copy
       load_runtime_preferences(options)
       return if zsh_completion_requested?
 
