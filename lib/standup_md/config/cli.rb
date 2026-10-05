@@ -22,6 +22,7 @@ module StandupMD
         post_adapter: nil,
         post_channel: nil,
         auto_fill_previous: true,
+        carry_forward_impediments: false,
         preference_file: ::File.expand_path(
           ::File.join(ENV["HOME"], ".standuprc")
         )
@@ -122,6 +123,15 @@ module StandupMD
       #
       # @return [Boolean]
       attr_accessor :auto_fill_previous
+
+      ##
+      # When writing a new entry, should impediments be pulled from the last
+      # entry?
+      #
+      # @param [Boolean] carry_forward_impediments
+      #
+      # @return [Boolean]
+      attr_accessor :carry_forward_impediments
 
       ##
       # Initializes the config with default values.

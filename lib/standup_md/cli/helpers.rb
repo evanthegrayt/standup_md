@@ -102,6 +102,11 @@ module StandupMD
           ) { |v| config.cli.auto_fill_previous = v }
 
           opts.on(
+            "-i", "--[no-]carry-forward-impediments",
+            "Carry impediments forward for new entries. Default is false"
+          ) { |v| config.cli.carry_forward_impediments = v }
+
+          opts.on(
             "-e", "--[no-]edit",
             "Open the file in the editor. Default is true"
           ) { |v| config.cli.edit = v }
@@ -170,7 +175,7 @@ module StandupMD
           config.cli.date,
           config.entry.current,
           previous_entry(file),
-          config.entry.impediments,
+          impediments_entry(file),
           config.entry.notes
         ).tap { |e| file.entries << e }
       end
@@ -181,12 +186,20 @@ module StandupMD
       # @return [Array]
       def previous_entry(file)
         return config.entry.previous unless config.cli.auto_fill_previous
-        if file.new?
-          previous_file = prev_file_exists?
-          return prev_entry_tasks(previous_file.load.entries) if previous_file
-        end
 
-        prev_entry_tasks(file.entries)
+        carry_forward_tasks(file, fallback: []) { |entry| entry.current_tasks }
+      end
+
+      ##
+      # The "impediments" tasks.
+      #
+      # @return [Array]
+      def impediments_entry(file)
+        return config.entry.impediments unless config.cli.carry_forward_impediments
+
+        carry_forward_tasks(file, fallback: config.entry.impediments) do |entry|
+          entry.impediments_tasks
+        end
       end
 
       def append_current_entry(entry)
@@ -217,14 +230,19 @@ module StandupMD
         raise OptionParser::InvalidArgument, value
       end
 
-      ##
-      # The previous entry's current tasks.
-      #
-      # @param [StandupMD::EntryList] entries
-      #
-      # @return [Array<StandupMD::Task>]
-      def prev_entry_tasks(entries)
-        entries.empty? ? [] : entries.last.current_tasks
+      def carry_forward_tasks(file, fallback:)
+        entry = carry_forward_entry(file)
+        entry.nil? ? fallback : yield(entry)
+      end
+
+      def carry_forward_entry(file)
+        carry_forward_entries(file).last
+      end
+
+      def carry_forward_entries(file)
+        return file.entries unless file.new?
+
+        find_previous_month_file&.load&.entries || file.entries
       end
 
       ##
@@ -233,14 +251,27 @@ module StandupMD
       # @param [StandupMD::Config::File] config
       #
       # @return [StandupMD::File]
-      def prev_file(config: self.config.file)
+      def previous_month_file(config: self.config.file)
         StandupMD::File.find_by_date(Date.today.prev_month, config: config)
       end
 
-      def prev_file_exists?
-        without_file_creation { |file_config| prev_file(config: file_config) }
-      rescue StandupMD::File::NotFoundError
-        nil
+      def previous_month_file?
+        ::File.file?(previous_month_file_path)
+      end
+
+      def find_previous_month_file
+        return nil unless previous_month_file?
+
+        without_file_creation do |file_config|
+          previous_month_file(config: file_config)
+        end
+      end
+
+      def previous_month_file_path
+        ::File.join(
+          config.file.directory,
+          Date.today.prev_month.strftime(config.file.name_format)
+        )
       end
 
       ##
